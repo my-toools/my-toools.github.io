@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>מחשבון זכויות - חישוב פיצויי פיטורין</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 650px; background: white; padding: 25px; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .ad-box { background: #e9ecef; border: 1px dashed #adb5bd; padding: 15px; margin: 15px 0; color: #6c757d; font-size: 14px; }
+        input, button { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; }
+        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>מחשבון פיצויי פיטורין מהיר</h2>
+    
+    <div class="ad-box">[ כאן תופיע פרסומת גוגל עליונה ]</div>
+
+    <label>משכורת חודשית ברוטו (בש"ח):</label>
+    <input type="number" id="salary" placeholder="למשל: 10000">
+
+    <label>וותק במקום העבודה (בשנים):</label>
+    <input type="number" id="years" placeholder="למשל: 3.5">
+
+    <button onclick="calculate()">חשב פיצויים מגיעים</button>
+
+    <div class="result" id="output"></div>
+
+    <div class="ad-box">[ כאן תופיע פרסומת גוגל צמודה לתוצאה ]</div>
+</div>
+
+<script>
+    function calculate() {
+        let salary = parseFloat(document.getElementById('salary').value);
+        let years = parseFloat(document.getElementById('years').value);
+        
+        if (isNaN(salary) || isNaN(years)) {
+            document.getElementById('output').innerText = "נא להזין נתונים תקינים.";
+            return;
+        }
+        
+        let total = salary * years;
+        document.getElementById('output').innerText = "סכום הפיצויים המוערך: " + total.toLocaleString() + " ש\"ח";
+    }
+</script>
+
+</body>
+</html>
