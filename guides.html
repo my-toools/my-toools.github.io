@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="מדריכים שימושיים וזכויות עובדים: מתי מגיעים פיצויי פיטורין, איך מחשבים דמי הבראה ומהן הזכויות בחופשת לידה.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>- מדריכים וזכויות</title>
+<title>הכלים שלי - מדריכים וזכויות</title>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
@@ -55,19 +55,8 @@
     gap: 12px;
   }
 
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0;
-  }
-
-  .nav-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    object-fit: contain;
-  }
+  .nav-brand { display: flex; align-items: center; position: absolute; right: 0; }
+  .nav-logo { width: 42px; height: 42px; border-radius: 8px; object-fit: contain; }
 
   .nav-links {
     display: flex;
@@ -88,10 +77,7 @@
     transition: all 0.2s ease;
   }
 
-  .nav-links a:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-  }
+  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
 
   .nav-widgets {
     display: flex;
@@ -107,13 +93,7 @@
     width: 100%;
   }
 
-  .widget-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-  }
-
+  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
   .widget-item span { color: #f8fafc; font-weight: 500; }
   .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
 
@@ -152,7 +132,6 @@
   .card p, .card li { color: var(--text-secondary); line-height: 1.6; font-size: 14px; }
   .card ul { padding-right: 20px; margin: 0; }
 
-  /* תיקון צבע טקסט ב-Footer */
   footer {
     margin-top: 50px;
     padding: 24px;
@@ -163,11 +142,7 @@
     color: #cbd5e1;
   }
 
-  footer p {
-    color: #cbd5e1 !important;
-    margin: 6px 0;
-  }
-
+  footer p { color: #cbd5e1 !important; margin: 6px 0; }
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
@@ -208,9 +183,15 @@
         <span class="widget-divider">|</span>
         <div class="widget-item">🌇 <span id="navSunset">--:--</span></div>
         <span class="widget-divider">|</span>
-        <div class="widget-item">💵 <span id="navUsd">--</span></div>
+        <div class="widget-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span id="navUsd">--</span>
+        </div>
         <span class="widget-divider">|</span>
-        <div class="widget-item">💶 <span id="navEur">--</span></div>
+        <div class="widget-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12a7.9 7.9 0 0 0 7.8 8 7.7 7.7 0 0 0 5.2-2"></path></svg>
+            <span id="navEur">--</span>
+        </div>
         <span class="widget-divider">|</span>
         <div class="widget-item">🌤️ <span id="navWeather">--</span></div>
     </div>
@@ -236,6 +217,16 @@
     <div class="card">
         <h2>מתי מגיעים פיצויי פיטורין מלאים?</h2>
         <p>עובד שעבד שנה ברציפות ופוטר זכאי לפיצויי פיטורין בגובה שכר חודשי אחד לכל שנת עבודה. במקרים מסוימים, גם עובד שהתפטר זכאי לפיצויים (כגון התפטרות לרגל טיפול בילד, הרעת תנאים מוחשית או מצב רפואי).</p>
+    </div>
+
+    <div class="card">
+        <h2>צבירת ימי חופשה שנתית</h2>
+        <p>לפי חוק חופשה שנתית, כל עובד זכאי לימי חופשה בתשלום. ב-5 השנים הראשונות במקום העבודה הזכאות היא 16 ימי חופשה ברוטו בשנה (12 ימי עבודה בפועל בשבוע עבודה של 5 ימים).</p>
+    </div>
+
+    <div class="card">
+        <h2>זכויות בחופשת לידה והורות</h2>
+        <p>חופשת הלידה הבסיסית עומדת על 26 שבועות, מתוכם 15 שבועות בתשלום (דמי לידה מביטוח לאומי) לעובדת שעבדה 10 מתוך 14 החודשים שקדמו ללידה.</p>
     </div>
 
 </div>
