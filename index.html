@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="מחשבוני זכויות עובדים חינמיים: חישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>מרכז הכלים - מחשבוני זכויות עובדים ופיצויים</title>
+<title>הכלים שלי - מחשבוני זכויות עובדים ופיצויים</title>
 
 <!-- תגיות SEO ושיתוף ברשתות חברתיות -->
-<meta property="og:title" content="מרכז הכלים - מחשבוני זכויות עובדים ופיצויים">
+<meta property="og:title" content="הכלים שלי - מחשבוני זכויות עובדים ופיצויים">
 <meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.">
 <meta property="og:image" content="https://my-toools.github.io/favicon.png">
 <meta property="og:url" content="https://my-toools.github.io/index.html">
@@ -25,7 +25,8 @@
     --input-bg: #ffffff;
     --text-primary: #0f172a;
     --text-secondary: #334155;
-    --dark-theme: #0b0f19;
+    --dark-blue: #0f172a;
+    --accent-blue: #1e3a8a;
     --border-color: #cbd5e1;
   }
 
@@ -40,19 +41,16 @@
     line-height: 1.6;
   }
 
-  /* סרגל עליון כהה וממורכז באופן מלא */
+  /* סרגל עליון בכחול כהה: מותג מימין, קישורים ממורכזים לאמצע */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: var(--dark-theme);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 20px;
+    background: var(--dark-blue);
+    border-bottom: 3px solid #1d4ed8;
+    padding: 12px 24px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
@@ -63,6 +61,7 @@
     font-weight: 800;
     font-size: 19px;
     color: #38bdf8;
+    white-space: nowrap;
   }
 
   .nav-logo {
@@ -73,9 +72,11 @@
   }
 
   .nav-links {
+    flex: 1;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
@@ -107,8 +108,8 @@
   }
 
   h1 { font-size: 26px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: var(--dark-theme); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-  h3 { font-size: 16px; font-weight: 700; color: var(--dark-theme); margin-top: 15px; margin-bottom: 8px; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--accent-blue); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+  h3 { font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 15px; margin-bottom: 8px; }
 
   label {
     display: block;
@@ -134,14 +135,14 @@
 
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--dark-theme);
-    box-shadow: 0 0 0 3px rgba(11, 15, 25, 0.1);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
   }
 
-  /* כפתורים בגוון הסרגל הכהה */
+  /* כפתורים בצבע כחול כהה לפי הסרגל */
   button {
     width: 100%;
-    background: var(--dark-theme);
+    background: var(--accent-blue);
     color: #ffffff;
     border: none;
     padding: 14px;
@@ -150,20 +151,20 @@
     font-weight: 700;
     font-size: 16px;
     font-family: inherit;
-    box-shadow: 0 4px 10px rgba(11, 15, 25, 0.2);
+    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
     transition: all 0.2s ease;
     margin-top: 18px;
   }
 
   button:hover {
-    background: #1f2937;
+    background: #1e4ed8;
     transform: translateY(-1px);
   }
 
   .result {
     font-size: 19px;
     font-weight: 700;
-    color: var(--dark-theme);
+    color: var(--accent-blue);
     margin-top: 20px;
     text-align: center;
     background: #f1f5f9;
@@ -174,7 +175,7 @@
 
   .info-section {
     background: #f8fafc;
-    border-right: 4px solid var(--dark-theme);
+    border-right: 4px solid var(--accent-blue);
     padding: 18px;
     margin-top: 24px;
     border-radius: 0 8px 8px 0;
@@ -190,22 +191,23 @@
 
   .info-section ul { padding-right: 20px; }
 
-  /* פוטר כהה בתחתית העמוד */
+  /* פוטר בכחול כהה */
   footer {
     margin-top: 50px;
     padding: 24px;
-    background: var(--dark-theme);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--dark-blue);
+    border-top: 3px solid #1d4ed8;
     text-align: center;
     font-size: 13px;
-    color: #9ca3af;
+    color: #cbd5e1;
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
-    .nav { flex-direction: column; gap: 8px; text-align: center; }
+    .nav { flex-direction: column; gap: 10px; text-align: center; }
+    .nav-links { justify-content: center; }
   }
 </style>
 </head>
@@ -213,8 +215,8 @@
 
 <div class="nav">
     <div class="nav-brand">
-        <img src="favicon.png" alt="לוגו מרכז הכלים" class="nav-logo">
-        <span>מרכז הכלים</span>
+        <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
+        <span>הכלים שלי</span>
     </div>
     <div class="nav-links">
         <a href="index.html">💼 זכויות עובדים</a>
@@ -330,8 +332,8 @@
 </script>
 
 <footer>
-    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
+    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
 </footer>
 
