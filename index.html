@@ -35,32 +35,42 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 100px;
+    padding-top: 140px;
     padding-bottom: 40px;
     direction: rtl;
     line-height: 1.6;
   }
 
-  /* סרגל עליון בכחול כהה: מותג מימין, קישורים ממורכזים לאמצע */
+  /* סרגל עליון בכחול כהה */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
     background: var(--dark-blue);
     border-bottom: 3px solid #1d4ed8;
-    padding: 12px 24px;
+    padding: 10px 20px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
+  .nav-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* מותג בלבן בוהק מימין */
   .nav-brand {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 800;
-    font-size: 19px;
-    color: #38bdf8;
+    font-size: 20px;
+    color: #ffffff;
     white-space: nowrap;
   }
 
@@ -71,12 +81,12 @@
     object-fit: contain;
   }
 
+  /* קישורים ממורכזים */
   .nav-links {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
@@ -84,9 +94,9 @@
     color: #cbd5e1;
     text-decoration: none;
     font-weight: 500;
-    font-size: 15px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 6px;
     transition: all 0.2s ease;
   }
 
@@ -95,7 +105,32 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  /* גוף האתר בהיר ונקי */
+  /* סרגל מידע: תאריך, שעה מתעדכנת, דולר ושעונים */
+  .nav-widgets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 13px;
+    color: #38bdf8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 16px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+  }
+
+  .widget-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .widget-item span {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  /* גוף האתר */
   .container {
     max-width: 740px;
     background: var(--card-bg);
@@ -139,7 +174,6 @@
     box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
   }
 
-  /* כפתורים בצבע כחול כהה לפי הסרגל */
   button {
     width: 100%;
     background: var(--accent-blue);
@@ -191,7 +225,6 @@
 
   .info-section ul { padding-right: 20px; }
 
-  /* פוטר בכחול כהה */
   footer {
     margin-top: 50px;
     padding: 24px;
@@ -206,24 +239,35 @@
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
-    .nav { flex-direction: column; gap: 10px; text-align: center; }
-    .nav-links { justify-content: center; }
+    body { padding-top: 170px; }
+    .nav-top-row { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
 <body>
 
 <div class="nav">
-    <div class="nav-brand">
-        <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
-        <span>הכלים שלי</span>
+    <div class="nav-top-row">
+        <div class="nav-brand">
+            <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
+            <span>הכלים שלי</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">💼 זכויות עובדים</a>
+            <a href="legal.html">⚖️ כלים משפטיים</a>
+            <a href="finance.html">💰 מט"ח ופיננסים</a>
+            <a href="utility.html">🛠️ כלים שימושיים</a>
+            <a href="guides.html">📚 מדריכים</a>
+        </div>
     </div>
-    <div class="nav-links">
-        <a href="index.html">💼 זכויות עובדים</a>
-        <a href="legal.html">⚖️ כלים משפטיים</a>
-        <a href="finance.html">💰 מט"ח ופיננסים</a>
-        <a href="utility.html">🛠️ כלים שימושיים</a>
-        <a href="guides.html">📚 מדריכים</a>
+
+    <!-- ווידג'ט תאריך ושעה מתעדכנים בלייב -->
+    <div class="nav-widgets">
+        <div class="widget-item">📅 <span id="navFullDate">טוען תאריך...</span></div>
+        <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
+        <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
+        <div class="widget-item">🗽 ניו יורק: <span id="navNyTime">00:00</span></div>
     </div>
 </div>
 
@@ -329,6 +373,38 @@
         let total = dayValue * days;
         document.getElementById('vacationResult').innerText = `פדיון חופשה משוער: ${total.toFixed(0).toLocaleString()} ₪`;
     }
+
+    // מעקב שעה ותאריך בלייב
+    function updateClockAndDate() {
+        let now = new Date();
+        
+        // תאריך עברי/לועזי מלא
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let dateStr = now.toLocaleDateString('he-IL', options);
+        document.getElementById('navFullDate').innerText = dateStr;
+
+        // שעה חיה מתעדכנת
+        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('navLiveTime').innerText = timeStr;
+
+        // שעון ניו יורק
+        let nyTime = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false });
+        document.getElementById('navNyTime').innerText = nyTime;
+    }
+
+    async function loadExchangeRate() {
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+        } catch (e) {
+            document.getElementById('navUsd').innerText = "₪ 3.70";
+        }
+    }
+
+    updateClockAndDate();
+    setInterval(updateClockAndDate, 1000);
+    loadExchangeRate();
 </script>
 
 <footer>
