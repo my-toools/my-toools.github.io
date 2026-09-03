@@ -7,9 +7,9 @@
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>מרכז הכלים - מחשבוני זכויות עובדים ופיצויים</title>
 
-<!-- תגיות SEO ושיתוף ברשתות חברתיות (Open Graph) -->
+<!-- תגיות SEO ושיתוף ברשתות חברתיות -->
 <meta property="og:title" content="מרכז הכלים - מחשבוני זכויות עובדים ופיצויים">
-<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות ברמת דיוק גבוהה.">
+<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.">
 <meta property="og:image" content="https://my-toools.github.io/favicon.png">
 <meta property="og:url" content="https://my-toools.github.io/index.html">
 <meta property="og:type" content="website">
@@ -25,7 +25,6 @@
     --input-bg: #f1f5f9;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --nav-bg: #1e3a8a;
     --accent-blue: #2563eb;
     --border-color: #e2e8f0;
   }
@@ -35,26 +34,24 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 90px;
+    padding-top: 100px;
     padding-bottom: 40px;
     direction: rtl;
     line-height: 1.6;
   }
 
-  /* סרגל עליון בסגנוןGov רשמי ונקי */
+  /* סרגל עליון כהה: לוגו מימין, קישורים ממורכזים במדויק באמצע */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: var(--nav-bg);
-    border-bottom: 3px solid #1d4ed8;
+    background: #0b0f19;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
   .nav-brand {
@@ -62,8 +59,8 @@
     align-items: center;
     gap: 10px;
     font-weight: 800;
-    font-size: 20px;
-    color: #ffffff;
+    font-size: 19px;
+    color: #38bdf8;
   }
 
   .nav-logo {
@@ -71,32 +68,32 @@
     height: 28px;
     border-radius: 6px;
     object-fit: contain;
-    background: #ffffff;
-    padding: 2px;
   }
 
   .nav-links {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .nav-links a {
-    color: #e2e8f0;
+    color: #9ca3af;
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.2s ease;
   }
 
   .nav-links a:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
   }
 
+  /* גוף האתר בהיר ונקי */
   .container {
     max-width: 740px;
     background: var(--card-bg);
@@ -104,13 +101,13 @@
     padding: 30px;
     margin: 0 auto 24px auto;
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     text-align: right;
   }
 
   h1 { font-size: 26px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: var(--nav-bg); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-  h3 { font-size: 16px; font-weight: 700; color: var(--nav-bg); margin-top: 15px; margin-bottom: 8px; }
+  h2 { font-size: 20px; font-weight: 700; color: #1e3a8a; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+  h3 { font-size: 16px; font-weight: 700; color: #1e3a8a; margin-top: 15px; margin-bottom: 8px; }
 
   label {
     display: block;
@@ -190,21 +187,26 @@
     color: var(--text-secondary);
   }
 
-  .info-section ul {
-    padding-right: 20px;
-  }
+  .info-section ul { padding-right: 20px; }
 
+  /* פוטר כהה בתחתית העמוד */
   footer {
     margin-top: 50px;
     padding: 24px;
-    background: #0f172a;
+    background: #0b0f19;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
     font-size: 13px;
-    color: #94a3b8;
+    color: #9ca3af;
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .nav { grid-template-columns: 1fr; text-align: center; gap: 10px; }
+    .nav-brand { justify-content: center; }
+  }
 </style>
 </head>
 <body>
@@ -329,7 +331,7 @@
 
 <footer>
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #94a3b8; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
 </footer>
 
