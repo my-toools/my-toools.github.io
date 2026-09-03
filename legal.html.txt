@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="מחשבונים משפטיים בחינם: בדיקת סמכות עניינית לפי סכום התביעה, חישוב אגרת בית משפט ומחשבון תביעות קטנות.">
+<link rel="icon" type="image/png" href="favicon.png?v=3">
+<title>כלים משפטיים - סמכות עניינית ואגרות בית משפט</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+.nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+.nav a { color: white; margin: 0 8px; text-decoration: none; font-weight: bold; font-size: 15px; }
+.container { max-width: 750px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; line-height: 1.6; }
+h1, h2, h3 { text-align: center; color: #2b2d42; }
+input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+.result { font-size: 18px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; background: #e9ecef; padding: 10px; border-radius: 5px; }
+.info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 20px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">זכויות עובדים</a>
+    <a href="legal.html">כלים משפטיים</a>
+    <a href="finance.html">מט"ח ופיננסים</a>
+    <a href="utility.html">כלים שימושיים</a>
+    <a href="guides.html">מדריכים</a>
+</div>
+
+<div class="container">
+    <h1>כלים ומחשבונים משפטיים</h1>
+    <p style="text-align: center; color: #666;">כלים לעזרת עורכי דין, תובעים ונתבעים לבדיקת סמכות שיפוט ואגרות.</p>
+</div>
+
+<!-- מחשבון סמכות עניינית -->
+<div class="container">
+    <h2>בדיקת סמכות עניינית לפי סכום התביעה</h2>
+    <label>סכום התביעה הכספית (בש"ח):</label>
+    <input type="number" id="claimAmount" placeholder="למשל: 50000">
+    <button onclick="checkJurisdiction()">בדקי סמכות שיפוט</button>
+    <div class="result" id="jurisResult">תוצאה תופיע כאן</div>
+    <div class="info-section">
+        <h3>איך נקבעת סמכות עניינית?</h3>
+        <p>תביעות עד 37,900 ₪ (נכון לעדכון האחרון) ניתן להגיש לבית המשפט לתביעות קטנות. תביעות כספיות עד 2.5 מיליון ₪ בסמכות בית משפט השלום. תביעות מעל 2.5 מיליון ₪ בסמכות בית המשפט המחוזי.</p>
+    </div>
+</div>
+
+<!-- מחשבון אגרת תביעה משוערת -->
+<div class="container">
+    <h2>מחשבון אגרת בית משפט משוערת (שלום / מחוזי)</h2>
+    <label>סכום התביעה (בש"ח):</label>
+    <input type="number" id="feeClaim" placeholder="למשל: 100000">
+    <label>ערכאה משפטית:</label>
+    <select id="courtType">
+        <option value="small">תביעות קטנות (1%)</option>
+        <option value="shalom">בית משפט השלום (2.5%)</option>
+    </select>
+    <button onclick="calcCourtFee()">חשבי אגרה משוערת</button>
+    <div class="result" id="feeResult">תוצאה תופיע כאן</div>
+</div>
+
+<script>
+    function checkJurisdiction() {
+        let amt = parseFloat(document.getElementById('claimAmount').value);
+        if (!amt) return;
+        let res = "";
+        if (amt <= 37900) {
+            res = "בית משפט לתביעות קטנות (או בית משפט השלום)";
+        } else if (amt <= 2500000) {
+            res = "בית משפט השלום";
+        } else {
+            res = "בית המשפט המחוזי";
+        }
+        document.getElementById('jurisResult').innerText = "הערכאה המוסמכת: " + res;
+    }
+
+    function calcCourtFee() {
+        let amt = parseFloat(document.getElementById('feeClaim').value);
+        let type = document.getElementById('courtType').value;
+        if (!amt) return;
+        let fee = 0;
+        if (type === 'small') {
+            fee = Math.max(amt * 0.01, 50); // לפחות 50 ש"ח
+        } else {
+            fee = amt * 0.025;
+        }
+        document.getElementById('feeResult').innerText = `אגרה משוערת: ${fee.toLocaleString()} ₪ (מחצית ראשונה 1.25% בהגשה)`;
+    }
+</script>
+
+<footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
+    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
+</footer>
+
+</body>
+</html>
