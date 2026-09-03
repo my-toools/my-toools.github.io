@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png?v=3">
+<title>מדיניות פרטיות ותנאי שימוש - מרכז הכלים</title>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; line-height: 1.6; }
+    .container { max-width: 800px; background: white; padding: 30px; margin: 0 auto; border-radius: 10px; text-align: right; }
+    h1, h2 { color: #2b2d42; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>מדיניות פרטיות ותנאי שימוש</h1>
+    
+    <h2>1. הבהרה משפטית</h2>
+    <p>הנתונים והחישובים המופיעים באתר "מרכז הכלים" מסופקים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי. החישובים אינם מחליפים התייעצות עם בעל מקצוע מוסמך.</p>
+
+    <h2>2. קבצי Cookie ופרסומות</h2>
+    <p>האתר משתמש בשירותי צד שלישי כגון Google AdSense להצגת פרסומות. ספקים אלה עשויים להשתמש בקבצי Cookie כדי להציג פרסומות בהתאם לביקורים קודמים של המשתמש באתר.</p>
+
+    <h2>3. יצירת קשר</h2>
+    <p>לכל שאלה ניתן לפנות אלינו במייל: mytooolsweb@gmail.com</p>
+
+    <p><a href="index.html">חזרה לדף הבית</a></p>
+</div>
+
+</body>
+</html>
