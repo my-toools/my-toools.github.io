@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
- <meta charset="UTF-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="מחשבוני זכויות עובדים בחינם: חישוב פיצויי פיטורין, דמי הבראה, ימי חופשה ושכר נטו/ברוטו.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>מרכז הכלים - מחשבוני זכויות עובדים ופיצויים</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="favicon.png?v=3">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
-        .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
-        .nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        .container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
-        h1, h2, h3 { text-align: center; color: #2b2d42; }
-        input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
-        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
-        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 25px; font-size: 14px; line-height: 1.6; }
-    </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+.nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+.nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+.container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
+h1, h2, h3 { text-align: center; color: #2b2d42; }
+input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+.result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
+.info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+</style>
 </head>
 <body>
 
@@ -106,19 +104,18 @@
         let sal = parseFloat(document.getElementById('vacSalary').value);
         let days = parseFloat(document.getElementById('vacDays').value);
         if (sal && days) {
-            let dailyRate = sal / 22; // מבוסס על שבוע עבודה של 5 ימים
+            let dailyRate = sal / 22;
             let total = dailyRate * days;
             document.getElementById('vacResult').innerText = `שווי פדיון החופשה: ${total.toFixed(2)} ₪`;
         }
     }
 </script>
-<p style="font-size: 11px; color: #888; text-align: center; margin-top: 30px;">
-    Google launcher Icon by bokehlicia on <a href="https://icon-icons.com/authors/88-bokehlicia" target="_blank" rel="noopener">Icon-Icons.com</a>
-</p>
+
 <footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
     <p style="font-size: 11px; color: #777; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener" style="color: #777;">Icon-Icons.com</a></p>
 </footer>
+
 </body>
 </html>
