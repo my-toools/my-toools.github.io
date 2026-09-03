@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="מחשבוני זכויות עובדים בחינם: חישוב פיצויי פיטורין, דמי הבראה, ימי חופשה ושכר נטו/ברוטו.">
+<meta name="description" content="מרכז כלים ומחשבוני זכויות עובדים בחינם: חישוב פיצויי פיטורין, דמי הבראה, פדיון חופשה, דמי מחלה ושעות נוספות.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>מרכז הכלים - מחשבוני זכויות עובדים ופיצויים</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
 <style>
 body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
 .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
-.nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-.container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
+.nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+.container { max-width: 750px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; line-height: 1.6; }
 h1, h2, h3 { text-align: center; color: #2b2d42; }
 input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
 button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
-.result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
-.info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+.result { font-size: 18px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; background: #e9ecef; padding: 10px; border-radius: 5px; }
+.info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 20px; font-size: 14px; }
+.faq-section { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
+.faq-item { margin-bottom: 15px; }
+.faq-item h4 { color: #2b2d42; margin-bottom: 5px; }
 </style>
 </head>
 <body>
@@ -29,19 +32,26 @@ button { background-color: #28a745; color: white; border: none; cursor: pointer;
 </div>
 
 <div class="container">
+    <h1>מחשבוני זכויות עובדים ודיני עבודה</h1>
+    <p style="text-align: center; color: #666;">כלים חינמיים לחישוב פיצויים, חופשות, הבראה ושכר עבודה בהתאם לחוק בישראל.</p>
+</div>
+
+<!-- מחשבון 1: פיצויי פיטורין -->
+<div class="container">
     <h2>מחשבון פיצויי פיטורין</h2>
     <label>משכורת חודשית ברוטו (בש"ח):</label>
     <input type="number" id="salary" placeholder="למשל: 10000">
     <label>ותק במקום העבודה (בשנים):</label>
     <input type="number" id="tenure" step="0.1" placeholder="למשל: 3.5">
     <button onclick="calcSeverance()">חשב פיצויים מגיעים</button>
-    <div class="result" id="sevResult"></div>
+    <div class="result" id="sevResult">תוצאה תופיע כאן</div>
     <div class="info-section">
         <h3>איך מחושבים פיצויי פיטורין בישראל?</h3>
-        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות ואשר פוטר ממישרתו זכאי לקבל ממעסיקו פיצויי פיטורין. החישוב הבסיסי מבוצע על פי הכפלת השכר החודשי האחרון בברוטו במספר שנות העבודה של העובד באותו מקום עבודה.</p>
+        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות ואשר פוטר מזכאי לקבל ממעסיקו פיצויי פיטורין. החישוב הבסיסי מבוצע על פי הכפלת השכר החודשי האחרון בברוטו במספר שנות העבודה של העובד באותו מקום עבודה.</p>
     </div>
 </div>
 
+<!-- מחשבון 2: דמי הבראה -->
 <div class="container">
     <h2>מחשבון דמי הבראה</h2>
     <label>ותק בשנים:</label>
@@ -49,13 +59,14 @@ button { background-color: #28a745; color: white; border: none; cursor: pointer;
     <label>אחוז משרה (%):</label>
     <input type="number" id="jobScope" value="100">
     <button onclick="calcHavraa()">חשב דמי הבראה</button>
-    <div class="result" id="havraaResult"></div>
+    <div class="result" id="havraaResult">תוצאה תופיע כאן</div>
     <div class="info-section">
         <h3>כללי הזכאות לדמי הבראה</h3>
         <p>זכאות לדמי הבראה קיימת רק לאחר שהעובד השלים את שנת עבודתו הראשונה במקום העבודה. מחיר יום הבראה מעודכן לפי צווי ההרחבה במשק, ומספר הימים להם זכאי העובד עולה בהדרגה בהתאם לוותק שנצבר.</p>
     </div>
 </div>
 
+<!-- מחשבון 3: פדיון ימי חופשה -->
 <div class="container">
     <h2>מחשבון פדיון ימי חופשה</h2>
     <label>שכר חודשי ברוטו (בש"ח):</label>
@@ -63,10 +74,62 @@ button { background-color: #28a745; color: white; border: none; cursor: pointer;
     <label>מספר ימי חופשה שלא נוצלו:</label>
     <input type="number" id="vacDays" placeholder="למשל: 10">
     <button onclick="calcVacation()">חשב פדיון חופשה</button>
-    <div class="result" id="vacResult"></div>
+    <div class="result" id="vacResult">תוצאה תופיע כאן</div>
     <div class="info-section">
         <h3>חישוב פדיון חופשה בסיום יחסי עובד-מעסיק</h3>
         <p>עובד שסיים את עבודתו ולא ניצל את כל ימי החופשה השנתית העומדים לזכותו, זכאי לפדיון חופשה. שווי יום חופשה מחושב בדרך כלל לפי השכר החודשי ברוטו מחולק ב-22 או 25 ימי עבודה (בהתאם לשבוע עבודה של 5 או 6 ימים).</p>
+    </div>
+</div>
+
+<!-- מחשבון 4: דמי מחלה -->
+<div class="container">
+    <h2>מחשבון תשלום ימי מחלה</h2>
+    <label>שכר יומי ממוצע (בש"ח):</label>
+    <input type="number" id="sickDailySalary" placeholder="למשל: 400">
+    <label>מספר ימי המחלה ברצף:</label>
+    <input type="number" id="sickDays" placeholder="למשל: 4">
+    <button onclick="calcSickPay()">חשב תשלום ימי מחלה</button>
+    <div class="result" id="sickResult">תוצאה תופיע כאן</div>
+    <div class="info-section">
+        <h3>כללי תשלום ימי מחלה לפי החוק</h3>
+        <p>על פי חוק דמי מחלה: על היום הראשון למחלה אין תשלום, על היום השני והשלישי משולמים 50% מהשכר היומי, ומהיום הרביעי ואילך משולמים 100% מהשכר היומי.</p>
+    </div>
+</div>
+
+<!-- מחשבון 5: שעות נוספות -->
+<div class="container">
+    <h2>מחשבון שעות נוספות יומיומי</h2>
+    <label>שכר שעתי בסיסי (בש"ח):</label>
+    <input type="number" id="hourlyRate" placeholder="למשל: 50">
+    <label>שעות נוספות ראשונות (125%):</label>
+    <input type="number" id="hours125" placeholder="עד 2 שעות">
+    <label>שעות נוספות משניות (150%):</label>
+    <input type="number" id="hours150" placeholder="מעל 2 שעות">
+    <button onclick="calcOvertime()">חשב תוספת לשכר</button>
+    <div class="result" id="overtimeResult">תוצאה תופיע כאן</div>
+    <div class="info-section">
+        <h3>חישוב גמול שעות נוספות</h3>
+        <p>עבור שתי השעות הנוספות הראשונות ביום עבודה זכאי העובד לתוספת של 25% למחירו השעתי (125%). עבור כל שעה נוספת מעבר לכך, זכאי העובד לתוספת של 50% (150%).</p>
+    </div>
+</div>
+
+<!-- סקציית תוכן מורחבת: שאלות ותשובות -->
+<div class="container faq-section">
+    <h2>שאלות ותשובות נפוצות בנושא זכויות עובדים</h2>
+    
+    <div class="faq-item">
+        <h4>מה עושים אם המעסיק אינו משלם פיצויי פיטורין בזמן?</h4>
+        <p>לפי חוק הגנת השכר, פיצויי פיטורין יש לשלם עם סיום יחסי העבודה או תוך 15 ימים ממועד הפיטורין. הלנת פיצויים מעבר ל-30 יום מעניקה לעובד זכות לתבוע פיצויי הלנה בבית הדין לעבודה.</p>
+    </div>
+
+    <div class="faq-item">
+        <h4>האם עובד שמתפטר זכאי לקבל פיצויי פיטורין?</h4>
+        <p>ככלל, עובד מתפטר אינו זכאי לפיצויים מלאים, אלא אם התפטר בנסיבות המזכות בפיצויים (כגון הרעה מוחשית בתנאי העבודה, מצב בריאותי לקוי, או התפטרות לצורך טיפול בילד). עם זאת, רוב העובדים זכאים לסכומים שנצברו בקופה מכוח סעיף 14 לחוק פיצויי פיטורין.</p>
+    </div>
+
+    <div class="faq-item">
+        <h4>איך מחושבים ימי חופשה לעובד במשרה חלקית?</h4>
+        <p>עובד במשרה חלקית זכאי למספר ימי חופשה יחסי להיקף משרתו או למספר הימים שעבד בפועל במהלך השנה, בהתאם לטבלת הימים המוגדרת בחוק חופשה שנתית.</p>
     </div>
 </div>
 
@@ -101,6 +164,26 @@ button { background-color: #28a745; color: white; border: none; cursor: pointer;
             let dailyRate = sal / 22;
             let total = dailyRate * days;
             document.getElementById('vacResult').innerText = `שווי פדיון החופשה: ${total.toFixed(2)} ₪`;
+        }
+    }
+    function calcSickPay() {
+        let rate = parseFloat(document.getElementById('sickDailySalary').value);
+        let days = parseInt(document.getElementById('sickDays').value);
+        if (rate && days) {
+            let total = 0;
+            if (days >= 2) total += rate * 0.5;
+            if (days >= 3) total += rate * 0.5;
+            if (days >= 4) total += rate * (days - 3);
+            document.getElementById('sickResult').innerText = `זכאות לתשלום דמי מחלה: ${total.toFixed(2)} ₪`;
+        }
+    }
+    function calcOvertime() {
+        let rate = parseFloat(document.getElementById('hourlyRate').value);
+        let h125 = parseFloat(document.getElementById('hours125').value) || 0;
+        let h150 = parseFloat(document.getElementById('hours150').value) || 0;
+        if (rate) {
+            let total = (h125 * rate * 1.25) + (h150 * rate * 1.5);
+            document.getElementById('overtimeResult').innerText = `תוספת תשלום עבור שעות נוספות: ${total.toFixed(2)} ₪`;
         }
     }
 </script>
