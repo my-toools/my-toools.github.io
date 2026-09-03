@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="מחשבוני זכויות עובדים, המרת תאריכים עברי-לועזי, שערי חליפין ומזג אוויר.">
+<meta name="description" content="הכלים שלי - מחשבוני זכויות עובדים, מועדים משפטיים, המרת מטבע וכלים שימושיים.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>הכלים שלי - מחשבוני זכויות עובדים והמרת תאריכים</title>
+<title>הכלים שלי - מחשבונים וכלים שימושיים</title>
 
-<!-- תגיות SEO ושיתוף ברשתות חברתיות -->
-<meta property="og:title" content="הכלים שלי - מחשבוני זכויות עובדים והמרת תאריכים">
-<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, המרת תאריכים עברי-לועזי ושערי מט"ח.">
+<meta property="og:title" content="הכלים שלי - מחשבונים וכלים שימושיים">
+<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, המרת תאריכים עברי-לועזי ושערי מט&quot;ח.">
 <meta property="og:image" content="https://my-toools.github.io/favicon.png">
 <meta property="og:url" content="https://my-toools.github.io/index.html">
 <meta property="og:type" content="website">
@@ -35,13 +34,13 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 150px;
+    padding-top: 160px;
     padding-bottom: 40px;
     direction: rtl;
     line-height: 1.6;
   }
 
-  /* סרגל עליון בכחול כהה */
+  /* סרגל עליון קבוע בכחול כהה (Sticky) */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -51,6 +50,7 @@
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
@@ -58,12 +58,13 @@
   .nav-top-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    width: 100%;
+    position: relative;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
   }
 
-  /* מותג בלבן בוהק מימין */
   .nav-brand {
     display: flex;
     align-items: center;
@@ -72,6 +73,8 @@
     font-size: 20px;
     color: #ffffff;
     white-space: nowrap;
+    position: absolute;
+    right: 0;
   }
 
   .nav-logo {
@@ -81,13 +84,13 @@
     object-fit: contain;
   }
 
-  /* קישורים ממורכזים */
   .nav-links {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 
   .nav-links a {
@@ -105,12 +108,12 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  /* סרגל מידע: תאריך עברי/לועזי, שעה, דולר, אירו ומזג אוויר */
+  /* סרגל ווידג'טים מקיף */
   .nav-widgets {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 12px;
     font-size: 13px;
     color: #38bdf8;
     background: rgba(255, 255, 255, 0.05);
@@ -130,45 +133,74 @@
     font-weight: 600;
   }
 
-  /* גוף האתר */
-  .container {
-    max-width: 740px;
+  /* כותרת העמוד */
+  .hero-header {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+
+  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+
+  /* סידור כרטיסיות בגריד של 2 עמודות */
+  .grid-container {
+    max-width: 940px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .card {
     background: var(--card-bg);
     border: 1px solid #e2e8f0;
-    padding: 30px;
-    margin: 0 auto 24px auto;
+    padding: 24px;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
     text-align: right;
   }
 
-  h1 { font-size: 26px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: var(--accent-blue); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-  h3 { font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 15px; margin-bottom: 8px; }
+  .card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .card h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-top: 0;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+  }
 
   label {
     display: block;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-secondary);
     margin-bottom: 6px;
-    margin-top: 14px;
+    margin-top: 12px;
   }
 
-  input, select, textarea {
+  input, select {
     width: 100%;
     background: var(--input-bg);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 8px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 14px;
     font-family: inherit;
     transition: all 0.2s ease;
   }
 
-  input:focus, select:focus, textarea:focus {
+  input:focus, select:focus {
     outline: none;
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
@@ -179,15 +211,15 @@
     background: var(--accent-blue);
     color: #ffffff;
     border: none;
-    padding: 14px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15px;
     font-family: inherit;
     box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
     transition: all 0.2s ease;
-    margin-top: 18px;
+    margin-top: 16px;
   }
 
   button:hover {
@@ -196,34 +228,16 @@
   }
 
   .result {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--accent-blue);
-    margin-top: 20px;
+    margin-top: 16px;
     text-align: center;
     background: #f1f5f9;
     border: 1px solid #cbd5e1;
-    padding: 16px;
+    padding: 12px;
     border-radius: 8px;
   }
-
-  .info-section {
-    background: #f8fafc;
-    border-right: 4px solid var(--accent-blue);
-    padding: 18px;
-    margin-top: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-
-  .info-section p, .info-section ul {
-    margin: 8px 0 0 0;
-    line-height: 1.6;
-    color: var(--text-secondary);
-  }
-
-  .info-section ul { padding-right: 20px; }
 
   footer {
     margin-top: 50px;
@@ -239,8 +253,10 @@
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
-    body { padding-top: 180px; }
-    .nav-top-row { flex-direction: column; gap: 8px; }
+    body { padding-top: 190px; }
+    .grid-container { grid-template-columns: 1fr; }
+    .nav-brand { position: static; justify-content: center; }
+    .nav-top-row { flex-direction: column; }
   }
 </style>
 </head>
@@ -262,87 +278,69 @@
         </div>
     </div>
 
-    <!-- סרגל ווידג'טים מתקדם -->
+    <!-- סרגל ווידג'טים מעודכן עם זריחה ושקיעה -->
     <div class="nav-widgets">
         <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
         <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
         <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
+        <div class="widget-item">🌅 זריחה: <span id="navSunrise">--:--</span></div>
+        <div class="widget-item">🌇 שקיעה: <span id="navSunset">--:--</span></div>
         <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
         <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
         <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
     </div>
 </div>
 
-<div class="container">
-    <h1>הכלים שלי - מחשבונים וכלים יומיומיים</h1>
-    <p style="text-align: center; color: var(--text-secondary);">פלטפורמה חינמית לחישוב זכויות עובדים, המרת תאריכים עברי-לועזי ושערי מטבע בזמן אמת.</p>
+<div class="hero-header">
+    <h1>מחשבוני זכויות עובדים ופיצויים</h1>
+    <p>חישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה והמרת תאריכים עברי-לועזי ברמת דיוק גבוהה.</p>
 </div>
 
-<!-- כרטיסייה חדשה: מחשבון וממיר תאריכים עברי-לועזי -->
-<div class="container">
-    <h2>מחשבון המרת תאריך לועזי ⇆ עברי</h2>
-    <label>בחרי תאריך לועזי להמרה:</label>
-    <input type="date" id="gregInputDate" onchange="convertGregToHeb()">
-    <button onclick="convertGregToHeb()">המר לתאריך עברי</button>
-    <div class="result" id="hebrewConvertResult">בחרי תאריך לחישוב המרה</div>
+<!-- גריד 2 עמודות של כרטיסיות -->
+<div class="grid-container">
 
-    <div class="info-section">
-        <h3>על הלוח העברי והלועזי</h3>
-        <p>הלוח העברי מבוסס על שילוב של מחזור הירח ומחזור השמש (לוח ירחי-שמשי), בעוד הלוח הגרגוריאני (הלועזי) מבוסס על שנת השמש בלבד. המחשבון מבצע המרה מדויקת בין התאריכים באופן מיידי.</p>
+    <!-- כרטיסייה 1: המרת תאריך עברי-לועזי -->
+    <div class="card">
+        <h2>מחשבון המרת תאריך לועזי ⇆ עברי</h2>
+        <label>בחרי תאריך לועזי להמרה:</label>
+        <input type="date" id="gregInputDate" onchange="convertGregToHeb()">
+        <button onclick="convertGregToHeb()">המר לתאריך עברי</button>
+        <div class="result" id="hebrewConvertResult">בחרי תאריך לחישוב</div>
     </div>
-</div>
 
-<!-- מחשבון 1: פיצויי פיטורין -->
-<div class="container">
-    <h2>מחשבון פיצויי פיטורין</h2>
-    <label>משכורת חודשית ברוטו (בש"ח):</label>
-    <input type="number" id="severanceSalary" placeholder="למשל: 10000">
-    <label>ותק במקום העבודה (בשנים):</label>
-    <input type="number" id="severanceYears" placeholder="למשל: 3.5" step="0.1">
-    <button onclick="calcSeverance()">חשב פיצויי פיטורין</button>
-    <div class="result" id="severanceResult">הכניסי נתונים לחישוב</div>
-
-    <div class="info-section">
-        <h3>זכאות לפיצויי פיטורין לפי חוק</h3>
-        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות באותו מקום עבודה ופוטר, זכאי לפיצויים בגובה משכורת חודשית אחת לכל שנת עבודה. במקרים מסוימים לפי סעיף 14 לחוק פיצויי פיטורין, ההפרשות הפנסיוניות באות במקום פיצויי פיטורין.</p>
+    <!-- כרטיסייה 2: פיצויי פיטורין -->
+    <div class="card">
+        <h2>מחשבון פיצויי פיטורין</h2>
+        <label>משכורת חודשית ברוטו (בש"ח):</label>
+        <input type="number" id="severanceSalary" placeholder="למשל: 10000">
+        <label>ותק במקום העבודה (בשנים):</label>
+        <input type="number" id="severanceYears" placeholder="למשל: 3.5" step="0.1">
+        <button onclick="calcSeverance()">חשב פיצויי פיטורין</button>
+        <div class="result" id="severanceResult">הכניסי נתונים לחישוב</div>
     </div>
-</div>
 
-<!-- מחשבון 2: דמי הבראה -->
-<div class="container">
-    <h2>מחשבון דמי הבראה</h2>
-    <label>ותק במקום העבודה (בשנים):</label>
-    <input type="number" id="recupYears" placeholder="למשל: 2" step="0.5">
-    <label>היקף משרה (%):</label>
-    <input type="number" id="recupJobScope" value="100">
-    <button onclick="calcRecuperation()">חשב דמי הבראה</button>
-    <div class="result" id="recupResult">הכניסי נתונים לחישוב</div>
-
-    <div class="info-section">
-        <h3>זכאות ותעריפי דמי הבראה</h3>
-        <p>תעריף יום הבראה במגזר הפרטי עומד כיום על 418 ש"ח ליום. הזכאות מתחילה לאחר השלמת שנת עבודה מלאה ראשונה:</p>
-        <ul>
-            <li>שנה ראשונה: 5 ימי הבראה</li>
-            <li>שנים 2-3: 6 ימי הבראה לכל שנה</li>
-            <li>שנים 4-10: 7 ימי הבראה לכל שנה</li>
-        </ul>
+    <!-- כרטיסייה 3: דמי הבראה -->
+    <div class="card">
+        <h2>מחשבון דמי הבראה</h2>
+        <label>ותק במקום העבודה (בשנים):</label>
+        <input type="number" id="recupYears" placeholder="למשל: 2" step="0.5">
+        <label>היקף משרה (%):</label>
+        <input type="number" id="recupJobScope" value="100">
+        <button onclick="calcRecuperation()">חשב דמי הבראה</button>
+        <div class="result" id="recupResult">הכניסי נתונים לחישוב</div>
     </div>
-</div>
 
-<!-- מחשבון 3: פדיון ימי חופשה -->
-<div class="container">
-    <h2>מחשבון פדיון ימי חופשה</h2>
-    <label>משכורת חודשית ברוטו (בש"ח):</label>
-    <input type="number" id="vacationSalary" placeholder="למשל: 9000">
-    <label>מספר ימי חופשה צבורים שלא נוצלו:</label>
-    <input type="number" id="vacationDays" placeholder="למשל: 12">
-    <button onclick="calcVacation()">חשב פדיון חופשה</button>
-    <div class="result" id="vacationResult">הכניסי נתונים לחישוב</div>
-
-    <div class="info-section">
-        <h3>איך מחושב ערך יום חופשה?</h3>
-        <p>ערך יום חופשה לעובד במשכורת חודשית במשרה מלאה מחושב על ידי חלוקת שכר הברוטו החודשי ב-21.67 ימי עבודה.</p>
+    <!-- כרטיסייה 4: פדיון ימי חופשה -->
+    <div class="card">
+        <h2>מחשבון פדיון ימי חופשה</h2>
+        <label>משכורת חודשית ברוטו (בש"ח):</label>
+        <input type="number" id="vacationSalary" placeholder="למשל: 9000">
+        <label>מספר ימי חופשה צבורים שלא נוצלו:</label>
+        <input type="number" id="vacationDays" placeholder="למשל: 12">
+        <button onclick="calcVacation()">חשב פדיון חופשה</button>
+        <div class="result" id="vacationResult">הכניסי נתונים לחישוב</div>
     </div>
+
 </div>
 
 <script>
@@ -354,7 +352,7 @@
             return;
         }
         let total = salary * years;
-        document.getElementById('severanceResult').innerText = `סך הפיצויים המשוער: ${total.toLocaleString()} ₪`;
+        document.getElementById('severanceResult').innerText = `סך הפיצויים: ${total.toLocaleString()} ₪`;
     }
 
     function calcRecuperation() {
@@ -373,9 +371,8 @@
         else if (years >= 16 && years < 20) days = 9;
         else if (years >= 20) days = 10;
 
-        let dayRate = 418;
-        let total = days * dayRate * scope;
-        document.getElementById('recupResult').innerText = `דמי הבראה משוערים: ${total.toLocaleString()} ₪ (${days} ימים)`;
+        let total = days * 418 * scope;
+        document.getElementById('recupResult').innerText = `דמי הבראה: ${total.toLocaleString()} ₪ (${days} ימים)`;
     }
 
     function calcVacation() {
@@ -385,12 +382,10 @@
             document.getElementById('vacationResult').innerText = "יש להזין נתונים תקינים.";
             return;
         }
-        let dayValue = salary / 21.67;
-        let total = dayValue * days;
-        document.getElementById('vacationResult').innerText = `פדיון חופשה משוער: ${total.toFixed(0).toLocaleString()} ₪`;
+        let total = (salary / 21.67) * days;
+        document.getElementById('vacationResult').innerText = `פדיון חופשה: ${total.toFixed(0).toLocaleString()} ₪`;
     }
 
-    // המרת תאריך לועזי לעברי באמצעות Hebcal API
     async function convertGregToHeb() {
         let val = document.getElementById('gregInputDate').value;
         if (!val) return;
@@ -398,72 +393,64 @@
         try {
             let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${parts[0]}&gm=${parts[1]}&gd=${parts[2]}&g2h=1`);
             let data = await res.json();
-            document.getElementById('hebrewConvertResult').innerText = `התאריך העברי: ${data.hebrew}`;
+            document.getElementById('hebrewConvertResult').innerText = `תאריך עברי: ${data.hebrew}`;
         } catch (e) {
-            document.getElementById('hebrewConvertResult').innerText = "שגיאה בחישוב התאריך העברי.";
+            document.getElementById('hebrewConvertResult').innerText = "שגיאה בחישוב התאריך.";
         }
     }
 
-    // מעקב שעה, תאריך בלייב, שערים ומזג אוויר
     function updateClockAndDate() {
         let now = new Date();
-        
         let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
-
         let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         document.getElementById('navLiveTime').innerText = timeStr;
     }
 
-    async function loadHebrewNavDate() {
+    async function loadNavData() {
+        // טעינת תאריך עברי
         try {
             let now = new Date();
             let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
             let data = await res.json();
             document.getElementById('navHebrewDate').innerText = data.hebrew;
-        } catch (e) {
-            document.getElementById('navHebrewDate').innerText = "זמין במחשבון";
-        }
-    }
+        } catch (e) {}
 
-    async function loadNavData() {
-        // טעינת שערי מט"ח (דולר ואירו)
+        // טעינת מט"ח
         try {
             let res = await fetch('https://open.er-api.com/v6/latest/USD');
             let data = await res.json();
-            let usd = data.rates.ILS.toFixed(2);
-            let eur = (data.rates.ILS / data.rates.EUR).toFixed(2);
-            document.getElementById('navUsd').innerText = `₪ ${usd}`;
-            document.getElementById('navEur').innerText = `₪ ${eur}`;
-        } catch (e) {
-            document.getElementById('navUsd').innerText = "₪ 3.70";
-            document.getElementById('navEur').innerText = "₪ 4.02";
-        }
+            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+            document.getElementById('navEur').innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
+        } catch (e) {}
 
-        // טעינת מזג אוויר בלייב (ישראל - תל אביב)
+        // טעינת מזג אוויר + זמני זריחה ושקיעה בלייב
         try {
-            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true');
+            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
             let wData = await wRes.json();
             let temp = Math.round(wData.current_weather.temperature);
             document.getElementById('navWeather').innerText = `${temp}°C`;
+
+            let sunrise = wData.daily.sunrise[0].split('T')[1];
+            let sunset = wData.daily.sunset[0].split('T')[1];
+            document.getElementById('navSunrise').innerText = sunrise;
+            document.getElementById('navSunset').innerText = sunset;
         } catch (e) {
-            document.getElementById('navWeather').innerText = "24°C";
+            document.getElementById('navSunrise').innerText = "06:20";
+            document.getElementById('navSunset').innerText = "19:10";
         }
     }
 
-    // הגדרת ברירת מחדל לתאריך של היום במחשבון
     document.getElementById('gregInputDate').valueAsDate = new Date();
-
     updateClockAndDate();
     setInterval(updateClockAndDate, 1000);
-    loadHebrewNavDate();
     loadNavData();
     convertGregToHeb();
 </script>
 
 <footer>
-    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
 </footer>
 
