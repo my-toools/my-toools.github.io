@@ -5,20 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="מחשבונים משפטיים מתקדמים: חישוב מועדים וימי פגרה (30/45/60 יום), בדיקת סמכות עניינית, אגרות בית משפט ושכר טרחה.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>כלים ומחשבונים משפטיים - חישוב מועדים, סמכות עניינית ואגרות</title>
+<title>הכלים שלי - מחשבונים וכלים משפטיים</title>
+
+<meta property="og:title" content="הכלים שלי - מחשבונים וכלים משפטיים">
+<meta property="og:description" content="חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.">
+<meta property="og:image" content="https://my-toools.github.io/favicon.png">
+<meta property="og:url" content="https://my-toools.github.io/legal.html">
+<meta property="og:type" content="website">
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
-    --bg-main: #0b0f19;
-    --card-bg: #111827;
-    --input-bg: #1f2937;
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
-    --accent-blue: #2563eb;
-    --accent-glow: rgba(37, 99, 235, 0.35);
-    --border-color: #1f2937;
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --dark-blue: #0f172a;
+    --accent-blue: #1e3a8a;
+    --border-color: #cbd5e1;
   }
 
   body {
@@ -26,26 +34,35 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 90px;
+    padding-top: 160px;
     padding-bottom: 40px;
     direction: rtl;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
+  /* סרגל עליון קבוע בכחול כהה (Sticky) */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 24px;
+    background: var(--dark-blue);
+    border-bottom: 3px solid #1d4ed8;
+    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
   }
 
   .nav-brand {
@@ -53,93 +70,151 @@
     align-items: center;
     gap: 10px;
     font-weight: 800;
-    font-size: 18px;
-    color: #38bdf8;
+    font-size: 22px; /* מוגדל לכותרת ראשית */
+    color: #ffffff;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
   }
 
   .nav-logo {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 6px;
     object-fit: contain;
   }
 
   .nav-links {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 
+  /* כותרות סרגל מוגדלות ובולטות */
   .nav-links a {
-    color: #9ca3af;
+    color: #cbd5e1;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px; /* מוגדל */
+    padding: 6px 12px;
+    border-radius: 6px;
     transition: all 0.2s ease;
   }
 
   .nav-links a:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.15);
   }
 
-  .container {
-    max-width: 720px;
+  .nav-widgets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #38bdf8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 16px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+  }
+
+  .widget-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .widget-item span {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .hero-header {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+
+  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+
+  /* גריד כרטיסיות */
+  .grid-container {
+    max-width: 940px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 30px;
-    margin: 0 auto 24px auto;
-    border-radius: 16px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
     text-align: right;
   }
 
-  h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; text-align: center; }
-  h3 { font-size: 16px; font-weight: 600; color: #38bdf8; margin-top: 15px; margin-bottom: 10px; }
+  .card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .card h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-top: 0;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+  }
 
   label {
     display: block;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-secondary);
     margin-bottom: 6px;
     margin-top: 12px;
   }
 
-  input, select, textarea {
+  input, select {
     width: 100%;
     background: var(--input-bg);
     border: 1px solid var(--border-color);
-    color: #ffffff;
-    padding: 12px 14px;
+    color: var(--text-primary);
+    padding: 10px 12px;
     border-radius: 8px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 14px;
     font-family: inherit;
     transition: all 0.2s ease;
   }
 
-  input:focus, select:focus, textarea:focus {
+  input:focus, select:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
   }
 
   .checkbox-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 16px 0;
+    gap: 8px;
+    margin: 14px 0;
   }
 
   .checkbox-group input {
     width: auto;
     margin: 0;
-    accent-color: var(--accent-blue);
     cursor: pointer;
   }
 
@@ -151,147 +226,158 @@
   button {
     width: 100%;
     background: var(--accent-blue);
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 14px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15px;
     font-family: inherit;
-    box-shadow: 0 4px 14px var(--accent-glow);
+    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
     transition: all 0.2s ease;
     margin-top: 16px;
   }
 
   button:hover {
-    background: #1d4ed8;
+    background: #1e4ed8;
     transform: translateY(-1px);
   }
 
   .result {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    color: #38bdf8;
-    margin-top: 20px;
+    color: var(--accent-blue);
+    margin-top: 16px;
     text-align: center;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 16px;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 12px;
     border-radius: 8px;
-  }
-
-  .info-section {
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid #3b82f6;
-    padding: 16px;
-    margin-top: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
   }
 
   footer {
     margin-top: 50px;
     padding: 24px;
-    background: #111827;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--dark-blue);
+    border-top: 3px solid #1d4ed8;
     text-align: center;
     font-size: 13px;
-    color: #9ca3af;
+    color: #cbd5e1;
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    body { padding-top: 190px; }
+    .grid-container { grid-template-columns: 1fr; }
+    .nav-brand { position: static; justify-content: center; }
+    .nav-top-row { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
 <div class="nav">
-    <div class="nav-brand">
-        <img src="favicon.png" alt="לוגו מרכז הכלים" class="nav-logo">
-        <span>מרכז הכלים</span>
+    <div class="nav-top-row">
+        <div class="nav-brand">
+            <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
+            <span>הכלים שלי</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">💼 זכויות עובדים</a>
+            <a href="legal.html">⚖️ כלים משפטיים</a>
+            <a href="finance.html">💰 מט"ח ופיננסים</a>
+            <a href="utility.html">🛠️ כלים שימושיים</a>
+            <a href="guides.html">📚 מדריכים</a>
+            <a href="about.html">ℹ️ אודות</a>
+        </div>
     </div>
-    <div class="nav-links">
-        <a href="index.html">💼 זכויות עובדים</a>
-        <a href="legal.html">⚖️ כלים משפטיים</a>
-        <a href="finance.html">💰 מט"ח ופיננסים</a>
-        <a href="utility.html">🛠️ כלים שימושיים</a>
-        <a href="guides.html">📚 מדריכים</a>
+
+    <div class="nav-widgets">
+        <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
+        <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
+        <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
+        <div class="widget-item">🌅 זריחה: <span id="navSunrise">--:--</span></div>
+        <div class="widget-item">🌇 שקיעה: <span id="navSunset">--:--</span></div>
+        <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
+        <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
+        <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
     </div>
 </div>
 
-<div class="container">
+<div class="hero-header">
     <h1>מחשבונים וכלים משפטיים מתקדמים</h1>
-    <p style="text-align: center; color: var(--text-secondary);">חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.</p>
+    <p>חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.</p>
 </div>
 
-<!-- מחשבון 1: חישוב מועדים ופגרות (60/45/30 יום) -->
-<div class="container">
-    <h2>מחשבון מועדים, ימי תגובה ופגרות (מתי/כמה זמן)</h2>
-    <label>תאריך המצאת הכתב / החלטה (תאריך התחלה):</label>
-    <input type="date" id="courtStartDate">
-    
-    <label>מספר הימים להגשה / תגובה:</label>
-    <select id="daysCount">
-        <option value="15">15 ימים (תגובה לבקשה בכתב / בקשת רשות ערעור)</option>
-        <option value="30">30 ימים (כתב הגנה בתביעות קטנות / תשובה)</option>
-        <option value="45">45 ימים (ערעור אזרחי / כתב תביעה)</option>
-        <option value="60">60 ימים (כתב הגנה בסדר דין מהיר / רגיל)</option>
-        <option value="90">90 ימים (הודעה לצד שלישי / תשובה מורחבת)</option>
-    </select>
+<div class="grid-container">
 
-    <div class="checkbox-group">
-        <input type="checkbox" id="includeVacation" checked>
-        <label for="includeVacation">קח בחשבון את פגרות בתי המשפט (פגרת הקיץ וסוכות/פסח)</label>
+    <!-- כרטיסייה 1: מועדים ופגרות -->
+    <div class="card">
+        <h2>מחשבון מועדים, ימי תגובה ופגרות</h2>
+        <label>תאריך המצאת הכתב / החלטה:</label>
+        <input type="date" id="courtStartDate">
+        
+        <label>מספר הימים להגשה / תגובה:</label>
+        <select id="daysCount">
+            <option value="15">15 ימים (תגובה לבקשה / בר"ע)</option>
+            <option value="30">30 ימים (כתב הגנה בתביעות קטנות / תשובה)</option>
+            <option value="45">45 ימים (ערעור אזרחי / כתב תביעה)</option>
+            <option value="60">60 ימים (כתב הגנה בסדר דין מהיר / רגיל)</option>
+            <option value="90">90 ימים (הודעה לצד שלישי)</option>
+        </select>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="includeVacation" checked>
+            <label for="includeVacation">כולל פגרות בתי המשפט (קיץ וחגים)</label>
+        </div>
+
+        <button onclick="calcCourtDeadline()">חשב תאריך אחרון להגשה</button>
+        <div class="result" id="deadlineResult">הכניסי תאריך לחישוב</div>
     </div>
 
-    <button onclick="calcCourtDeadline()">חשב תאריך אחרון להגשה</button>
-    <div class="result" id="deadlineResult">הכניסי תאריך וסוג מועד לחישוב</div>
+    <!-- כרטיסייה 2: סמכות עניינית -->
+    <div class="card">
+        <h2>מחשבון סמכות עניינית מקיף</h2>
+        <label>מהות התביעה / הנושא:</label>
+        <select id="claimSubject" onchange="toggleAmountInput()">
+            <option value="money">תביעה כספית / פיצויים</option>
+            <option value="work">סכסוך עבודה / זכויות עובדים</option>
+            <option value="family">ענייני משפחה / ירושה</option>
+            <option value="admin">עתירה מנהלית / החלטת רשות</option>
+            <option value="realestate_use">חזקה / שימוש במקרקעין</option>
+            <option value="realestate_ownership">בעלות במקרקעין</option>
+        </select>
 
-    <div class="info-section">
-        <h3>כללי חישוב מועדים ופגרות בבתי המשפט</h3>
-        <p>לפי תקנות סדר הדין האזרחי (תשפ"א-2020), מניין הימים מתחיל ביום למחרת יום ההמצאה. תקופת פגרת בתי המשפט (פגרת הקיץ בין 21 ביולי ל-5 בספטמבר, ופגרות החגים) אינה באה במניין הימים, אלא אם נקבע אחרת מפורשות על ידי בית המשפט.</p>
-    </div>
-</div>
+        <div id="amountWrapper">
+            <label>סכום התביעה המשוער (בש"ח):</label>
+            <input type="number" id="fullClaimAmount" placeholder="למשל: 150000">
+        </div>
 
-<!-- מחשבון 2: סמכות עניינית מורחבת -->
-<div class="container">
-    <h2>מחשבון סמכות עניינית מקיף (מהות מהותית וסכום)</h2>
-    <label>מהות התביעה / הנושא:</label>
-    <select id="claimSubject" onchange="toggleAmountInput()">
-        <option value="money">תביעה כספית / פיצויים</option>
-        <option value="work">סכסוך עבודה / זכויות עובד-מעסיק</option>
-        <option value="family">ענייני משפחה / ירושה / מזונות</option>
-        <option value="admin">עתירה מנהלית / החלטת רשות</option>
-        <option value="realestate_use">חזקה / שימוש במקרקעין</option>
-        <option value="realestate_ownership">בעלות במקרקעין / פירוק שיתוף</option>
-    </select>
-
-    <div id="amountWrapper">
-        <label>סכום התביעה המשוער (בש"ח):</label>
-        <input type="number" id="fullClaimAmount" placeholder="למשל: 150000">
+        <button onclick="calcFullJurisdiction()">בדוק ערכאה מוסמכת</button>
+        <div class="result" id="fullJurisResult">תוצאה תופיע כאן</div>
     </div>
 
-    <button onclick="calcFullJurisdiction()">בדוק ערכאה מוסמכת</button>
-    <div class="result" id="fullJurisResult">תוצאה תופיע כאן</div>
-</div>
+    <!-- כרטיסייה 3: אגרות בית משפט -->
+    <div class="card" style="grid-column: span 2;">
+        <h2>מחשבון אגרת בית משפט וחלוקה למחציות</h2>
+        <label>סכום התביעה (בש"ח):</label>
+        <input type="number" id="courtFeeClaim" placeholder="למשל: 200000">
+        
+        <label>סוג ההליך המשפטי:</label>
+        <select id="courtTypeSelect">
+            <option value="small">תביעות קטנות (1% - מינימום 50 ₪)</option>
+            <option value="shalom">בית משפט השלום (2.5%)</option>
+            <option value="mehozi">בית משפט מחוזי (2.5%)</option>
+        </select>
 
-<!-- מחשבון 3: אגרות בית משפט וחלוקת מחציות -->
-<div class="container">
-    <h2>מחשבון אגרת בית משפט וחלוקה למחציות</h2>
-    <label>סכום התביעה (בש"ח):</label>
-    <input type="number" id="courtFeeClaim" placeholder="למשל: 200000">
-    
-    <label>סוג ההליך המשפטי:</label>
-    <select id="courtTypeSelect">
-        <option value="small">תביעות קטנות (1% - מינימום 50 ₪)</option>
-        <option value="shalom">בית משפט השלום (2.5%)</option>
-        <option value="mehozi">בית משפט מחוזי (2.5%)</option>
-    </select>
+        <button onclick="calcDetailedCourtFee()">חשב אגרה ומחציות</button>
+        <div class="result" id="detailedFeeResult">תוצאה תופיע כאן</div>
+    </div>
 
-    <button onclick="calcDetailedCourtFee()">חשב אגרה ומחציות</button>
-    <div class="result" id="detailedFeeResult">תוצאה תופיע כאן</div>
 </div>
 
 <script>
@@ -337,7 +423,7 @@
         else if (dayOfWeek === 6) currDate.setDate(currDate.getDate() + 1);
 
         let dateStr = currDate.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-        document.getElementById('deadlineResult').innerText = `תאריך אחרון להגשה: ${dateStr}`;
+        document.getElementById('deadlineResult').innerText = `תאריך אחרון: ${dateStr}`;
     }
 
     function calcFullJurisdiction() {
@@ -346,18 +432,18 @@
         let res = "";
 
         if (subj === 'work') {
-            res = "בית הדין האזורי לעבודה (סמכות ייחודית בכל ענייני עובד-מעסיק)";
+            res = "בית הדין האזורי לעבודה";
         } else if (subj === 'family') {
-            res = "בית המשפט לענייני משפחה (או בית הדין הדתי המוסמך)";
+            res = "בית המשפט לענייני משפחה";
         } else if (subj === 'admin') {
-            res = "בית משפט לעניינים מנהליים (שלום/מחוזי) או בג\"ץ";
+            res = "בית משפט לעניינים מנהליים או בג\"ץ";
         } else if (subj === 'realestate_use') {
-            res = "בית משפט השלום (סמכות ייחודית לתביעות חזקה, שימוש וחלוקת מקרקעין)";
+            res = "בית משפט השלום (סמכות ייחודית לתביעות חזקה ושימוש)";
         } else if (subj === 'realestate_ownership') {
-            res = "בית המשפט המחוזי (סמכות ייחודית לתביעות בעלות במקרקעין)";
+            res = "בית המשפט המחוזי (סמכות ייחודית לתביעות בעלות)";
         } else {
             if (amt <= 37900) {
-                res = "בית משפט לתביעות קטנות (או בית משפט השלום)";
+                res = "בית משפט לתביעות קטנות (או שלום)";
             } else if (amt <= 2500000) {
                 res = "בית משפט השלום";
             } else {
@@ -377,20 +463,62 @@
 
         if (type === 'small') {
             let fee = Math.max(amt * 0.01, 50);
-            document.getElementById('detailedFeeResult').innerText = `אגרת תביעות קטנות כוללת: ${fee.toFixed(2)} ₪ (משולמת במלואה בעת ההגשה)`;
+            document.getElementById('detailedFeeResult').innerText = `אגרת תביעות קטנות: ${fee.toFixed(2)} ₪`;
         } else {
             let totalFee = amt * 0.025;
             let half1 = totalFee * 0.5;
-            let half2 = totalFee * 0.5;
-            document.getElementById('detailedFeeResult').innerText = `סך אגרה כוללת (2.5%): ${totalFee.toLocaleString()} ₪ | מחצית ראשונה להגשה: ${half1.toLocaleString()} ₪ | מחצית שנייה: ${half2.toLocaleString()} ₪`;
+            document.getElementById('detailedFeeResult').innerText = `סך אגרה (2.5%): ${totalFee.toLocaleString()} ₪ | מחצית ראשונה להגשה: ${half1.toLocaleString()} ₪`;
         }
     }
+
+    function updateClockAndDate() {
+        let now = new Date();
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
+        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('navLiveTime').innerText = timeStr;
+    }
+
+    async function loadNavData() {
+        try {
+            let now = new Date();
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
+            let data = await res.json();
+            document.getElementById('navHebrewDate').innerText = data.hebrew;
+        } catch (e) {}
+
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+            document.getElementById('navEur').innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
+        } catch (e) {}
+
+        try {
+            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
+            let wData = await wRes.json();
+            let temp = Math.round(wData.current_weather.temperature);
+            document.getElementById('navWeather').innerText = `${temp}°C`;
+
+            let sunrise = wData.daily.sunrise[0].split('T')[1];
+            let sunset = wData.daily.sunset[0].split('T')[1];
+            document.getElementById('navSunrise').innerText = sunrise;
+            document.getElementById('navSunset').innerText = sunset;
+        } catch (e) {
+            document.getElementById('navSunrise').innerText = "06:20";
+            document.getElementById('navSunset').innerText = "19:10";
+        }
+    }
+
+    updateClockAndDate();
+    setInterval(updateClockAndDate, 1000);
+    loadNavData();
 </script>
 
 <footer>
-    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
 </body>
