@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="כלים שימושיים: מחשבון רגיל ומדעי, תרגום שפות, המרת מידות נעליים ובגדים, המרת בישול, סופר מילים ומחולל סיסמאות.">
+<meta name="description" content="כלים שימושיים: מחשבון רגיל ומדעי, תרגום שפות, המרת מידות, סופר מילים, מחולל סיסמאות וממיר בישול.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>הכלים שלי - כלים שימושיים ומחשבונים</title>
 
@@ -32,7 +32,6 @@
     line-height: 1.6;
   }
 
-  /* סרגל עליון מורחב ואחיד */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -57,19 +56,8 @@
     gap: 12px;
   }
 
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0;
-  }
-
-  .nav-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
-    object-fit: contain;
-  }
+  .nav-brand { display: flex; align-items: center; position: absolute; right: 0; }
+  .nav-logo { width: 42px; height: 42px; border-radius: 8px; object-fit: contain; }
 
   .nav-links {
     display: flex;
@@ -90,12 +78,8 @@
     transition: all 0.2s ease;
   }
 
-  .nav-links a:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-  }
+  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
 
-  /* סרגל ווידג'טים מינימליסטי ונקי */
   .nav-widgets {
     display: flex;
     align-items: center;
@@ -110,13 +94,7 @@
     width: 100%;
   }
 
-  .widget-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-  }
-
+  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
   .widget-item span { color: #f8fafc; font-weight: 500; }
   .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
 
@@ -154,7 +132,7 @@
 
   label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
   input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-  textarea { min-height: 90px; resize: vertical; }
+  textarea { min-height: 80px; resize: vertical; }
 
   .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
   .calc-btn { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
@@ -178,7 +156,7 @@
   button:hover { background: #1e4ed8; }
 
   .result {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--accent-blue);
     margin-top: 16px;
@@ -187,6 +165,7 @@
     border: 1px solid #cbd5e1;
     padding: 12px;
     border-radius: 8px;
+    word-break: break-all;
   }
 
   footer {
@@ -240,9 +219,15 @@
         <span class="widget-divider">|</span>
         <div class="widget-item">🌇 <span id="navSunset">--:--</span></div>
         <span class="widget-divider">|</span>
-        <div class="widget-item">💵 <span id="navUsd">--</span></div>
+        <div class="widget-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span id="navUsd">--</span>
+        </div>
         <span class="widget-divider">|</span>
-        <div class="widget-item">💶 <span id="navEur">--</span></div>
+        <div class="widget-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12a7.9 7.9 0 0 0 7.8 8 7.7 7.7 0 0 0 5.2-2"></path></svg>
+            <span id="navEur">--</span>
+        </div>
         <span class="widget-divider">|</span>
         <div class="widget-item">🌤️ <span id="navWeather">--</span></div>
     </div>
@@ -250,11 +235,12 @@
 
 <div class="hero-header">
     <h1>כלים שימושיים ומחשבונים</h1>
-    <p>מחשבון רגיל ומדעי, תרגום שפות, המרת מידות, סופר מילים ומחולל סיסמאות.</p>
+    <p>מחשבון רגיל ומדעי, תרגום שפות, המרת מידות, סופר מילים, מחולל סיסמאות וממיר בישול.</p>
 </div>
 
 <div class="grid-container">
 
+    <!-- 1. מחשבון רגיל ומדעי -->
     <div class="card">
         <h2>מחשבון רגיל ומדעי</h2>
         <input type="text" id="calcDisplay" class="calc-screen" value="0" readonly>
@@ -282,6 +268,7 @@
         </div>
     </div>
 
+    <!-- 2. תרגום שפות -->
     <div class="card">
         <h2>תרגום שפות ומילים</h2>
         <label>טקסט לתרגום:</label>
@@ -302,6 +289,7 @@
         <div class="result" id="transResult">התרגום יופיע כאן</div>
     </div>
 
+    <!-- 3. המרת מידות נעליים ובגדים -->
     <div class="card">
         <h2>מחשבון המרת מידות נעליים (EU / US / UK)</h2>
         <label>בחרי מידה אירופאית (EU):</label>
@@ -311,14 +299,35 @@
             <option value="38" selected>38 EU</option>
             <option value="39">39 EU</option>
             <option value="40">40 EU</option>
+            <option value="41">41 EU</option>
+            <option value="42">42 EU</option>
+            <option value="43">43 EU</option>
         </select>
         <div class="result" id="shoeResult">מידה מקבילה: US 7.5 | UK 5</div>
     </div>
 
+    <!-- 4. סופר מילים ותווים -->
     <div class="card">
         <h2>סופר מילים, תווים ופסקיות</h2>
         <textarea id="textToCount" placeholder="הדביקי טקסט כאן..." oninput="countText()"></textarea>
         <div class="result" id="countResult">תווים: 0 | מילים: 0</div>
+    </div>
+
+    <!-- 5. מחולל סיסמאות מאובטחות -->
+    <div class="card">
+        <h2>מחולל סיסמאות חזקות ומאובטחות</h2>
+        <label>אורך הסיסמה (תווים):</label>
+        <input type="number" id="passLength" value="12" min="6" max="32">
+        <button onclick="generatePassword()">הפק סיסמה חדשה</button>
+        <div class="result" id="passResult">לחצי להפקת סיסמה</div>
+    </div>
+
+    <!-- 6. המרות בישול ואפייה -->
+    <div class="card">
+        <h2>מחשבון המרות בישול ואפייה</h2>
+        <label>כמות בכוסות (כוס חצי ליטר/סטנדרטית):</label>
+        <input type="number" id="cupInput" value="1" step="0.25" oninput="convertCooking()">
+        <div class="result" id="cookingResult">1 כוס = 240 מ"ל | 200 גרם סוכר | 140 גרם קמח</div>
     </div>
 
 </div>
@@ -345,7 +354,7 @@
 
     function convertShoeSize() {
         let eu = document.getElementById('shoeEuSize').value;
-        let map = { '36': 'US 6 | UK 3.5', '37': 'US 6.5 | UK 4', '38': 'US 7.5 | UK 5', '39': 'US 8.5 | UK 5.5', '40': 'US 9 | UK 6.5' };
+        let map = { '36': 'US 6 | UK 3.5', '37': 'US 6.5 | UK 4', '38': 'US 7.5 | UK 5', '39': 'US 8.5 | UK 5.5', '40': 'US 9 | UK 6.5', '41': 'US 9.5 | UK 7', '42': 'US 10.5 | UK 8', '43': 'US 11.5 | UK 9' };
         document.getElementById('shoeResult').innerText = "מידה מקבילה: " + map[eu];
     }
 
@@ -354,6 +363,24 @@
         let chars = txt.length;
         let words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
         document.getElementById('countResult').innerText = `תווים: ${chars} | מילים: ${words}`;
+    }
+
+    function generatePassword() {
+        let len = parseInt(document.getElementById('passLength').value) || 12;
+        let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        let res = "";
+        for (let i = 0; i < len; i++) {
+            res += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById('passResult').innerText = res;
+    }
+
+    function convertCooking() {
+        let cups = parseFloat(document.getElementById('cupInput').value) || 0;
+        let ml = cups * 240;
+        let sugar = cups * 200;
+        let flour = cups * 140;
+        document.getElementById('cookingResult').innerText = `${cups} כוסות = ${ml} מ"ל | ${sugar} ג' סוכר | ${flour} ג' קמח`;
     }
 
     function updateClockAndDate() {
