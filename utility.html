@@ -8,7 +8,6 @@
 <title>כלים שימושיים - המרת מידות, סופר מילים ועוד</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
 <style>
-  <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
@@ -99,18 +98,7 @@
   }
 
   h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
+  h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; text-align: center; }
 
   label {
     display: block;
@@ -118,6 +106,7 @@
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 6px;
+    margin-top: 12px;
   }
 
   input, select, textarea {
@@ -131,6 +120,11 @@
     font-size: 15px;
     font-family: inherit;
     transition: all 0.2s ease;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
   }
 
   input:focus, select:focus, textarea:focus {
@@ -152,7 +146,7 @@
     font-family: inherit;
     box-shadow: 0 4px 14px var(--accent-glow);
     transition: all 0.2s ease;
-    margin-top: 10px;
+    margin-top: 16px;
   }
 
   button:hover {
@@ -172,189 +166,18 @@
     border-radius: 8px;
   }
 
-  .info-section {
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid #3b82f6;
-    padding: 16px;
-    margin-top: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-</style>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
-
-  :root {
-    --bg-main: #0b0f19;
-    --card-bg: #111827;
-    --input-bg: #1f2937;
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
-    --accent-blue: #2563eb;
-    --accent-glow: rgba(37, 99, 235, 0.35);
-    --border-color: #1f2937;
-  }
-
-  body {
-    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    margin: 0;
-    padding-top: 90px;
-    padding-bottom: 40px;
-    direction: rtl;
-    line-height: 1.5;
-  }
-
-  .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 18px;
-    color: #38bdf8;
-  }
-
-  .nav-logo {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    object-fit: contain;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .nav-links a {
+  footer {
+    margin-top: 50px;
+    padding: 24px;
+    background: #111827;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    font-size: 13px;
     color: #9ca3af;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
   }
 
-  .nav-links a:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .container {
-    max-width: 720px;
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 30px;
-    margin: 0 auto 24px auto;
-    border-radius: 16px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-    text-align: right;
-  }
-
-  h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
-
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-  }
-
-  input, select, textarea {
-    width: 100%;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    color: #ffffff;
-    padding: 12px 14px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: inherit;
-    transition: all 0.2s ease;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-  }
-
-  button {
-    width: 100%;
-    background: var(--accent-blue);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 16px;
-    font-family: inherit;
-    box-shadow: 0 4px 14px var(--accent-glow);
-    transition: all 0.2s ease;
-    margin-top: 10px;
-  }
-
-  button:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-  }
-
-  .result {
-    font-size: 18px;
-    font-weight: 700;
-    color: #38bdf8;
-    margin-top: 20px;
-    text-align: center;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 16px;
-    border-radius: 8px;
-  }
-
-  .info-section {
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid #3b82f6;
-    padding: 16px;
-    margin-top: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
+  footer a { color: #38bdf8; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -371,9 +194,11 @@
         <a href="utility.html">🛠️ כלים שימושיים</a>
         <a href="guides.html">📚 מדריכים</a>
     </div>
+</div>
+
 <div class="container">
     <h1>כלים שימושיים ביום-יום</h1>
-    <p style="text-align: center; color: #666;">המרי מידות, ספרי תווים ומילים, חשבי ימים וצרי סיסמאות מאובטחות בלחיצת כפתור.</p>
+    <p style="text-align: center; color: var(--text-secondary);">המרי מידות, ספרי תווים ומילים, חשבי ימים וצרי סיסמאות מאובטחות בלחיצת כפתור.</p>
 </div>
 
 <!-- כלי 1: המרת מידות וס"מ -->
@@ -451,7 +276,7 @@
 
     function generatePassword() {
         let len = parseInt(document.getElementById('passLength').value) || 12;
-        let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+" ;
+        let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
         let pass = "";
         for (let i = 0; i < len; i++) {
             pass += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -460,10 +285,10 @@
     }
 </script>
 
-<footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
+<footer>
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
 </footer>
 
 </body>
