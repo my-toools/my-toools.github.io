@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כלים שימושיים - מחשבון BMI וסופר מילים</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+        .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+        .nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
+        h2, h3 { text-align: center; color: #2b2d42; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #17a2b8; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
+        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #17a2b8; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">זכויות עובדים</a>
+    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="utility.html">כלים שימושיים</a>
+</div>
+
+<div class="container">
+    <h2>מחשבון מדד מסת גוף (BMI)</h2>
+    <label>משקל (בק"ג):</label>
+    <input type="number" id="weight" placeholder="למשל: 70">
+    <label>גובה (בס"מ):</label>
+    <input type="number" id="height" placeholder="למשל: 175">
+    <button onclick="calcBMI()">חשב BMI</button>
+    <div class="result" id="bmiResult"></div>
+
+    <div class="info-section">
+        <h3>מהו מדד ה-BMI?</h3>
+        <p>מדד מסת הגוף (BMI) הוא כלי סקירה משוער להערכת משקל גוף תקין ביחס לגובה. תוצאה בין 18.5 ל-24.9 נחשבת לטווח המשקל התקין עבור מבוגרים.</p>
+    </div>
+</div>
+
+<div class="container">
+    <h2>סופר מילים وتווים בטקסט</h2>
+    <textarea id="textInput" rows="5" placeholder="הדבק או הקלד את הטקסט כאן..." oninput="countText()"></textarea>
+    <div class="result" id="textStats">מילים: 0 | תווים: 0</div>
+</div>
+
+<script>
+    function calcBMI() {
+        let w = parseFloat(document.getElementById('weight').value);
+        let h = parseFloat(document.getElementById('height').value) / 100;
+        if (w && h) {
+            let bmi = (w / (h * h)).toFixed(1);
+            let msg = "";
+            if (bmi < 18.5) msg = "(תת משקל)";
+            else if (bmi < 25) msg = "(משקל תקין)";
+            else if (bmi < 30) msg = "(משקל עודף)";
+            else msg = "(השמנה)";
+            document.getElementById('bmiResult').innerText = `ה-BMI שלך הוא: ${bmi} ${msg}`;
+        }
+    }
+
+    function countText() {
+        let text = document.getElementById('textInput').value.trim();
+        let words = text ? text.split(/\s+/).length : 0;
+        let chars = text.length;
+        document.getElementById('textStats').innerText = `מילים: ${words} | תווים: ${chars}`;
+    }
+</script>
+
+</body>
+</html>
