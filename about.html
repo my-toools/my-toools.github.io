@@ -7,15 +7,6 @@
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>הכלים שלי - אודות והצהרת נגישות</title>
 
-<!-- תגיות SEO ושיתוף ברשתות חברתיות -->
-<meta property="og:title" content="הכלים שלי - אודות והצהרת נגישות">
-<meta property="og:description" content="למדו עלינו, על מקורות הנתונים והחישובים המדויקים בפלטפורמת הכלים שלי.">
-<meta property="og:image" content="https://my-toools.github.io/favicon.png">
-<meta property="og:url" content="https://my-toools.github.io/about.html">
-<meta property="og:type" content="website">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
@@ -40,7 +31,6 @@
     line-height: 1.6;
   }
 
-  /* סרגל עליון קבוע בכחול כהה (Sticky) */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -68,19 +58,14 @@
   .nav-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 20px;
-    color: #ffffff;
-    white-space: nowrap;
     position: absolute;
     right: 0;
   }
 
   .nav-logo {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
     object-fit: contain;
   }
 
@@ -88,7 +73,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     margin: 0 auto;
   }
@@ -96,16 +81,16 @@
   .nav-links a {
     color: #cbd5e1;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 6px 10px;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 6px 12px;
     border-radius: 6px;
     transition: all 0.2s ease;
   }
 
   .nav-links a:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
   }
 
   .nav-widgets {
@@ -114,23 +99,23 @@
     justify-content: center;
     gap: 12px;
     font-size: 13px;
-    color: #38bdf8;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 16px;
-    border-radius: 20px;
+    color: #94a3b8;
+    background: transparent;
+    padding: 4px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .widget-item {
     display: flex;
     align-items: center;
     gap: 5px;
+    white-space: nowrap;
   }
 
-  .widget-item span {
-    color: #ffffff;
-    font-weight: 600;
-  }
+  .widget-item span { color: #f8fafc; font-weight: 500; }
+  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
 
   .container {
     max-width: 800px;
@@ -146,9 +131,10 @@
   h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 12px; }
   h2 { font-size: 20px; font-weight: 700; color: var(--accent-blue); margin-top: 24px; margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
-  p, li { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
+  .container p, .container li { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
   ul { padding-right: 20px; }
 
+  /* תיקון צבע טקסט ב-Footer */
   footer {
     margin-top: 50px;
     padding: 24px;
@@ -157,6 +143,11 @@
     text-align: center;
     font-size: 13px;
     color: #cbd5e1;
+  }
+
+  footer p {
+    color: #cbd5e1 !important;
+    margin: 6px 0;
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
@@ -174,8 +165,7 @@
 <div class="nav">
     <div class="nav-top-row">
         <div class="nav-brand">
-            <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
-            <span>הכלים שלי</span>
+            <img src="favicon.png" alt="לוגו" class="nav-logo">
         </div>
 
         <div class="nav-links">
@@ -188,16 +178,22 @@
         </div>
     </div>
 
-    <!-- סרגל ווידג'טים -->
     <div class="nav-widgets">
         <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
-        <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
-        <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
-        <div class="widget-item">🌅 זריחה: <span id="navSunrise">--:--</span></div>
-        <div class="widget-item">🌇 שקיעה: <span id="navSunset">--:--</span></div>
-        <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
-        <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
-        <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">📜 <span id="navHebrewDate">טוען...</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">⏰ <span id="navLiveTime">00:00:00</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">🌅 <span id="navSunrise">--:--</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">🌇 <span id="navSunset">--:--</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">💵 <span id="navUsd">--</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">💶 <span id="navEur">--</span></div>
+        <span class="widget-divider">|</span>
+        <div class="widget-item">🌤️ <span id="navWeather">--</span></div>
     </div>
 </div>
 
@@ -223,10 +219,8 @@
 <script>
     function updateClockAndDate() {
         let now = new Date();
-        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
-        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('navLiveTime').innerText = timeStr;
+        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('navLiveTime').innerText = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
     async function loadNavData() {
@@ -247,17 +241,10 @@
         try {
             let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
             let wData = await wRes.json();
-            let temp = Math.round(wData.current_weather.temperature);
-            document.getElementById('navWeather').innerText = `${temp}°C`;
-
-            let sunrise = wData.daily.sunrise[0].split('T')[1];
-            let sunset = wData.daily.sunset[0].split('T')[1];
-            document.getElementById('navSunrise').innerText = sunrise;
-            document.getElementById('navSunset').innerText = sunset;
-        } catch (e) {
-            document.getElementById('navSunrise').innerText = "06:20";
-            document.getElementById('navSunset').innerText = "19:10";
-        }
+            document.getElementById('navWeather').innerText = `${Math.round(wData.current_weather.temperature)}°C`;
+            document.getElementById('navSunrise').innerText = wData.daily.sunrise[0].split('T')[1];
+            document.getElementById('navSunset').innerText = wData.daily.sunset[0].split('T')[1];
+        } catch (e) {}
     }
 
     updateClockAndDate();
@@ -267,7 +254,7 @@
 
 <footer>
     <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
