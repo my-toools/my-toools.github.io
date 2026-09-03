@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>כלים שימושיים - מחשבון BMI וסופר מילים</title>
+    <title>כלים שימושיים - BMI, מחשבון הריון וסופר מילים</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
@@ -21,8 +21,21 @@
 
 <div class="nav">
     <a href="index.html">זכויות עובדים</a>
-    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="finance.html">מט"ח ופיננסים</a>
     <a href="utility.html">כלים שימושיים</a>
+</div>
+
+<div class="container">
+    <h2>מחשבון שבועות הריון ותאריך לידה משוער</h2>
+    <label>תאריך יום ראשון של הווסת האחרונה:</label>
+    <input type="date" id="lastPeriod">
+    <button onclick="calcPregnancy()">חשב שבוע הריון ותאריך לידה</button>
+    <div class="result" id="pregResult"></div>
+
+    <div class="info-section">
+        <h3>איך מחושב גיל ההריון?</h3>
+        <p>חישוב שבועות הריון מבוסס על הכלל שלפיו הריון ממוצע נמשך כ-280 ימים (40 שבועות) מהיום הראשון של הווסת האחרונה. המחשבון מציג את השבוע הנוכחי ואת תאריך הלידה המשוער.</p>
+    </div>
 </div>
 
 <div class="container">
@@ -41,12 +54,33 @@
 </div>
 
 <div class="container">
-    <h2>סופר מילים وتווים בטקסט</h2>
+    <h2>סופר מילים ותווים בטקסט</h2>
     <textarea id="textInput" rows="5" placeholder="הדבק או הקלד את הטקסט כאן..." oninput="countText()"></textarea>
     <div class="result" id="textStats">מילים: 0 | תווים: 0</div>
 </div>
 
 <script>
+    function calcPregnancy() {
+        let dateVal = document.getElementById('lastPeriod').value;
+        if (!dateVal) return;
+
+        let lastDate = new Date(dateVal);
+        let today = new Date();
+
+        let diffTime = Math.abs(today - lastDate);
+        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        let weeks = Math.floor(diffDays / 7);
+        let days = diffDays % 7;
+
+        let dueDate = new Date(lastDate);
+        dueDate.setDate(dueDate.getDate() + 280);
+
+        let dueDateStr = dueDate.toLocaleDateString('he-IL');
+
+        document.getElementById('pregResult').innerHTML = `את נמצאת בשבוע <b>${weeks} + ${days} ימים</b><br>תאריך לידה משוער: <b>${dueDateStr}</b>`;
+    }
+
     function calcBMI() {
         let w = parseFloat(document.getElementById('weight').value);
         let h = parseFloat(document.getElementById('height').value) / 100;
