@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שערי חליפין בלייב ומחשבון מע"מ</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+        .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+        .nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
+        h2, h3 { text-align: center; color: #2b2d42; }
+        input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #0056b3; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
+        .rates-grid { display: flex; justify-content: space-around; margin: 20px 0; font-weight: bold; font-size: 18px; text-align: center; }
+        .rate-card { background: #eef2f5; padding: 15px; border-radius: 8px; width: 45%; }
+        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #0056b3; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">זכויות עובדים</a>
+    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="utility.html">כלים שימושיים</a>
+</div>
+
+<div class="container">
+    <h2>שערי חליפין בזמן אמת</h2>
+    <div class="rates-grid">
+        <div class="rate-card">💵 דולר (USD): <span id="usd-rate">טוען...</span> ₪</div>
+        <div class="rate-card">💶 אירו (EUR): <span id="eur-rate">טוען...</span> ₪</div>
+    </div>
+
+    <h3>מחשבון המרת מטבע</h3>
+    <label>סכום להמרה:</label>
+    <input type="number" id="amount" value="100">
+    <label>ממטבע:</label>
+    <select id="fromCurrency">
+        <option value="USD">דולר ארה"ב (USD)</option>
+        <option value="EUR">אירו (EUR)</option>
+        <option value="ILS">שקל חדש (ILS)</option>
+    </select>
+    <label>למטבע:</label>
+    <select id="toCurrency">
+        <option value="ILS">שקל חדש (ILS)</option>
+        <option value="USD">דולר ארה"ב (USD)</option>
+        <option value="EUR">אירו (EUR)</option>
+    </select>
+    <button onclick="convertCurrency()">חשב המרה</button>
+    <div class="result" id="conversionResult"></div>
+</div>
+
+<div class="container">
+    <h2>מחשבון מע"מ מהיר (18%)</h2>
+    <label>סכום בש"ח:</label>
+    <input type="number" id="vatAmount" placeholder="הכנס סכום">
+    <button onclick="calcVat(true)">הוסף מע"מ לסכום</button>
+    <button onclick="calcVat(false)" style="background-color: #6c757d;">החלץ מע"מ מסכום כולל</button>
+    <div class="result" id="vatResult"></div>
+
+    <div class="info-section">
+        <h3>אודות חישוב ערך מוסף</h3>
+        <p>מס ערך מוסף (מע"מ) הוא מס עקיף המוטל על צריכה של נכסים ושירותים בישראל. המחשבון מאפשר להוסיף מע"מ על מחיר נטו, או לחלץ את רכיב המע"מ מתוך מחיר כולל (ברוטו).</p>
+    </div>
+</div>
+
+<script>
+    let rates = {};
+
+    async function fetchRates() {
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            rates = data.rates;
+            document.getElementById('usd-rate').innerText = rates.ILS.toFixed(2);
+            document.getElementById('eur-rate').innerText = (rates.ILS / rates.EUR).toFixed(2);
+        } catch (e) {
+            document.getElementById('usd-rate').innerText = "שגיאה";
+        }
+    }
+
+    function convertCurrency() {
+        let amount = parseFloat(document.getElementById('amount').value);
+        let from = document.getElementById('fromCurrency').value;
+        let to = document.getElementById('toCurrency').value;
+        if (!amount || !rates.ILS) return;
+        let amountInUSD = from === 'USD' ? amount : amount / rates[from];
+        let converted = amountInUSD * rates[to];
+        document.getElementById('conversionResult').innerText = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+    }
+
+    function calcVat(add) {
+        let amt = parseFloat(document.getElementById('vatAmount').value);
+        if (!amt) return;
+        if (add) {
+            let total = amt * 1.18;
+            document.getElementById('vatResult').innerText = `סכום כולל מע"מ: ${total.toFixed(2)} ₪ (רכיב המע"מ: ${(amt * 0.18).toFixed(2)} ₪)`;
+        } else {
+            let net = amt / 1.18;
+            document.getElementById('vatResult').innerText = `סכום לפני מע"מ: ${net.toFixed(2)} ₪ (רכיב המע"מ: ${(amt - net).toFixed(2)} ₪)`;
+        }
+    }
+
+    fetchRates();
+</script>
+
+</body>
+</html>
