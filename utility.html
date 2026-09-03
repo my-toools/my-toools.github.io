@@ -1,428 +1,75 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="כלים שימושיים: מחשבון רגיל ומדעי, תרגום שפות, המרת מידות, סופר מילים, מחולל סיסמאות וממיר בישול.">
-<link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>הכלים שלי - כלים שימושיים ומחשבונים</title>
+<!-- כרטיסיית המרת מידות נעליים ובגדים -->
+<div class="card">
+    <h2>מחשבון המרת מידות נעליים ובגדים</h2>
+    
+    <!-- בחירת קטגוריה -->
+    <label>בחרי סוג פריט:</label>
+    <select id="sizeCategory" onchange="updateSizeOptions()">
+        <option value="shoes">👟 נעליים (אירופאי / אמריקאי / בריטי)</option>
+        <option value="clothes_women">👗 בגדי נשים (חולצות, שמלות, מכנסיים)</option>
+        <option value="clothes_men">👕 בגדי גברים (חולצות, ז'קטים)</option>
+    </select>
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
+    <!-- מידה לבחירה -->
+    <label>בחרי מידה אירופאית (EU):</label>
+    <select id="sizeSelect" onchange="convertSizes()">
+        <!-- יתמלא דינמית על ידי סקריפט -->
+    </select>
 
-  :root {
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --input-bg: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --dark-blue: #0f172a;
-    --accent-blue: #1e3a8a;
-    --border-color: #cbd5e1;
-  }
-
-  body {
-    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    margin: 0;
-    padding-top: 160px;
-    padding-bottom: 40px;
-    direction: rtl;
-    line-height: 1.6;
-  }
-
-  .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: var(--dark-blue);
-    border-bottom: 3px solid #1d4ed8;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  .nav-top-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    position: relative;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .nav-brand { display: flex; align-items: center; position: absolute; right: 0; }
-  .nav-logo { width: 42px; height: 42px; border-radius: 8px; object-fit: contain; }
-
-  .nav-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-
-  .nav-links a {
-    color: #cbd5e1;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-  }
-
-  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-
-  .nav-widgets {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    font-size: 13px;
-    color: #94a3b8;
-    background: transparent;
-    padding: 4px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .widget-item span { color: #f8fafc; font-weight: 500; }
-  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
-
-  .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
-  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
-  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
-
-  .grid-container {
-    max-width: 940px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 0 10px;
-  }
-
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    text-align: right;
-  }
-
-  .card h2 {
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-top: 0;
-    margin-bottom: 16px;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 8px;
-  }
-
-  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-  input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-  textarea { min-height: 80px; resize: vertical; }
-
-  .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
-  .calc-btn { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
-  .calc-btn.op { background: var(--accent-blue); color: #ffffff; }
-  .calc-screen { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; }
-
-  button {
-    width: 100%;
-    background: var(--accent-blue);
-    color: #ffffff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 15px;
-    transition: all 0.2s ease;
-    margin-top: 16px;
-  }
-
-  button:hover { background: #1e4ed8; }
-
-  .result {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-top: 16px;
-    text-align: center;
-    background: #f1f5f9;
-    border: 1px solid #cbd5e1;
-    padding: 12px;
-    border-radius: 8px;
-    word-break: break-all;
-  }
-
-  footer {
-    margin-top: 50px;
-    padding: 24px;
-    background: var(--dark-blue);
-    border-top: 3px solid #1d4ed8;
-    text-align: center;
-    font-size: 13px;
-    color: #cbd5e1;
-  }
-
-  footer p { color: #cbd5e1 !important; margin: 6px 0; }
-  footer a { color: #38bdf8; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
-  @media (max-width: 768px) {
-    body { padding-top: 190px; }
-    .grid-container { grid-template-columns: 1fr; }
-    .nav-brand { position: static; justify-content: center; }
-    .nav-top-row { flex-direction: column; }
-  }
-</style>
-</head>
-<body>
-
-<div class="nav">
-    <div class="nav-top-row">
-        <div class="nav-brand">
-            <img src="favicon.png" alt="לוגו" class="nav-logo">
-        </div>
-
-        <div class="nav-links">
-            <a href="index.html">💼 זכויות עובדים</a>
-            <a href="legal.html">⚖️ כלים משפטיים</a>
-            <a href="finance.html">💰 מט"ח ופיננסים</a>
-            <a href="utility.html">🛠️ כלים שימושיים</a>
-            <a href="guides.html">📚 מדריכים</a>
-            <a href="about.html">ℹ️ אודות</a>
-        </div>
-    </div>
-
-    <div class="nav-widgets">
-        <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">📜 <span id="navHebrewDate">טוען...</span></div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">⏰ <span id="navLiveTime">00:00:00</span></div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">🌅 <span id="navSunrise">--:--</span></div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">🌇 <span id="navSunset">--:--</span></div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            <span id="navUsd">--</span>
-        </div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12a7.9 7.9 0 0 0 7.8 8 7.7 7.7 0 0 0 5.2-2"></path></svg>
-            <span id="navEur">--</span>
-        </div>
-        <span class="widget-divider">|</span>
-        <div class="widget-item">🌤️ <span id="navWeather">--</span></div>
-    </div>
-</div>
-
-<div class="hero-header">
-    <h1>כלים שימושיים ומחשבונים</h1>
-    <p>מחשבון רגיל ומדעי, תרגום שפות, המרת מידות, סופר מילים, מחולל סיסמאות וממיר בישול.</p>
-</div>
-
-<div class="grid-container">
-
-    <!-- 1. מחשבון רגיל ומדעי -->
-    <div class="card">
-        <h2>מחשבון רגיל ומדעי</h2>
-        <input type="text" id="calcDisplay" class="calc-screen" value="0" readonly>
-        <div class="calc-grid">
-            <button class="calc-btn" onclick="clearCalc()">C</button>
-            <button class="calc-btn" onclick="pressCalc('(')">(</button>
-            <button class="calc-btn" onclick="pressCalc(')')">)</button>
-            <button class="calc-btn op" onclick="pressCalc('/')">/</button>
-            <button class="calc-btn" onclick="pressCalc('7')">7</button>
-            <button class="calc-btn" onclick="pressCalc('8')">8</button>
-            <button class="calc-btn" onclick="pressCalc('9')">9</button>
-            <button class="calc-btn op" onclick="pressCalc('*')">*</button>
-            <button class="calc-btn" onclick="pressCalc('4')">4</button>
-            <button class="calc-btn" onclick="pressCalc('5')">5</button>
-            <button class="calc-btn" onclick="pressCalc('6')">6</button>
-            <button class="calc-btn op" onclick="pressCalc('-')">-</button>
-            <button class="calc-btn" onclick="pressCalc('1')">1</button>
-            <button class="calc-btn" onclick="pressCalc('2')">2</button>
-            <button class="calc-btn" onclick="pressCalc('3')">3</button>
-            <button class="calc-btn op" onclick="pressCalc('+')">+</button>
-            <button class="calc-btn" onclick="pressCalc('0')">0</button>
-            <button class="calc-btn" onclick="pressCalc('.')">.</button>
-            <button class="calc-btn" onclick="scientificCalc('sqrt')">√</button>
-            <button class="calc-btn op" onclick="evalCalc()">=</button>
-        </div>
-    </div>
-
-    <!-- 2. תרגום שפות -->
-    <div class="card">
-        <h2>תרגום שפות ומילים</h2>
-        <label>טקסט לתרגום:</label>
-        <textarea id="transText" placeholder="הקלידי מילה או משפט..."></textarea>
-        <label>משפה:</label>
-        <select id="transFrom">
-            <option value="he">עברית</option>
-            <option value="en">אנגלית</option>
-            <option value="es">ספרדית</option>
-        </select>
-        <label>לשפה:</label>
-        <select id="transTo">
-            <option value="en">אנגלית</option>
-            <option value="he">עברית</option>
-            <option value="es">ספרדית</option>
-        </select>
-        <button onclick="translateText()">תרגם טקסט</button>
-        <div class="result" id="transResult">התרגום יופיע כאן</div>
-    </div>
-
-    <!-- 3. המרת מידות נעליים ובגדים -->
-    <div class="card">
-        <h2>מחשבון המרת מידות נעליים (EU / US / UK)</h2>
-        <label>בחרי מידה אירופאית (EU):</label>
-        <select id="shoeEuSize" onchange="convertShoeSize()">
-            <option value="36">36 EU</option>
-            <option value="37">37 EU</option>
-            <option value="38" selected>38 EU</option>
-            <option value="39">39 EU</option>
-            <option value="40">40 EU</option>
-            <option value="41">41 EU</option>
-            <option value="42">42 EU</option>
-            <option value="43">43 EU</option>
-        </select>
-        <div class="result" id="shoeResult">מידה מקבילה: US 7.5 | UK 5</div>
-    </div>
-
-    <!-- 4. סופר מילים ותווים -->
-    <div class="card">
-        <h2>סופר מילים, תווים ופסקיות</h2>
-        <textarea id="textToCount" placeholder="הדביקי טקסט כאן..." oninput="countText()"></textarea>
-        <div class="result" id="countResult">תווים: 0 | מילים: 0</div>
-    </div>
-
-    <!-- 5. מחולל סיסמאות מאובטחות -->
-    <div class="card">
-        <h2>מחולל סיסמאות חזקות ומאובטחות</h2>
-        <label>אורך הסיסמה (תווים):</label>
-        <input type="number" id="passLength" value="12" min="6" max="32">
-        <button onclick="generatePassword()">הפק סיסמה חדשה</button>
-        <div class="result" id="passResult">לחצי להפקת סיסמה</div>
-    </div>
-
-    <!-- 6. המרות בישול ואפייה -->
-    <div class="card">
-        <h2>מחשבון המרות בישול ואפייה</h2>
-        <label>כמות בכוסות (כוס חצי ליטר/סטנדרטית):</label>
-        <input type="number" id="cupInput" value="1" step="0.25" oninput="convertCooking()">
-        <div class="result" id="cookingResult">1 כוס = 240 מ"ל | 200 גרם סוכר | 140 גרם קמח</div>
-    </div>
-
+    <div class="result" id="sizeConvertResult">בחרי מידה להצגת ההמרה</div>
 </div>
 
 <script>
-    let calcExpr = "";
-    function pressCalc(val) { if (calcExpr === "0") calcExpr = ""; calcExpr += val; document.getElementById('calcDisplay').value = calcExpr; }
-    function clearCalc() { calcExpr = ""; document.getElementById('calcDisplay').value = "0"; }
-    function evalCalc() { try { let res = eval(calcExpr); document.getElementById('calcDisplay').value = res; calcExpr = res.toString(); } catch(e) { document.getElementById('calcDisplay').value = "שגיאה"; calcExpr = ""; } }
-    function scientificCalc(op) { try { let val = eval(calcExpr || "0"); let res = Math.sqrt(val); document.getElementById('calcDisplay').value = res.toFixed(4); calcExpr = res.toString(); } catch(e) {} }
-
-    async function translateText() {
-        let text = document.getElementById('transText').value;
-        let from = document.getElementById('transFrom').value;
-        let to = document.getElementById('transTo').value;
-        if (!text.trim()) return;
-        document.getElementById('transResult').innerText = "מתרגם...";
-        try {
-            let res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`);
-            let data = await res.json();
-            document.getElementById('transResult').innerText = data.responseData.translatedText;
-        } catch (e) { document.getElementById('transResult').innerText = "שגיאה בתרגום."; }
-    }
-
-    function convertShoeSize() {
-        let eu = document.getElementById('shoeEuSize').value;
-        let map = { '36': 'US 6 | UK 3.5', '37': 'US 6.5 | UK 4', '38': 'US 7.5 | UK 5', '39': 'US 8.5 | UK 5.5', '40': 'US 9 | UK 6.5', '41': 'US 9.5 | UK 7', '42': 'US 10.5 | UK 8', '43': 'US 11.5 | UK 9' };
-        document.getElementById('shoeResult').innerText = "מידה מקבילה: " + map[eu];
-    }
-
-    function countText() {
-        let txt = document.getElementById('textToCount').value;
-        let chars = txt.length;
-        let words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
-        document.getElementById('countResult').innerText = `תווים: ${chars} | מילים: ${words}`;
-    }
-
-    function generatePassword() {
-        let len = parseInt(document.getElementById('passLength').value) || 12;
-        let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-        let res = "";
-        for (let i = 0; i < len; i++) {
-            res += chars.charAt(Math.floor(Math.random() * chars.length));
+    const sizeData = {
+        shoes: {
+            "36": "US 6 | UK 3.5 | INT Small",
+            "37": "US 6.5 | UK 4 | INT Small",
+            "38": "US 7.5 | UK 5 | INT Medium",
+            "39": "US 8.5 | UK 5.5 | INT Medium",
+            "40": "US 9 | UK 6.5 | INT Large",
+            "41": "US 9.5 | UK 7 | INT Large",
+            "42": "US 10.5 | UK 8 | INT XL",
+            "43": "US 11.5 | UK 9 | INT XL"
+        },
+        clothes_women: {
+            "34": "US 2 | UK 6 | INT XS",
+            "36": "US 4 | UK 8 | INT S",
+            "38": "US 6 | UK 10 | INT M",
+            "40": "US 8 | UK 12 | INT L",
+            "42": "US 10 | UK 14 | INT XL",
+            "44": "US 12 | UK 16 | INT XXL"
+        },
+        clothes_men: {
+            "46": "US/UK 36 | INT S (חזה ~92 ס\"מ)",
+            "48": "US/UK 38 | INT M (חזה ~96 ס\"מ)",
+            "50": "US/UK 40 | INT L (חזה ~104 ס\"מ)",
+            "52": "US/UK 42 | INT XL (חזה ~110 ס\"מ)",
+            "54": "US/UK 44 | INT XXL (חזה ~116 ס\"מ)"
         }
-        document.getElementById('passResult').innerText = res;
+    };
+
+    function updateSizeOptions() {
+        const cat = document.getElementById('sizeCategory').value;
+        const select = document.getElementById('sizeSelect');
+        select.innerHTML = '';
+
+        Object.keys(sizeData[cat]).forEach(size => {
+            let opt = document.createElement('option');
+            opt.value = size;
+            opt.innerText = `מידה ${size} (EU)`;
+            select.appendChild(opt);
+        });
+
+        convertSizes();
     }
 
-    function convertCooking() {
-        let cups = parseFloat(document.getElementById('cupInput').value) || 0;
-        let ml = cups * 240;
-        let sugar = cups * 200;
-        let flour = cups * 140;
-        document.getElementById('cookingResult').innerText = `${cups} כוסות = ${ml} מ"ל | ${sugar} ג' סוכר | ${flour} ג' קמח`;
+    function convertSizes() {
+        const cat = document.getElementById('sizeCategory').value;
+        const val = document.getElementById('sizeSelect').value;
+        const res = sizeData[cat][val];
+        document.getElementById('sizeConvertResult').innerText = `מידה מקבילה: ${res}`;
     }
 
-    function updateClockAndDate() {
-        let now = new Date();
-        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('navLiveTime').innerText = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    }
-
-    async function loadNavData() {
-        try {
-            let now = new Date();
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
-            let data = await res.json();
-            document.getElementById('navHebrewDate').innerText = data.hebrew;
-        } catch (e) {}
-
-        try {
-            let res = await fetch('https://open.er-api.com/v6/latest/USD');
-            let data = await res.json();
-            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
-            document.getElementById('navEur').innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
-        } catch (e) {}
-
-        try {
-            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
-            let wData = await wRes.json();
-            document.getElementById('navWeather').innerText = `${Math.round(wData.current_weather.temperature)}°C`;
-            document.getElementById('navSunrise').innerText = wData.daily.sunrise[0].split('T')[1];
-            document.getElementById('navSunset').innerText = wData.daily.sunset[0].split('T')[1];
-        } catch (e) {}
-    }
-
-    updateClockAndDate();
-    setInterval(updateClockAndDate, 1000);
-    loadNavData();
+    // הפעלה ראשונית
+    updateSizeOptions();
 </script>
-
-<footer>
-    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
-</footer>
-
-</body>
-</html>
