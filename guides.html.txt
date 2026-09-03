@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="מדריכים שימושיים בנושאי זכויות עובדים, חישוב פיצויים, תכנון פיננסי ובריאות.">
+<link rel="icon" type="image/png" href="favicon.png?v=3">
+<title>מדריכים ומידע שימושי - מרכז הכלים</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
+.nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+.nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+.container { max-width: 800px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; line-height: 1.6; }
+h1, h2 { color: #2b2d42; }
+.article { border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+.article:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">זכויות עובדים</a>
+    <a href="finance.html">מט"ח ופיננסים</a>
+    <a href="utility.html">כלים שימושיים</a>
+    <a href="guides.html">מדריכים</a>
+</div>
+
+<div class="container">
+    <h1>מדריכים ומידע שימושי</h1>
+
+    <div class="article">
+        <h2>מדריך: כל מה שצריך לדעת על זכויות עובדים בסיום העסקה</h2>
+        <p>סיום יחסי עובד-מעסיק הוא תהליך רגיש המלווה בחובות וזכויות המוגדרות בחוק דיני העבודה בישראל. בין אם מדובר בפיטורין ובין אם בהתפטרות, קיימים מספר רכיבים כספיים מרכזיים שחשוב להכיר:</p>
+        <ul>
+            <li><strong>פיצויי פיטורין:</strong> זכאות בסיסית הניתנת לעובד שעבד לפחות שנה אחת ברציפות ופוטר. החישוב מבוסס על השכר החודשי האחרון כפול ותק השנים.</li>
+            <li><strong>פדיון ימי חופשה:</strong> ימי חופשה שהעובד צבר ולא ניצל במהלך תקופת העסקתו מומרים לתשלום כספי בשכר הגמר.</li>
+            <li><strong>דמי הבראה:</strong> עובד שהשלים שנה מלאה זכאי לתשלום דמי הבראה בהתאם לוותק שנצבר ולאחוז המשרה.</li>
+        </ul>
+    </div>
+
+    <div class="article">
+        <h2>איך עובד אפקט הריבית דריבית בחיסכון?</h2>
+        <p>ריבית דריבית היא אחד המנגנונים המשמעותיים ביותר בצמיחה פיננסית לטווח ארוך. בשונה מריבית רגילה המחושבת רק על סכום הקרן המקורי, ריבית דריבית מחושבת על הקרן בתוספת הריביות שהצטברו בתקופות הקודמות. ככל שתווח החיסכון ארוך יותר, כך האפקט המצטבר הופך למשמעותי יותר.</p>
+    </div>
+</div>
+
+<footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
+    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
+    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p style="font-size: 11px; color: #777; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener" style="color: #777;">Icon-Icons.com</a></p>
+</footer>
+
+</body>
+</html>
