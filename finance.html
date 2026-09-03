@@ -7,7 +7,6 @@
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>מחשבונים פיננסיים - שערים, נטו-ברוטו וריבית דריבית</title>
 <style>
-<style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
@@ -99,6 +98,7 @@
 
   h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
   h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
+  h3 { font-size: 16px; font-weight: 600; color: #38bdf8; margin-top: 15px; margin-bottom: 10px; }
 
   .form-grid {
     display: grid;
@@ -111,12 +111,36 @@
     .form-grid { grid-template-columns: 1fr; }
   }
 
+  /* עיצוב כרטיסיות שערי חליפין */
+  .rates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .rate-card {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .rate-card span {
+    color: #38bdf8;
+    font-weight: 700;
+  }
+
   label {
     display: block;
     font-size: 13px;
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 6px;
+    margin-top: 12px;
   }
 
   input, select, textarea {
@@ -151,7 +175,7 @@
     font-family: inherit;
     box-shadow: 0 4px 14px var(--accent-glow);
     transition: all 0.2s ease;
-    margin-top: 10px;
+    margin-top: 16px;
   }
 
   button:hover {
@@ -180,7 +204,19 @@
     font-size: 14px;
     color: var(--text-secondary);
   }
-</style>
+
+  footer {
+    margin-top: 50px;
+    padding: 24px;
+    background: #111827;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    font-size: 13px;
+    color: #9ca3af;
+  }
+
+  footer a { color: #38bdf8; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -197,6 +233,8 @@
         <a href="utility.html">🛠️ כלים שימושיים</a>
         <a href="guides.html">📚 מדריכים</a>
     </div>
+</div>
+
 <div class="container">
     <h2>שערי חליפין בזמן אמת ומחשבון המרה</h2>
     <div class="rates-grid">
@@ -316,11 +354,11 @@
     fetchRates();
 </script>
 
-<footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
+<footer>
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
-    <p style="font-size: 11px; color: #777; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener" style="color: #777;">Icon-Icons.com</a></p>
+    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p style="font-size: 11px; color: #6b7280; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener">Icon-Icons.com</a></p>
 </footer>
 
 </body>
