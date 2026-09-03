@@ -14,11 +14,11 @@
     --bg-main: #0b0f19;
     --card-bg: #111827;
     --input-bg: #1f2937;
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e7eb;
     --accent-blue: #2563eb;
     --accent-glow: rgba(37, 99, 235, 0.35);
-    --border-color: #1f2937;
+    --border-color: #374151;
   }
 
   body {
@@ -26,26 +26,26 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 90px;
+    padding-top: 100px;
     padding-bottom: 40px;
     direction: rtl;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
+    background: rgba(17, 24, 39, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
   }
 
   .nav-brand {
@@ -53,7 +53,7 @@
     align-items: center;
     gap: 10px;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 19px;
     color: #38bdf8;
   }
 
@@ -67,12 +67,12 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
   .nav-links a {
-    color: #9ca3af;
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
@@ -83,13 +83,13 @@
 
   .nav-links a:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .container {
     max-width: 720px;
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
     padding: 30px;
     margin: 0 auto 24px auto;
     border-radius: 16px;
@@ -99,15 +99,15 @@
 
   h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
   h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; text-align: center; }
-  h3 { font-size: 16px; font-weight: 600; color: #38bdf8; margin-top: 15px; margin-bottom: 10px; }
+  h3 { font-size: 17px; font-weight: 700; color: #38bdf8; margin-top: 15px; margin-bottom: 10px; }
 
   label {
     display: block;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     color: var(--text-secondary);
     margin-bottom: 6px;
-    margin-top: 12px;
+    margin-top: 14px;
   }
 
   input, select, textarea {
@@ -126,13 +126,13 @@
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   }
 
   button {
     width: 100%;
     background: var(--accent-blue);
-    color: white;
+    color: #ffffff;
     border: none;
     padding: 14px;
     border-radius: 8px;
@@ -142,7 +142,7 @@
     font-family: inherit;
     box-shadow: 0 4px 14px var(--accent-glow);
     transition: all 0.2s ease;
-    margin-top: 16px;
+    margin-top: 18px;
   }
 
   button:hover {
@@ -151,21 +151,21 @@
   }
 
   .result {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     color: #38bdf8;
     margin-top: 20px;
     text-align: center;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     padding: 16px;
     border-radius: 8px;
   }
 
   .info-section {
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid #3b82f6;
-    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-right: 4px solid #3b82f6;
+    padding: 18px;
     margin-top: 24px;
     border-radius: 0 8px 8px 0;
     font-size: 14px;
@@ -175,6 +175,7 @@
   .info-section p, .info-section ul {
     margin: 8px 0 0 0;
     line-height: 1.6;
+    color: var(--text-secondary);
   }
 
   .info-section ul {
@@ -185,10 +186,10 @@
     margin-top: 50px;
     padding: 24px;
     background: #111827;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border-color);
     text-align: center;
     font-size: 13px;
-    color: #9ca3af;
+    color: var(--text-secondary);
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
@@ -317,7 +318,7 @@
 
 <footer>
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p style="font-size: 12px; color: #e5e7eb; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
 </footer>
 
