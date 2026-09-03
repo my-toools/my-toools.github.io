@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>שערי חליפין בלייב ומחשבון מע"מ</title>
+    <title>מחשבונים פיננסיים - שערים, נטו-ברוטו וריבית דריבית</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
@@ -23,12 +23,12 @@
 
 <div class="nav">
     <a href="index.html">זכויות עובדים</a>
-    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="finance.html">מט"ח ופיננסים</a>
     <a href="utility.html">כלים שימושיים</a>
 </div>
 
 <div class="container">
-    <h2>שערי חליפין בזמן אמת</h2>
+    <h2>שערי חליפין בזמן אמת ומחשבון המרה</h2>
     <div class="rates-grid">
         <div class="rate-card">💵 דולר (USD): <span id="usd-rate">טוען...</span> ₪</div>
         <div class="rate-card">💶 אירו (EUR): <span id="eur-rate">טוען...</span> ₪</div>
@@ -54,16 +54,36 @@
 </div>
 
 <div class="container">
-    <h2>מחשבון מע"מ מהיר (18%)</h2>
-    <label>סכום בש"ח:</label>
-    <input type="number" id="vatAmount" placeholder="הכנס סכום">
-    <button onclick="calcVat(true)">הוסף מע"מ לסכום</button>
-    <button onclick="calcVat(false)" style="background-color: #6c757d;">החלץ מע"מ מסכום כולל</button>
-    <div class="result" id="vatResult"></div>
+    <h2>מחשבון נטו לברוטו משוער</h2>
+    <label>שכר ברוטו מבוקש (בש"ח):</label>
+    <input type="number" id="grossSalary" placeholder="למשל: 12000">
+    <label>מספר נקודות זיכוי במס (ברירת מחדל: 2.25 לתושב):</label>
+    <input type="number" id="creditPoints" value="2.25" step="0.25">
+    <button onclick="calcNet()">חשב שכר נטו משוער</button>
+    <div class="result" id="netResult"></div>
 
     <div class="info-section">
-        <h3>אודות חישוב ערך מוסף</h3>
-        <p>מס ערך מוסף (מע"מ) הוא מס עקיף המוטל על צריכה של נכסים ושירותים בישראל. המחשבון מאפשר להוסיף מע"מ על מחיר נטו, או לחלץ את רכיב המע"מ מתוך מחיר כולל (ברוטו).</p>
+        <h3>מה משפיע על שכר הנטו שלך?</h3>
+        <p>שכר הנטו מתקבל לאחר הפחתת ניכויי חובה משכר הברוטו: מס הכנסה, דמי ביטוח לאומי ודמי ביטוח בריאות. נקודות הזיכוי מפחיתות את גובה מס ההכנסה, כאשר כל נקודת זיכוי שווה כ-242 ש"ח לחודש.</p>
+    </div>
+</div>
+
+<div class="container">
+    <h2>מחשבון ריבית דריבית וחיסכון</h2>
+    <label>סכום התחלתי (בש"ח):</label>
+    <input type="number" id="initCapital" value="10000">
+    <label>הפקדה חודשית נוספת (בש"ח):</label>
+    <input type="number" id="monthlyDeposit" value="500">
+    <label>תקופת חיסכון (בשנים):</label>
+    <input type="number" id="years" value="10">
+    <label>תשואה שנתית משוערת (%):</label>
+    <input type="number" id="interestRate" value="6" step="0.1">
+    <button onclick="calcCompound()">חשב שווי חיסכון עתידי</button>
+    <div class="result" id="compoundResult"></div>
+
+    <div class="info-section">
+        <h3>מהי ריבית דריבית?</h3>
+        <p>ריבית דריבית היא האפקט שבו הריבית שהורווצה בתקופה אחת מתווספת לקרן, וכך בתקופה הבאה מרוויחים ריבית גם על הקרן וגם על הריבית המצטברת. זהו אחד המנגנונים החזקים ביותר להגדלת הון לטווח ארוך.</p>
     </div>
 </div>
 
@@ -92,16 +112,35 @@
         document.getElementById('conversionResult').innerText = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
     }
 
-    function calcVat(add) {
-        let amt = parseFloat(document.getElementById('vatAmount').value);
-        if (!amt) return;
-        if (add) {
-            let total = amt * 1.18;
-            document.getElementById('vatResult').innerText = `סכום כולל מע"מ: ${total.toFixed(2)} ₪ (רכיב המע"מ: ${(amt * 0.18).toFixed(2)} ₪)`;
-        } else {
-            let net = amt / 1.18;
-            document.getElementById('vatResult').innerText = `סכום לפני מע"מ: ${net.toFixed(2)} ₪ (רכיב המע"מ: ${(amt - net).toFixed(2)} ₪)`;
+    function calcNet() {
+        let gross = parseFloat(document.getElementById('grossSalary').value);
+        let points = parseFloat(document.getElementById('creditPoints').value);
+        if (!gross) return;
+
+        let pointsValue = points * 242;
+        let approxTax = Math.max(0, (gross * 0.14) - pointsValue); // הערכה מקורבת
+        let approxNationalInsurance = gross * 0.07;
+        let net = gross - approxTax - approxNationalInsurance;
+
+        document.getElementById('netResult').innerText = `שכר נטו משוער: ${net.toFixed(0)} ₪`;
+    }
+
+    function calcCompound() {
+        let P = parseFloat(document.getElementById('initCapital').value) || 0;
+        let PMT = parseFloat(document.getElementById('monthlyDeposit').value) || 0;
+        let t = parseFloat(document.getElementById('years').value) || 0;
+        let r = (parseFloat(document.getElementById('interestRate').value) || 0) / 100 / 12;
+        let n = t * 12;
+
+        let total = P * Math.pow(1 + r, n);
+        for (let i = 1; i <= n; i++) {
+            total += PMT * Math.pow(1 + r, n - i);
         }
+
+        let totalDeposited = P + (PMT * n);
+        let profit = total - totalDeposited;
+
+        document.getElementById('compoundResult').innerText = `סכום סופי משוער: ${total.toFixed(0)} ₪ (רווח מריבית: ${profit.toFixed(0)} ₪)`;
     }
 
     fetchRates();
