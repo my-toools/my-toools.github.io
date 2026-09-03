@@ -2,48 +2,85 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>מחשבון זכויות - חישוב פיצויי פיטורין</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז הכלים - מחשבון פיצויים וזכויות עובדים</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 650px; background: white; padding: 25px; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .ad-box { background: #e9ecef; border: 1px dashed #adb5bd; padding: 15px; margin: 15px 0; color: #6c757d; font-size: 14px; }
-        input, button { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
-        button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; }
-        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; }
+        .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
+        .nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
+        h1, h2, h3 { text-align: center; color: #2b2d42; }
+        input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
+        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #0056b3; margin-top: 25px; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body>
 
+<div class="nav">
+    <a href="index.html">זכויות עובדים</a>
+    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="utility.html">כלים שימושיים</a>
+</div>
+
 <div class="container">
     <h2>מחשבון פיצויי פיטורין מהיר</h2>
-    
-    <div class="ad-box">[ כאן תופיע פרסומת גוגל עליונה ]</div>
-
     <label>משכורת חודשית ברוטו (בש"ח):</label>
     <input type="number" id="salary" placeholder="למשל: 10000">
+    <label>ותק במקום העבודה (בשנים):</label>
+    <input type="number" id="tenure" step="0.1" placeholder="למשל: 3.5">
+    <button onclick="calcSeverance()">חשב פיצויים מגיעים</button>
+    <div class="result" id="sevResult"></div>
 
-    <label>וותק במקום העבודה (בשנים):</label>
-    <input type="number" id="years" placeholder="למשל: 3.5">
+    <div class="info-section">
+        <h3>איך מחושבים פיצויי פיטורין בישראל?</h3>
+        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות ואשר פוטר ממישרתו זכאי לקבל מעסיקו פיצויי פיטורין. החישוב הבסיסי מבוצע על פי הכפלת השכר החודשי האחרון בברוטו במספר שנות העבודה של העובד באותו מקום עבודה.</p>
+    </div>
+</div>
 
-    <button onclick="calculate()">חשב פיצויים מגיעים</button>
+<div class="container">
+    <h2>מחשבון דמי הבראה</h2>
+    <label>ותק בשנים:</label>
+    <input type="number" id="havraaTenure" placeholder="למשל: 2">
+    <label>אחוז משרה (%):</label>
+    <input type="number" id="jobScope" value="100">
+    <button onclick="calcHavraa()">חשב דמי הבראה</button>
+    <div class="result" id="havraaResult"></div>
 
-    <div class="result" id="output"></div>
-
-    <div class="ad-box">[ כאן תופיע פרסומת גוגל צמודה לתוצאה ]</div>
+    <div class="info-section">
+        <h3>כללי הזכאות לדמי הבראה</h3>
+        <p>זכאות לדמי הבראה קיימת רק לאחר שהעובד השלים את שנת עבודתו הראשונה במקום העבודה. מחיר יום הבראה במגזר הפרטי מעודכן לפי הצווים במשק, ומספר הימים להם זכאי העובד עולה בהדרגה בהתאם לוותק שנצבר.</p>
+    </div>
 </div>
 
 <script>
-    function calculate() {
-        let salary = parseFloat(document.getElementById('salary').value);
-        let years = parseFloat(document.getElementById('years').value);
-        
-        if (isNaN(salary) || isNaN(years)) {
-            document.getElementById('output').innerText = "נא להזין נתונים תקינים.";
-            return;
+    function calcSeverance() {
+        let sal = parseFloat(document.getElementById('salary').value);
+        let ten = parseFloat(document.getElementById('tenure').value);
+        if (sal && ten) {
+            document.getElementById('sevResult').innerText = "סכום הפיצויים המשוער: " + (sal * ten).toLocaleString() + " ₪";
         }
-        
-        let total = salary * years;
-        document.getElementById('output').innerText = "סכום הפיצויים המוערך: " + total.toLocaleString() + " ש\"ח";
+    }
+
+    function calcHavraa() {
+        let ten = parseFloat(document.getElementById('havraaTenure').value);
+        let scope = parseFloat(document.getElementById('jobScope').value) / 100;
+        let dayValue = 418; // מחיר יום הבראה מעודכן
+        let days = 0;
+
+        if (ten >= 1 && ten < 2) days = 5;
+        else if (ten >= 2 && ten < 4) days = 6;
+        else if (ten >= 4 && ten < 11) days = 7;
+        else if (ten >= 11) days = 8;
+
+        if (ten >= 1) {
+            let total = days * dayValue * scope;
+            document.getElementById('havraaResult').innerText = `מגיעים לך ${days} ימי הבראה בסך: ${total.toLocaleString()} ₪`;
+        } else {
+            document.getElementById('havraaResult').innerText = "זכאות לדמי הבראה ניתנת רק לאחר השלמת שנת עבודה מלאה.";
+        }
     }
 </script>
 
