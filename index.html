@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="מחשבוני זכויות עובדים חינמיים: חישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.">
+<meta name="description" content="מחשבוני זכויות עובדים, המרת תאריכים עברי-לועזי, שערי חליפין ומזג אוויר.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>הכלים שלי - מחשבוני זכויות עובדים ופיצויים</title>
+<title>הכלים שלי - מחשבוני זכויות עובדים והמרת תאריכים</title>
 
 <!-- תגיות SEO ושיתוף ברשתות חברתיות -->
-<meta property="og:title" content="הכלים שלי - מחשבוני זכויות עובדים ופיצויים">
-<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.">
+<meta property="og:title" content="הכלים שלי - מחשבוני זכויות עובדים והמרת תאריכים">
+<meta property="og:description" content="פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, המרת תאריכים עברי-לועזי ושערי מט"ח.">
 <meta property="og:image" content="https://my-toools.github.io/favicon.png">
 <meta property="og:url" content="https://my-toools.github.io/index.html">
 <meta property="og:type" content="website">
@@ -35,7 +35,7 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 140px;
+    padding-top: 150px;
     padding-bottom: 40px;
     direction: rtl;
     line-height: 1.6;
@@ -105,12 +105,12 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  /* סרגל מידע: תאריך, שעה מתעדכנת, דולר ושעונים */
+  /* סרגל מידע: תאריך עברי/לועזי, שעה, דולר, אירו ומזג אוויר */
   .nav-widgets {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 14px;
     font-size: 13px;
     color: #38bdf8;
     background: rgba(255, 255, 255, 0.05);
@@ -239,7 +239,7 @@
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
-    body { padding-top: 170px; }
+    body { padding-top: 180px; }
     .nav-top-row { flex-direction: column; gap: 8px; }
   }
 </style>
@@ -262,18 +262,34 @@
         </div>
     </div>
 
-    <!-- ווידג'ט תאריך ושעה מתעדכנים בלייב -->
+    <!-- סרגל ווידג'טים מתקדם -->
     <div class="nav-widgets">
-        <div class="widget-item">📅 <span id="navFullDate">טוען תאריך...</span></div>
+        <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
+        <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
         <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
         <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
-        <div class="widget-item">🗽 ניו יורק: <span id="navNyTime">00:00</span></div>
+        <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
+        <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
     </div>
 </div>
 
 <div class="container">
-    <h1>מחשבוני זכויות עובדים ופיצויים</h1>
-    <p style="text-align: center; color: var(--text-secondary);">פלטפורמה חינמית לחישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושעות נוספות.</p>
+    <h1>הכלים שלי - מחשבונים וכלים יומיומיים</h1>
+    <p style="text-align: center; color: var(--text-secondary);">פלטפורמה חינמית לחישוב זכויות עובדים, המרת תאריכים עברי-לועזי ושערי מטבע בזמן אמת.</p>
+</div>
+
+<!-- כרטיסייה חדשה: מחשבון וממיר תאריכים עברי-לועזי -->
+<div class="container">
+    <h2>מחשבון המרת תאריך לועזי ⇆ עברי</h2>
+    <label>בחרי תאריך לועזי להמרה:</label>
+    <input type="date" id="gregInputDate" onchange="convertGregToHeb()">
+    <button onclick="convertGregToHeb()">המר לתאריך עברי</button>
+    <div class="result" id="hebrewConvertResult">בחרי תאריך לחישוב המרה</div>
+
+    <div class="info-section">
+        <h3>על הלוח העברי והלועזי</h3>
+        <p>הלוח העברי מבוסס על שילוב של מחזור הירח ומחזור השמש (לוח ירחי-שמשי), בעוד הלוח הגרגוריאני (הלועזי) מבוסס על שנת השמש בלבד. המחשבון מבצע המרה מדויקת בין התאריכים באופן מיידי.</p>
+    </div>
 </div>
 
 <!-- מחשבון 1: פיצויי פיטורין -->
@@ -288,7 +304,7 @@
 
     <div class="info-section">
         <h3>זכאות לפיצויי פיטורין לפי חוק</h3>
-        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות באותו מקום עבודה ופוטר, זכאי לפיצויים בגובה משכורת חודשית אחת לכל שנת עבודה (חודש לכל שנה). במקרים מסוימים לפי סעיף 14 לחוק פיצויי פיטורין, ההפרשות הפנסיוניות באות במקום פיצויי פיטורין.</p>
+        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות באותו מקום עבודה ופוטר, זכאי לפיצויים בגובה משכורת חודשית אחת לכל שנת עבודה. במקרים מסוימים לפי סעיף 14 לחוק פיצויי פיטורין, ההפרשות הפנסיוניות באות במקום פיצויי פיטורין.</p>
     </div>
 </div>
 
@@ -325,7 +341,7 @@
 
     <div class="info-section">
         <h3>איך מחושב ערך יום חופשה?</h3>
-        <p>ערך יום חופשה לעובד במשכורת חודשית במשרה מלאה (של 5 ימי עבודה בשבוע) מחושב על ידי חלוקת שכר הברוטו החודשי ב-21.67 ימי עבודה. בעת סיום יחסי עובד-מעסיק, מעסיק מחויב לפדות את ימי החופשה הצבורים בכסף.</p>
+        <p>ערך יום חופשה לעובד במשכורת חודשית במשרה מלאה מחושב על ידי חלוקת שכר הברוטו החודשי ב-21.67 ימי עבודה.</p>
     </div>
 </div>
 
@@ -374,37 +390,75 @@
         document.getElementById('vacationResult').innerText = `פדיון חופשה משוער: ${total.toFixed(0).toLocaleString()} ₪`;
     }
 
-    // מעקב שעה ותאריך בלייב
-    function updateClockAndDate() {
-        let now = new Date();
-        
-        // תאריך עברי/לועזי מלא
-        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        let dateStr = now.toLocaleDateString('he-IL', options);
-        document.getElementById('navFullDate').innerText = dateStr;
-
-        // שעה חיה מתעדכנת
-        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('navLiveTime').innerText = timeStr;
-
-        // שעון ניו יורק
-        let nyTime = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false });
-        document.getElementById('navNyTime').innerText = nyTime;
-    }
-
-    async function loadExchangeRate() {
+    // המרת תאריך לועזי לעברי באמצעות Hebcal API
+    async function convertGregToHeb() {
+        let val = document.getElementById('gregInputDate').value;
+        if (!val) return;
+        let parts = val.split('-');
         try {
-            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${parts[0]}&gm=${parts[1]}&gd=${parts[2]}&g2h=1`);
             let data = await res.json();
-            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+            document.getElementById('hebrewConvertResult').innerText = `התאריך העברי: ${data.hebrew}`;
         } catch (e) {
-            document.getElementById('navUsd').innerText = "₪ 3.70";
+            document.getElementById('hebrewConvertResult').innerText = "שגיאה בחישוב התאריך העברי.";
         }
     }
 
+    // מעקב שעה, תאריך בלייב, שערים ומזג אוויר
+    function updateClockAndDate() {
+        let now = new Date();
+        
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
+
+        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('navLiveTime').innerText = timeStr;
+    }
+
+    async function loadHebrewNavDate() {
+        try {
+            let now = new Date();
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
+            let data = await res.json();
+            document.getElementById('navHebrewDate').innerText = data.hebrew;
+        } catch (e) {
+            document.getElementById('navHebrewDate').innerText = "זמין במחשבון";
+        }
+    }
+
+    async function loadNavData() {
+        // טעינת שערי מט"ח (דולר ואירו)
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            let usd = data.rates.ILS.toFixed(2);
+            let eur = (data.rates.ILS / data.rates.EUR).toFixed(2);
+            document.getElementById('navUsd').innerText = `₪ ${usd}`;
+            document.getElementById('navEur').innerText = `₪ ${eur}`;
+        } catch (e) {
+            document.getElementById('navUsd').innerText = "₪ 3.70";
+            document.getElementById('navEur').innerText = "₪ 4.02";
+        }
+
+        // טעינת מזג אוויר בלייב (ישראל - תל אביב)
+        try {
+            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true');
+            let wData = await wRes.json();
+            let temp = Math.round(wData.current_weather.temperature);
+            document.getElementById('navWeather').innerText = `${temp}°C`;
+        } catch (e) {
+            document.getElementById('navWeather').innerText = "24°C";
+        }
+    }
+
+    // הגדרת ברירת מחדל לתאריך של היום במחשבון
+    document.getElementById('gregInputDate').valueAsDate = new Date();
+
     updateClockAndDate();
     setInterval(updateClockAndDate, 1000);
-    loadExchangeRate();
+    loadHebrewNavDate();
+    loadNavData();
+    convertGregToHeb();
 </script>
 
 <footer>
