@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מרכז הכלים - מחשבון פיצויים וזכויות עובדים</title>
+    <title>מרכז הכלים - מחשבוני זכויות עובדים ופיצויים</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
@@ -14,19 +14,19 @@
         input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
         .result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
-        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #0056b3; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+        .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 25px; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body>
 
 <div class="nav">
     <a href="index.html">זכויות עובדים</a>
-    <a href="finance.html">מט"ח ובורסה</a>
+    <a href="finance.html">מט"ח ופיננסים</a>
     <a href="utility.html">כלים שימושיים</a>
 </div>
 
 <div class="container">
-    <h2>מחשבון פיצויי פיטורין מהיר</h2>
+    <h2>מחשבון פיצויי פיטורין</h2>
     <label>משכורת חודשית ברוטו (בש"ח):</label>
     <input type="number" id="salary" placeholder="למשל: 10000">
     <label>ותק במקום העבודה (בשנים):</label>
@@ -36,7 +36,7 @@
 
     <div class="info-section">
         <h3>איך מחושבים פיצויי פיטורין בישראל?</h3>
-        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות ואשר פוטר ממישרתו זכאי לקבל מעסיקו פיצויי פיטורין. החישוב הבסיסי מבוצע על פי הכפלת השכר החודשי האחרון בברוטו במספר שנות העבודה של העובד באותו מקום עבודה.</p>
+        <p>לפי חוק פיצויי פיטורין, עובד שעבד שנה אחת ברציפות ואשר פוטר ממישרתו זכאי לקבל ממעסיקו פיצויי פיטורין. החישוב הבסיסי מבוצע על פי הכפלת השכר החודשי האחרון בברוטו במספר שנות העבודה של העובד באותו מקום עבודה.</p>
     </div>
 </div>
 
@@ -51,7 +51,22 @@
 
     <div class="info-section">
         <h3>כללי הזכאות לדמי הבראה</h3>
-        <p>זכאות לדמי הבראה קיימת רק לאחר שהעובד השלים את שנת עבודתו הראשונה במקום העבודה. מחיר יום הבראה במגזר הפרטי מעודכן לפי הצווים במשק, ומספר הימים להם זכאי העובד עולה בהדרגה בהתאם לוותק שנצבר.</p>
+        <p>זכאות לדמי הבראה קיימת רק לאחר שהעובד השלים את שנת עבודתו הראשונה במקום העבודה. מחיר יום הבראה מעודכן לפי צווי ההרחבה במשק, ומספר הימים להם זכאי העובד עולה בהדרגה בהתאם לוותק שנצבר.</p>
+    </div>
+</div>
+
+<div class="container">
+    <h2>מחשבון פדיון ימי חופשה</h2>
+    <label>שכר חודשי ברוטו (בש"ח):</label>
+    <input type="number" id="vacSalary" placeholder="למשל: 12000">
+    <label>מספר ימי חופשה שלא נוצלו:</label>
+    <input type="number" id="vacDays" placeholder="למשל: 10">
+    <button onclick="calcVacation()">חשב פדיון חופשה</button>
+    <div class="result" id="vacResult"></div>
+
+    <div class="info-section">
+        <h3>חישוב פדיון חופשה בסיום יחסי עובד-מעסיק</h3>
+        <p>עובד שסיים את עבודתו ולא ניצל את כל ימי החופשה השנתית העומדים לזכותו, זכאי לפדיון חופשה. שווי יום חופשה מחושב בדרך כלל לפי השכר החודשי ברוטו מחולק ב-22 או 25 ימי עבודה (בהתאם לשבוע עבודה של 5 או 6 ימים).</p>
     </div>
 </div>
 
@@ -67,7 +82,7 @@
     function calcHavraa() {
         let ten = parseFloat(document.getElementById('havraaTenure').value);
         let scope = parseFloat(document.getElementById('jobScope').value) / 100;
-        let dayValue = 418; // מחיר יום הבראה מעודכן
+        let dayValue = 418;
         let days = 0;
 
         if (ten >= 1 && ten < 2) days = 5;
@@ -80,6 +95,16 @@
             document.getElementById('havraaResult').innerText = `מגיעים לך ${days} ימי הבראה בסך: ${total.toLocaleString()} ₪`;
         } else {
             document.getElementById('havraaResult').innerText = "זכאות לדמי הבראה ניתנת רק לאחר השלמת שנת עבודה מלאה.";
+        }
+    }
+
+    function calcVacation() {
+        let sal = parseFloat(document.getElementById('vacSalary').value);
+        let days = parseFloat(document.getElementById('vacDays').value);
+        if (sal && days) {
+            let dailyRate = sal / 22; // מבוסס על שבוע עבודה של 5 ימים
+            let total = dailyRate * days;
+            document.getElementById('vacResult').innerText = `שווי פדיון החופשה: ${total.toFixed(2)} ₪`;
         }
     }
 </script>
