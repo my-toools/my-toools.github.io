@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="מחשבונים משפטיים בחינם: בדיקת סמכות עניינית לפי סכום התביעה, חישוב אגרת בית משפט ומחשבון תביעות קטנות.">
+<meta name="description" content="מחשבונים משפטיים מתקדמים: חישוב מועדים וימי פגרה (30/45/60 יום), בדיקת סמכות עניינית, אגרות בית משפט ושכר טרחה.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>כלים משפטיים - סמכות עניינית ואגרות בית משפט</title>
+<title>כלים ומחשבונים משפטיים - חישוב מועדים, סמכות עניינית ואגרות</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
 <style>
 body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
@@ -17,6 +17,8 @@ input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px s
 button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
 .result { font-size: 18px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; background: #e9ecef; padding: 10px; border-radius: 5px; }
 .info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #28a745; margin-top: 20px; font-size: 14px; }
+.checkbox-group { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+.checkbox-group input { width: auto; margin: 0; }
 </style>
 </head>
 <body>
@@ -30,63 +32,172 @@ button { background-color: #28a745; color: white; border: none; cursor: pointer;
 </div>
 
 <div class="container">
-    <h1>כלים ומחשבונים משפטיים</h1>
-    <p style="text-align: center; color: #666;">כלים לעזרת עורכי דין, תובעים ונתבעים לבדיקת סמכות שיפוט ואגרות.</p>
+    <h1>מחשבונים וכלים משפטיים מתקדמים</h1>
+    <p style="text-align: center; color: #666;">חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.</p>
 </div>
 
-<!-- מחשבון סמכות עניינית -->
+<!-- מחשבון 1: חישוב מועדים ופגרות (60/45/30 יום) -->
 <div class="container">
-    <h2>בדיקת סמכות עניינית לפי סכום התביעה</h2>
-    <label>סכום התביעה הכספית (בש"ח):</label>
-    <input type="number" id="claimAmount" placeholder="למשל: 50000">
-    <button onclick="checkJurisdiction()">בדקי סמכות שיפוט</button>
-    <div class="result" id="jurisResult">תוצאה תופיע כאן</div>
+    <h2>מחשבון מועדים, ימי תגובה ופגרות (מתי/כמה זמן)</h2>
+    <label>תאריך המצאת הכתב / החלטה (תאריך התחלה):</label>
+    <input type="date" id="courtStartDate">
+    
+    <label>מספר הימים להגשה / תגובה:</label>
+    <select id="daysCount">
+        <option value="15">15 ימים (תגובה לבקשה בכתב / בקשת רשות ערעור)</option>
+        <option value="30">30 ימים (כתב הגנה בתביעות קטנות / תשובה)</option>
+        <option value="45">45 ימים (ערעור אזרחי / כתב תביעה)</option>
+        <option value="60">60 ימים (כתב הגנה בסדר דין מהיר / רגיל)</option>
+        <option value="90">90 ימים (הודעה לצד שלישי / תשובה מורחבת)</option>
+    </select>
+
+    <div class="checkbox-group">
+        <input type="checkbox" id="includeVacation" checked>
+        <label for="includeVacation">קח בחשבון את פגרות בתי המשפט (פגרת הקיץ וסוכות/פסח)</label>
+    </div>
+
+    <button onclick="calcCourtDeadline()">חשב תאריך אחרון להגשה</button>
+    <div class="result" id="deadlineResult">הכניסי תאריך וסוג מועד לחישוב</div>
+
     <div class="info-section">
-        <h3>איך נקבעת סמכות עניינית?</h3>
-        <p>תביעות עד 37,900 ₪ (נכון לעדכון האחרון) ניתן להגיש לבית המשפט לתביעות קטנות. תביעות כספיות עד 2.5 מיליון ₪ בסמכות בית משפט השלום. תביעות מעל 2.5 מיליון ₪ בסמכות בית המשפט המחוזי.</p>
+        <h3>כללי חישוב מועדים ופגרות בבתי המשפט</h3>
+        <p>לפי תקנות סדר הדין האזרחי (תשפ"א-2020), מניין הימים מתחיל ביום למחרת יום ההמצאה. תקופת פגרת בתי המשפט (פגרת הקיץ בין 21 ביולי ל-5 בספטמבר, ופגרות החגים) אינה באה במניין הימים, אלא אם נקבע אחרת מפורשות על ידי בית המשפט.</p>
     </div>
 </div>
 
-<!-- מחשבון אגרת תביעה משוערת -->
+<!-- מחשבון 2: סמכות עניינית מורחבת -->
 <div class="container">
-    <h2>מחשבון אגרת בית משפט משוערת (שלום / מחוזי)</h2>
-    <label>סכום התביעה (בש"ח):</label>
-    <input type="number" id="feeClaim" placeholder="למשל: 100000">
-    <label>ערכאה משפטית:</label>
-    <select id="courtType">
-        <option value="small">תביעות קטנות (1%)</option>
-        <option value="shalom">בית משפט השלום (2.5%)</option>
+    <h2>מחשבון סמכות עניינית מקיף (מהות מהותית וסכום)</h2>
+    <label>מהות התביעה / הנושא:</label>
+    <select id="claimSubject" onchange="toggleAmountInput()">
+        <option value="money">תביעה כספית / פיצויים</option>
+        <option value="work">סכסוך עבודה / זכויות עובד-מעסיק</option>
+
+        <option value="family">ענייני משפחה / ירושה / מזונות</option>
+        <option value="admin">עתירה מנהלית / החלטת רשות</option>
+        <option value="realestate_use">חזקה / שימוש במקרקעין</option>
+        <option value="realestate_ownership">בעלות במקרקעין / פירוק שיתוף</option>
     </select>
-    <button onclick="calcCourtFee()">חשבי אגרה משוערת</button>
-    <div class="result" id="feeResult">תוצאה תופיע כאן</div>
+
+    <div id="amountWrapper">
+        <label>סכום התביעה המשוער (בש"ח):</label>
+        <input type="number" id="fullClaimAmount" placeholder="למשל: 150000">
+    </div>
+
+    <button onclick="calcFullJurisdiction()">בדוק ערכאה מוסמכת</button>
+    <div class="result" id="fullJurisResult">תוצאה תופיע כאן</div>
+</div>
+
+<!-- מחשבון 3: אגרות בית משפט וחלוקת מחציות -->
+<div class="container">
+    <h2>מחשבון אגרת בית משפט וחלוקה למחציות</h2>
+    <label>סכום התביעה (בש"ח):</label>
+    <input type="number" id="courtFeeClaim" placeholder="למשל: 200000">
+    
+    <label>סוג ההליך המשפטי:</label>
+    <select id="courtTypeSelect">
+        <option value="small">תביעות קטנות (1% - מינימום 50 ₪)</option>
+        <option value="shalom">בית משפט השלום (2.5%)</option>
+        <option value="mehozi">בית משפט מחוזי (2.5%)</option>
+    </select>
+
+    <button onclick="calcDetailedCourtFee()">חשב אגרה ומחציות</button>
+    <div class="result" id="detailedFeeResult">תוצאה תופיע כאן</div>
 </div>
 
 <script>
-    function checkJurisdiction() {
-        let amt = parseFloat(document.getElementById('claimAmount').value);
-        if (!amt) return;
-        let res = "";
-        if (amt <= 37900) {
-            res = "בית משפט לתביעות קטנות (או בית משפט השלום)";
-        } else if (amt <= 2500000) {
-            res = "בית משפט השלום";
+    function toggleAmountInput() {
+        let subj = document.getElementById('claimSubject').value;
+        let wrapper = document.getElementById('amountWrapper');
+        if (subj === 'work' || subj === 'family' || subj === 'admin' || subj === 'realestate_use' || subj === 'realestate_ownership') {
+            wrapper.style.display = 'none';
         } else {
-            res = "בית המשפט המחוזי";
+            wrapper.style.display = 'block';
         }
-        document.getElementById('jurisResult').innerText = "הערכאה המוסמכת: " + res;
     }
 
-    function calcCourtFee() {
-        let amt = parseFloat(document.getElementById('feeClaim').value);
-        let type = document.getElementById('courtType').value;
-        if (!amt) return;
-        let fee = 0;
-        if (type === 'small') {
-            fee = Math.max(amt * 0.01, 50); // לפחות 50 ש"ח
-        } else {
-            fee = amt * 0.025;
+    function calcCourtDeadline() {
+        let startVal = document.getElementById('courtStartDate').value;
+        let days = parseInt(document.getElementById('daysCount').value);
+        let includeVacation = document.getElementById('includeVacation').checked;
+
+        if (!startVal) {
+            document.getElementById('deadlineResult').innerText = "יש לבחור תאריך התחלה.";
+            return;
         }
-        document.getElementById('feeResult').innerText = `אגרה משוערת: ${fee.toLocaleString()} ₪ (מחצית ראשונה 1.25% בהגשה)`;
+
+        let currDate = new Date(startVal);
+        let addedDays = 0;
+
+        while (addedDays < days) {
+            currDate.setDate(currDate.getDate() + 1);
+            let month = currDate.getMonth() + 1; // 1-12
+            let dateNum = currDate.getDate();
+
+            if (includeVacation) {
+                // פגרת הקיץ: 21 ביולי עד 5 בספטמבר
+                let isSummerVacation = (month === 7 && dateNum >= 21) || (month === 8) || (month === 9 && dateNum <= 5);
+                // פגרת סוכות ופסח (הערכה כללית במערכת)
+                if (isSummerVacation) {
+                    continue; // ימי פגרה לא נספרים
+                }
+            }
+            addedDays++;
+        }
+
+        // אם התאריך הסופי נופל ביום שישי/שבת, מעבירים ליום ראשון
+        let dayOfWeek = currDate.getDay();
+        if (dayOfWeek === 5) currDate.setDate(currDate.getDate() + 2); // שישי -> ראשון
+        else if (dayOfWeek === 6) currDate.setDate(currDate.getDate() + 1); // שבת -> ראשון
+
+        let dateStr = currDate.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+        document.getElementById('deadlineResult').innerText = `תאריך אחרון להגשה: ${dateStr}`;
+    }
+
+    function calcFullJurisdiction() {
+        let subj = document.getElementById('claimSubject').value;
+        let amt = parseFloat(document.getElementById('fullClaimAmount').value) || 0;
+        let res = "";
+
+        if (subj === 'work') {
+            res = "בית הדין האזורי לעבודה (סמכות ייחודית בכל ענייני עובד-מעסיק)";
+        } else if (subj === 'family') {
+            res = "בית המשפט לענייני משפחה (או בית הדין הרבני/הדתי הליטושי)";
+        } else if (subj === 'admin') {
+            res = "בית משפט לעניינים מנהליים (שלום/מחוזי) או בג\"ץ";
+        } else if (subj === 'realestate_use') {
+            res = "בית משפט השלום (סמכות ייחודית לתביעות חזקה, שימוש וחלוקת מקרקעין)";
+        } else if (subj === 'realestate_ownership') {
+            res = "בית המשפט המחוזי (סמכות ייחודית לתביעות בעלות במקרקעין)";
+        } else {
+            if (amt <= 37900) {
+                res = "בית משפט לתביעות קטנות (או בית משפט השלום)";
+            } else if (amt <= 2500000) {
+                res = "בית משפט השלום";
+            } else {
+                res = "בית המשפט המחוזי";
+            }
+        }
+        document.getElementById('fullJurisResult').innerText = "הערכאה המוסמכת: " + res;
+    }
+
+    function calcDetailedCourtFee() {
+        let amt = parseFloat(document.getElementById('courtFeeClaim').value);
+        let type = document.getElementById('courtTypeSelect').value;
+        if (!amt) {
+            document.getElementById('detailedFeeResult').innerText = "יש להזין סכום תביעה.";
+            return;
+        }
+
+        if (type === 'small') {
+            let fee = Math.max(amt * 0.01, 50);
+            document.getElementById('detailedFeeResult').innerText = `אגרת תביעות קטנות כוללת: ${fee.toFixed(2)} ₪ (משולמת במלואה בעת ההגשה)`;
+        } else {
+            let totalFee = amt * 0.025;
+            let half1 = totalFee * 0.5; // מחצית ראשונה 1.25%
+            let half2 = totalFee * 0.5; // מחצית שנייה 1.25%
+            document.getElementById('detailedFeeResult').innerText = `סך אגרה כוללת (2.5%): ${totalFee.toLocaleString()} ₪ | מחצית ראשונה להגשה: ${half1.toLocaleString()} ₪ | מחצית שנייה: ${half2.toLocaleString()} ₪`;
+        }
     }
 </script>
 
