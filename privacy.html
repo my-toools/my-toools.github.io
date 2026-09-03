@@ -7,7 +7,6 @@
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>מדיניות פרטיות ותנאי שימוש - מרכז הכלים</title>
 <style>
-<style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
@@ -97,93 +96,40 @@
     text-align: right;
   }
 
-  h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
+  h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 20px; }
+  h2 { font-size: 18px; font-weight: 700; color: #38bdf8; margin-top: 24px; margin-bottom: 8px; }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
+  p { color: var(--text-secondary); line-height: 1.6; }
 
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
-
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-  }
-
-  input, select, textarea {
-    width: 100%;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    color: #ffffff;
-    padding: 12px 14px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: inherit;
-    transition: all 0.2s ease;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-  }
-
-  button {
-    width: 100%;
-    background: var(--accent-blue);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 16px;
-    font-family: inherit;
-    box-shadow: 0 4px 14px var(--accent-glow);
-    transition: all 0.2s ease;
-    margin-top: 10px;
-  }
-
-  button:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-  }
-
-  .result {
-    font-size: 18px;
-    font-weight: 700;
-    color: #38bdf8;
-    margin-top: 20px;
+  footer {
+    margin-top: 50px;
+    padding: 24px;
+    background: #111827;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     text-align: center;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 16px;
-    border-radius: 8px;
+    font-size: 13px;
+    color: #9ca3af;
   }
 
-  .info-section {
-    background: rgba(255, 255, 255, 0.02);
-    border-right: 3px solid #3b82f6;
-    padding: 16px;
-    margin-top: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-</style>
+  footer a { color: #38bdf8; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
+
+<div class="nav">
+    <div class="nav-brand">
+        <img src="favicon.png" alt="לוגו מרכז הכלים" class="nav-logo">
+        <span>מרכז הכלים</span>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">💼 זכויות עובדים</a>
+        <a href="legal.html">⚖️ כלים משפטיים</a>
+        <a href="finance.html">💰 מט"ח ופיננסים</a>
+        <a href="utility.html">🛠️ כלים שימושיים</a>
+        <a href="guides.html">📚 מדריכים</a>
+    </div>
+</div>
 
 <div class="container">
     <h1>מדיניות פרטיות ותנאי שימוש</h1>
@@ -195,16 +141,16 @@
     <p>האתר משתמש בשירותי צד שלישי כגון Google AdSense להצגת פרסומות. ספקים אלה עשויים להשתמש בקבצי Cookie כדי להציג פרסומות בהתאם לביקורים קודמים של המשתמש באתר.</p>
 
     <h2>3. יצירת קשר</h2>
-    <p>לכל שאלה ניתן לפנות אלינו במייל: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a></p>
+    <p>לכל שאלה ניתן לפנות אלינו במייל: <a href="mailto:mytooolsweb@gmail.com" style="color: #38bdf8;">mytooolsweb@gmail.com</a></p>
 
-    <p style="margin-top: 25px;"><a href="index.html" style="color: #0056b3; font-weight: bold;">← חזרה לדף הבית</a></p>
+    <p style="margin-top: 25px;"><a href="index.html" style="color: #38bdf8; font-weight: bold; text-decoration: none;">← חזרה לדף הבית</a></p>
 </div>
 
-<footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
+<footer>
     <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
-    <p style="font-size: 11px; color: #777; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener" style="color: #777;">Icon-Icons.com</a></p>
+    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p style="font-size: 11px; color: #6b7280; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener">Icon-Icons.com</a></p>
 </footer>
 
 </body>
