@@ -3,118 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="כלים שימושיים ליום-יום: מחשבון הריון שליש לפי שליש, מחשבון BMI וכלי לספירת מילים.">
+<meta name="description" content="כלים שימושיים בחינם: המרת מידות (ס ס/אינץ'), סופר מילים ותווים, מחולל סיסמאות ומחשבון הפרשי תאריכים.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>כלים שימושיים - מחשבון הריון, BMI וספירת מילים</title>
+<title>כלים שימושיים - המרת מידות, סופר מילים ועוד</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
 <style>
 body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; }
 .nav { background: #2b2d42; padding: 15px; margin-bottom: 25px; border-radius: 8px; }
-.nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-.container { max-width: 700px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; }
-h2, h3 { text-align: center; color: #2b2d42; }
-input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-button { background-color: #17a2b8; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
-.result { font-size: 20px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; }
-.info-section { background: #f8f9fa; padding: 15px; border-right: 4px solid #17a2b8; margin-top: 25px; font-size: 14px; line-height: 1.6; }
+.nav a { color: white; margin: 0 8px; text-decoration: none; font-weight: bold; font-size: 15px; }
+.container { max-width: 750px; background: white; padding: 25px; margin: 0 auto 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: right; line-height: 1.6; }
+h1, h2, h3 { text-align: center; color: #2b2d42; }
+input, select, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+button { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; }
+.result { font-size: 18px; font-weight: bold; color: #2b2d42; margin-top: 15px; text-align: center; background: #e9ecef; padding: 10px; border-radius: 5px; }
+textarea { height: 100px; resize: vertical; }
 </style>
 </head>
 <body>
 
 <div class="nav">
     <a href="index.html">זכויות עובדים</a>
+    <a href="legal.html">כלים משפטיים</a>
     <a href="finance.html">מט"ח ופיננסים</a>
     <a href="utility.html">כלים שימושיים</a>
     <a href="guides.html">מדריכים</a>
 </div>
 
 <div class="container">
-    <h2>מחשבון שבועות הריון ותאריך לידה משוער</h2>
-    <label>תאריך יום ראשון של הווסת האחרונה:</label>
-    <input type="date" id="lastPeriod">
-    <button onclick="calcPregnancy()">חשב שבוע הריון ותאריך לידה</button>
-    <div class="result" id="pregResult"></div>
-
-    <div class="info-section">
-        <h3>איך מחושב גיל ההריון?</h3>
-        <p>חישוב שבועות הריון מבוסס על הכלל שלפיו הריון ממוצע נמשך כ-280 ימים (40 שבועות) מהיום הראשון של הווסת האחרונה. המחשבון מציג את השבוע הנוכחי ואת תאריך הלידה המשוער.</p>
-    </div>
+    <h1>כלים שימושיים ביום-יום</h1>
+    <p style="text-align: center; color: #666;">המרי מידות, ספרי תווים ומילים, חשבי ימים וצרי סיסמאות מאובטחות בלחיצת כפתור.</p>
 </div>
 
+<!-- כלי 1: המרת מידות וס"מ -->
 <div class="container">
-    <h2>מחשבון מדד מסת גוף (BMI)</h2>
-    <label>משקל (בק"ג):</label>
-    <input type="number" id="weight" placeholder="למשל: 70">
-    <label>גובה (בס"מ):</label>
-    <input type="number" id="height" placeholder="למשל: 175">
-    <button onclick="calcBMI()">חשב BMI</button>
-    <div class="result" id="bmiResult"></div>
-
-    <div class="info-section">
-        <h3>מהו מדד ה-BMI?</h3>
-        <p>מדד מסת הגוף (BMI) הוא כלי סקירה משוער להערכת משקל גוף תקין ביחס לגובה. תוצאה בין 18.5 ל-24.9 נחשבת לטווח המשקל התקין עבור מבוגרים.</p>
-    </div>
+    <h2>ממיר מידות ואורכים (ס"מ / אינץ' / רגל)</h2>
+    <label>הכניסי ערך להמרה:</label>
+    <input type="number" id="convertVal" placeholder="למשל: 10" oninput="convertUnits()">
+    <label>סוג ההמרה:</label>
+    <select id="convertType" onchange="convertUnits()">
+        <option value="cmToInch">סנטימטר (ס"מ) ⬅️ אינץ' (Inch)</option>
+        <option value="inchToCm">אינץ' (Inch) ⬅️ סנטימטר (ס"מ)</option>
+        <option value="meterToFeet">מטרים ⬅️ רגל (Feet)</option>
+        <option value="kgToLbs">קילוגרם (ק"ג) ⬅️ פאונד (Lbs)</option>
+    </select>
+    <div class="result" id="unitResult">הזיזי ערך לצפייה בהמרה</div>
 </div>
 
+<!-- כלי 2: סופר מילים ותווים -->
 <div class="container">
-    <h2>סופר מילים ותווים בטקסט</h2>
-    <textarea id="textInput" rows="5" placeholder="הדבק או הקלד את הטקסט כאן..." oninput="countText()"></textarea>
-    <div class="result" id="textStats">מילים: 0 | תווים: 0</div>
+    <h2>סופר מילים, תווים ופסקיות</h2>
+    <textarea id="textToCount" placeholder="הדביקי או הקלידי טקסט כאן..." oninput="countText()"></textarea>
+    <div class="result" id="countResult">תווים: 0 | מילים: 0 | פסקיות: 0</div>
+</div>
 
-    <div class="info-section">
-        <h3>למה כדאי להשתמש בסופר מילים?</h3>
-        <p>כלי לספירת מילים ותווים מסייע בפתרון משימות כתיבה הדורשות עמידה במגבלות אורך מדויקות, כגון פוסטים לרשתות חברתיות, מאמרים אקדמיים, עבודות הגשה ותגיות מטא לאתרי אינטרנט.</p>
-    </div>
+<!-- כלי 3: מחשבון ימים בין תאריכים -->
+<div class="container">
+    <h2>מחשבון הפרש ימים בין תאריכים</h2>
+    <label>תאריך התחלה:</label>
+    <input type="date" id="startDate">
+    <label>תאריך סיום:</label>
+    <input type="date" id="endDate">
+    <button onclick="calcDateDiff()">חשבי הפרש ימים</button>
+    <div class="result" id="dateResult">תוצאה תופיע כאן</div>
+</div>
+
+<!-- כלי 4: מחולל סיסמאות -->
+<div class="container">
+    <h2>מחולל סיסמאות חזקות</h2>
+    <label>אורך הסיסמה (תווים):</label>
+    <input type="number" id="passLength" value="12" min="6" max="32">
+    <button onclick="generatePassword()">יוצר סיסמה מאובטחת</button>
+    <div class="result" id="passResult" style="letter-spacing: 2px;">לחצי על הכפתור ליצירה</div>
 </div>
 
 <script>
-    function calcPregnancy() {
-        let dateVal = document.getElementById('lastPeriod').value;
-        if (!dateVal) return;
-
-        let lastDate = new Date(dateVal);
-        let today = new Date();
-
-        let diffTime = Math.abs(today - lastDate);
-        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        let weeks = Math.floor(diffDays / 7);
-        let days = diffDays % 7;
-
-        let dueDate = new Date(lastDate);
-        dueDate.setDate(dueDate.getDate() + 280);
-
-        let dueDateStr = dueDate.toLocaleDateString('he-IL');
-
-        document.getElementById('pregResult').innerHTML = `את נמצאת בשבוע <b>${weeks} + ${days} ימים</b><br>תאריך לידה משוער: <b>${dueDateStr}</b>`;
-    }
-
-    function calcBMI() {
-        let w = parseFloat(document.getElementById('weight').value);
-        let h = parseFloat(document.getElementById('height').value) / 100;
-        if (w && h) {
-            let bmi = (w / (h * h)).toFixed(1);
-            let msg = "";
-            if (bmi < 18.5) msg = "(תת משקל)";
-            else if (bmi < 25) msg = "(משקל תקין)";
-            else if (bmi < 30) msg = "(משקל עודף)";
-            else msg = "(השמנה)";
-            document.getElementById('bmiResult').innerText = `ה-BMI שלך הוא: ${bmi} ${msg}`;
-        }
+    function convertUnits() {
+        let val = parseFloat(document.getElementById('convertVal').value);
+        let type = document.getElementById('convertType').value;
+        if (isNaN(val)) { document.getElementById('unitResult').innerText = "הזיזי ערך לצפייה בהמרה"; return; }
+        let res = 0;
+        if (type === 'cmToInch') res = (val / 2.54).toFixed(2) + ' אינץ\'';
+        else if (type === 'inchToCm') res = (val * 2.54).toFixed(2) + ' ס"מ';
+        else if (type === 'meterToFeet') res = (val * 3.28084).toFixed(2) + ' רגל';
+        else if (type === 'kgToLbs') res = (val * 2.20462).toFixed(2) + ' פאונד';
+        document.getElementById('unitResult').innerText = "תוצאה: " + res;
     }
 
     function countText() {
-        let text = document.getElementById('textInput').value.trim();
-        let words = text ? text.split(/\s+/).length : 0;
-        let chars = text.length;
-        document.getElementById('textStats').innerText = `מילים: ${words} | תווים: ${chars}`;
+        let txt = document.getElementById('textToCount').value;
+        let chars = txt.length;
+        let words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+        let paras = txt.trim() ? txt.split(/\n+/).filter(p => p.trim() !== '').length : 0;
+        document.getElementById('countResult').innerText = `תווים: ${chars} | מילים: ${words} | פסקיות: ${paras}`;
+    }
+
+    function calcDateDiff() {
+        let d1 = new Date(document.getElementById('startDate').value);
+        let d2 = new Date(document.getElementById('endDate').value);
+        if (d1 && d2 && !isNaN(d1) && !isNaN(d2)) {
+            let diffTime = Math.abs(d2 - d1);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('dateResult').innerText = `ההפרש: ${diffDays} ימים`;
+        }
+    }
+
+    function generatePassword() {
+        let len = parseInt(document.getElementById('passLength').value) || 12;
+        let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+" ;
+        let pass = "";
+        for (let i = 0; i < len; i++) {
+            pass += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById('passResult').innerText = pass;
     }
 </script>
 
 <footer style="margin-top: 50px; padding: 20px; background: #f1f1f1; text-align: center; font-size: 13px; color: #555;">
-    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים פיננסיים ומחשבונים שימושיים.</p>
-    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או רפואי.</p>
+    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; color: #666; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #0056b3;">mytooolsweb@gmail.com</a> | <a href="privacy.html" style="color: #0056b3;">מדיניות פרטיות ותנאי שימוש</a></p>
-    <p style="font-size: 11px; color: #777; margin-top: 8px;">Google launcher Icon by bokehlicia on <a href="https://icon-icons.com" target="_blank" rel="noopener" style="color: #777;">Icon-Icons.com</a></p>
 </footer>
+
 </body>
 </html>
