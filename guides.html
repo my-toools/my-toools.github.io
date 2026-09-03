@@ -5,20 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="מדריכים שימושיים וזכויות עובדים: מתי מגיעים פיצויי פיטורין, איך מחשבים דמי הבראה ומהן הזכויות בחופשת לידה.">
 <link rel="icon" type="image/png" href="favicon.png?v=3">
-<title>מדריכים וזכויות - מרכז הכלים</title>
+<title>הכלים שלי - מדריכים וזכויות</title>
+
+<meta property="og:title" content="הכלים שלי - מדריכים וזכויות">
+<meta property="og:description" content="מדריכים שימושיים וזכויות עובדים: מתי מגיעים פיצויי פיטורין, איך מחשבים דמי הבראה ומהן הזכויות בחופשת לידה.">
+<meta property="og:image" content="https://my-toools.github.io/favicon.png">
+<meta property="og:url" content="https://my-toools.github.io/guides.html">
+<meta property="og:type" content="website">
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
-    --bg-main: #0b0f19;
-    --card-bg: #111827;
-    --input-bg: #1f2937;
-    --text-primary: #f9fafb;
-    --text-secondary: #9ca3af;
-    --accent-blue: #2563eb;
-    --accent-glow: rgba(37, 99, 235, 0.35);
-    --border-color: #1f2937;
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --dark-blue: #0f172a;
+    --accent-blue: #1e3a8a;
+    --border-color: #cbd5e1;
   }
 
   body {
@@ -26,26 +33,35 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 90px;
+    padding-top: 160px;
     padding-bottom: 40px;
     direction: rtl;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
+  /* סרגל עליון קבוע בכחול כהה */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 24px;
+    background: var(--dark-blue);
+    border-bottom: 3px solid #1d4ed8;
+    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
   }
 
   .nav-brand {
@@ -53,110 +69,243 @@
     align-items: center;
     gap: 10px;
     font-weight: 800;
-    font-size: 18px;
-    color: #38bdf8;
+    font-size: 22px; /* מוגדל */
+    color: #ffffff;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
   }
 
   .nav-logo {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 6px;
     object-fit: contain;
   }
 
   .nav-links {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 
+  /* כותרות סרגל מוגדלות ובולטות */
   .nav-links a {
-    color: #9ca3af;
+    color: #cbd5e1;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px; /* מוגדל */
+    padding: 6px 12px;
+    border-radius: 6px;
     transition: all 0.2s ease;
   }
 
   .nav-links a:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.15);
   }
 
-  .container {
-    max-width: 720px;
+  .nav-widgets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #38bdf8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 16px;
+    border-radius: 20px;
+    flex-wrap: wrap;
+  }
+
+  .widget-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .widget-item span {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .hero-header {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+
+  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+
+  /* גריד כרטיסיות מדריכים */
+  .grid-container {
+    max-width: 940px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 30px;
-    margin: 0 auto 24px auto;
-    border-radius: 16px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
     text-align: right;
   }
 
-  h1 { font-size: 26px; font-weight: 800; color: #ffffff; text-align: center; margin-bottom: 8px; }
-  h2 { font-size: 20px; font-weight: 700; color: #38bdf8; margin-bottom: 12px; }
+  .card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
 
-  p, li { color: var(--text-secondary); line-height: 1.6; font-size: 15px; }
-  ul { padding-right: 20px; margin-bottom: 0; }
+  .card h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-top: 0;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+  }
+
+  p, li { color: var(--text-secondary); line-height: 1.6; font-size: 14px; }
+  ul { padding-right: 20px; margin: 0; }
 
   footer {
     margin-top: 50px;
     padding: 24px;
-    background: #111827;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--dark-blue);
+    border-top: 3px solid #1d4ed8;
     text-align: center;
     font-size: 13px;
-    color: #9ca3af;
+    color: #cbd5e1;
   }
 
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    body { padding-top: 190px; }
+    .grid-container { grid-template-columns: 1fr; }
+    .nav-brand { position: static; justify-content: center; }
+    .nav-top-row { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
 <div class="nav">
-    <div class="nav-brand">
-        <img src="favicon.png" alt="לוגו מרכז הכלים" class="nav-logo">
-        <span>מרכז הכלים</span>
+    <div class="nav-top-row">
+        <div class="nav-brand">
+            <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
+            <span>הכלים שלי</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">💼 זכויות עובדים</a>
+            <a href="legal.html">⚖️ כלים משפטיים</a>
+            <a href="finance.html">💰 מט"ח ופיננסים</a>
+            <a href="utility.html">🛠️ כלים שימושיים</a>
+            <a href="guides.html">📚 מדריכים</a>
+            <a href="about.html">ℹ️ אודות</a>
+        </div>
     </div>
-    <div class="nav-links">
-        <a href="index.html">💼 זכויות עובדים</a>
-        <a href="legal.html">⚖️ כלים משפטיים</a>
-        <a href="finance.html">💰 מט"ח ופיננסים</a>
-        <a href="utility.html">🛠️ כלים שימושיים</a>
-        <a href="guides.html">📚 מדריכים</a>
+
+    <div class="nav-widgets">
+        <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
+        <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
+        <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
+        <div class="widget-item">🌅 זריחה: <span id="navSunrise">--:--</span></div>
+        <div class="widget-item">🌇 שקיעה: <span id="navSunset">--:--</span></div>
+        <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
+        <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
+        <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
     </div>
 </div>
 
-<div class="container">
+<div class="hero-header">
     <h1>מדריכים שימושיים וזכויות עובדים</h1>
-    <p style="text-align: center; color: var(--text-secondary);">מרכז המידע והמדריכים המלא לעובדים: דמי הבראה, פיצויי פיטורין, ימי חופשה וזכויות בעבודה.</p>
+    <p>מרכז המידע והמדריכים המלא לעובדים: דמי הבראה, פיצויי פיטורין, ימי חופשה וזכויות בעבודה.</p>
 </div>
 
-<div class="container">
-    <h2>זכאות לדמי הבראה: כמה מגיע לך ומתי?</h2>
-    <p>עובד שמשלים שנת עבודה מלאה אחת באותו מקום עבודה זכאי לקבל דמי הבראה. גובה דמי ההבראה ליום במגזר הפרטי עומד כיום על 418 ש"ח.</p>
-    <ul>
-        <li><strong>שנה ראשונה:</strong> 5 ימי הבראה</li>
-        <li><strong>שנים 2-3:</strong> 6 ימי הבראה לכל שנה</li>
-        <li><strong>שנים 4-10:</strong> 7 ימי הבראה לכל שנה</li>
-    </ul>
+<div class="grid-container">
+
+    <!-- מדריך 1 -->
+    <div class="card">
+        <h2>זכאות לדמי הבראה: כמה מגיע לך ומתי?</h2>
+        <p>עובד שמשלים שנת עבודה מלאה אחת באותו מקום עבודה זכאי לקבל דמי הבראה. גובה דמי ההבראה ליום במגזר הפרטי עומד כיום על 418 ש"ח.</p>
+        <ul>
+            <li><strong>שנה ראשונה:</strong> 5 ימי הבראה</li>
+            <li><strong>שנים 2-3:</strong> 6 ימי הבראה לכל שנה</li>
+            <li><strong>שנים 4-10:</strong> 7 ימי הבראה לכל שנה</li>
+        </ul>
+    </div>
+
+    <!-- מדריך 2 -->
+    <div class="card">
+        <h2>מתי מגיעים פיצויי פיטורין מלאים?</h2>
+        <p>עובד שעבד שנה ברציפות ופוטר זכאי לפיצויי פיטורין בגובה שכר חודשי אחד לכל שנת עבודה. במקרים מסוימים, גם עובד שהתפטר זכאי לפיצויים (כגון התפטרות לרגל טיפול בילד, הרעת תנאים מוחשית או מצב רפואי).</p>
+    </div>
+
 </div>
 
-<div class="container">
-    <h2>מתי מגיעים פיצויי פיטורין מלאים?</h2>
-    <p>עובד שעבד שנה ברציפות ופוטר זכאי לפיצויי פיטורין בגובה שכר חודשי אחד לכל שנת עבודה. במקרים מסוימים, גם עובד שהתפטר זכאי לפיצויים (כגון התפטרות לרגל טיפול בילד, הרעת תנאים מוחשית או מצב רפואי).</p>
-</div>
+<script>
+    function updateClockAndDate() {
+        let now = new Date();
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
+        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('navLiveTime').innerText = timeStr;
+    }
+
+    async function loadNavData() {
+        try {
+            let now = new Date();
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
+            let data = await res.json();
+            document.getElementById('navHebrewDate').innerText = data.hebrew;
+        } catch (e) {}
+
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+            document.getElementById('navEur').innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
+        } catch (e) {}
+
+        try {
+            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
+            let wData = await wRes.json();
+            let temp = Math.round(wData.current_weather.temperature);
+            document.getElementById('navWeather').innerText = `${temp}°C`;
+
+            let sunrise = wData.daily.sunrise[0].split('T')[1];
+            let sunset = wData.daily.sunset[0].split('T')[1];
+            document.getElementById('navSunrise').innerText = sunrise;
+            document.getElementById('navSunset').innerText = sunset;
+        } catch (e) {
+            document.getElementById('navSunrise').innerText = "06:20";
+            document.getElementById('navSunset').innerText = "19:10";
+        }
+    }
+
+    updateClockAndDate();
+    setInterval(updateClockAndDate, 1000);
+    loadNavData();
+</script>
 
 <footer>
-    <p><strong>מרכז הכלים</strong> - פלטפורמה חינמית לחישוב זכויות, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; color: #9ca3af; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a></p>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
 </body>
