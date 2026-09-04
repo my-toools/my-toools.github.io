@@ -37,31 +37,11 @@
             text-align: center;
             transition: transform 0.2s;
         }
-        .clock-card:hover {
-            transform: translateY(-3px);
-            border-color: #38bdf8;
-        }
-        .clock-card h3 {
-            margin: 0 0 5px 0;
-            color: #1e293b;
-            font-size: 18px;
-        }
-        .clock-card .country {
-            font-size: 12px;
-            color: #64748b;
-            margin-bottom: 10px;
-        }
-        .clock-card .time {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0284c7;
-            font-family: monospace;
-        }
-        .clock-card .date {
-            font-size: 12px;
-            color: #475569;
-            margin-top: 5px;
-        }
+        .clock-card:hover { transform: translateY(-3px); border-color: #38bdf8; }
+        .clock-card h3 { margin: 0 0 5px 0; color: #1e293b; font-size: 18px; }
+        .clock-card .country { font-size: 12px; color: #64748b; margin-bottom: 10px; }
+        .clock-card .time { font-size: 24px; font-weight: bold; color: #0284c7; font-family: monospace; }
+        .clock-card .date { font-size: 12px; color: #475569; margin-top: 5px; }
         .map-box {
             width: 100%;
             height: 450px;
@@ -86,54 +66,14 @@
         </h2>
 
         <div class="clocks-grid">
-            <div class="clock-card">
-                <h3>ניו יורק</h3>
-                <div class="country">ארצות הברית (EDT)</div>
-                <div class="time" id="clock-ny">--:--:--</div>
-                <div class="date" id="date-ny">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>לונדון</h3>
-                <div class="country">בריטניה (BST)</div>
-                <div class="time" id="clock-london">--:--:--</div>
-                <div class="date" id="date-london">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>פריז</h3>
-                <div class="country">צרפת (CEST)</div>
-                <div class="time" id="clock-paris">--:--:--</div>
-                <div class="date" id="date-paris">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>טוקיו</h3>
-                <div class="country">יפן (JST)</div>
-                <div class="time" id="clock-tokyo">--:--:--</div>
-                <div class="date" id="date-tokyo">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>לוס אנג'לס</h3>
-                <div class="country">ארצות הברית (PDT)</div>
-                <div class="time" id="clock-la">--:--:--</div>
-                <div class="date" id="date-la">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>דובאי</h3>
-                <div class="country">איחוד האמירויות (GST)</div>
-                <div class="time" id="clock-dubai">--:--:--</div>
-                <div class="date" id="date-dubai">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>בנגקוק</h3>
-                <div class="country">תאילנד (ICT)</div>
-                <div class="time" id="clock-bangkok">--:--:--</div>
-                <div class="date" id="date-bangkok">--/--/----</div>
-            </div>
-            <div class="clock-card">
-                <h3>סידני</h3>
-                <div class="country">אוסטרליה (AEST)</div>
-                <div class="time" id="clock-sydney">--:--:--</div>
-                <div class="date" id="date-sydney">--/--/----</div>
-            </div>
+            <div class="clock-card"><h3>ניו יורק</h3><div class="country">ארצות הברית</div><div class="time" id="clock-ny">--:--:--</div><div class="date" id="date-ny">--/--/----</div></div>
+            <div class="clock-card"><h3>לונדון</h3><div class="country">בריטניה</div><div class="time" id="clock-london">--:--:--</div><div class="date" id="date-london">--/--/----</div></div>
+            <div class="clock-card"><h3>פריז</h3><div class="country">צרפת</div><div class="time" id="clock-paris">--:--:--</div><div class="date" id="date-paris">--/--/----</div></div>
+            <div class="clock-card"><h3>טוקיו</h3><div class="country">יפן</div><div class="time" id="clock-tokyo">--:--:--</div><div class="date" id="date-tokyo">--/--/----</div></div>
+            <div class="clock-card"><h3>לוס אנג'לס</h3><div class="country">ארצות הברית</div><div class="time" id="clock-la">--:--:--</div><div class="date" id="date-la">--/--/----</div></div>
+            <div class="clock-card"><h3>דובאי</h3><div class="country">איחוד האמירויות</div><div class="time" id="clock-dubai">--:--:--</div><div class="date" id="date-dubai">--/--/----</div></div>
+            <div class="clock-card"><h3>בנגקוק</h3><div class="country">תאילנד</div><div class="time" id="clock-bangkok">--:--:--</div><div class="date" id="date-bangkok">--/--/----</div></div>
+            <div class="clock-card"><h3>סידני</h3><div class="country">אוסטרליה</div><div class="time" id="clock-sydney">--:--:--</div><div class="date" id="date-sydney">--/--/----</div></div>
         </div>
 
         <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 20px;">
@@ -141,7 +81,7 @@
         </h2>
 
         <div class="map-box">
-            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=he&amp;q=Israel+(My%20Business%20Name)&amp;t=&amp;z=3&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+            <iframe width="100%" height="100%" frameborder="0" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=he&amp;q=Israel&amp;t=&amp;z=3&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
         </div>
     </div>
 
@@ -160,21 +100,16 @@
                 { idTime: 'clock-bangkok', idDate: 'date-bangkok', tz: 'Asia/Bangkok' },
                 { idTime: 'clock-sydney', idDate: 'date-sydney', tz: 'Australia/Sydney' }
             ];
-
             var now = new Date();
-
             cities.forEach(function(city) {
                 var timeStr = now.toLocaleTimeString('he-IL', { timeZone: city.tz, hour12: false });
                 var dateStr = now.toLocaleDateString('he-IL', { timeZone: city.tz });
-                
                 var timeElem = document.getElementById(city.idTime);
                 var dateElem = document.getElementById(city.idDate);
-                
                 if (timeElem) timeElem.innerText = timeStr;
                 if (dateElem) dateElem.innerText = dateStr;
             });
         }
-
         setInterval(updateWorldClocks, 1000);
         updateWorldClocks();
     </script>
