@@ -15,7 +15,28 @@
         document.head.appendChild(favicon);
     }
 
-    // 3. הזרקת סרגל ניווט עליון קבוע (מרווחים צפופים וקרובים ללוגו)
+    // 3. הזרקת CSS לנעילת גודל וסגנון אחיד למניעת שינויי גודל בין עמודים
+    var navStyle = document.createElement('style');
+    navStyle.innerHTML = `
+        .nav {
+            box-sizing: border-box !important;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+            line-height: 1.2 !important;
+        }
+        .nav-top-row a {
+            box-sizing: border-box !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+        .nav-widgets {
+            box-sizing: border-box !important;
+            font-size: 12px !important;
+            line-height: 1 !important;
+        }
+    `;
+    document.head.appendChild(navStyle);
+
+    // 4. הזרקת סרגל ניווט עליון
     var navContainer = document.querySelector('.nav');
     if (navContainer) {
         var navHTML = `
@@ -50,14 +71,12 @@
             </div>
 
             <div class="nav-widgets" id="navWidgets" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; width: 100%; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 5px; margin-top: 5px; font-size: 12px; color: #cbd5e1;">
-                <!-- חלק ימני: שעה, תאריך לועזי ותאריך עברי -->
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-clock" style="color: #60a5fa;"></i> <span id="navTime" style="color: #ffffff; font-weight: 700;">--:--:--</span></div>
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-calendar" style="color: #38bdf8;"></i> <span id="navGregorianDate" style="color: #ffffff; font-weight: 700;">--/--/----</span></div>
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-calendar-days" style="color: #e879f9;"></i> <span id="navHebrewDate" style="color: #ffffff; font-weight: 700;">טוען תאריך עברי...</span></div>
                 
-                <!-- המשך הסרגל המשני -->
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-sun" style="color: #f59e0b;"></i> זריחה: <span id="navSun" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
@@ -77,7 +96,7 @@
         navContainer.innerHTML = navHTML;
     }
 
-    // 4. הזרקת הסרגל התחתון (פוטר)
+    // 5. הזרקת הסרגל התחתון (פוטר)
     var footerElem = document.querySelector('footer');
     var footerHTML = `
         <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
@@ -94,18 +113,15 @@
         footerElem.innerHTML = footerHTML;
     }
 
-    // 5. עדכון שעה ותאריך לועזי בזמן אמת (כל שנייה)
+    // 6. עדכון שעה ותאריך לועזי
     function updateClockAndDate() {
         var now = new Date();
-        
-        // שעה בפורמט HH:MM:SS
         var hours = String(now.getHours()).padStart(2, '0');
         var minutes = String(now.getMinutes()).padStart(2, '0');
         var seconds = String(now.getSeconds()).padStart(2, '0');
         var timeElem = document.getElementById('navTime');
         if (timeElem) timeElem.innerText = `${hours}:${minutes}:${seconds}`;
 
-        // תאריך לועזי בפורמט DD/MM/YYYY
         var day = String(now.getDate()).padStart(2, '0');
         var month = String(now.getMonth() + 1).padStart(2, '0');
         var year = now.getFullYear();
@@ -116,9 +132,8 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 6. טעינת נתוני APIs בלייב
+    // 7. טעינת APIs
     async function updateNavData() {
-        // שערי מט"ח
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
             var data = await res.json();
@@ -134,7 +149,6 @@
             }
         } catch (e) {}
 
-        // תאריך עברי בלייב
         try {
             var now = new Date();
             var hebRes = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth() + 1}&gd=${now.getDate()}&g2h=1`);
@@ -145,7 +159,6 @@
             }
         } catch (e) {}
 
-        // מזג אוויר, זריחה ושקיעה
         try {
             var wRes = await fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true&daily=sunrise,sunset&timezone=auto");
             var wData = await wRes.json();
