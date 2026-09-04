@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. הזרקת עיצוב ה-CSS של המחשבון המדעי הקומפקטי
+  // 1. הזרקת עיצוב ה-CSS של המחשבון המדעי במבנה מימין לשמאל
   var style = document.createElement('style');
   style.innerHTML = `
     .calc-modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(6px);
       z-index: 9999;
       justify-content: center;
       align-items: center;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .calc-modal-card {
       background: #0f172a;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
+      padding: 22px;
       border-radius: 20px;
       width: 100%;
       max-width: 440px;
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .calc-modal-screen {
       width: 100%;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       color: #38bdf8;
       background: transparent;
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
-      direction: ltr;
+      direction: rtl; /* כפתורי פעולות מימין בסגנון Windows */
     }
     .calc-btn {
       background: #1e293b;
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
     '<div class="widget-item">🌤️ <span id="navWeather">--</span></div>' +
     "</div>" +
 
-    // חלון קופץ של המחשבון המדעי
+    // חלון קופץ של המחשבון המדעי עם כפתורי הפעולות מימין
     '<div id="calcModal" class="calc-modal-overlay" onclick="if(event.target === this) toggleNavCalculator()">' +
     '<div class="calc-modal-card">' +
     '<div class="calc-modal-header"><h3>🧮 מחשבון מדעי מקצועי</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
@@ -190,41 +190,35 @@ document.addEventListener("DOMContentLoaded", function () {
     '</div>' +
     '<div class="calc-modal-grid">' +
     // שורה 1
-    '<button class="calc-btn sci" onclick="navCalcSci(\'sin\')">sin</button>' +
-    '<button class="calc-btn sci" onclick="navCalcSci(\'cos\')">cos</button>' +
-    '<button class="calc-btn sci" onclick="navCalcSci(\'tan\')">tan</button>' +
+    '<button class="calc-btn op" onclick="navCalcPress(\'/\')">÷</button>' +
     '<button class="calc-btn clear" onclick="navCalcClear()">C</button>' +
     '<button class="calc-btn func" onclick="navCalcBackspace()">⌫</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sin\')">sin</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'cos\')">cos</button>' +
     // שורה 2
-    '<button class="calc-btn sci" onclick="navCalcSci(\'sqrt\')">√</button>' +
-    '<button class="calc-btn sci" onclick="navCalcSci(\'sqr\')">x²</button>' +
-    '<button class="calc-btn sci" onclick="navCalcPress(\'**\')">xʸ</button>' +
-    '<button class="calc-btn func" onclick="navCalcPercent()">%</button>' +
-    '<button class="calc-btn op" onclick="navCalcPress(\'/\')">÷</button>' +
-    // שורה 3
-    '<button class="calc-btn sci" onclick="navCalcSci(\'log\')">log</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'7\')">7</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'8\')">8</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'9\')">9</button>' +
     '<button class="calc-btn op" onclick="navCalcPress(\'*\')">×</button>' +
-    // שורה 4
-    '<button class="calc-btn sci" onclick="navCalcSci(\'ln\')">ln</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'4\')">4</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'5\')">5</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'6\')">6</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'9\')">9</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'8\')">8</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'7\')">7</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'tan\')">tan</button>' +
+    // שורה 3
     '<button class="calc-btn op" onclick="navCalcPress(\'-\')">-</button>' +
-    // שורה 5
-    '<button class="calc-btn sci" onclick="navCalcSci(\'pi\')">π</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'1\')">1</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'2\')">2</button>' +
-    '<button class="calc-btn" onclick="navCalcPress(\'3\')">3</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'6\')">6</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'5\')">5</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'4\')">4</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sqrt\')">√</button>' +
+    // שורה 4
     '<button class="calc-btn op" onclick="navCalcPress(\'+\')">+</button>' +
-    // שורה 6
-    '<button class="calc-btn func" onclick="navCalcPress(\'(\')">(</button>' +
-    '<button class="calc-btn func" onclick="navCalcPress(\')\')">)</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'3\')">3</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'2\')">2</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'1\')">1</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sqr\')">x²</button>' +
+    // שורה 5
+    '<button class="calc-btn equals" onclick="navCalcEval()">=</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'0\')">0</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'.\')">.</button>' +
-    '<button class="calc-btn equals" onclick="navCalcEval()">=</button>' +
+    '<button class="calc-btn func" onclick="navCalcPercent()">%</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'pi\')">π</button>' +
     '</div>' +
     '</div>' +
     '</div>';
@@ -320,7 +314,7 @@ function toggleNavCalculator() {
 function navCalcPress(val) {
   var display = document.getElementById('navCalcDisplay');
   if (navCalcNewEntry) {
-    if (['+', '-', '*', '/', '**'].includes(val)) {
+    if (['+', '-', '*', '/'].includes(val)) {
       navCalcNewEntry = false;
     } else {
       navCalcExpr = "";
@@ -363,8 +357,6 @@ function navCalcSci(type) {
     else if (type === 'tan') res = Math.tan(val * Math.PI / 180);
     else if (type === 'sqrt') res = Math.sqrt(val);
     else if (type === 'sqr') res = Math.pow(val, 2);
-    else if (type === 'log') res = Math.log10(val);
-    else if (type === 'ln') res = Math.log(val);
     else if (type === 'pi') { res = Math.PI; }
 
     res = Math.round(res * 100000000) / 100000000;
