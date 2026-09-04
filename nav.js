@@ -17,15 +17,15 @@
             </a>
         </div>
         <div class="nav-widgets" id="navWidgets">
-            <div class="widget-item"><i class="fa-solid fa-percent" style="color:#38bdf8;"></i> ריבית פריים: <span>6.00%</span></div>
+            <div class="widget-item"><i class="fa-solid fa-percent" style="color: #38bdf8; font-size: 14px;"></i> ריבית פריים: <span>6.00%</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item"><i class="fa-solid fa-shekel-sign" style="color:#38bdf8;"></i> שכר מינימום: <span>₪5,880</span></div>
+            <div class="widget-item"><i class="fa-solid fa-shekel-sign" style="color: #38bdf8; font-size: 14px;"></i> שכר מינימום: <span>₪5,880</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item"><i class="fa-solid fa-dollar-sign" style="color:#38bdf8;"></i> דולר: <span id="navUsd">טוען...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-dollar-sign" style="color: #38bdf8; font-size: 14px;"></i> דולר: <span id="navUsd">טוען...</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item"><i class="fa-solid fa-euro-sign" style="color:#38bdf8;"></i> אירו: <span id="navEur">טוען...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-euro-sign" style="color: #38bdf8; font-size: 14px;"></i> אירו: <span id="navEur">טוען...</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item"><i class="fa-solid fa-calendar-days" style="color:#38bdf8;"></i> <span id="navHebrewDate">טוען תאריך עברי...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-calendar-days" style="color: #38bdf8; font-size: 14px;"></i> <span id="navHebrewDate">טוען תאריך עברי...</span></div>
         </div>
     `;
 
