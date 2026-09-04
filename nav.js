@@ -88,7 +88,7 @@
         document.body.insertBefore(navContainer, document.body.firstChild);
     }
 
-    // 4. הזרקת תוכן הסרגל (חדשות אונליין מוקם מימין ללוגו)
+    // 4. הזרקת תוכן הסרגל
     navContainer.innerHTML = `
         <div class="nav-top-row">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -137,7 +137,7 @@
         </div>
     `;
 
-    // 5. תיקון אוטומטי - יצירת פוטר אם לא קיים בדף
+    // 5. תיקון אוטומטי - יצירת פוטר
     var footerElem = document.querySelector('footer');
     if (!footerElem) {
         footerElem = document.createElement('footer');
@@ -150,7 +150,7 @@
             <strong>הבהרה משפטית:</strong> הנתונים, החישובים והמידע המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.
         </p>
         <p>
-            ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | 
+            ליצירת קשר: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a> | 
             <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | 
             <a href="about.html">אודות והצהרת נגישות</a>
         </p>
