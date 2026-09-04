@@ -57,7 +57,7 @@
   input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
   textarea { min-height: 80px; resize: vertical; }
 
-  /* מחשבון עמוד כלים */
+  /* מחשבון עמוד כלים - כפתורים מימין */
   .calc-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -128,7 +128,7 @@
             <button class="calc-btn-u" onclick="pressCalc('3')">3</button>
             <button class="calc-btn-u" onclick="pressCalc('2')">2</button>
             <button class="calc-btn-u" onclick="pressCalc('1')">1</button>
-            <button class="calc-btn-u sci" onclick="pressCalc('**')">xʸ</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('pow')">xʸ</button>
 
             <button class="calc-btn-u op" onclick="evalCalc()">=</button>
             <button class="calc-btn-u" onclick="pressCalc('0')">0</button>
@@ -221,6 +221,7 @@
             else if (type === 'tan') res = Math.tan(val * Math.PI / 180);
             else if (type === 'sqrt') res = Math.sqrt(val);
             else if (type === 'sqr') res = Math.pow(val, 2);
+            else if (type === 'pow') { calcExpr += '**'; document.getElementById('calcDisplay').value = calcExpr; return; }
             document.getElementById('calcDisplay').value = res.toFixed(4);
             calcExpr = res.toString();
         } catch(e) {}
