@@ -1,12 +1,103 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. הזרקת עיצוב ה-CSS של המחשבון המדעי במבנה מימין לשמאל
+  // 1. הזרקת עיצוב ה-CSS המוגן והאחיד לסרגל ולמחשבון המדעי
   var style = document.createElement('style');
   style.innerHTML = `
+    .nav {
+      position: fixed !important;
+      top: 0 !important; left: 0 !important; right: 0 !important;
+      z-index: 1000 !important;
+      background: #0f172a !important;
+      border-bottom: 3px solid #1d4ed8 !important;
+      padding: 10px 20px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 8px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+    .nav-top-row {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100% !important;
+    }
+    .nav-links {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 14px !important;
+      flex-wrap: wrap !important;
+      margin: 0 auto !important;
+      direction: rtl !important;
+    }
+    .nav-links a {
+      color: #f8fafc !important;
+      text-decoration: none !important;
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      padding: 6px 10px !important;
+      border-radius: 8px !important;
+      transition: all 0.2s ease !important;
+      white-space: nowrap !important;
+    }
+    .nav-links a:hover {
+      color: #38bdf8 !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+    .nav-logo-link {
+      display: flex !important;
+      align-items: center !important;
+      padding: 0 6px !important;
+      cursor: pointer !important;
+    }
+    .nav-logo {
+      width: 40px !important;
+      height: 40px !important;
+      max-width: 40px !important;
+      max-height: 40px !important;
+      border-radius: 8px !important;
+      object-fit: contain !important;
+      transition: transform 0.2s ease !important;
+    }
+    .nav-logo:hover {
+      transform: scale(1.1) !important;
+    }
+    .nav-widgets {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      font-size: 13px !important;
+      color: #cbd5e1 !important;
+      padding-top: 6px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      flex-wrap: wrap !important;
+      width: 100% !important;
+      direction: rtl !important;
+    }
+    .widget-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      white-space: nowrap !important;
+    }
+    .widget-item span {
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+    .widget-divider {
+      color: rgba(255, 255, 255, 0.2) !important;
+      font-weight: 300 !important;
+    }
+
+    /* עיצוב המחשבון המדעי הקופץ */
     .calc-modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(6px);
       z-index: 9999;
       justify-content: center;
@@ -86,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
-      direction: rtl; /* כפתורי פעולות מימין בסגנון Windows */
+      direction: rtl;
     }
     .calc-btn {
       background: #1e293b;
@@ -103,9 +194,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .calc-btn:hover {
       background: #334155;
       transform: translateY(-1px);
-    }
-    .calc-btn:active {
-      transform: translateY(0);
     }
     .calc-btn.op {
       background: #1d4ed8;
@@ -149,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(style);
 
-  // 2. הזרקת הסרגל והמחשבון המדעי
+  // 2. הזרקת הסרגל המרכזי ומדדי המשק בלייב
   var navHTML =
     '<div class="nav-top-row">' +
     '<div class="nav-links">' +
@@ -169,9 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
     '<span class="widget-divider">|</span>' +
     '<div class="widget-item">⏰ <span id="navLiveTime">00:00:00</span></div>' +
     '<span class="widget-divider">|</span>' +
-    '<div class="widget-item">🌅 <span id="navSunrise">--:--</span></div>' +
+    '<div class="widget-item">🏛️ ריבית פריים: <span>6.00%</span></div>' +
     '<span class="widget-divider">|</span>' +
-    '<div class="widget-item">🌇 <span id="navSunset">--:--</span></div>' +
+    '<div class="widget-item">💼 שכר מינימום: <span>32.30 ₪/שעה</span></div>' +
     '<span class="widget-divider">|</span>' +
     '<div class="widget-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <span id="navUsd">--</span></div>' +
     '<span class="widget-divider">|</span>' +
@@ -180,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
     '<div class="widget-item">🌤️ <span id="navWeather">--</span></div>' +
     "</div>" +
 
-    // חלון קופץ של המחשבון המדעי עם כפתורי הפעולות מימין
+    // חלון קופץ של המחשבון המדעי
     '<div id="calcModal" class="calc-modal-overlay" onclick="if(event.target === this) toggleNavCalculator()">' +
     '<div class="calc-modal-card">' +
     '<div class="calc-modal-header"><h3>🧮 מחשבון מדעי מקצועי</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
@@ -189,31 +277,30 @@ document.addEventListener("DOMContentLoaded", function () {
     '<input type="text" id="navCalcDisplay" class="calc-modal-screen" value="0" readonly>' +
     '</div>' +
     '<div class="calc-modal-grid">' +
-    // שורה 1
     '<button class="calc-btn op" onclick="navCalcPress(\'/\')">÷</button>' +
     '<button class="calc-btn clear" onclick="navCalcClear()">C</button>' +
     '<button class="calc-btn func" onclick="navCalcBackspace()">⌫</button>' +
     '<button class="calc-btn sci" onclick="navCalcSci(\'sin\')">sin</button>' +
     '<button class="calc-btn sci" onclick="navCalcSci(\'cos\')">cos</button>' +
-    // שורה 2
+
     '<button class="calc-btn op" onclick="navCalcPress(\'*\')">×</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'9\')">9</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'8\')">8</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'7\')">7</button>' +
     '<button class="calc-btn sci" onclick="navCalcSci(\'tan\')">tan</button>' +
-    // שורה 3
+
     '<button class="calc-btn op" onclick="navCalcPress(\'-\')">-</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'6\')">6</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'5\')">5</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'4\')">4</button>' +
     '<button class="calc-btn sci" onclick="navCalcSci(\'sqrt\')">√</button>' +
-    // שורה 4
+
     '<button class="calc-btn op" onclick="navCalcPress(\'+\')">+</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'3\')">3</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'2\')">2</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'1\')">1</button>' +
     '<button class="calc-btn sci" onclick="navCalcSci(\'sqr\')">x²</button>' +
-    // שורה 5
+
     '<button class="calc-btn equals" onclick="navCalcEval()">=</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'0\')">0</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'.\')">.</button>' +
@@ -281,13 +368,8 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       var wData = await wRes.json();
       var weatherEl = document.getElementById("navWeather");
-      var sunriseEl = document.getElementById("navSunrise");
-      var sunsetEl = document.getElementById("navSunset");
       if (weatherEl)
-        weatherEl.innerText =
-          Math.round(wData.current_weather.temperature) + "°C";
-      if (sunriseEl) sunriseEl.innerText = wData.daily.sunrise[0].split("T")[1];
-      if (sunsetEl) sunsetEl.innerText = wData.daily.sunset[0].split("T")[1];
+        weatherEl.innerText = Math.round(wData.current_weather.temperature) + "°C";
     } catch (e) {}
   }
 
