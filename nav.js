@@ -24,8 +24,8 @@
                     </a>
                 </div>
 
-                <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 15px;">
-                    <img src="logo.png" alt="לוגו האתר" class="nav-logo" style="width: 48px; height: 48px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 15px; text-decoration: none;">
+                    <img src="logo.png" onerror="this.onerror=null; this.src='favicon.png';" alt="לוגו האתר" class="nav-logo" style="width: 48px; height: 48px; object-fit: contain; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); background: #ffffff; padding: 2px;">
                 </a>
 
                 <div class="nav-links-left" style="display: flex; align-items: center; gap: 14px;">
