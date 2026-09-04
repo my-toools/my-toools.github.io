@@ -45,16 +45,8 @@
             border-radius: 8px;
             text-align: center;
         }
-        .card h3 {
-            margin: 0 0 10px 0;
-            color: #1e293b;
-            font-size: 16px;
-        }
-        .card .time-val {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2563eb;
-        }
+        .card h3 { margin: 0 0 10px 0; color: #1e293b; font-size: 16px; }
+        .card .time-val { font-size: 20px; font-weight: bold; color: #2563eb; }
         .shabbat-box {
             background: #fef3c7;
             border: 1px solid #fde047;
@@ -67,14 +59,8 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        .shabbat-item {
-            text-align: center;
-        }
-        .shabbat-item .val {
-            font-size: 22px;
-            font-weight: bold;
-            color: #b45309;
-        }
+        .shabbat-item { text-align: center; }
+        .shabbat-item .val { font-size: 22px; font-weight: bold; color: #b45309; }
     </style>
 </head>
 <body>
@@ -85,7 +71,6 @@
         <div class="header-card">
             <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה בלייב</h1>
             <p style="margin: 0; color: #cbd5e1;">זמני היום לפי ההלכה, פרשת השבוע וכניסת/יציאת שבת לפי ערים</p>
-            
             <div style="margin-top: 15px;">
                 <label for="citySelector" style="color: #ffffff; font-weight: bold;">בחרי עיר: </label>
                 <select id="citySelector" class="city-select" onchange="loadZmanim()">
@@ -117,34 +102,13 @@
         </h2>
 
         <div class="grid-cards">
-            <div class="card">
-                <h3>עלות השחר</h3>
-                <div class="time-val" id="zAlot">--:--</div>
-            </div>
-            <div class="card">
-                <h3>הנץ החמה (זריחה)</h3>
-                <div class="time-val" id="zSunrise">--:--</div>
-            </div>
-            <div class="card">
-                <h3>סוף זמן קריאת שמע</h3>
-                <div class="time-val" id="zShma">--:--</div>
-            </div>
-            <div class="card">
-                <h3>סוף זמן תפילה</h3>
-                <div class="time-val" id="zTfila">--:--</div>
-            </div>
-            <div class="card">
-                <h3>מנחה גדולה</h3>
-                <div class="time-val" id="zMinchaG">--:--</div>
-            </div>
-            <div class="card">
-                <h3>שקיעת החמה</h3>
-                <div class="time-val" id="zSunset">--:--</div>
-            </div>
-            <div class="card">
-                <h3>צאת הכוכבים</h3>
-                <div class="time-val" id="zTzet">--:--</div>
-            </div>
+            <div class="card"><h3>עלות השחר</h3><div class="time-val" id="zAlot">--:--</div></div>
+            <div class="card"><h3>הנץ החמה (זריחה)</h3><div class="time-val" id="zSunrise">--:--</div></div>
+            <div class="card"><h3>סוף זמן קריאת שמע</h3><div class="time-val" id="zShma">--:--</div></div>
+            <div class="card"><h3>סוף זמן תפילה</h3><div class="time-val" id="zTfila">--:--</div></div>
+            <div class="card"><h3>מנחה גדולה</h3><div class="time-val" id="zMinchaG">--:--</div></div>
+            <div class="card"><h3>שקיעת החמה</h3><div class="time-val" id="zSunset">--:--</div></div>
+            <div class="card"><h3>צאת הכוכבים</h3><div class="time-val" id="zTzet">--:--</div></div>
         </div>
     </div>
 
@@ -154,12 +118,9 @@
     <script>
         async function loadZmanim() {
             var geonameid = document.getElementById('citySelector').value;
-            
-            // טעינת זמני שבת
             try {
                 var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&m=50`);
                 var shabbatData = await shabbatRes.json();
-                
                 if (shabbatData && shabbatData.items) {
                     var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
                     var candleItem = shabbatData.items.find(i => i.category === 'candles');
@@ -171,19 +132,15 @@
                 }
             } catch(e) {}
 
-            // טעינת זמני היום בהלכה
             try {
-                var now = new Date();
                 var zRes = await fetch(`https://www.hebcal.com/zmanim?cfg=json&geonameid=${geonameid}`);
                 var zData = await zRes.json();
-                
                 if (zData && zData.times) {
                     var formatTime = function(isoStr) {
                         if(!isoStr) return '--:--';
                         var d = new Date(isoStr);
                         return d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
                     };
-
                     document.getElementById('zAlot').innerText = formatTime(zData.times.alotHaShachar);
                     document.getElementById('zSunrise').innerText = formatTime(zData.times.sunrise);
                     document.getElementById('zShma').innerText = formatTime(zData.times.sofZmanShma);
@@ -194,7 +151,6 @@
                 }
             } catch(e) {}
         }
-
         loadZmanim();
     </script>
 </body>
