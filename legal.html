@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="מחשבונים משפטיים מתקדמים: חישוב מועדים וימי פגרה (30/45/60 יום), בדיקת סמכות עניינית, אגרות בית משפט ושכר טרחה.">
-<link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>הכלים שלי - מחשבונים וכלים משפטיים</title>
+<link rel="icon" type="image/png" href="favicon.png?v=3">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
@@ -32,57 +31,56 @@
     line-height: 1.6;
   }
 
+  /* דריסת CSS היקפית לסרגל */
   .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: var(--dark-blue);
-    border-bottom: 3px solid #1d4ed8;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    z-index: 1000 !important;
+    background: #0f172a !important;
+    border-bottom: 3px solid #1d4ed8 !important;
+    padding: 10px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
-  .nav-top-row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; flex-wrap: wrap; }
-  .nav-links { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 auto; }
-  .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 700; font-size: 16px; padding: 6px 12px; border-radius: 6px; transition: all 0.2s ease; }
-  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-  .nav-logo-link { display: flex; align-items: center; padding: 0 4px; }
-  .nav-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; transition: transform 0.2s ease; }
-  .nav-logo:hover { transform: scale(1.08); }
+  .nav-top-row { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; }
+  .nav-links { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important; margin: 0 auto !important; }
+  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 10px !important; }
+  
+  .nav-logo-link { display: flex !important; align-items: center !important; }
+  .nav-logo { width: 40px !important; height: 40px !important; max-width: 40px !important; max-height: 40px !important; object-fit: contain !important; border-radius: 8px !important; }
 
-  .nav-widgets { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #94a3b8; background: transparent; padding: 4px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; width: 100%; }
-  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .widget-item span { color: #f8fafc; font-weight: 500; }
-  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
+  .nav-widgets { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; width: 100% !important; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 6px !important; }
+  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 4px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
+  .widget-item span { color: #ffffff !important; font-weight: 600 !important; }
+  .widget-divider { color: rgba(255,255,255,0.2) !important; }
 
   .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
   .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
   .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
 
   .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
-  .card { background: var(--card-bg); border: 1px solid #e2e8f0; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
+  .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
   .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
   label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
 
-  .checkbox-group { display: flex; align-items: center; gap: 8px; margin: 14px 0; }
-  .checkbox-group input { width: auto; margin: 0; cursor: pointer; }
-  .checkbox-group label { margin: 0; cursor: pointer; }
-
-  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; transition: all 0.2s ease; margin-top: 16px; }
+  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
   button:hover { background: #1e4ed8; }
 
-  .result { font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; }
+  .result { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; word-break: break-all; }
+
+  .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
+  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; }
+  
+  .legal-disclaimer { font-size: 11px; color: #64748b; margin-top: 8px; text-align: justify; }
 
   footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
   footer p { color: #cbd5e1 !important; margin: 6px 0; }
   footer a { color: #38bdf8; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) { body { padding-top: 190px; } .grid-container { grid-template-columns: 1fr; } }
 </style>
@@ -92,169 +90,177 @@
 <div class="nav"></div>
 
 <div class="hero-header">
-    <h1>מחשבונים וכלים משפטיים מתקדמים</h1>
-    <p>חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.</p>
+    <h1>כלים ומחשבונים משפטיים</h1>
+    <p>מחשבוני מועדים ופגרות, אגרות בית משפט, בדיקת סמכות עניינית והפרשי הצמדה וריבית.</p>
 </div>
 
 <div class="grid-container">
 
+    <!-- מחשבון מועדים ופגרות -->
     <div class="card">
-        <h2>מחשבון מועדים, ימי תגובה ופגרות</h2>
-        <label>תאריך המצאת הכתב / החלטה:</label>
-        <input type="date" id="courtStartDate">
-        
-        <label>מספר הימים להגשה / תגובה:</label>
-        <select id="daysCount">
-            <option value="15">15 ימים (תגובה לבקשה / בר"ע)</option>
-            <option value="30">30 ימים (כתב הגנה בתביעות קטנות / תשובה)</option>
-            <option value="45">45 ימים (ערעור אזרחי / כתב תביעה)</option>
-            <option value="60">60 ימים (כתב הגנה בסדר דין מהיר / רגיל)</option>
-            <option value="90">90 ימים (הודעה לצד שלישי)</option>
-        </select>
+        <h2>מחשבון מועדים ופגרות בתי המשפט</h2>
+        <label>תאריך קבלת כתב הטענות / החלטה:</label>
+        <input type="date" id="legalStartDate">
+        <label>מספר ימים ימים שנקבעו בחוק / החלטה:</label>
+        <input type="number" id="legalDays" value="30">
+        <button onclick="calcLegalDeadline()">חשב תאריך הגשה סופי</button>
+        <div class="result" id="legalDeadResult">בחרי תאריך לחישוב</div>
 
-        <div class="checkbox-group">
-            <input type="checkbox" id="includeVacation" checked>
-            <label for="includeVacation">כולל פגרות בתי המשפט (קיץ וחגים)</label>
+        <div class="guide-box">
+            <h4>💡 הוראות תקנות סדר הדין האזרחי:</h4>
+            <p>לפי תקנות בתי המשפט (פגרות), תקופת פגרת הקיץ (21 ביולי עד 5 בספטמבר) ופגרות החגים (סוכות ופסח) אינן נספרות במניין הימים, אלא אם כן הוראה מפורשת קבעה אחרת.</p>
         </div>
-
-        <button onclick="calcCourtDeadline()">חשב תאריך אחרון להגשה</button>
-        <div class="result" id="deadlineResult">הכניסי תאריך לחישוב</div>
+        <div class="legal-disclaimer">* הבהרה: החישוב כולל קיזוז פגרות רשמיות. חובה לאמת את המועד הסופי מול מזכירות הערכאה השיפוטית.</div>
     </div>
 
+    <!-- מחשבון אגרות בית משפט -->
     <div class="card">
-        <h2>מחשבון סמכות עניינית מקיף</h2>
-        <label>מהות התביעה / הנושא:</label>
-        <select id="claimSubject" onchange="toggleAmountInput()">
-            <option value="money">תביעה כספית / פיצויים</option>
-            <option value="work">סכסוך עבודה / זכויות עובדים</option>
-            <option value="family">ענייני משפחה / ירושה</option>
-            <option value="admin">עתירה מנהלית / החלטת רשות</option>
-            <option value="realestate_use">חזקה / שימוש במקרקעין</option>
-            <option value="realestate_ownership">בעלות במקרקעין</option>
+        <h2>מחשבון אגרת פתיחת הליך כספי</h2>
+        <label>סוג ההליך / הערכאה:</label>
+        <select id="courtType">
+            <option value="magistrate">בית משפט שלום (תביעה כספית רגילה)</option>
+            <option value="district">בית משפט מחוזי (תביעה כספית רגילה)</option>
+            <option value="small">בית משפט לתביעות קטנות (עד 38,900 ₪)</option>
         </select>
+        <label>סכום התביעה בש"ח:</label>
+        <input type="number" id="claimAmount" placeholder="לדוגמה: 150000">
+        <button onclick="calcCourtFee()">חשב אגרת בית משפט</button>
+        <div class="result" id="feeResult">תוצאה תופיע כאן</div>
 
-        <div id="amountWrapper">
-            <label>סכום התביעה המשוער (בש"ח):</label>
-            <input type="number" id="fullClaimAmount" placeholder="למשל: 150000">
+        <div class="guide-box">
+            <h4>💡 תקנות בתי המשפט (אגרות):</h4>
+            <p>בתביעות כספיות בבית משפט שלום ומחוזי, האגרה הכוללת עומדת על 2.5% מסכום התביעה. מחצית ראשונה (1.25%) משולמת במועד פתיחת התיק, והמחצית השנייה משולמת לפני ישיבת הוכחות.</p>
         </div>
-
-        <button onclick="calcFullJurisdiction()">בדוק ערכאה מוסמכת</button>
-        <div class="result" id="fullJurisResult">תוצאה תופיע כאן</div>
+        <div class="legal-disclaimer">* בתביעות קטנות האגרה עומדת על 1% מסכום התביעה (לפחות 50 ₪).</div>
     </div>
 
-    <div class="card" style="grid-column: span 2;">
-        <h2>מחשבון אגרת בית משפט וחלוקה למחציות</h2>
-        <label>סכום התביעה (בש"ח):</label>
-        <input type="number" id="courtFeeClaim" placeholder="למשל: 200000">
-        
-        <label>סוג ההליך המשפטי:</label>
-        <select id="courtTypeSelect">
-            <option value="small">תביעות קטנות (1% - מינימום 50 ₪)</option>
-            <option value="shalom">בית משפט השלום (2.5%)</option>
-            <option value="mehozi">בית משפט מחוזי (2.5%)</option>
+    <!-- מחשבון סמכות עניינית -->
+    <div class="card">
+        <h2>מחשבון דיאגנוסטי לסמכות עניינית</h2>
+        <label>נושא התביעה המרכזי:</label>
+        <select id="jurisCategory">
+            <option value="money">תביעה כספית / נזיקין / חוזים</option>
+            <option value="labor">סכסוך עבודה / זכויות עובדים</option>
+            <option value="family">ענייני משפחה / ירושה / מזונות</option>
+            <option value="realestate">מקרקעין (חזקה ושימוש / בעלות)</option>
         </select>
+        <label>סכום התביעה בש"ח (אם רלוונטי):</label>
+        <input type="number" id="jurisAmount" placeholder="לדוגמה: 3000000">
+        <button onclick="calcJurisdiction()">בדוק ערכאה מוסמכת</button>
+        <div class="result" id="jurisResult">תוצאה תופיע כאן</div>
 
-        <button onclick="calcDetailedCourtFee()">חשב אגרה ומחציות</button>
-        <div class="result" id="detailedFeeResult">תוצאה תופיע כאן</div>
+        <div class="guide-box">
+            <h4>💡 כללי הסמכות העניינית בישראל:</h4>
+            <p>בית משפט השלום מוסמך לדון בתביעות כספיות עד 2.5 מיליון ₪ ובתביעות חזקה ושימוש במקרקעין. תביעות כספיות מעל 2.5 מיליון ₪ ותביעות בעלות במקרקעין בסמכות בית המשפט המחוזי.</p>
+        </div>
+        <div class="legal-disclaimer">* בדיקה זו כללית בלבד. סמכות בית הדין לעבודה ובית המשפט לענייני משפחה גוברת לפי מהות הסכסוך.</div>
+    </div>
+
+    <!-- מחשבון הצמדה וריבית -->
+    <div class="card">
+        <h2>מחשבון הפרשי הצמדה וריבית לפי חוק</h2>
+        <label>סכום החוב המקורי (₪):</label>
+        <input type="number" id="debtAmount" placeholder="לדוגמה: 50000">
+        <label>תקופה בחדשים:</label>
+        <input type="number" id="debtMonths" value="12">
+        <label>סוג הריבית:</label>
+        <select id="interestType">
+            <option value="legal">ריבית משפטית (פסיקת ריבית והצמדה)</option>
+            <option value="arrears">ריבית פיגורים רשמית</option>
+        </select>
+        <button onclick="calcInterest()">חשב הפרשי הצמדה וריבית</button>
+        <div class="result" id="interestResult">תוצאה תופיע כאן</div>
+
+        <div class="guide-box">
+            <h4>💡 חוק פסיקת ריבית והצמדה, תשכ"א-1961:</h4>
+            <p>רשויות השיפוט וקצובות החוק קובעות תוספת הפרשי הצמדה למדד המחירים לצרכן בצד ריבית משפטית שנשנתית כדי לשמור על ערכו הכלכלי של החוב בערכים ריאליים.</p>
+        </div>
+        <div class="legal-disclaimer">* החישוב נסמך על שיעור ריבית משפטית ממוצע מותאם.</div>
     </div>
 
 </div>
 
 <footer>
     <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, חוות דעת או תחליף לייעוץ משפטי פרטני.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
 <script>
-    function toggleAmountInput() {
-        var subj = document.getElementById('claimSubject').value;
-        var wrapper = document.getElementById('amountWrapper');
-        if (subj === 'work' || subj === 'family' || subj === 'admin' || subj === 'realestate_use' || subj === 'realestate_ownership') {
-            wrapper.style.display = 'none';
-        } else {
-            wrapper.style.display = 'block';
-        }
-    }
+    document.getElementById('legalStartDate').valueAsDate = new Date();
 
-    function calcCourtDeadline() {
-        var startVal = document.getElementById('courtStartDate').value;
-        var days = parseInt(document.getElementById('daysCount').value);
-        var includeVacation = document.getElementById('includeVacation').checked;
+    function calcLegalDeadline() {
+        var start = new Date(document.getElementById('legalStartDate').value);
+        var days = parseInt(document.getElementById('legalDays').value) || 0;
+        if (!start || isNaN(start.getTime())) return;
 
-        if (!startVal) {
-            document.getElementById('deadlineResult').innerText = "יש לבחור תאריך התחלה.";
-            return;
-        }
+        var curr = new Date(start);
+        var added = 0;
 
-        var currDate = new Date(startVal);
-        var addedDays = 0;
+        while (added < days) {
+            curr.setDate(curr.getDate() + 1);
+            var m = curr.getMonth() + 1; // 1-12
+            var d = curr.getDate();
 
-        while (addedDays < days) {
-            currDate.setDate(currDate.getDate() + 1);
-            var month = currDate.getMonth() + 1;
-            var dateNum = currDate.getDate();
-
-            if (includeVacation) {
-                var isSummerVacation = (month === 7 && dateNum >= 21) || (month === 8) || (month === 9 && dateNum <= 5);
-                if (isSummerVacation) {
-                    continue;
-                }
-            }
-            addedDays++;
-        }
-
-        var dayOfWeek = currDate.getDay();
-        if (dayOfWeek === 5) currDate.setDate(currDate.getDate() + 2);
-        else if (dayOfWeek === 6) currDate.setDate(currDate.getDate() + 1);
-
-        var dateStr = currDate.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-        document.getElementById('deadlineResult').innerText = "תאריך אחרון: " + dateStr;
-    }
-
-    function calcFullJurisdiction() {
-        var subj = document.getElementById('claimSubject').value;
-        var amt = parseFloat(document.getElementById('fullClaimAmount').value) || 0;
-        var res = "";
-
-        if (subj === 'work') {
-            res = "בית הדין האזורי לעבודה";
-        } else if (subj === 'family') {
-            res = "בית המשפט לענייני משפחה";
-        } else if (subj === 'admin') {
-            res = "בית משפט לעניינים מנהליים או בג\"ץ";
-        } else if (subj === 'realestate_use') {
-            res = "בית משפט השלום (סמכות ייחודית לתביעות חזקה ושימוש)";
-        } else if (subj === 'realestate_ownership') {
-            res = "בית המשפט המחוזי (סמכות ייחודית לתביעות בעלות)";
-        } else {
-            if (amt <= 37900) {
-                res = "בית משפט לתביעות קטנות (או שלום)";
-            } else if (amt <= 2500000) {
-                res = "בית משפט השלום";
-            } else {
-                res = "בית המשפט המחוזי";
+            // קיזוז פגרת הקיץ (21 ביולי - 5 בספטמבר)
+            var isSummerVac = (m === 7 && d >= 21) || (m === 8) || (m === 9 && d <= 5);
+            if (!isSummerVac) {
+                added++;
             }
         }
-        document.getElementById('fullJurisResult').innerText = "הערכאה המוסמכת: " + res;
+
+        document.getElementById('legalDeadResult').innerText = "תאריך הגשה משוער (כולל קיזוז פגרה): " + curr.toLocaleDateString('he-IL');
     }
 
-    function calcDetailedCourtFee() {
-        var amt = parseFloat(document.getElementById('courtFeeClaim').value);
-        var type = document.getElementById('courtTypeSelect').value;
-        if (!amt) {
-            document.getElementById('detailedFeeResult').innerText = "יש להזין סכום תביעה.";
-            return;
-        }
+    function calcCourtFee() {
+        var type = document.getElementById('courtType').value;
+        var amt = parseFloat(document.getElementById('claimAmount').value) || 0;
+        
+        if (amt <= 0) { document.getElementById('feeResult').innerText = "נא להזין סכום תביעה"; return; }
 
         if (type === 'small') {
-            var fee = Math.max(amt * 0.01, 50);
-            document.getElementById('detailedFeeResult').innerText = "אגרת תביעות קטנות: " + fee.toFixed(2) + " ₪";
+            if (amt > 38900) {
+                document.getElementById('feeResult').innerText = "תקרת תביעות קטנות היא 38,900 ₪";
+                return;
+            }
+            var fee = Math.max(50, amt * 0.01);
+            document.getElementById('feeResult').innerText = "אגרת תביעות קטנות: ₪ " + fee.toFixed(2);
         } else {
             var totalFee = amt * 0.025;
-            var half1 = totalFee * 0.5;
-            document.getElementById('detailedFeeResult').innerText = "סך אגרה (2.5%): " + totalFee.toLocaleString() + " ₪ | מחצית ראשונה להגשה: " + half1.toLocaleString() + " ₪";
+            var half1 = totalFee / 2;
+            document.getElementById('feeResult').innerText = "מחצית ראשונה (פתיחה): ₪ " + half1.toLocaleString() + " | סה\"כ אגרה: ₪ " + totalFee.toLocaleString();
         }
+    }
+
+    function calcJurisdiction() {
+        var cat = document.getElementById('jurisCategory').value;
+        var amt = parseFloat(document.getElementById('jurisAmount').value) || 0;
+
+        if (cat === 'labor') {
+            document.getElementById('jurisResult').innerText = "סמכות ייחודית: בית הדין האזורי לעבודה";
+        } else if (cat === 'family') {
+            document.getElementById('jurisResult').innerText = "סמכות ייחודית: בית המשפט לענייני משפחה / בית הדין הרבני";
+        } else if (cat === 'realestate') {
+            document.getElementById('jurisResult').innerText = "חזקה ושימוש: בית משפט שלום | תביעת בעלות: בית משפט מחוזי";
+        } else {
+            if (amt <= 2500000) {
+                document.getElementById('jurisResult').innerText = "סמכות עניינית: בית משפט השלום (עד 2.5 מיליון ₪)";
+            } else {
+                document.getElementById('jurisResult').innerText = "סמכות עניינית: בית המשפט המחוזי (מעל 2.5 מיליון ₪)";
+            }
+        }
+    }
+
+    function calcInterest() {
+        var amt = parseFloat(document.getElementById('debtAmount').value) || 0;
+        var m = parseInt(document.getElementById('debtMonths').value) || 0;
+        var type = document.getElementById('interestType').value;
+
+        var rate = (type === 'arrears') ? 0.075 : 0.04;
+        var interestPart = amt * (rate * (m / 12));
+        var total = amt + interestPart;
+
+        document.getElementById('interestResult').innerText = "סה\"כ כולל ריבית: ₪ " + total.toLocaleString() + " (רכיב ריבית: ₪ " + interestPart.toLocaleString() + ")";
     }
 </script>
 
