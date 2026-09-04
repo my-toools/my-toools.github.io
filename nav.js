@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // 1. הזרקת ה-HTML של הסרגל
     const navHTML = `
     <div class="nav-top-row">
         <div class="nav-links">
@@ -45,4 +46,47 @@ document.addEventListener("DOMContentLoaded", function() {
     if (navContainer) {
         navContainer.innerHTML = navHTML;
     }
+
+    // 2. פונקציות טעינת נתונים ושעון
+    function updateClockAndDate() {
+        let now = new Date();
+        const gregEl = document.getElementById('navGregDate');
+        const timeEl = document.getElementById('navLiveTime');
+        if (gregEl) gregEl.innerText = now.toLocaleDateString('he-IL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        if (timeEl) timeEl.innerText = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    async function loadNavData() {
+        try {
+            let now = new Date();
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
+            let data = await res.json();
+            const hebEl = document.getElementById('navHebrewDate');
+            if (hebEl) hebEl.innerText = data.hebrew;
+        } catch (e) {}
+
+        try {
+            let res = await fetch('https://open.er-api.com/v6/latest/USD');
+            let data = await res.json();
+            const usdEl = document.getElementById('navUsd');
+            const eurEl = document.getElementById('navEur');
+            if (usdEl) usdEl.innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
+            if (eurEl) eurEl.innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
+        } catch (e) {}
+
+        try {
+            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
+            let wData = await wRes.json();
+            const weatherEl = document.getElementById('navWeather');
+            const sunriseEl = document.getElementById('navSunrise');
+            const sunsetEl = document.getElementById('navSunset');
+            if (weatherEl) weatherEl.innerText = `${Math.round(wData.current_weather.temperature)}°C`;
+            if (sunriseEl) sunriseEl.innerText = wData.daily.sunrise[0].split('T')[1];
+            if (sunsetEl) sunsetEl.innerText = wData.daily.sunset[0].split('T')[1];
+        } catch (e) {}
+    }
+
+    updateClockAndDate();
+    setInterval(updateClockAndDate, 1000);
+    loadNavData();
 });
