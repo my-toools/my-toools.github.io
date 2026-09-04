@@ -5,27 +5,27 @@
     var navHTML = `
         <div class="nav-top-row">
             <div class="nav-links">
-                <a href="index.html">זכויות עובדים</a>
-                <a href="legal.html">כלים משפטיים</a>
-                <a href="finance.html">פיננסים ומט"ח</a>
-                <a href="utility.html">כלים שימושיים</a>
-                <a href="tech.html">טכנולוגיה ומדיה</a>
-                <a href="about.html">אודות ונגישות</a>
+                <a href="index.html"><i class="fa-solid fa-briefcase"></i> זכויות עובדים</a>
+                <a href="legal.html"><i class="fa-solid fa-scale-balanced"></i> כלים משפטיים</a>
+                <a href="finance.html"><i class="fa-solid fa-chart-line"></i> פיננסים ומט"ח</a>
+                <a href="utility.html"><i class="fa-solid fa-toolbox"></i> כלים שימושיים</a>
+                <a href="tech.html"><i class="fa-solid fa-laptop-code"></i> טכנולוגיה ומדיה</a>
+                <a href="about.html"><i class="fa-solid fa-circle-info"></i> אודות ונגישות</a>
             </div>
             <a href="index.html" class="nav-logo-link">
                 <img src="logo.png" alt="לוגו האתר" class="nav-logo">
             </a>
         </div>
         <div class="nav-widgets" id="navWidgets">
-            <div class="widget-item">ריבית פריים: <span>6.00%</span></div>
+            <div class="widget-item"><i class="fa-solid fa-percent" style="color:#38bdf8;"></i> ריבית פריים: <span>6.00%</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item">שכר מינימום: <span>₪5,880</span></div>
+            <div class="widget-item"><i class="fa-solid fa-shekel-sign" style="color:#38bdf8;"></i> שכר מינימום: <span>₪5,880</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item">דולר: <span id="navUsd">טוען...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-dollar-sign" style="color:#38bdf8;"></i> דולר: <span id="navUsd">טוען...</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item">אירו: <span id="navEur">טוען...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-euro-sign" style="color:#38bdf8;"></i> אירו: <span id="navEur">טוען...</span></div>
             <div class="widget-divider">|</div>
-            <div class="widget-item"><span id="navHebrewDate">טוען תאריך עברי...</span></div>
+            <div class="widget-item"><i class="fa-solid fa-calendar-days" style="color:#38bdf8;"></i> <span id="navHebrewDate">טוען תאריך עברי...</span></div>
         </div>
     `;
 
