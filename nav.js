@@ -1,5 +1,5 @@
 (function() {
-    // 1. טעינה אוטומטית של CSS ופונטים
+    // 1. טעינת פונטים ואיקונים
     if (!document.querySelector('link[href*="font-awesome"]')) {
         var faLink = document.createElement('link');
         faLink.rel = 'stylesheet';
@@ -14,7 +14,7 @@
         document.head.appendChild(favicon);
     }
 
-    // 2. עיצוב מובנה לסרגל, לפוטר ולחלונית המחשבון המקצועי
+    // 2. עיצוב מובנה ויציב לסרגל ולפוטר
     var navStyle = document.createElement('style');
     navStyle.innerHTML = `
         html { overflow-y: scroll !important; }
@@ -54,21 +54,7 @@
             align-items: center !important;
             gap: 4px !important;
         }
-        .nav-logo-btn {
-            background: none !important;
-            border: none !important;
-            padding: 0 !important;
-            cursor: pointer !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 6px !important;
-            transition: transform 0.2s !important;
-        }
-        .nav-logo-btn:hover {
-            transform: scale(1.08) !important;
-        }
-        .nav-logo-btn img {
+        .nav-logo-link img {
             width: 42px !important;
             height: 42px !important;
             max-height: 42px !important;
@@ -91,96 +77,10 @@
             border-top: 1px solid rgba(255,255,255,0.1) !important;
         }
         footer a { color: #38bdf8 !important; text-decoration: none !important; }
-
-        /* עיצוב חלונית המחשבון המקצועי */
-        .calc-modal {
-            display: none;
-            position: fixed;
-            z-index: 99999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-        }
-        .calc-modal-content {
-            background-color: #1e293b;
-            color: #ffffff;
-            padding: 20px;
-            border-radius: 16px;
-            width: 320px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 1px solid #334155;
-            position: relative;
-            direction: ltr;
-        }
-        .calc-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            direction: rtl;
-        }
-        .calc-header h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .calc-close-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .calc-close-btn:hover { color: #ffffff; }
-        .calc-display {
-            width: 100%;
-            height: 50px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #38bdf8;
-            font-size: 24px;
-            font-family: monospace;
-            text-align: right;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-        .calc-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-        .calc-btn {
-            background: #334155;
-            color: #ffffff;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .calc-btn:hover { background: #475569; }
-        .calc-btn.op { background: #0284c7; color: #ffffff; }
-        .calc-btn.op:hover { background: #0369a1; }
-        .calc-btn.equal { background: #22c55e; color: #ffffff; grid-column: span 2; }
-        .calc-btn.equal:hover { background: #16a34a; }
-        .calc-btn.clear { background: #ef4444; color: #ffffff; }
-        .calc-btn.clear:hover { background: #dc2626; }
     `;
     document.head.appendChild(navStyle);
 
-    // 3. יצירת או זיהוי אלמנט הניווט
+    // 3. תיקון אוטומטי - יצירת הניווט אם לא קיים בדף
     var navContainer = document.querySelector('.nav');
     if (!navContainer) {
         navContainer = document.createElement('div');
@@ -188,7 +88,7 @@
         document.body.insertBefore(navContainer, document.body.firstChild);
     }
 
-    // הזרקת HTML של הסרגל
+    // 4. הזרקת תוכן הסרגל בלייב
     navContainer.innerHTML = `
         <div class="nav-top-row">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -198,10 +98,9 @@
                 <a href="zmanim.html"><i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה</a>
             </div>
 
-            <!-- לוגו האתר הפותח את המחשבון המקצועי בלחיצה -->
-            <button class="nav-logo-btn" onclick="openCalcModal()" title="לחצי לפתיחת מחשבון מקצועי">
-                <img src="logo.png" alt="לוגו - מחשבון מקצועי" onerror="this.src='favicon.png';">
-            </button>
+            <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 6px;">
+                <img src="logo.png" alt="לוגו האתר" class="nav-logo" onerror="this.src='favicon.png';">
+            </a>
 
             <div style="display: flex; align-items: center; gap: 10px;">
                 <a href="news.html"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין</a>
@@ -238,91 +137,13 @@
         </div>
     `;
 
-    // 4. הזרקת חלונית המחשבון המקצועי ל-DOM
-    var calcModal = document.createElement('div');
-    calcModal.id = 'calcModal';
-    calcModal.className = 'calc-modal';
-    calcModal.innerHTML = `
-        <div class="calc-modal-content">
-            <div class="calc-header">
-                <h3><i class="fa-solid fa-calculator"></i> מחשבון מקצועי</h3>
-                <button class="calc-close-btn" onclick="closeCalcModal()">X</button>
-            </div>
-            <input type="text" id="calcDisplay" class="calc-display" readonly value="0">
-            <div class="calc-grid">
-                <button class="calc-btn clear" onclick="calcClear()">C</button>
-                <button class="calc-btn op" onclick="calcAppend('/')">/</button>
-                <button class="calc-btn op" onclick="calcAppend('*')">*</button>
-                <button class="calc-btn op" onclick="calcBack()">DEL</button>
-                
-                <button class="calc-btn" onclick="calcAppend('7')">7</button>
-                <button class="calc-btn" onclick="calcAppend('8')">8</button>
-                <button class="calc-btn" onclick="calcAppend('9')">9</button>
-                <button class="calc-btn op" onclick="calcAppend('-')">-</button>
-                
-                <button class="calc-btn" onclick="calcAppend('4')">4</button>
-                <button class="calc-btn" onclick="calcAppend('5')">5</button>
-                <button class="calc-btn" onclick="calcAppend('6')">6</button>
-                <button class="calc-btn op" onclick="calcAppend('+')">+</button>
-                
-                <button class="calc-btn" onclick="calcAppend('1')">1</button>
-                <button class="calc-btn" onclick="calcAppend('2')">2</button>
-                <button class="calc-btn" onclick="calcAppend('3')">3</button>
-                <button class="calc-btn op" onclick="calcSqrt()">SQRT</button>
-
-                <button class="calc-btn" onclick="calcAppend('0')">0</button>
-                <button class="calc-btn" onclick="calcAppend('.')">.</button>
-                <button class="calc-btn equal" onclick="calcCalculate()">=</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(calcModal);
-
-    // 5. פונקציות המחשבון
-    window.openCalcModal = function() {
-        document.getElementById('calcModal').style.display = 'flex';
-    };
-    window.closeCalcModal = function() {
-        document.getElementById('calcModal').style.display = 'none';
-    };
-    window.calcAppend = function(val) {
-        var display = document.getElementById('calcDisplay');
-        if (display.value === '0' || display.value === 'שגיאה') display.value = val;
-        else display.value += val;
-    };
-    window.calcClear = function() {
-        document.getElementById('calcDisplay').value = '0';
-    };
-    window.calcBack = function() {
-        var display = document.getElementById('calcDisplay');
-        display.value = display.value.slice(0, -1);
-        if (display.value === '') display.value = '0';
-    };
-    window.calcSqrt = function() {
-        var display = document.getElementById('calcDisplay');
-        try {
-            var res = Math.sqrt(eval(display.value));
-            display.value = isNaN(res) ? 'שגיאה' : res;
-        } catch(e) { display.value = 'שגיאה'; }
-    };
-    window.calcCalculate = function() {
-        var display = document.getElementById('calcDisplay');
-        try {
-            display.value = eval(display.value);
-        } catch(e) { display.value = 'שגיאה'; }
-    };
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('calcModal');
-        if (event.target === modal) { modal.style.display = 'none'; }
-    };
-
-    // 6. הזרקת פוטר
+    // 5. תיקון אוטומטי - יצירת פוטר אם לא קיים בדף
     var footerElem = document.querySelector('footer');
     if (!footerElem) {
         footerElem = document.createElement('footer');
         document.body.appendChild(footerElem);
     }
+
     footerElem.innerHTML = `
         <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
         <p style="font-size: 12px; margin: 8px 0; color: #cbd5e1;">
@@ -335,7 +156,7 @@
         </p>
     `;
 
-    // 7. שעון וטעינת נתונים
+    // 6. עדכון שעון ותאריך
     function updateClockAndDate() {
         var now = new Date();
         var hours = String(now.getHours()).padStart(2, '0');
@@ -353,6 +174,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
+    // 7. טעינת נתונים חיים (מט"ח, מזג אוויר, תאריך עברי, פרשה)
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
