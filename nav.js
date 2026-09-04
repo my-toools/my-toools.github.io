@@ -15,12 +15,10 @@
         document.head.appendChild(favicon);
     }
 
-    // 3. הזרקת CSS לנעילת ממידי הסרגל ומניעת תזוזות/קפיצות בגודל
+    // 3. הזרקת CSS לנעילת ממידי הסרגל ובאנר התראות בזמן אמת
     var navStyle = document.createElement('style');
     navStyle.innerHTML = `
-        html {
-            overflow-y: scroll !important; /* מונע קפיצת רוחב כתוצאה מפס הגלילה */
-        }
+        html { overflow-y: scroll !important; }
         .nav {
             box-sizing: border-box !important;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
@@ -36,7 +34,7 @@
             justify-content: center !important;
             gap: 12px !important;
             width: 100% !important;
-            max-width: 1200px !important;
+            max-width: 1350px !important;
             margin: 0 auto !important;
             padding: 0 10px !important;
             box-sizing: border-box !important;
@@ -44,7 +42,7 @@
         }
         .nav-top-row a {
             box-sizing: border-box !important;
-            font-size: 14px !important;
+            font-size: 13px !important;
             line-height: 1 !important;
             padding: 0 !important;
             margin: 0 !important;
@@ -62,39 +60,58 @@
             margin-top: 5px !important;
             padding-top: 5px !important;
         }
+        #alertBanner {
+            display: none;
+            background: #ef4444;
+            color: #ffffff;
+            text-align: center;
+            padding: 6px;
+            font-weight: bold;
+            font-size: 13px;
+            width: 100%;
+        }
     `;
     document.head.appendChild(navStyle);
 
-    // 4. הזרקת סרגל ניווט עליון
+    // 4. הזרקת סרגל ניווט עליון (כולל הסמל האדום להתראות)
     var navContainer = document.querySelector('.nav');
     if (navContainer) {
         var navHTML = `
+            <div id="alertBanner"><i class="fa-solid fa-triangle-exclamation"></i> <span id="alertText">התראת צבע אדום פעילה!</span></div>
             <div class="nav-top-row">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <a href="index.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="index.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> זכויות עובדים
                     </a>
-                    <a href="legal.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    <a href="legal.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> כלים משפטיים
                     </a>
-                    <a href="finance.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    <a href="finance.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-chart-line" style="color: #22c55e;"></i> פיננסים ומט"ח
+                    </a>
+                    <a href="zmanim.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                        <i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה
                     </a>
                 </div>
 
-                <!-- בלחיצה על הלוגו נפתח המחשבון / עמוד הבית -->
-                <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 8px;">
+                <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 6px;">
                     <img src="logo.png" alt="לוגו האתר" class="nav-logo" onerror="this.src='favicon.png';">
                 </a>
 
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <a href="utility.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="world.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                        <i class="fa-solid fa-globe" style="color: #38bdf8;"></i> מפות ושעוני עולם
+                    </a>
+                    <a href="alerts.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                        <i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות וצבע אדום
+                    </a>
+                    <a href="utility.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-toolbox" style="color: #f97316;"></i> כלים שימושיים
                     </a>
-                    <a href="tech.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    <a href="tech.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-laptop-code" style="color: #06b6d4;"></i> טכנולוגיה ומדיה
                     </a>
-                    <a href="about.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    <a href="about.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-circle-info" style="color: #60a5fa;"></i> אודות ונגישות
                     </a>
                 </div>
@@ -106,6 +123,8 @@
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-calendar" style="color: #38bdf8;"></i> <span id="navGregorianDate" style="color: #ffffff; font-weight: 700;">--/--/----</span></div>
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-calendar-days" style="color: #e879f9;"></i> <span id="navHebrewDate" style="color: #ffffff; font-weight: 700;">טוען תאריך עברי...</span></div>
+                <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
+                <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-torah" style="color: #facc15;"></i> <span id="navParasha" style="color: #ffffff; font-weight: 700;">טוען פרשה...</span></div>
                 
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-sun" style="color: #f59e0b;"></i> זריחה: <span id="navSun" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
@@ -186,6 +205,16 @@
             if (hebData && hebData.hebrew) {
                 var hebElem = document.getElementById('navHebrewDate');
                 if (hebElem) hebElem.innerText = hebData.hebrew;
+            }
+
+            var parashaRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&m=0`);
+            var parashaData = await parashaRes.json();
+            if (parashaData && parashaData.items) {
+                var pItem = parashaData.items.find(i => i.category === 'parashat');
+                if (pItem) {
+                    var pElem = document.getElementById('navParasha');
+                    if (pElem) pElem.innerText = pItem.hebrew;
+                }
             }
         } catch (e) {}
 
