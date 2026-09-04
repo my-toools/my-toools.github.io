@@ -14,7 +14,7 @@
         document.head.appendChild(favicon);
     }
 
-    // 2. עיצוב מובנה ויציב לסרגל ולפוטר
+    // 2. עיצוב מובנה
     var navStyle = document.createElement('style');
     navStyle.innerHTML = `
         html { overflow-y: scroll !important; }
@@ -88,7 +88,7 @@
         document.body.insertBefore(navContainer, document.body.firstChild);
     }
 
-    // 4. הזרקת תוכן הסרגל בלייב
+    // 4. הזרקת תוכן הסרגל (חדשות אונליין מוקם מימין ללוגו)
     navContainer.innerHTML = `
         <div class="nav-top-row">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -96,6 +96,7 @@
                 <a href="legal.html"><i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> כלים משפטיים</a>
                 <a href="finance.html"><i class="fa-solid fa-chart-line" style="color: #22c55e;"></i> פיננסים ומט"ח</a>
                 <a href="zmanim.html"><i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה</a>
+                <a href="news.html"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין</a>
             </div>
 
             <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 6px;">
@@ -103,7 +104,6 @@
             </a>
 
             <div style="display: flex; align-items: center; gap: 10px;">
-                <a href="news.html"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין</a>
                 <a href="world.html"><i class="fa-solid fa-globe" style="color: #38bdf8;"></i> מפות ושעוני עולם</a>
                 <a href="alerts.html"><i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות וצבע אדום</a>
                 <a href="utility.html"><i class="fa-solid fa-toolbox" style="color: #f97316;"></i> כלים שימושיים</a>
@@ -174,7 +174,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת נתונים חיים (מט"ח, מזג אוויר, תאריך עברי, פרשה)
+    // 7. טעינת נתונים חיים
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
