@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .alerts-container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 30px auto;
             padding: 20px;
             background: #ffffff;
@@ -16,10 +16,10 @@
             font-family: system-ui, -apple-system, sans-serif;
         }
         .status-box {
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 20px;
             background: #dcfce7;
@@ -37,24 +37,14 @@
             50% { opacity: 0.8; }
             100% { opacity: 1; }
         }
-        .map-section {
+        .grid-layout {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 20px;
             margin-bottom: 30px;
         }
-        @media (max-width: 768px) {
-            .map-section {
-                grid-template-columns: 1fr;
-            }
-        }
-        .map-frame {
-            width: 100%;
-            height: 480px;
-            border-radius: 10px;
-            border: 1px solid #cbd5e1;
-            background: #f8fafc;
-            overflow: hidden;
+        @media (max-width: 850px) {
+            .grid-layout { grid-template-columns: 1fr; }
         }
         .live-panel {
             background: #1e293b;
@@ -63,6 +53,7 @@
             border-radius: 10px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
         .live-panel h3 {
             margin-top: 0;
@@ -70,16 +61,20 @@
             border-bottom: 1px solid rgba(255,255,255,0.15);
             padding-bottom: 10px;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .active-cities-list {
             flex-grow: 1;
             overflow-y: auto;
-            max-height: 380px;
+            max-height: 320px;
+            margin-top: 10px;
         }
         .city-badge {
             background: #ef4444;
             color: #ffffff;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-radius: 6px;
             margin-bottom: 8px;
             font-weight: bold;
@@ -87,6 +82,40 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+        .sound-controls {
+            background: rgba(255,255,255,0.08);
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sound-btn {
+            background: #334155;
+            color: white;
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sound-btn.active {
+            background: #22c55e;
+            border-color: #16a34a;
+        }
+        .map-frame {
+            width: 100%;
+            height: 480px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            overflow: hidden;
         }
         .search-box {
             width: 100%;
@@ -111,9 +140,7 @@
             color: #ffffff;
             font-weight: 600;
         }
-        .alerts-table tr:hover {
-            background-color: #f8fafc;
-        }
+        .alerts-table tr:hover { background-color: #f8fafc; }
         .badge-alert {
             background: #ef4444;
             color: white;
@@ -128,43 +155,54 @@
 
     <div class="nav"></div>
 
+    <audio id="alertSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
+
     <div class="alerts-container">
-        <h1 style="text-align: center; color: #1e293b; margin-bottom: 10px;">
-            <i class="fa-solid fa-map-location-dot" style="color: #ef4444;"></i> מפת התראות פיקוד העורף בזמן אמת
+        <h1 style="text-align: center; color: #1e293b; margin-bottom: 8px;">
+            <i class="fa-solid fa-map-location-dot" style="color: #ef4444;"></i> התראות פיקוד העורף בזמן אמת
         </h1>
         <p style="text-align: center; color: #64748b; margin-bottom: 20px;">
-            תצוגת מפה חי על גבי מפת ישראל ומעקב היסטורי אחר התראות פיקוד העורף
+            מעקב חי אחר התראות צבע אדום ומפת ישראל האינטראקטיבית
         </p>
 
-        <!-- מחוון סטטוס ראשי -->
         <div id="liveStatus" class="status-box">
             <i class="fa-solid fa-shield-halved"></i> אין התראות פעילות כעת בפיקוד העורף (שגרה)
         </div>
 
-        <!-- אזור המפה והלוח החי -->
-        <div class="map-section">
-            <div class="map-frame">
-                <!-- מפת ישראל אינטראקטיבית מותאמת להתראות -->
-                <iframe id="orefMapFrame" width="100%" height="100%" frameborder="0" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=he&amp;q=Israel&amp;t=&amp;z=7&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+        <div class="grid-layout">
+            <div class="live-panel">
+                <div>
+                    <h3>
+                        <span><i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות ברגע זה</span>
+                        <span style="font-size: 11px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">LIVE</span>
+                    </h3>
+
+                    <div class="active-cities-list" id="activeCitiesContainer">
+                        <p style="color: #94a3b8; text-align: center; margin-top: 40px;" id="noAlertsMsg">
+                            <i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 28px; display: block; margin-bottom: 8px;"></i>
+                            אין התראות פעילות כעת
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sound-controls">
+                    <span style="font-size: 13px; color: #cbd5e1;"><i class="fa-solid fa-volume-high"></i> צליל התראה:</span>
+                    <button id="soundToggleBtn" class="sound-btn" onclick="togglePageSound()">
+                        <i class="fa-solid fa-volume-xmark" id="soundIcon"></i> <span id="soundStatusText">שקט (כבוי)</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="live-panel">
-                <h3><i class="fa-solid fa-bell"></i> התראות פעילות ברגע זה</h3>
-                <div class="active-cities-list" id="activeCitiesContainer">
-                    <p style="color: #94a3b8; text-align: center; margin-top: 40px;" id="noAlertsMsg">
-                        <i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                        אין התראות פעילות כעת
-                    </p>
-                </div>
+            <div class="map-frame">
+                <iframe id="orefMapFrame" width="100%" height="100%" frameborder="0" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=he&amp;q=Israel&amp;t=&amp;z=7&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
             </div>
         </div>
 
-        <!-- היסטוריית התראות -->
         <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 20px;">
             <i class="fa-solid fa-clock-rotate-left"></i> היסטוריית התראות
         </h2>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 חפשי יישוב, אזור או עיר (לדוגמה: אשקלון, שדרות, תל אביב)..." onkeyup="filterAlerts()">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 חפשי יישוב, אזור או עיר..." onkeyup="filterAlerts()">
 
         <table class="alerts-table" id="alertsTable">
             <thead>
@@ -187,30 +225,44 @@
     <script src="nav.js"></script>
     <script>
         var allAlerts = [];
+        var pageSoundEnabled = false;
 
-        // טעינת היסטוריה
+        function togglePageSound() {
+            var btn = document.getElementById('soundToggleBtn');
+            var icon = document.getElementById('soundIcon');
+            var text = document.getElementById('soundStatusText');
+            var audio = document.getElementById('alertSound');
+
+            pageSoundEnabled = !pageSoundEnabled;
+
+            if (pageSoundEnabled) {
+                btn.classList.add('active');
+                icon.className = 'fa-solid fa-volume-high';
+                text.innerText = 'צליל פעיל';
+                if (audio) { audio.play(); audio.pause(); }
+            } else {
+                btn.classList.remove('active');
+                icon.className = 'fa-solid fa-volume-xmark';
+                text.innerText = 'שקט (כבוי)';
+            }
+        }
+
         async function fetchAlertsHistory() {
             try {
                 var response = await fetch("https://www.oref.org.il/WarningMessages/History/AlertsHistory.json");
                 var data = await response.json();
-                
                 if (data && data.length > 0) {
                     allAlerts = data;
                     renderTable(allAlerts);
-                } else {
-                    useFallbackData();
-                }
-            } catch (error) {
-                useFallbackData();
-            }
+                } else { useFallbackData(); }
+            } catch (error) { useFallbackData(); }
         }
 
         function useFallbackData() {
             allAlerts = [
                 { alertDate: "04/09/2026 11:20", data: "שדרות, איבים, ניר עם", title: "ירי רקטות וטילים" },
                 { alertDate: "04/09/2026 10:15", data: "מנרה, מרגליות, קריית שמונה", title: "חדירת כלי טיס עוין" },
-                { alertDate: "03/09/2026 22:45", data: "אשקלון - צפון, אשקלון - דרום", title: "ירי רקטות וטילים" },
-                { alertDate: "03/09/2026 18:10", data: "נחל עוז, עלומים", title: "ירי רקטות וטילים" }
+                { alertDate: "03/09/2026 22:45", data: "אשקלון - צפון, אשקלון - דרום", title: "ירי רקטות וטילים" }
             ];
             renderTable(allAlerts);
         }
@@ -218,7 +270,6 @@
         function renderTable(alerts) {
             var tbody = document.getElementById('alertsBody');
             tbody.innerHTML = '';
-
             alerts.slice(0, 50).forEach(function(alert) {
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -240,19 +291,17 @@
             renderTable(filtered);
         }
 
-        // בדיקת התראות פעילות בלייב לעדכון המפה והלוח
         async function checkLiveAlerts() {
             try {
                 var res = await fetch("https://www.oref.org.il/WarningMessages/alert/alerts.json");
                 var data = await res.json();
-
                 var statusBox = document.getElementById('liveStatus');
                 var activeContainer = document.getElementById('activeCitiesContainer');
+                var audio = document.getElementById('alertSound');
 
                 if (data && data.data && data.data.length > 0) {
                     statusBox.className = 'status-box active';
                     statusBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> התראת צבע אדום פעילה ברגע זה!';
-                    
                     activeContainer.innerHTML = '';
                     data.data.forEach(function(city) {
                         var badge = document.createElement('div');
@@ -260,19 +309,13 @@
                         badge.innerHTML = `<span><i class="fa-solid fa-location-dot"></i> ${city}</span> <small>צבע אדום</small>`;
                         activeContainer.appendChild(badge);
                     });
-
-                    // עדכון מרכז המפה לעיר הראשונה
+                    if (pageSoundEnabled && audio) { audio.play(); }
                     var firstCity = encodeURIComponent(data.data[0]);
                     document.getElementById('orefMapFrame').src = `https://maps.google.com/maps?width=100%25&height=600&hl=he&q=${firstCity}+Israel&t=&z=11&ie=UTF8&iwloc=B&output=embed`;
-
                 } else {
                     statusBox.className = 'status-box';
                     statusBox.innerHTML = '<i class="fa-solid fa-shield-halved"></i> אין התראות פעילות כעת בפיקוד העורף (שגרה)';
-                    activeContainer.innerHTML = `
-                        <p style="color: #94a3b8; text-align: center; margin-top: 40px;">
-                            <i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 24px; display: block; margin-bottom: 8px;"></i>
-                            אין התראות פעילות כעת
-                        </p>`;
+                    activeContainer.innerHTML = `<p style="color: #94a3b8; text-align: center; margin-top: 40px;"><i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 28px; display: block; margin-bottom: 8px;"></i>אין התראות פעילות כעת</p>`;
                 }
             } catch (e) {}
         }
