@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הכלים שלי - מחשבוני מט"ח, שכר ופיננסים</title>
+<title>הכלים שלי - מחשבוני מט"ח, שכר, מס ופיננסים</title>
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 
 <style>
@@ -31,7 +31,6 @@
     line-height: 1.6;
   }
 
-  /* דריסת CSS היקפית לסרגל הניווט */
   .nav {
     position: fixed !important;
     top: 0 !important; left: 0 !important; right: 0 !important;
@@ -91,7 +90,7 @@
 
 <div class="hero-header">
     <h1>שערי חליפין, המרת מט"ח ומחשבוני פיננסים</h1>
-    <p>שערי מטבע בזמן אמת, מחשבון המרה ישיר, מחשבון מע"מ ומחשבוני שכר וחיסכון.</p>
+    <p>מחשבוני מט"ח, מע"מ, נקודות זיכוי במס, עמלות סליקה, פנסיה וחיסכון.</p>
 </div>
 
 <div class="grid-container">
@@ -122,9 +121,79 @@
 
         <div class="guide-box">
             <h4>💡 שערי חליפין רציפים:</h4>
-            <p>שערי החליפין מתעדכנים בזמן אמת מול מערכות המסחר הבינלאומיות. שערים אלו מייצגים שער רציף/יציג ללא עמלות המרה בנקאיות.</p>
+            <p>שערי החליפין מתעדכנים בזמן אמת מול מערכות המסחר הבינלאומיות. שערים אלו מייצגים שער רציף ללא עמלות המרה בנקאיות.</p>
         </div>
         <div class="legal-disclaimer">* הבהרה: עמלות המרה והפרשי קנייה/מכירה בנקאיים עשויים לשנות את הסכום הסופי בבנק.</div>
+    </div>
+
+    <!-- מחשבון נקודות זיכוי במס (חדש) -->
+    <div class="card">
+        <h2>מחשבון נקודות זיכוי במס הכנסה</h2>
+        <label>מגדר:</label>
+        <select id="taxGender" onchange="calcTaxCredits()">
+            <option value="female">אישה (2.75 נקודות בסיס)</option>
+            <option value="male">גבר (2.25 נקודות בסיס)</option>
+        </select>
+
+        <label>מספר ילדים מתחת לגיל 18:</label>
+        <input type="number" id="taxKids" value="0" min="0" oninput="calcTaxCredits()">
+
+        <label>זכאות נוספת:</label>
+        <select id="taxExtra" onchange="calcTaxCredits()">
+            <option value="0">ללא זכאות נוספת</option>
+            <option value="1">תואר אקדמי / תעודת מקצוע (+1 נק')</option>
+            <option value="2">חייל/ת משוחרר/ת (משוחרר שנה ראשונה) (+2 נק')</option>
+            <option value="1">חייל/ת משוחרר/ת (שנה שנייה) (+1 נק')</option>
+        </select>
+
+        <div class="result" id="taxCreditResult">סה"כ: 2.75 נקודות (שווי חודשי: ₪665.5)</div>
+
+        <div class="guide-box">
+            <h4>💡 שווי נקודת זיכוי:</h4>
+            <p>ערך נקודת זיכוי עומד כיום על 242 ₪ לחודש (2,904 ₪ לשנה). נקודות הזיכוי מקזזות את חבות מס ההכנסה ישירות מהשכר הברוטו.</p>
+        </div>
+    </div>
+
+    <!-- מחשבון עמלות סליקה ואשראי (חדש) -->
+    <div class="card">
+        <h2>מחשבון עמלות סליקה לעסקים</h2>
+        <label>מחזור עסקאות חודשי באשראי (₪):</label>
+        <input type="number" id="clearingVolume" placeholder="לדוגמה: 50000" oninput="calcClearing()">
+
+        <label>אחוז עמלת סליקה ממוצע (%):</label>
+        <input type="number" id="clearingRate" value="1.2" step="0.1" oninput="calcClearing()">
+
+        <label>דמי ניהול / חיבור חודשי קבוע (₪):</label>
+        <input type="number" id="clearingFixed" value="39" oninput="calcClearing()">
+
+        <div class="result" id="clearingResult">הכניסי מחזור עסקאות לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 עמלות סליקה לעסקים:</h4>
+            <p>עמלת הסליקה מורכבת מעמלה אחוזית לכל עסקה (עמלת צולבת לחברות האשראי) בתוספת דמי מסלול או תשלום קבוע לחברת הסליקה.</p>
+        </div>
+    </div>
+
+    <!-- מחשבון פנסיה וקצבה צפויה (חדש) -->
+    <div class="card">
+        <h2>מחשבון סימולציית פנסיה וקצבה</h2>
+        <label>גיל נוכחי:</label>
+        <input type="number" id="pensionAge" value="30">
+
+        <label>שכר חודשי ברוטו (₪):</label>
+        <input type="number" id="pensionSalary" placeholder="לדוגמה: 12000">
+
+        <label>חיסכון פנסיוני קיים מצטבר (₪):</label>
+        <input type="number" id="pensionCurrent" value="50000">
+
+        <button onclick="calcPension()">חשב קצבה צפויה בגיל פרישה</button>
+
+        <div class="result" id="pensionResult">תוצאה תופיע כאן</div>
+
+        <div class="guide-box">
+            <h4>💡 הפרשות חובה לפנסיה:</h4>
+            <p>שיעור ההפקדה הפנסיונית המינימלי עומד על 18.5% מהשכר (6.5% מעסיק, 6% עובד, 6% פיצויים). החישוב מניח גיל פרישה 67 ותשואה ממוצעת של 4.5% בשנה.</p>
+        </div>
     </div>
 
     <!-- מחשבון מע"מ -->
@@ -146,9 +215,8 @@
 
         <div class="guide-box">
             <h4>💡 חוק מס ערך מוסף:</h4>
-            <p>שיעור המע"מ בישראל עומד כיום על 17%. חילוץ מע"מ מבוצע על ידי חלוקת סכום הברוטו ב-1.17 לקבלת הנטו, וההפרש הנו רכיב המע"מ לתשלום.</p>
+            <p>שיעור המע"מ בישראל עומד כיום על 17%. חילוץ מע"מ מבוצע על ידי חלוקת סכום הברוטו ב-1.17 לקבלת הנטו.</p>
         </div>
-        <div class="legal-disclaimer">* עוסק פטור אינו רשאי לגבות מע"מ בעסקאותיו.</div>
     </div>
 
     <!-- מחשבון שכר ברוטו לנטו -->
@@ -165,28 +233,6 @@
             <h4>💡 נקודות זיכוי ומדרגות מס:</h4>
             <p>תושב ישראל זכאי מתושבות ל-2.25 נקודות זיכוי (תושבת זכאית ל-2.75 נקודות). ערך נקודת זיכוי שנתית מעודכן מקזז את חבות מס ההכנסה ישירות.</p>
         </div>
-        <div class="legal-disclaimer">* החישוב כולל ניכויי חובה משוערים (מס הכנסה, ביטוח לאומי ומס בריאות) ואינו כולל הפרשות פנסיוניות אישיות.</div>
-    </div>
-
-    <!-- מחשבון ריבית דריבית -->
-    <div class="card">
-        <h2>מחשבון ריבית דריבית וחיסכון</h2>
-        <label>סכום הפקדה ראשוני (₪):</label>
-        <input type="number" id="initDeposit" placeholder="לדוגמה: 20000">
-        <label>הפקדה חודשית נוספת (₪):</label>
-        <input type="number" id="monthlyDeposit" value="500">
-        <label>תקופת החיסכון (בשנים):</label>
-        <input type="number" id="investYears" value="10">
-        <label>תשואה / ריבית שנתית משוערת (%):</label>
-        <input type="number" id="annualRate" value="5" step="0.1">
-        <button onclick="calcCompoundInterest()">חשב צמיחת החיסכון</button>
-        <div class="result" id="compoundResult">תוצאה תופיע כאן</div>
-
-        <div class="guide-box">
-            <h4>💡 אפקט הריבית דריבית:</h4>
-            <p>ריבית דריבית היא ריבית המחושבת לא רק על קרן ההשקעה המקורית, אלא גם על הריבית שהצטברה בתקופות הקודמות. זהו מנוע הצמיחה המרכזי של חסכונות ארוכי טווח.</p>
-        </div>
-        <div class="legal-disclaimer">* החישוב תיאורטי בלבד ואינו מקזז מס רווחי הון (25%) או עמלות ניהול תיק.</div>
     </div>
 
 </div>
@@ -224,6 +270,58 @@
         document.getElementById('forexResult').innerText = amt + " " + from + " = " + converted.toFixed(2) + " " + to;
     }
 
+    function calcTaxCredits() {
+        var gender = document.getElementById('taxGender').value;
+        var kids = parseInt(document.getElementById('taxKids').value) || 0;
+        var extra = parseFloat(document.getElementById('taxExtra').value) || 0;
+
+        var base = (gender === 'female') ? 2.75 : 2.25;
+        var totalPoints = base + (kids * 1.5) + extra;
+        var monthlyValue = totalPoints * 242;
+
+        document.getElementById('taxCreditResult').innerText = "סה\"כ: " + totalPoints + " נקודות (שווי חודשי: ₪" + monthlyValue.toFixed(1) + ")";
+    }
+
+    function calcClearing() {
+        var volume = parseFloat(document.getElementById('clearingVolume').value) || 0;
+        var rate = parseFloat(document.getElementById('clearingRate').value) || 0;
+        var fixed = parseFloat(document.getElementById('clearingFixed').value) || 0;
+
+        if (volume <= 0) {
+            document.getElementById('clearingResult').innerText = "הכניסי מחזור עסקאות לחישוב";
+            return;
+        }
+
+        var feePercent = volume * (rate / 100);
+        var totalFee = feePercent + fixed;
+        var netReceived = volume - totalFee;
+
+        document.getElementById('clearingResult').innerText = "עמלה חודשית כוללת: ₪" + totalFee.toFixed(2) + " | נטו לחשבון: ₪" + netReceived.toFixed(2);
+    }
+
+    function calcPension() {
+        var age = parseInt(document.getElementById('pensionAge').value) || 30;
+        var salary = parseFloat(document.getElementById('pensionSalary').value) || 0;
+        var current = parseFloat(document.getElementById('pensionCurrent').value) || 0;
+
+        if (salary <= 0 || age >= 67) {
+            document.getElementById('pensionResult').innerText = "נא להזין גיל ושכר תקינים";
+            return;
+        }
+
+        var yearsToRetire = 67 - age;
+        var monthlyDeposit = salary * 0.185; // 18.5% הפרשה כוללת
+        var annualRate = 0.045; // 4.5% תשואה ממוצעת
+
+        var totalAccrued = current;
+        for (var i = 0; i < yearsToRetire * 12; i++) {
+            totalAccrued = (totalAccrued + monthlyDeposit) * (1 + (annualRate / 12));
+        }
+
+        var estimatedMonthlyPayout = totalAccrued / 200; // מקדם קצבה משוער 200
+        document.getElementById('pensionResult').innerText = "צבירה משוערת בגיל 67: ₪" + Math.round(totalAccrued).toLocaleString() + " | קצבה חודשית משוערת: ₪" + Math.round(estimatedMonthlyPayout).toLocaleString();
+    }
+
     function calcVat() {
         var amt = parseFloat(document.getElementById('vatAmount').value);
         var rate = parseFloat(document.getElementById('vatRate').value) / 100;
@@ -254,31 +352,12 @@
             return;
         }
 
-        // אומדן מס הכנסה וביטוח לאומי בסיסי
-        var taxCreditValue = pts * 242; // ערך נקודת זיכוי חודשית משוערת
+        var taxCreditValue = pts * 242;
         var incomeTax = Math.max(0, (gross * 0.14) - taxCreditValue);
         var nationalInsurance = (gross > 7522) ? (gross * 0.12) : (gross * 0.035);
         
         var net = gross - incomeTax - nationalInsurance;
         document.getElementById('salaryNetResult').innerText = "שכר נטו משוער: ₪ " + Math.round(net).toLocaleString();
-    }
-
-    function calcCompoundInterest() {
-        var init = parseFloat(document.getElementById('initDeposit').value) || 0;
-        var monthly = parseFloat(document.getElementById('monthlyDeposit').value) || 0;
-        var yrs = parseInt(document.getElementById('investYears').value) || 0;
-        var rate = (parseFloat(document.getElementById('annualRate').value) || 0) / 100;
-
-        var total = init;
-        var totalDeposits = init;
-
-        for (var i = 0; i < yrs * 12; i++) {
-            total = (total + monthly) * (1 + (rate / 12));
-            totalDeposits += monthly;
-        }
-
-        var profit = total - totalDeposits;
-        document.getElementById('compoundResult').innerText = "סה\"כ חיסכון מצטבר: ₪ " + Math.round(total).toLocaleString() + " (רווח נקי: ₪ " + Math.round(profit).toLocaleString() + ")";
     }
 
     fetchRates();
