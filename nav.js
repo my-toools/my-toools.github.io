@@ -1,52 +1,146 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. הזרקת עיצוב ה-CSS של חלון המחשבון הקופץ
+  // 1. הזרקת עיצוב ה-CSS המודרני והיוקרתי של המחשבון
   var style = document.createElement('style');
   style.innerHTML = `
     .calc-modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
       z-index: 9999;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
     .calc-modal-card {
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 16px;
-      width: 300px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 28px;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
       position: relative;
       direction: rtl;
+      font-family: 'Heebo', sans-serif;
     }
     .calc-modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      border-bottom: 2px solid #f1f5f9;
-      padding-bottom: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 12px;
     }
-    .calc-modal-header h3 { margin: 0; font-size: 18px; color: #1e3a8a; }
+    .calc-modal-header h3 {
+      margin: 0; font-size: 20px; color: #f8fafc; font-weight: 800; display: flex; align-items: center; gap: 8px;
+    }
     .calc-close-btn {
-      background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer; color: #64748b;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #cbd5e1;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .calc-close-btn:hover {
+      background: #ef4444; color: #ffffff;
+    }
+    .calc-display-container {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      text-align: left;
+      direction: ltr;
+    }
+    .calc-history {
+      font-size: 14px;
+      color: #94a3b8;
+      min-height: 20px;
+      margin-bottom: 4px;
+      word-break: break-all;
     }
     .calc-modal-screen {
-      width: 100%; font-size: 22px; text-align: left; direction: ltr; font-weight: 700;
-      background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px;
-      box-sizing: border-box; margin-bottom: 12px;
+      width: 100%;
+      font-size: 32px;
+      font-weight: 800;
+      color: #38bdf8;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
     }
-    .calc-modal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .calc-modal-btn {
-      background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 12px;
-      border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer;
+    .calc-modal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
-    .calc-modal-btn.op { background: #1e3a8a; color: #ffffff; }
+    .calc-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 18px 0;
+      border-radius: 14px;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .calc-btn:hover {
+      background: #334155;
+      transform: translateY(-2px);
+    }
+    .calc-btn:active {
+      transform: translateY(0);
+    }
+    .calc-btn.op {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+    .calc-btn.op:hover {
+      background: #2563eb;
+    }
+    .calc-btn.func {
+      background: #334155;
+      color: #38bdf8;
+    }
+    .calc-btn.func:hover {
+      background: #475569;
+    }
+    .calc-btn.equals {
+      background: #0284c7;
+      color: #ffffff;
+      grid-column: span 2;
+    }
+    .calc-btn.equals:hover {
+      background: #0369a1;
+    }
+    .calc-btn.clear {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .calc-btn.clear:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
   `;
   document.head.appendChild(style);
 
-  // 2. הזרקת הסרגל והמחשבון הקופץ ל-HTML
+  // 2. הזרקת ה-HTML של הסרגל והמחשבון המעוצב
   var navHTML =
     '<div class="nav-top-row">' +
     '<div class="nav-links">' +
@@ -76,32 +170,36 @@ document.addEventListener("DOMContentLoaded", function () {
     '<span class="widget-divider">|</span>' +
     '<div class="widget-item">🌤️ <span id="navWeather">--</span></div>' +
     "</div>" +
-    
-    // חלון קופץ של המחשבון
+
+    // חלון קופץ של המחשבון היוקרתי
     '<div id="calcModal" class="calc-modal-overlay" onclick="if(event.target === this) toggleNavCalculator()">' +
     '<div class="calc-modal-card">' +
-    '<div class="calc-modal-header"><h3>🧮 מחשבון מהיר</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
+    '<div class="calc-modal-header"><h3>🧮 מחשבון מקצועי</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
+    '<div class="calc-display-container">' +
+    '<div id="navCalcHistory" class="calc-history"></div>' +
     '<input type="text" id="navCalcDisplay" class="calc-modal-screen" value="0" readonly>' +
+    '</div>' +
     '<div class="calc-modal-grid">' +
-    '<button class="calc-modal-btn" onclick="navCalcClear()">C</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'(\')">(</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\')\')">)</button>' +
-    '<button class="calc-modal-btn op" onclick="navCalcPress(\'/\')">/</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'7\')">7</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'8\')">8</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'9\')">9</button>' +
-    '<button class="calc-modal-btn op" onclick="navCalcPress(\'*\')">*</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'4\')">4</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'5\')">5</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'6\')">6</button>' +
-    '<button class="calc-modal-btn op" onclick="navCalcPress(\'-\')">-</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'1\')">1</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'2\')">2</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'3\')">3</button>' +
-    '<button class="calc-modal-btn op" onclick="navCalcPress(\'+\')">+</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'0\')">0</button>' +
-    '<button class="calc-modal-btn" onclick="navCalcPress(\'.\')">.</button>' +
-    '<button class="calc-modal-btn op" style="grid-column: span 2;" onclick="navCalcEval()">=</button>' +
+    '<button class="calc-btn clear" onclick="navCalcClear()">C</button>' +
+    '<button class="calc-btn func" onclick="navCalcBackspace()">⌫</button>' +
+    '<button class="calc-btn func" onclick="navCalcPercent()">%</button>' +
+    '<button class="calc-btn op" onclick="navCalcPress(\'/\')">÷</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'7\')">7</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'8\')">8</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'9\')">9</button>' +
+    '<button class="calc-btn op" onclick="navCalcPress(\'*\')">×</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'4\')">4</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'5\')">5</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'6\')">6</button>' +
+    '<button class="calc-btn op" onclick="navCalcPress(\'-\')">-</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'1\')">1</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'2\')">2</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'3\')">3</button>' +
+    '<button class="calc-btn op" onclick="navCalcPress(\'+\')">+</button>' +
+    '<button class="calc-btn func" onclick="navCalcPlusMinus()">±</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'0\')">0</button>' +
+    '<button class="calc-btn" onclick="navCalcPress(\'.\')">.</button>' +
+    '<button class="calc-btn equals" style="grid-column: span 1;" onclick="navCalcEval()">=</button>' +
     '</div>' +
     '</div>' +
     '</div>';
@@ -111,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
     navContainer.innerHTML = navHTML;
   }
 
-  // 3. לוגיקת השעון והמידע
+  // 3. שעון ונתוני הניווט
   function updateClockAndDate() {
     var now = new Date();
     var gregEl = document.getElementById("navGregDate");
@@ -179,8 +277,10 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNavData();
 });
 
-// 4. פונקציות המחשבון הקופץ
+// 4. פונקציות המחשבון המקצועי
 var navCalcExpr = "";
+var navCalcNewEntry = false;
+
 function toggleNavCalculator() {
   var modal = document.getElementById('calcModal');
   if (modal) {
@@ -191,20 +291,67 @@ function toggleNavCalculator() {
     }
   }
 }
+
 function navCalcPress(val) {
-  if (navCalcExpr === "0") navCalcExpr = "";
+  var display = document.getElementById('navCalcDisplay');
+  if (navCalcNewEntry) {
+    if (['+', '-', '*', '/'].includes(val)) {
+      navCalcNewEntry = false;
+    } else {
+      navCalcExpr = "";
+      navCalcNewEntry = false;
+    }
+  }
+  if (navCalcExpr === "0" && val !== ".") navCalcExpr = "";
   navCalcExpr += val;
-  document.getElementById('navCalcDisplay').value = navCalcExpr;
+  display.value = navCalcExpr;
 }
+
 function navCalcClear() {
   navCalcExpr = "";
+  navCalcNewEntry = false;
   document.getElementById('navCalcDisplay').value = "0";
+  document.getElementById('navCalcHistory').innerText = "";
 }
-function navCalcEval() {
+
+function navCalcBackspace() {
+  if (navCalcNewEntry) return;
+  navCalcExpr = navCalcExpr.slice(0, -1);
+  document.getElementById('navCalcDisplay').value = navCalcExpr || "0";
+}
+
+function navCalcPlusMinus() {
+  if (!navCalcExpr) return;
+  if (navCalcExpr.startsWith('-')) {
+    navCalcExpr = navCalcExpr.slice(1);
+  } else {
+    navCalcExpr = '-' + navCalcExpr;
+  }
+  document.getElementById('navCalcDisplay').value = navCalcExpr;
+}
+
+function navCalcPercent() {
+  if (!navCalcExpr) return;
   try {
+    var val = eval(navCalcExpr) / 100;
+    navCalcExpr = val.toString();
+    document.getElementById('navCalcDisplay').value = navCalcExpr;
+  } catch (e) {}
+}
+
+function navCalcEval() {
+  if (!navCalcExpr) return;
+  try {
+    var historyText = navCalcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
+    document.getElementById('navCalcHistory').innerText = historyText + ' =';
+    
     var res = eval(navCalcExpr);
+    if (typeof res === 'number') {
+      res = Math.round(res * 100000000) / 100000000;
+    }
     document.getElementById('navCalcDisplay').value = res;
     navCalcExpr = res.toString();
+    navCalcNewEntry = true;
   } catch (e) {
     document.getElementById('navCalcDisplay').value = "שגיאה";
     navCalcExpr = "";
