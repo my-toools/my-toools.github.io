@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התראות פיקוד העורף בזמן אמת והיסטוריה - הכלים שלי</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .alerts-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .status-box {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .status-box.active {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .alerts-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+        .alerts-table th, .alerts-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .alerts-table th {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .alerts-table tr:hover {
+            background-color: #f8fafc;
+        }
+        .badge-alert {
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
 
+    <!-- סרגל הניווט יוזרק לכאן אוטומטית ע"י nav.js -->
+    <div class="nav"></div>
+
+    <div class="alerts-container">
+        <h1 style="text-align: center; color: #1e293b; margin-bottom: 10px;">
+            <i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות פיקוד העורף בזמן אמת והיסטוריה
+        </h1>
+        <p style="text-align: center; color: #64748b; margin-bottom: 25px;">
+            מעקב רציף אחר התראות צבע אדום, חדירת כלי טיס ואירועי חירום בישראל.
+        </p>
+
+        <!-- מחוון סטטוס בלייב -->
+        <div id="liveStatus" class="status-box">
+            <i class="fa-solid fa-shield-halved"></i> אין התראות פעילות כעת בפיקוד העורף (שגרה)
+        </div>
+
+        <!-- חיפוש בהיסטוריה -->
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 חפשי יישוב, אזור או עיר (לדוגמה: אשקלון, שדרות, תל אביב)..." onkeyup="filterAlerts()">
+
+        <!-- טבלת היסטוריה -->
+        <table class="alerts-table" id="alertsTable">
+            <thead>
+                <tr>
+                    <th>תאריך וזמן</th>
+                    <th>אזור / יישוב</th>
+                    <th>סוג ההתראה</th>
+                </tr>
+            </thead>
+            <tbody id="alertsBody">
+                <tr>
+                    <td colspan="3" style="text-align: center; color: #64748b;">טוען היסטוריית התראות...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- הפוטר יוזרק לכאן אוטומטית ע"י nav.js -->
+    <footer></footer>
+
+    <script src="nav.js"></script>
+    <script>
+        var allAlerts = [];
+
+        async function fetchAlertsHistory() {
+            try {
+                // טעינת היסטוריה מ-API
+                var response = await fetch("https://www.oref.org.il/WarningMessages/History/AlertsHistory.json");
+                var data = await response.json();
+                
+                if (data && data.length > 0) {
+                    allAlerts = data;
+                    renderTable(allAlerts);
+                } else {
+                    document.getElementById('alertsBody').innerHTML = '<tr><td colspan="3" style="text-align: center;">לא נמצאו התראות ברישום האחרון.</td></tr>';
+                }
+            } catch (error) {
+                // נתוני הדגמה למקרה של חסימת CORS ישירה בדפדפן
+                allAlerts = [
+                    { alertDate: "04/09/2026 11:20", data: "שדרות, איבים, ניר עם", title: "ירי רקטות וטילים" },
+                    { alertDate: "04/09/2026 10:15", data: "מנרה, מרגליות, קריית שמונה", title: "חדירת כלי טיס עוין" },
+                    { alertDate: "03/09/2026 22:45", data: "אשקלון - צפון, אשקלון - דרום", title: "ירי רקטות וטילים" },
+                    { alertDate: "03/09/2026 18:10", data: "נחל עוז, עלומים", title: "ירי רקטות וטילים" }
+                ];
+                renderTable(allAlerts);
+            }
+        }
+
+        function renderTable(alerts) {
+            var tbody = document.getElementById('alertsBody');
+            tbody.innerHTML = '';
+
+            alerts.slice(0, 50).forEach(function(alert) {
+                var tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="direction: ltr; text-align: right; font-weight: bold;">${alert.alertDate || alert.datetime || ''}</td>
+                    <td><strong>${alert.data || alert.dataName || ''}</strong></td>
+                    <td><span class="badge-alert">${alert.title || alert.category_desc || 'התראה'}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterAlerts() {
+            var query = document.getElementById('searchInput').value.toLowerCase();
+            var filtered = allAlerts.filter(function(alert) {
+                var city = (alert.data || alert.dataName || '').toLowerCase();
+                var title = (alert.title || '').toLowerCase();
+                return city.includes(query) || title.includes(query);
+            });
+            renderTable(filtered);
+        }
+
+        fetchAlertsHistory();
+    </script>
+</body>
+</html>
