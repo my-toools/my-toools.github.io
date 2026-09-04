@@ -71,22 +71,6 @@
             width: 100%;
             box-shadow: 0 2px 10px rgba(239,68,68,0.5);
         }
-        .sound-toggle-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #ffffff;
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .sound-toggle-btn.active {
-            background: #22c55e;
-            border-color: #16a34a;
-        }
     `;
     document.head.appendChild(navStyle);
 
@@ -94,7 +78,6 @@
     var navContainer = document.querySelector('.nav');
     if (navContainer) {
         var navHTML = `
-            <audio id="alertSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
             <div id="alertBanner"><i class="fa-solid fa-triangle-exclamation"></i> <span id="alertText">התראת צבע אדום פעילה!</span></div>
             <div class="nav-top-row">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -123,9 +106,6 @@
                     <a href="alerts.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות וצבע אדום
                     </a>
-                    <button id="soundToggle" class="sound-toggle-btn" onclick="toggleAlertSound()">
-                        <i class="fa-solid fa-volume-xmark" id="soundIcon"></i> <span id="soundText">צליל כבוי</span>
-                    </button>
                     <a href="utility.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-toolbox" style="color: #f97316;"></i> כלים שימושיים
                     </a>
@@ -171,7 +151,7 @@
     var footerHTML = `
         <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
         <p style="font-size: 12px; margin: 8px 0; color: #cbd5e1;">
-            <strong>הבהרה משפטית:</strong> הנתונים, החישובים והמידע המופיעים באתר מוצגים כהערכה כללית ואינדיקציה בלבד, ואינם מהווים ייעוץ משפטי, פיננסי, מיסויי או ייעוץ השקעות.
+            <strong>הבהרה משפטית:</strong> הנתונים, החישובים והמידע المופיעים באתר מוצגים כהערכה כללית ואינדיקציה בלבד, ואינם מהווים ייעוץ משפטי, פיננסי, מיסויי או ייעוץ השקעות.
         </p>
         <p>
             ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com" style="color: #38bdf8; text-decoration: none;">mytooolsweb@gmail.com</a> | 
@@ -183,29 +163,7 @@
         footerElem.innerHTML = footerHTML;
     }
 
-    // 6. כפתור הפעלת צליל התראה
-    window.soundEnabled = false;
-    window.toggleAlertSound = function() {
-        var btn = document.getElementById('soundToggle');
-        var icon = document.getElementById('soundIcon');
-        var text = document.getElementById('soundText');
-        var audio = document.getElementById('alertSound');
-
-        window.soundEnabled = !window.soundEnabled;
-
-        if (window.soundEnabled) {
-            btn.classList.add('active');
-            icon.className = 'fa-solid fa-volume-high';
-            text.innerText = 'צליל פעיל';
-            if (audio) { audio.play(); audio.pause(); } // אישור דפדפן להשמעת שמע
-        } else {
-            btn.classList.remove('active');
-            icon.className = 'fa-solid fa-volume-xmark';
-            text.innerText = 'צליל כבוי';
-        }
-    };
-
-    // 7. עדכון שעה ותאריך לועזי
+    // 6. עדכון שעה ותאריך לועזי
     function updateClockAndDate() {
         var now = new Date();
         var hours = String(now.getHours()).padStart(2, '0');
@@ -224,7 +182,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 8. טעינת נתונים בלייב
+    // 7. טעינת נתונים בלייב
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
