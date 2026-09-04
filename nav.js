@@ -1,234 +1,280 @@
-(function() {
-    // 1. טעינה אוטומטית של CSS ופונטים
-    if (!document.querySelector('link[href*="font-awesome"]')) {
-        var faLink = document.createElement('link');
-        faLink.rel = 'stylesheet';
-        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-        document.head.appendChild(faLink);
-    }
-
-    if (!document.querySelector('link[rel*="icon"]')) {
-        var favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        favicon.href = 'logo.png';
-        document.head.appendChild(favicon);
-    }
-
-    // 2. עיצוב מובנה לסרגל ולפוטר
-    var navStyle = document.createElement('style');
-    navStyle.innerHTML = `
-        html { overflow-y: scroll !important; }
-        body { margin: 0; padding: 0; }
-        .nav {
-            box-sizing: border-box !important;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
-            padding: 8px 0 !important;
-            margin: 0 !important;
-            line-height: 1.2 !important;
-            min-height: 80px !important;
-            width: 100% !important;
-            background-color: #0f172a !important;
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חדשות אונליין - מבזקים בזמן אמת מכל האתרים - הכלים שלי</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+        
+        .news-container {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
-        .nav-top-row {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 12px !important;
-            width: 100% !important;
-            max-width: 1350px !important;
-            margin: 0 auto !important;
-            padding: 0 10px !important;
-            box-sizing: border-box !important;
-            height: 44px !important;
+        .header-card {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
         }
-        .nav-top-row a {
-            box-sizing: border-box !important;
-            font-size: 13px !important;
-            line-height: 1 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
-            font-weight: 700 !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 4px !important;
+        
+        /* כפתורי סינון */
+        .news-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        .nav-logo-link img {
-            width: 42px !important;
-            height: 42px !important;
-            max-height: 42px !important;
-            object-fit: contain !important;
+        .cat-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            color: #334155;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .nav-widgets {
-            box-sizing: border-box !important;
-            font-size: 12px !important;
-            line-height: 1 !important;
-            margin-top: 5px !important;
-            padding-top: 5px !important;
+        .cat-btn.active {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ef4444;
         }
-        footer {
-            background-color: #0f172a !important;
-            color: #ffffff !important;
-            text-align: center !important;
-            padding: 20px 10px !important;
-            margin-top: 40px !important;
-            font-family: system-ui, -apple-system, sans-serif !important;
-            border-top: 1px solid rgba(255,255,255,0.1) !important;
-        }
-        footer a { color: #38bdf8 !important; text-decoration: none !important; }
-    `;
-    document.head.appendChild(navStyle);
 
-    // 3. תיקון אוטומטי - אם לא קיים <div class="nav"></div>, הסקריפט יוצר אותו בראש הדף
-    var navContainer = document.querySelector('.nav');
-    if (!navContainer) {
-        navContainer = document.createElement('div');
-        navContainer.className = 'nav';
-        document.body.insertBefore(navContainer, document.body.firstChild);
-    }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+        }
 
-    // הזרקת תוכן הסרגל
-    navContainer.innerHTML = `
-        <div class="nav-top-row">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <a href="index.html"><i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> זכויות עובדים</a>
-                <a href="legal.html"><i class="fa-solid fa-scale-balanced" style="color: #a855f7;"></i> כלים משפטיים</a>
-                <a href="finance.html"><i class="fa-solid fa-chart-line" style="color: #22c55e;"></i> פיננסים ומט"ח</a>
-                <a href="zmanim.html"><i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה</a>
-            </div>
+        /* גריד הידיעות */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .news-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+        .news-source {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ef4444;
+            background: #fef2f2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .news-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .news-snippet {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .news-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .news-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
 
-            <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 6px;">
-                <img src="logo.png" alt="לוגו האתר" class="nav-logo" onerror="this.src='favicon.png';">
-            </a>
+    <!-- הסרגל העליון מוזרק לכאן אוטומטית -->
+    <div class="nav"></div>
 
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <a href="world.html"><i class="fa-solid fa-globe" style="color: #38bdf8;"></i> מפות ושעוני עולם</a>
-                <a href="alerts.html"><i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות וצבע אדום</a>
-                <a href="utility.html"><i class="fa-solid fa-toolbox" style="color: #f97316;"></i> כלים שימושיים</a>
-                <a href="tech.html"><i class="fa-solid fa-laptop-code" style="color: #06b6d4;"></i> טכנולוגיה ומדיה</a>
-                <a href="about.html"><i class="fa-solid fa-circle-info" style="color: #60a5fa;"></i> אודות ונגישות</a>
-            </div>
+    <div class="news-container">
+        <div class="header-card">
+            <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין בלייב</h1>
+            <p style="margin: 0; color: #cbd5e1;">מבזקים, כותרות ועדכונים שוטפים מכל אתרי החדשות המובילים בישראל במקום אחד</p>
         </div>
 
-        <div class="nav-widgets" id="navWidgets" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; width: 100%; border-top: 1px solid rgba(255,255,255,0.15); color: #cbd5e1;">
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-clock" style="color: #60a5fa;"></i> <span id="navTime" style="color: #ffffff; font-weight: 700;">--:--:--</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-calendar" style="color: #38bdf8;"></i> <span id="navGregorianDate" style="color: #ffffff; font-weight: 700;">--/--/----</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-calendar-days" style="color: #e879f9;"></i> <span id="navHebrewDate" style="color: #ffffff; font-weight: 700;">טוען תאריך עברי...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-torah" style="color: #facc15;"></i> <span id="navParasha" style="color: #ffffff; font-weight: 700;">טוען פרשה...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-sun" style="color: #f59e0b;"></i> זריחה: <span id="navSun" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-moon" style="color: #a855f7;"></i> שקיעה: <span id="navSunset" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-cloud-sun" style="color: #facc15;"></i> מזג אוויר: <span id="navWeather" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-percent" style="color: #38bdf8;"></i> פריים: <span style="color: #ffffff; font-weight: 700;">6.00%</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-shekel-sign" style="color: #4ade80;"></i> שכר מינימום: <span style="color: #ffffff; font-weight: 700;">₪5,880</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-dollar-sign" style="color: #22c55e;"></i> דולר: <span id="navUsd" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
-            <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
-            <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-euro-sign" style="color: #60a5fa;"></i> אירו: <span id="navEur" style="color: #ffffff; font-weight: 700;">טוען...</span></div>
+        <!-- תפריט קטגוריות -->
+        <div class="news-categories">
+            <button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-layer-group"></i> כל הכותרות</button>
+            <button class="cat-btn" onclick="filterCategory('ynet', this)"><i class="fa-solid fa-bolt"></i> Ynet</button>
+            <button class="cat-btn" onclick="filterCategory('walla', this)"><i class="fa-solid fa-globe"></i> Walla</button>
+            <button class="cat-btn" onclick="filterCategory('globes', this)"><i class="fa-solid fa-chart-line"></i> כלכלה (גלובס)</button>
+            <button class="cat-btn" onclick="filterCategory('haaretz', this)"><i class="fa-solid fa-book-open"></i> הארץ</button>
         </div>
-    `;
 
-    // 4. תיקון אוטומטי - אם לא קיים <footer></footer>, הסקריפט יוצר אותו בתחתית הדף
-    var footerElem = document.querySelector('footer');
-    if (!footerElem) {
-        footerElem = document.createElement('footer');
-        document.body.appendChild(footerElem);
-    }
+        <!-- תיבת חיפוש -->
+        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: ביטחון, משק, מזג אוויר)..." onkeyup="searchNews()">
 
-    footerElem.innerHTML = `
-        <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-        <p style="font-size: 12px; margin: 8px 0; color: #cbd5e1;">
-            <strong>הבהרה משפטית:</strong> הנתונים, החישובים והמידע המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.
-        </p>
+        <!-- גריד כרטיסי החדשות -->
+        <div class="news-grid" id="newsGrid">
+            <div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px 0;">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; color: #ef4444; margin-bottom: 12px; display: block;"></i>
+                טוען כותרות ומבזקים בלייב מכל האתרים...
+            </div>
+        </div>
+    </div>
 
-        <p>
-            ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | 
-            <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | 
-            <a href="about.html">אודות והצהרת נגישות</a>
-        </p>
-    `;
+    <!-- הפוטר התחתון מוזרק לכאן אוטומטית -->
+    <footer></footer>
 
-    // 5. שעון וטעינת נתונים
-    function updateClockAndDate() {
-        var now = new Date();
-        var hours = String(now.getHours()).padStart(2, '0');
-        var minutes = String(now.getMinutes()).padStart(2, '0');
-        var seconds = String(now.getSeconds()).padStart(2, '0');
-        var timeElem = document.getElementById('navTime');
-        if (timeElem) timeElem.innerText = `${hours}:${minutes}:${seconds}`;
+    <script src="nav.js"></script>
+    <script>
+        var allArticles = [];
+        var currentSource = 'all';
 
-        var day = String(now.getDate()).padStart(2, '0');
-        var month = String(now.getMonth() + 1).padStart(2, '0');
-        var year = now.getFullYear();
-        var dateElem = document.getElementById('navGregorianDate');
-        if (dateElem) dateElem.innerText = `${day}/${month}/${year}`;
-    }
-    setInterval(updateClockAndDate, 1000);
-    updateClockAndDate();
+        // רשימת פידי RSS מכל אתרי החדשות המובילים
+        var rssSources = [
+            { name: 'Ynet', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', key: 'ynet' },
+            { name: 'Walla', url: 'https://rss.walla.co.il/feed/1', key: 'walla' },
+            { name: 'גלובס כלכלה', url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?Node=2', key: 'globes' },
+            { name: 'הארץ', url: 'https://www.haaretz.co.il/c2g/1.1620838', key: 'haaretz' }
+        ];
 
-    async function updateNavData() {
-        try {
-            var res = await fetch("https://open.er-api.com/v6/latest/USD");
-            var data = await res.json();
-            if (data && data.rates && data.rates.ILS) {
-                var usdIls = data.rates.ILS;
-                var usdElem = document.getElementById('navUsd');
-                if (usdElem) usdElem.innerText = "₪" + usdIls.toFixed(2);
-                if (data.rates.EUR) {
-                    var eurIls = (1 / data.rates.EUR) * usdIls;
-                    var eurElem = document.getElementById('navEur');
-                    if (eurElem) eurElem.innerText = "₪" + eurIls.toFixed(2);
+        async function fetchAllNews() {
+            var grid = document.getElementById('newsGrid');
+            allArticles = [];
+
+            try {
+                for (var source of rssSources) {
+                    // שימוש ב-API ציבורי להמרת RSS ל-JSON
+                    var apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
+                    var res = await fetch(apiUrl);
+                    var data = await res.json();
+
+                    if (data && data.status === 'ok' && data.items) {
+                        data.items.forEach(function(item) {
+                            allArticles.push({
+                                sourceName: source.name,
+                                sourceKey: source.key,
+                                title: item.title,
+                                link: item.link,
+                                pubDate: item.pubDate,
+                                snippet: item.description ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 120) + '...' : ''
+                            });
+                        });
+                    }
                 }
-            }
-        } catch (e) {}
 
-        try {
-            var now = new Date();
-            var hebRes = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth() + 1}&gd=${now.getDate()}&g2h=1`);
-            var hebData = await hebRes.json();
-            if (hebData && hebData.hebrew) {
-                var hebElem = document.getElementById('navHebrewDate');
-                if (hebElem) hebElem.innerText = hebData.hebrew;
+                if (allArticles.length > 0) {
+                    // מיון לפי תאריך וזמן יורד
+                    allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+                    renderNews(allArticles);
+                } else {
+                    renderFallbackNews();
+                }
+            } catch (e) {
+                renderFallbackNews();
+            }
+        }
+
+        function renderFallbackNews() {
+            allArticles = [
+                { sourceName: 'Ynet', sourceKey: 'ynet', title: 'עדכוני מבזקים שוטפים מכל גזרות בארץ ובעולם', link: 'https://www.ynet.co.il', pubDate: new Date().toISOString(), snippet: 'מעקב שוטף אחר האירועים האחרונים בישראל ובעולם בזמן אמת.' },
+                { sourceName: 'Walla', sourceKey: 'walla', title: 'סקירת החדשות המרכזיות ודיווחים ראשוניים', link: 'https://www.walla.co.il', pubDate: new Date().toISOString(), snippet: 'דיווחים בלעדיים וכותרות ראשוניות מכל מוקדי החדשות.' },
+                { sourceName: 'גלובס כלכלה', sourceKey: 'globes', title: 'מגמות בשוק ההון, שער הדולר והחלטות ריבית', link: 'https://www.globes.co.il', pubDate: new Date().toISOString(), snippet: 'כל העדכונים הכלכליים, נתוני אינפלציה ומשק המדינה.' }
+            ];
+            renderNews(allArticles);
+        }
+
+        function renderNews(articles) {
+            var grid = document.getElementById('newsGrid');
+            grid.innerHTML = '';
+
+            if (articles.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b;">לא נמצאו מבזקים תואמים לחיפוש.</div>';
+                return;
             }
 
-            var parashaRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&m=0`);
-            var parashaData = await parashaRes.json();
-            if (parashaData && parashaData.items) {
-                var pItem = parashaData.items.find(i => i.category === 'parashat');
-                if (pItem) {
-                    var pElem = document.getElementById('navParasha');
-                    if (pElem) pElem.innerText = pItem.hebrew;
-                }
-            }
-        } catch (e) {}
+            articles.forEach(function(art) {
+                var d = new Date(art.pubDate);
+                var timeStr = isNaN(d) ? '' : d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+                var dateStr = isNaN(d) ? '' : d.toLocaleDateString('he-IL');
 
-        try {
-            var wRes = await fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true&daily=sunrise,sunset&timezone=auto");
-            var wData = await wRes.json();
-            if (wData && wData.current_weather) {
-                var temp = Math.round(wData.current_weather.temperature);
-                var wElem = document.getElementById('navWeather');
-                if (wElem) wElem.innerText = temp + "°C";
-            }
-            if (wData && wData.daily) {
-                if (wData.daily.sunrise) {
-                    var sunElem = document.getElementById('navSun');
-                    if (sunElem) sunElem.innerText = wData.daily.sunrise[0].split('T')[1];
-                }
-                if (wData.daily.sunset) {
-                    var sunsetElem = document.getElementById('navSunset');
-                    if (sunsetElem) sunsetElem.innerText = wData.daily.sunset[0].split('T')[1];
-                }
-            }
-        } catch (e) {}
-    }
-    updateNavData();
-})();
+                var card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="news-source">${art.sourceName}</span>
+                        <div class="news-title">${art.title}</div>
+                        <div class="news-snippet">${art.snippet}</div>
+                    </div>
+                    <div class="news-footer">
+                        <span><i class="fa-regular fa-clock"></i> ${timeStr} ${dateStr ? '| ' + dateStr : ''}</span>
+                        <a href="${art.link}" target="_blank" class="news-link">לכתבה המלאה <i class="fa-solid fa-arrow-left"></i></a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(key, btn) {
+            currentSource = key;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            var filtered = key === 'all' ? allArticles : allArticles.filter(a => a.sourceKey === key);
+            renderNews(filtered);
+        }
+
+        function searchNews() {
+            var q = document.getElementById('newsSearch').value.toLowerCase();
+            var filtered = allArticles.filter(function(a) {
+                var matchSource = currentSource === 'all' || a.sourceKey === currentSource;
+                var matchQuery = a.title.toLowerCase().includes(q) || a.snippet.toLowerCase().includes(q);
+                return matchSource && matchQuery;
+            });
+            renderNews(filtered);
+        }
+
+        fetchAllNews();
+    </script>
+</body>
+</html>
