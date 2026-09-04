@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חדשות אונליין - מבזקים בזמן אמת מכל האתרים - הכלים שלי</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+        
+        .news-container {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .header-card {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        /* כפתורי סינון */
+        .news-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cat-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            color: #334155;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cat-btn.active {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ef4444;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+        }
+
+        /* גריד הידיעות */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .news-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+        .news-source {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ef4444;
+            background: #fef2f2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .news-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .news-snippet {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .news-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .news-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- הסרגל העליון מוזרק לכאן אוטומטית -->
+    <div class="nav"></div>
+
+    <div class="news-container">
+        <div class="header-card">
+            <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין בלייב</h1>
+            <p style="margin: 0; color: #cbd5e1;">מבזקים, כותרות ועדכונים שוטפים מכל אתרי החדשות המובילים בישראל במקום אחד</p>
+        </div>
+
+        <!-- תפריט קטגוריות -->
+        <div class="news-categories">
+            <button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-layer-group"></i> כל הכותרות</button>
+            <button class="cat-btn" onclick="filterCategory('ynet', this)"><i class="fa-solid fa-bolt"></i> Ynet</button>
+            <button class="cat-btn" onclick="filterCategory('walla', this)"><i class="fa-solid fa-globe"></i> Walla</button>
+            <button class="cat-btn" onclick="filterCategory('globes', this)"><i class="fa-solid fa-chart-line"></i> כלכלה (גלובס)</button>
+            <button class="cat-btn" onclick="filterCategory('haaretz', this)"><i class="fa-solid fa-book-open"></i> הארץ</button>
+        </div>
+
+        <!-- תיבת חיפוש -->
+        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: ביטחון, משק, מזג אוויר)..." onkeyup="searchNews()">
+
+        <!-- גריד כרטיסי החדשות -->
+        <div class="news-grid" id="newsGrid">
+            <div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px 0;">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; color: #ef4444; margin-bottom: 12px; display: block;"></i>
+                טוען כותרות ומבזקים בלייב מכל האתרים...
+            </div>
+        </div>
+    </div>
+
+    <!-- הפוטר התחתון מוזרק לכאן אוטומטית -->
+    <footer></footer>
+
+    <script src="nav.js"></script>
+    <script>
+        var allArticles = [];
+        var currentSource = 'all';
+
+        // רשימת פידי RSS מכל אתרי החדשות המובילים
+        var rssSources = [
+            { name: 'Ynet', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', key: 'ynet' },
+            { name: 'Walla', url: 'https://rss.walla.co.il/feed/1', key: 'walla' },
+            { name: 'גלובס כלכלה', url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?Node=2', key: 'globes' },
+            { name: 'הארץ', url: 'https://www.haaretz.co.il/c2g/1.1620838', key: 'haaretz' }
+        ];
+
+        async function fetchAllNews() {
+            var grid = document.getElementById('newsGrid');
+            allArticles = [];
+
+            try {
+                for (var source of rssSources) {
+                    // שימוש ב-API ציבורי להמרת RSS ל-JSON
+                    var apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
+                    var res = await fetch(apiUrl);
+                    var data = await res.json();
+
+                    if (data && data.status === 'ok' && data.items) {
+                        data.items.forEach(function(item) {
+                            allArticles.push({
+                                sourceName: source.name,
+                                sourceKey: source.key,
+                                title: item.title,
+                                link: item.link,
+                                pubDate: item.pubDate,
+                                snippet: item.description ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 120) + '...' : ''
+                            });
+                        });
+                    }
+                }
+
+                if (allArticles.length > 0) {
+                    // מיון לפי תאריך וזמן יורד
+                    allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+                    renderNews(allArticles);
+                } else {
+                    renderFallbackNews();
+                }
+            } catch (e) {
+                renderFallbackNews();
+            }
+        }
+
+        function renderFallbackNews() {
+            allArticles = [
+                { sourceName: 'Ynet', sourceKey: 'ynet', title: 'עדכוני מבזקים שוטפים מכל גזרות בארץ ובעולם', link: 'https://www.ynet.co.il', pubDate: new Date().toISOString(), snippet: 'מעקב שוטף אחר האירועים האחרונים בישראל ובעולם בזמן אמת.' },
+                { sourceName: 'Walla', sourceKey: 'walla', title: 'סקירת החדשות המרכזיות ודיווחים ראשוניים', link: 'https://www.walla.co.il', pubDate: new Date().toISOString(), snippet: 'דיווחים בלעדיים וכותרות ראשוניות מכל מוקדי החדשות.' },
+                { sourceName: 'גלובס כלכלה', sourceKey: 'globes', title: 'מגמות בשוק ההון, שער הדולר והחלטות ריבית', link: 'https://www.globes.co.il', pubDate: new Date().toISOString(), snippet: 'כל העדכונים הכלכליים, נתוני אינפלציה ומשק המדינה.' }
+            ];
+            renderNews(allArticles);
+        }
+
+        function renderNews(articles) {
+            var grid = document.getElementById('newsGrid');
+            grid.innerHTML = '';
+
+            if (articles.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b;">לא נמצאו מבזקים תואמים לחיפוש.</div>';
+                return;
+            }
+
+            articles.forEach(function(art) {
+                var d = new Date(art.pubDate);
+                var timeStr = isNaN(d) ? '' : d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+                var dateStr = isNaN(d) ? '' : d.toLocaleDateString('he-IL');
+
+                var card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="news-source">${art.sourceName}</span>
+                        <div class="news-title">${art.title}</div>
+                        <div class="news-snippet">${art.snippet}</div>
+                    </div>
+                    <div class="news-footer">
+                        <span><i class="fa-regular fa-clock"></i> ${timeStr} ${dateStr ? '| ' + dateStr : ''}</span>
+                        <a href="${art.link}" target="_blank" class="news-link">לכתבה המלאה <i class="fa-solid fa-arrow-left"></i></a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(key, btn) {
+            currentSource = key;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            var filtered = key === 'all' ? allArticles : allArticles.filter(a => a.sourceKey === key);
+            renderNews(filtered);
+        }
+
+        function searchNews() {
+            var q = document.getElementById('newsSearch').value.toLowerCase();
+            var filtered = allArticles.filter(function(a) {
+                var matchSource = currentSource === 'all' || a.sourceKey === currentSource;
+                var matchQuery = a.title.toLowerCase().includes(q) || a.snippet.toLowerCase().includes(q);
+                return matchSource && matchQuery;
+            });
+            renderNews(filtered);
+        }
+
+        fetchAllNews();
+    </script>
+</body>
+</html>
