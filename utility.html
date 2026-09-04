@@ -5,19 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>הכלים שלי - כלים שימושיים ומחשבונים</title>
 <link rel="icon" type="image/png" href="favicon.png?v=3">
+<!-- ספריית האייקונים Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
   :root {
-    --bg-main: #f8fafc;
+    --bg-main: #f1f5f9;
     --card-bg: #ffffff;
-    --input-bg: #ffffff;
     --text-primary: #0f172a;
-    --text-secondary: #334155;
+    --text-secondary: #475569;
     --dark-blue: #0f172a;
     --accent-blue: #1e3a8a;
     --border-color: #cbd5e1;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   }
 
   body {
@@ -25,12 +28,13 @@
     background-color: var(--bg-main);
     color: var(--text-primary);
     margin: 0;
-    padding-top: 160px;
-    padding-bottom: 40px;
+    padding-top: 170px;
+    padding-bottom: 50px;
     direction: rtl;
     line-height: 1.6;
   }
 
+  /* סרגל ניווט עליון מוגן */
   .nav {
     position: fixed !important;
     top: 0 !important; left: 0 !important; right: 0 !important;
@@ -42,51 +46,83 @@
     flex-direction: column !important;
     align-items: center !important;
     gap: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
   }
 
   .nav-top-row { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; }
   .nav-links { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important; margin: 0 auto !important; }
-  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 10px !important; }
+  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 12px !important; border-radius: 6px !important; transition: background 0.2s !important; }
+  .nav-links a:hover { background: rgba(255,255,255,0.1) !important; }
   
   .nav-logo-link { display: flex !important; align-items: center !important; }
   .nav-logo { width: 40px !important; height: 40px !important; max-width: 40px !important; max-height: 40px !important; object-fit: contain !important; border-radius: 8px !important; }
 
   .nav-widgets { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; width: 100% !important; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 6px !important; }
-  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 4px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
-  .widget-item span { color: #ffffff !important; font-weight: 600 !important; }
+  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 5px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
+  .widget-item span { color: #ffffff !important; font-weight: 700 !important; }
   .widget-divider { color: rgba(255,255,255,0.2) !important; }
 
-  .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
-  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
-  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+  /* כותרת ראשית */
+  .hero-header { max-width: 940px; margin: 0 auto 24px auto; text-align: center; padding: 0 15px; }
+  .hero-header h1 { font-size: 30px; font-weight: 800; color: var(--dark-blue); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .hero-header p { color: var(--text-secondary); font-size: 16px; margin: 0; }
 
-  .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
-  .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
-  .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+  /* גריד כרטיסיות עיצובי */
+  .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 0 15px; }
+  
+  .card { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color); 
+    padding: 24px; 
+    border-radius: 14px; 
+    box-shadow: var(--shadow-md); 
+    text-align: right; 
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+  
+  .card h2 { 
+    font-size: 20px; 
+    font-weight: 800; 
+    color: var(--accent-blue); 
+    margin-top: 0; 
+    margin-bottom: 18px; 
+    border-bottom: 2px solid #e2e8f0; 
+    padding-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+  }
+  .card h2 i { color: #2563eb; font-size: 20px; }
 
-  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-  input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
-  textarea { min-height: 80px; resize: vertical; }
+  label { display: block; font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; margin-top: 14px; }
+  input, select, textarea { width: 100%; background: #fff; border: 1px solid var(--border-color); color: var(--text-primary); padding: 11px 14px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; transition: border-color 0.2s; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+  textarea { min-height: 90px; resize: vertical; }
 
+  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 13px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+  button:hover { background: #1d4ed8; }
+
+  .result { font-size: 15px; font-weight: 700; color: #1e3a8a; margin-top: 18px; text-align: center; background: #eff6ff; border: 1px solid #bfdbfe; padding: 14px; border-radius: 8px; word-break: break-all; }
+
+  .guide-box { margin-top: 16px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 14px; border-radius: 8px; border-right: 4px solid var(--accent-blue); }
+  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; display: flex; align-items: center; gap: 6px; }
+
+  /* מחשבון מדעי עיצובי */
   .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px; direction: rtl; }
-  .calc-btn-u { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 10px 0; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .calc-btn-u { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 12px 0; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+  .calc-btn-u:hover { background: #e2e8f0; }
   .calc-btn-u.op { background: var(--accent-blue); color: #ffffff; }
+  .calc-btn-u.op:hover { background: #1d4ed8; }
   .calc-btn-u.sci { background: #e2e8f0; color: #1e3a8a; font-size: 13px; }
-  .calc-screen-u { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; }
+  .calc-screen-u { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; border: 1px solid var(--border-color); }
 
-  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
-  button:hover { background: #1e4ed8; }
-
-  .result { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; word-break: break-all; }
-
-  .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
-  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; }
-
-  footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
+  footer { margin-top: 60px; padding: 30px 20px; background: var(--dark-blue); border-top: 4px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
   footer p { color: #cbd5e1 !important; margin: 6px 0; }
-  footer a { color: #38bdf8; text-decoration: none; }
+  footer a { color: #38bdf8; text-decoration: none; font-weight: 600; }
+  footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 768px) { body { padding-top: 190px; } .grid-container { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { body { padding-top: 200px; } .grid-container { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -94,15 +130,15 @@
 <div class="nav"></div>
 
 <div class="hero-header">
-    <h1>כלים שימושיים ומחשבונים</h1>
-    <p>מחשבון דלק, בריאות ו-BMI, מועדי הורדת קבצים, המרת מידות, סופר מילים ומחולל סיסמאות.</p>
+    <h1><i class="fa-solid fa-toolbox"></i> כלים שימושיים ומחשבונים</h1>
+    <p>מחשבון דלק, בריאות ו-BMI, זמן הורדת קבצים, מחשבון מדעי, סופר מילים ومחולל סיסמאות.</p>
 </div>
 
 <div class="grid-container">
 
-    <!-- מחשבון דלק ועלות נסיעה (חדש) -->
+    <!-- מחשבון דלק ועלות נסיעה -->
     <div class="card">
-        <h2>מחשבון דלק וחלוקת עלות נסיעה</h2>
+        <h2><i class="fa-solid fa-gas-pump"></i> מחשבון דלק וחלוקת נסיעה</h2>
         <label>מרחק הנסיעה בק"מ (הלוך-חזור):</label>
         <input type="number" id="fuelDistance" placeholder="לדוגמה: 150" oninput="calcFuel()">
 
@@ -115,17 +151,17 @@
         <label>מספר נוסעים לחלוקה:</label>
         <input type="number" id="fuelPasseng" value="1" min="1" oninput="calcFuel()">
 
-        <div class="result" id="fuelResult">הכניסי מרחק נסיעה לחישוב</div>
+        <div class="result" id="fuelResult"><i class="fa-solid fa-calculator"></i> הכניסי מרחק נסיעה לחישוב</div>
 
         <div class="guide-box">
-            <h4>💡 חישוב עלויות נסיעה:</h4>
+            <h4><i class="fa-solid fa-lightbulb"></i> חישוב עלויות נסיעה:</h4>
             <p>הכלי מחשב את כמות הליטרים הנדרשת לפי צריכת הדלק של הרכב ומחלק את הסכום הכולל בשווה בין הנוסעים.</p>
         </div>
     </div>
 
-    <!-- מחשבון BMI וסגנון חיים (חדש) -->
+    <!-- מחשבון BMI וסגנון חיים -->
     <div class="card">
-        <h2>מחשבון BMI וקלוריות יומיומיות (BMR)</h2>
+        <h2><i class="fa-solid fa-heart-pulse"></i> מחשבון BMI וקלוריות (BMR)</h2>
         <label>משקל (ק"ג):</label>
         <input type="number" id="bmiWeight" placeholder="לדוגמה: 70">
 
@@ -135,36 +171,36 @@
         <label>גיל:</label>
         <input type="number" id="bmiAge" value="30">
 
-        <button onclick="calcBMI()">חשב מדד BMI וחלוקה קלורית</button>
+        <button onclick="calcBMI()"><i class="fa-solid fa-check"></i> חשב מדד BMI וצריכה קלורית</button>
 
         <div class="result" id="bmiResult">תוצאה תופיע כאן</div>
 
         <div class="guide-box">
-            <h4>💡 מדד BMI וצריכה קלורית:</h4>
+            <h4><i class="fa-solid fa-notes-medical"></i> מדד BMI וצריכה קלורית:</h4>
             <p>BMI מתחת ל-18.5 נחשב תת-משקל, 18.5-24.9 משקל תקין, 25-29.9 עודף משקל, ו-30 ומעלה השמנה.</p>
         </div>
     </div>
 
-    <!-- מחשבון זמן הורדת קבצים (חדש) -->
+    <!-- מחשבון זמן הורדת קבצים -->
     <div class="card">
-        <h2>מחשבון זמן הורדת קבצים</h2>
+        <h2><i class="fa-solid fa-download"></i> מחשבון זמן הורדת קבצים</h2>
         <label>גודל הקובץ (ב-GB):</label>
         <input type="number" id="dlFileSize" placeholder="לדוגמה: 5" oninput="calcDownloadTime()">
 
         <label>מהירות חיבור אינטרנט (ב-Mbps):</label>
         <input type="number" id="dlSpeed" value="100" oninput="calcDownloadTime()">
 
-        <div class="result" id="dlResult">הכניסי גודל קובץ לחישוב</div>
+        <div class="result" id="dlResult"><i class="fa-solid fa-stopwatch"></i> הכניסי גודל קובץ לחישוב</div>
 
         <div class="guide-box">
-            <h4>💡 המרה בין Megabits ל-Megabytes:</h4>
+            <h4><i class="fa-solid fa-circle-info"></i> המרה בין Megabits ל-Megabytes:</h4>
             <p>מהירות האינטרנט נמדדת במגה-ביט (Mb), בעוד גודל קבצים נמדד במגה-בייט (MB). 1 Byte שווה ל-8 Bits.</p>
         </div>
     </div>
 
     <!-- מחשבון מדעי -->
     <div class="card">
-        <h2>מחשבון מדעי ומקצועי</h2>
+        <h2><i class="fa-solid fa-calculator"></i> מחשבון מדעי ومקצועי</h2>
         <input type="text" id="calcDisplay" class="calc-screen-u" value="0" readonly>
         <div class="calc-grid">
             <button class="calc-btn-u op" onclick="pressCalc('/')">÷</button>
@@ -201,17 +237,17 @@
 
     <!-- סופר מילים ותווים -->
     <div class="card">
-        <h2>סופר מילים, תווים וזמן קריאה</h2>
+        <h2><i class="fa-solid fa-align-right"></i> סופר מילים, תווים וזמן קריאה</h2>
         <textarea id="textToCount" placeholder="הדביקי טקסט כאן..." oninput="countText()"></textarea>
         <div class="result" id="countResult">תווים: 0 | מילים: 0 | זמן קריאה: 0 דק'</div>
     </div>
 
     <!-- מחולל סיסמאות -->
     <div class="card">
-        <h2>מחולל סיסמאות חזקות ומאובטחות</h2>
+        <h2><i class="fa-solid fa-key"></i> מחולל סיסמאות מאובטחות</h2>
         <label>אורך הסיסמה (תווים):</label>
         <input type="number" id="passLength" value="12" min="6" max="32">
-        <button onclick="generatePassword()">הפק סיסמה חדשה</button>
+        <button onclick="generatePassword()"><i class="fa-solid fa-shield-halved"></i> הפק סיסמה חדשה</button>
         <div class="result" id="passResult">לחצי להפקת סיסמה</div>
     </div>
 
@@ -231,7 +267,7 @@
         var pass = parseInt(document.getElementById('fuelPasseng').value) || 1;
 
         if (dist <= 0) {
-            document.getElementById('fuelResult').innerText = "הכניסי מרחק נסיעה לחישוב";
+            document.getElementById('fuelResult').innerHTML = '<i class="fa-solid fa-calculator"></i> הכניסי מרחק נסיעה לחישוב';
             return;
         }
 
@@ -239,7 +275,7 @@
         var totalCost = totalLiters * price;
         var costPerPerson = totalCost / pass;
 
-        document.getElementById('fuelResult').innerText = "סה\"כ דלק: " + totalLiters.toFixed(1) + " ליטר | עלות כוללת: ₪" + totalCost.toFixed(2) + " (₪" + costPerPerson.toFixed(2) + " לנוסע)";
+        document.getElementById('fuelResult').innerHTML = '<i class="fa-solid fa-gas-pump"></i> סה"כ דלק: ' + totalLiters.toFixed(1) + ' ליטר | עלות כוללת: ₪' + totalCost.toFixed(2) + ' (₪' + costPerPerson.toFixed(2) + ' לנוסע)';
     }
 
     function calcBMI() {
@@ -261,10 +297,9 @@
         else if (bmi < 30) status = "עודף משקל";
         else status = "השמנה";
 
-        // BMR משוער
         var bmr = (10 * w) + (6.25 * hCm) - (5 * age) + 5;
 
-        document.getElementById('bmiResult').innerText = "BMI: " + bmi.toFixed(1) + " (" + status + ") | צריכה קלורית בסיסית (BMR): ~" + Math.round(bmr) + " קלוריות";
+        document.getElementById('bmiResult').innerHTML = '<i class="fa-solid fa-user-doctor"></i> BMI: ' + bmi.toFixed(1) + ' (' + status + ') | צריכה קלורית בסיסית (BMR): ~' + Math.round(bmr) + ' קלוריות';
     }
 
     function calcDownloadTime() {
@@ -272,18 +307,18 @@
         var speedMbps = parseFloat(document.getElementById('dlSpeed').value) || 0;
 
         if (fileGb <= 0 || speedMbps <= 0) {
-            document.getElementById('dlResult').innerText = "הכניסי גודל קובץ לחישוב";
+            document.getElementById('dlResult').innerHTML = '<i class="fa-solid fa-stopwatch"></i> הכניסי גודל קובץ לחישוב';
             return;
         }
 
-        var totalBits = fileGb * 8 * 1024 * 1024 * 1024; // Bits
+        var totalBits = fileGb * 8 * 1024 * 1024 * 1024;
         var totalSpeedBits = speedMbps * 1000 * 1000;
         var seconds = totalBits / totalSpeedBits;
 
         var mins = Math.floor(seconds / 60);
         var secs = Math.round(seconds % 60);
 
-        document.getElementById('dlResult').innerText = "זמן הורדה משוער: " + mins + " דקות ו-" + secs + " שניות";
+        document.getElementById('dlResult').innerHTML = '<i class="fa-solid fa-clock"></i> זמן הורדה משוער: ' + mins + ' דקות ו-' + secs + ' שניות';
     }
 
     var calcExpr = "";
