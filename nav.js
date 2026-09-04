@@ -1,26 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. הזרקת עיצוב ה-CSS המודרני והיוקרתי של המחשבון
+  // 1. הזרקת עיצוב ה-CSS של המחשבון המדעי הקומפקטי
   var style = document.createElement('style');
   style.innerHTML = `
     .calc-modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
       z-index: 9999;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
     }
     .calc-modal-card {
       background: #0f172a;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 28px;
-      border-radius: 24px;
+      padding: 20px;
+      border-radius: 20px;
       width: 100%;
-      max-width: 380px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      max-width: 440px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
       position: relative;
       direction: rtl;
       font-family: 'Heebo', sans-serif;
@@ -29,22 +29,22 @@ document.addEventListener("DOMContentLoaded", function () {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 12px;
+      padding-bottom: 8px;
     }
     .calc-modal-header h3 {
-      margin: 0; font-size: 20px; color: #f8fafc; font-weight: 800; display: flex; align-items: center; gap: 8px;
+      margin: 0; font-size: 17px; color: #f8fafc; font-weight: 800; display: flex; align-items: center; gap: 8px;
     }
     .calc-close-btn {
       background: rgba(255, 255, 255, 0.1);
       border: none;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       color: #cbd5e1;
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -57,22 +57,22 @@ document.addEventListener("DOMContentLoaded", function () {
     .calc-display-container {
       background: #1e293b;
       border: 1px solid #334155;
-      padding: 16px 20px;
-      border-radius: 16px;
-      margin-bottom: 20px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 14px;
       text-align: left;
       direction: ltr;
     }
     .calc-history {
-      font-size: 14px;
+      font-size: 13px;
       color: #94a3b8;
-      min-height: 20px;
-      margin-bottom: 4px;
+      min-height: 18px;
+      margin-bottom: 2px;
       word-break: break-all;
     }
     .calc-modal-screen {
       width: 100%;
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 800;
       color: #38bdf8;
       background: transparent;
@@ -84,16 +84,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .calc-modal-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      direction: ltr;
     }
     .calc-btn {
       background: #1e293b;
       color: #f8fafc;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 18px 0;
-      border-radius: 14px;
-      font-size: 20px;
+      padding: 12px 0;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .calc-btn:hover {
       background: #334155;
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
     .calc-btn:active {
       transform: translateY(0);
@@ -113,9 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
     .calc-btn.op:hover {
       background: #2563eb;
     }
+    .calc-btn.sci {
+      background: #0f172a;
+      color: #38bdf8;
+      border-color: #334155;
+      font-size: 14px;
+    }
+    .calc-btn.sci:hover {
+      background: #1e293b;
+    }
     .calc-btn.func {
       background: #334155;
-      color: #38bdf8;
+      color: #cbd5e1;
     }
     .calc-btn.func:hover {
       background: #475569;
@@ -123,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .calc-btn.equals {
       background: #0284c7;
       color: #ffffff;
-      grid-column: span 2;
     }
     .calc-btn.equals:hover {
       background: #0369a1;
@@ -140,14 +149,14 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(style);
 
-  // 2. הזרקת ה-HTML של הסרגל והמחשבון המעוצב
+  // 2. הזרקת הסרגל והמחשבון המדעי
   var navHTML =
     '<div class="nav-top-row">' +
     '<div class="nav-links">' +
     '<a href="index.html">💼 זכויות עובדים</a>' +
     '<a href="legal.html">⚖️ כלים משפטיים</a>' +
     '<a href="finance.html">💰 מט"ח ופיננסים</a>' +
-    '<a href="javascript:void(0)" onclick="toggleNavCalculator()" class="nav-logo-link" title="לחצי לפתיחת מחשבון"><img src="favicon.png" alt="לוגו" class="nav-logo"></a>' +
+    '<a href="javascript:void(0)" onclick="toggleNavCalculator()" class="nav-logo-link" title="לחצי לפתיחת מחשבון מדעי"><img src="favicon.png" alt="לוגו" class="nav-logo"></a>' +
     '<a href="utility.html">🛠️ כלים שימושיים</a>' +
     '<a href="guides.html">📚 מדריכים</a>' +
     '<a href="about.html">ℹ️ אודות</a>' +
@@ -171,35 +180,51 @@ document.addEventListener("DOMContentLoaded", function () {
     '<div class="widget-item">🌤️ <span id="navWeather">--</span></div>' +
     "</div>" +
 
-    // חלון קופץ של המחשבון היוקרתי
+    // חלון קופץ של המחשבון המדעי
     '<div id="calcModal" class="calc-modal-overlay" onclick="if(event.target === this) toggleNavCalculator()">' +
     '<div class="calc-modal-card">' +
-    '<div class="calc-modal-header"><h3>🧮 מחשבון מקצועי</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
+    '<div class="calc-modal-header"><h3>🧮 מחשבון מדעי מקצועי</h3><button class="calc-close-btn" onclick="toggleNavCalculator()">×</button></div>' +
     '<div class="calc-display-container">' +
     '<div id="navCalcHistory" class="calc-history"></div>' +
     '<input type="text" id="navCalcDisplay" class="calc-modal-screen" value="0" readonly>' +
     '</div>' +
     '<div class="calc-modal-grid">' +
+    // שורה 1
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sin\')">sin</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'cos\')">cos</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'tan\')">tan</button>' +
     '<button class="calc-btn clear" onclick="navCalcClear()">C</button>' +
     '<button class="calc-btn func" onclick="navCalcBackspace()">⌫</button>' +
+    // שורה 2
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sqrt\')">√</button>' +
+    '<button class="calc-btn sci" onclick="navCalcSci(\'sqr\')">x²</button>' +
+    '<button class="calc-btn sci" onclick="navCalcPress(\'**\')">xʸ</button>' +
     '<button class="calc-btn func" onclick="navCalcPercent()">%</button>' +
     '<button class="calc-btn op" onclick="navCalcPress(\'/\')">÷</button>' +
+    // שורה 3
+    '<button class="calc-btn sci" onclick="navCalcSci(\'log\')">log</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'7\')">7</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'8\')">8</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'9\')">9</button>' +
     '<button class="calc-btn op" onclick="navCalcPress(\'*\')">×</button>' +
+    // שורה 4
+    '<button class="calc-btn sci" onclick="navCalcSci(\'ln\')">ln</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'4\')">4</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'5\')">5</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'6\')">6</button>' +
     '<button class="calc-btn op" onclick="navCalcPress(\'-\')">-</button>' +
+    // שורה 5
+    '<button class="calc-btn sci" onclick="navCalcSci(\'pi\')">π</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'1\')">1</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'2\')">2</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'3\')">3</button>' +
     '<button class="calc-btn op" onclick="navCalcPress(\'+\')">+</button>' +
-    '<button class="calc-btn func" onclick="navCalcPlusMinus()">±</button>' +
+    // שורה 6
+    '<button class="calc-btn func" onclick="navCalcPress(\'(\')">(</button>' +
+    '<button class="calc-btn func" onclick="navCalcPress(\')\')">)</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'0\')">0</button>' +
     '<button class="calc-btn" onclick="navCalcPress(\'.\')">.</button>' +
-    '<button class="calc-btn equals" style="grid-column: span 1;" onclick="navCalcEval()">=</button>' +
+    '<button class="calc-btn equals" onclick="navCalcEval()">=</button>' +
     '</div>' +
     '</div>' +
     '</div>';
@@ -209,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
     navContainer.innerHTML = navHTML;
   }
 
-  // 3. שעון ונתוני הניווט
+  // 3. שעון ונתוני ניווט
   function updateClockAndDate() {
     var now = new Date();
     var gregEl = document.getElementById("navGregDate");
@@ -277,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNavData();
 });
 
-// 4. פונקציות המחשבון המקצועי
+// 4. פונקציות המחשבון המדעי
 var navCalcExpr = "";
 var navCalcNewEntry = false;
 
@@ -295,7 +320,7 @@ function toggleNavCalculator() {
 function navCalcPress(val) {
   var display = document.getElementById('navCalcDisplay');
   if (navCalcNewEntry) {
-    if (['+', '-', '*', '/'].includes(val)) {
+    if (['+', '-', '*', '/', '**'].includes(val)) {
       navCalcNewEntry = false;
     } else {
       navCalcExpr = "";
@@ -320,16 +345,6 @@ function navCalcBackspace() {
   document.getElementById('navCalcDisplay').value = navCalcExpr || "0";
 }
 
-function navCalcPlusMinus() {
-  if (!navCalcExpr) return;
-  if (navCalcExpr.startsWith('-')) {
-    navCalcExpr = navCalcExpr.slice(1);
-  } else {
-    navCalcExpr = '-' + navCalcExpr;
-  }
-  document.getElementById('navCalcDisplay').value = navCalcExpr;
-}
-
 function navCalcPercent() {
   if (!navCalcExpr) return;
   try {
@@ -337,6 +352,28 @@ function navCalcPercent() {
     navCalcExpr = val.toString();
     document.getElementById('navCalcDisplay').value = navCalcExpr;
   } catch (e) {}
+}
+
+function navCalcSci(type) {
+  try {
+    var val = eval(navCalcExpr || "0");
+    var res = 0;
+    if (type === 'sin') res = Math.sin(val * Math.PI / 180);
+    else if (type === 'cos') res = Math.cos(val * Math.PI / 180);
+    else if (type === 'tan') res = Math.tan(val * Math.PI / 180);
+    else if (type === 'sqrt') res = Math.sqrt(val);
+    else if (type === 'sqr') res = Math.pow(val, 2);
+    else if (type === 'log') res = Math.log10(val);
+    else if (type === 'ln') res = Math.log(val);
+    else if (type === 'pi') { res = Math.PI; }
+
+    res = Math.round(res * 100000000) / 100000000;
+    document.getElementById('navCalcDisplay').value = res;
+    navCalcExpr = res.toString();
+    navCalcNewEntry = true;
+  } catch (e) {
+    document.getElementById('navCalcDisplay').value = "שגיאה";
+  }
 }
 
 function navCalcEval() {
