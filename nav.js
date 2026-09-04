@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
     const navHTML = `
     <div class="nav-top-row">
-        <div class="nav-brand">
-            <img src="favicon.png" alt="לוגו" class="nav-logo">
-        </div>
-
         <div class="nav-links">
             <a href="index.html">💼 זכויות עובדים</a>
             <a href="legal.html">⚖️ כלים משפטיים</a>
             <a href="finance.html">💰 מט"ח ופיננסים</a>
+            
+            <a href="index.html" class="nav-logo-link">
+                <img src="favicon.png" alt="לוגו" class="nav-logo">
+            </a>
+            
             <a href="utility.html">🛠️ כלים שימושיים</a>
             <a href="guides.html">📚 מדריכים</a>
             <a href="about.html">ℹ️ אודות</a>
