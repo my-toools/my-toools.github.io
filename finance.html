@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הכלים שלי - מט"ח ופיננסים</title>
+<title>הכלים שלי - מחשבוני מט"ח, שכר ופיננסים</title>
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 
 <style>
@@ -31,47 +31,52 @@
     line-height: 1.6;
   }
 
+  /* דריסת CSS היקפית לסרגל הניווט */
   .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: var(--dark-blue);
-    border-bottom: 3px solid #1d4ed8;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    z-index: 1000 !important;
+    background: #0f172a !important;
+    border-bottom: 3px solid #1d4ed8 !important;
+    padding: 10px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
-  .nav-top-row { display: flex; align-items: center; justify-content: center; width: 100%; }
-  .nav-links { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 auto; }
-  .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 700; font-size: 16px; padding: 6px 12px; border-radius: 6px; }
-  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-  .nav-logo-link { display: flex; align-items: center; padding: 0 4px; }
-  .nav-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+  .nav-top-row { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; }
+  .nav-links { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important; margin: 0 auto !important; }
+  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 10px !important; }
+  
+  .nav-logo-link { display: flex !important; align-items: center !important; }
+  .nav-logo { width: 40px !important; height: 40px !important; max-width: 40px !important; max-height: 40px !important; object-fit: contain !important; border-radius: 8px !important; }
 
-  .nav-widgets { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #94a3b8; padding: 4px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; width: 100%; }
-  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .widget-item span { color: #f8fafc; font-weight: 500; }
-  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
+  .nav-widgets { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; width: 100% !important; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 6px !important; }
+  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 4px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
+  .widget-item span { color: #ffffff !important; font-weight: 600 !important; }
+  .widget-divider { color: rgba(255,255,255,0.2) !important; }
 
   .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
   .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
   .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
 
   .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
-  .card { background: var(--card-bg); border: 1px solid #e2e8f0; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
+  .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
   .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
   label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
 
-  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; }
+  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
   button:hover { background: #1e4ed8; }
 
-  .result { font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; }
+  .result { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; word-break: break-all; }
+
+  .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
+  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; }
+  
+  .legal-disclaimer { font-size: 11px; color: #64748b; margin-top: 8px; text-align: justify; }
 
   footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
   footer p { color: #cbd5e1 !important; margin: 6px 0; }
@@ -86,11 +91,12 @@
 
 <div class="hero-header">
     <h1>שערי חליפין, המרת מט"ח ומחשבוני פיננסים</h1>
-    <p>שערי מטבע בזמן אמת, מחשבון המרה ישיר ומחשבון מע"מ מעודכן.</p>
+    <p>שערי מטבע בזמן אמת, מחשבון המרה ישיר, מחשבון מע"מ ומחשבוני שכר וחיסכון.</p>
 </div>
 
 <div class="grid-container">
 
+    <!-- המרת מט"ח בלייב -->
     <div class="card">
         <h2>מחשבון המרת מטבע חוץ (בלייב)</h2>
         <label>סכום להמרה:</label>
@@ -113,12 +119,19 @@
         </select>
 
         <div class="result" id="forexResult">טוען שערי חליפין...</div>
+
+        <div class="guide-box">
+            <h4>💡 שערי חליפין רציפים:</h4>
+            <p>שערי החליפין מתעדכנים בזמן אמת מול מערכות המסחר הבינלאומיות. שערים אלו מייצגים שער רציף/יציג ללא עמלות המרה בנקאיות.</p>
+        </div>
+        <div class="legal-disclaimer">* הבהרה: עמלות המרה והפרשי קנייה/מכירה בנקאיים עשויים לשנות את הסכום הסופי בבנק.</div>
     </div>
 
+    <!-- מחשבון מע"מ -->
     <div class="card">
         <h2>מחשבון חישוב מע"מ (כולל / לפני מע"מ)</h2>
         <label>סכום בש"ח:</label>
-        <input type="number" id="vatAmount" placeholder="למשל: 1000" oninput="calcVat()">
+        <input type="number" id="vatAmount" placeholder="לדוגמה: 1000" oninput="calcVat()">
         
         <label>אחוז מע"מ עדכני (%):</label>
         <input type="number" id="vatRate" value="17" readonly>
@@ -130,13 +143,57 @@
         </select>
 
         <div class="result" id="vatResult">הכניסי סכום לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 חוק מס ערך מוסף:</h4>
+            <p>שיעור המע"מ בישראל עומד כיום על 17%. חילוץ מע"מ מבוצע על ידי חלוקת סכום הברוטו ב-1.17 לקבלת הנטו, וההפרש הנו רכיב המע"מ לתשלום.</p>
+        </div>
+        <div class="legal-disclaimer">* עוסק פטור אינו רשאי לגבות מע"מ בעסקאותיו.</div>
+    </div>
+
+    <!-- מחשבון שכר ברוטו לנטו -->
+    <div class="card">
+        <h2>מחשבון שכר ברוטו ל-נטו משוער</h2>
+        <label>שכר ברוטו חודשי (₪):</label>
+        <input type="number" id="grossSalary" placeholder="לדוגמה: 12000">
+        <label>מספר נקודות זיכוי:</label>
+        <input type="number" id="creditPoints" value="2.25" step="0.25">
+        <button onclick="calcSalaryNet()">חשב שכר נטו משוער</button>
+        <div class="result" id="salaryNetResult">תוצאה תופיע כאן</div>
+
+        <div class="guide-box">
+            <h4>💡 נקודות זיכוי ומדרגות מס:</h4>
+            <p>תושב ישראל זכאי מתושבות ל-2.25 נקודות זיכוי (תושבת זכאית ל-2.75 נקודות). ערך נקודת זיכוי שנתית מעודכן מקזז את חבות מס ההכנסה ישירות.</p>
+        </div>
+        <div class="legal-disclaimer">* החישוב כולל ניכויי חובה משוערים (מס הכנסה, ביטוח לאומי ומס בריאות) ואינו כולל הפרשות פנסיוניות אישיות.</div>
+    </div>
+
+    <!-- מחשבון ריבית דריבית -->
+    <div class="card">
+        <h2>מחשבון ריבית דריבית וחיסכון</h2>
+        <label>סכום הפקדה ראשוני (₪):</label>
+        <input type="number" id="initDeposit" placeholder="לדוגמה: 20000">
+        <label>הפקדה חודשית נוספת (₪):</label>
+        <input type="number" id="monthlyDeposit" value="500">
+        <label>תקופת החיסכון (בשנים):</label>
+        <input type="number" id="investYears" value="10">
+        <label>תשואה / ריבית שנתית משוערת (%):</label>
+        <input type="number" id="annualRate" value="5" step="0.1">
+        <button onclick="calcCompoundInterest()">חשב צמיחת החיסכון</button>
+        <div class="result" id="compoundResult">תוצאה תופיע כאן</div>
+
+        <div class="guide-box">
+            <h4>💡 אפקט הריבית דריבית:</h4>
+            <p>ריבית דריבית היא ריבית המחושבת לא רק על קרן ההשקעה המקורית, אלא גם על הריבית שהצטברה בתקופות הקודמות. זהו מנוע הצמיחה המרכזי של חסכונות ארוכי טווח.</p>
+        </div>
+        <div class="legal-disclaimer">* החישוב תיאורטי בלבד ואינו מקזז מס רווחי הון (25%) או עמלות ניהול תיק.</div>
     </div>
 
 </div>
 
 <footer>
     <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי, פיננסי או ייעוץ השקעות.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
@@ -186,6 +243,42 @@
             var vatPart = amt - net;
             document.getElementById('vatResult').innerText = "סכום לפני מע\"מ: " + net.toFixed(2) + " ₪ (מע\"מ: " + vatPart.toFixed(2) + " ₪)";
         }
+    }
+
+    function calcSalaryNet() {
+        var gross = parseFloat(document.getElementById('grossSalary').value) || 0;
+        var pts = parseFloat(document.getElementById('creditPoints').value) || 2.25;
+
+        if (gross <= 0) {
+            document.getElementById('salaryNetResult').innerText = "נא להזין שכר ברוטו תקין";
+            return;
+        }
+
+        // אומדן מס הכנסה וביטוח לאומי בסיסי
+        var taxCreditValue = pts * 242; // ערך נקודת זיכוי חודשית משוערת
+        var incomeTax = Math.max(0, (gross * 0.14) - taxCreditValue);
+        var nationalInsurance = (gross > 7522) ? (gross * 0.12) : (gross * 0.035);
+        
+        var net = gross - incomeTax - nationalInsurance;
+        document.getElementById('salaryNetResult').innerText = "שכר נטו משוער: ₪ " + Math.round(net).toLocaleString();
+    }
+
+    function calcCompoundInterest() {
+        var init = parseFloat(document.getElementById('initDeposit').value) || 0;
+        var monthly = parseFloat(document.getElementById('monthlyDeposit').value) || 0;
+        var yrs = parseInt(document.getElementById('investYears').value) || 0;
+        var rate = (parseFloat(document.getElementById('annualRate').value) || 0) / 100;
+
+        var total = init;
+        var totalDeposits = init;
+
+        for (var i = 0; i < yrs * 12; i++) {
+            total = (total + monthly) * (1 + (rate / 12));
+            totalDeposits += monthly;
+        }
+
+        var profit = total - totalDeposits;
+        document.getElementById('compoundResult').innerText = "סה\"כ חיסכון מצטבר: ₪ " + Math.round(total).toLocaleString() + " (רווח נקי: ₪ " + Math.round(profit).toLocaleString() + ")";
     }
 
     fetchRates();
