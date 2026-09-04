@@ -31,7 +31,6 @@
     line-height: 1.6;
   }
 
-  /* תיקון בכוח לסרגל והווידג'טים למניעת עיוותים */
   .nav {
     position: fixed !important;
     top: 0 !important; left: 0 !important; right: 0 !important;
@@ -69,32 +68,19 @@
   input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
   textarea { min-height: 80px; resize: vertical; }
 
-  /* מחשבון עמוד כלים - כפתורים מימין */
-  .calc-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    margin-top: 12px;
-    direction: rtl;
-  }
-  .calc-btn-u {
-    background: #f1f5f9;
-    color: var(--dark-blue);
-    border: 1px solid #cbd5e1;
-    padding: 10px 0;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-  }
+  .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px; direction: rtl; }
+  .calc-btn-u { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 10px 0; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
   .calc-btn-u.op { background: var(--accent-blue); color: #ffffff; }
   .calc-btn-u.sci { background: #e2e8f0; color: #1e3a8a; font-size: 13px; }
   .calc-screen-u { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; }
 
-  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; }
+  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
   button:hover { background: #1e4ed8; }
 
   .result { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; word-break: break-all; }
+
+  .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
+  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; }
 
   footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
   footer p { color: #cbd5e1 !important; margin: 6px 0; }
@@ -109,11 +95,74 @@
 
 <div class="hero-header">
     <h1>כלים שימושיים ומחשבונים</h1>
-    <p>מחשבון רגיל ומדעי, תרגום שפות, המרת מידות נעליים ובגדים, סופר מילים ומחולל סיסמאות.</p>
+    <p>מחשבון דלק, בריאות ו-BMI, מועדי הורדת קבצים, המרת מידות, סופר מילים ומחולל סיסמאות.</p>
 </div>
 
 <div class="grid-container">
 
+    <!-- מחשבון דלק ועלות נסיעה (חדש) -->
+    <div class="card">
+        <h2>מחשבון דלק וחלוקת עלות נסיעה</h2>
+        <label>מרחק הנסיעה בק"מ (הלוך-חזור):</label>
+        <input type="number" id="fuelDistance" placeholder="לדוגמה: 150" oninput="calcFuel()">
+
+        <label>צריכת דלק ממוצעת של הרכב (ק"מ לליטר):</label>
+        <input type="number" id="fuelConsumption" value="14" oninput="calcFuel()">
+
+        <label>מחיר ליטר דלק (₪):</label>
+        <input type="number" id="fuelPrice" value="7.20" step="0.01" oninput="calcFuel()">
+
+        <label>מספר נוסעים לחלוקה:</label>
+        <input type="number" id="fuelPasseng" value="1" min="1" oninput="calcFuel()">
+
+        <div class="result" id="fuelResult">הכניסי מרחק נסיעה לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 חישוב עלויות נסיעה:</h4>
+            <p>הכלי מחשב את כמות הליטרים הנדרשת לפי צריכת הדלק של הרכב ומחלק את הסכום הכולל בשווה בין הנוסעים.</p>
+        </div>
+    </div>
+
+    <!-- מחשבון BMI וסגנון חיים (חדש) -->
+    <div class="card">
+        <h2>מחשבון BMI וקלוריות יומיומיות (BMR)</h2>
+        <label>משקל (ק"ג):</label>
+        <input type="number" id="bmiWeight" placeholder="לדוגמה: 70">
+
+        <label>גובה (ס"מ):</label>
+        <input type="number" id="bmiHeight" placeholder="לדוגמה: 175">
+
+        <label>גיל:</label>
+        <input type="number" id="bmiAge" value="30">
+
+        <button onclick="calcBMI()">חשב מדד BMI וחלוקה קלורית</button>
+
+        <div class="result" id="bmiResult">תוצאה תופיע כאן</div>
+
+        <div class="guide-box">
+            <h4>💡 מדד BMI וצריכה קלורית:</h4>
+            <p>BMI מתחת ל-18.5 נחשב תת-משקל, 18.5-24.9 משקל תקין, 25-29.9 עודף משקל, ו-30 ומעלה השמנה.</p>
+        </div>
+    </div>
+
+    <!-- מחשבון זמן הורדת קבצים (חדש) -->
+    <div class="card">
+        <h2>מחשבון זמן הורדת קבצים</h2>
+        <label>גודל הקובץ (ב-GB):</label>
+        <input type="number" id="dlFileSize" placeholder="לדוגמה: 5" oninput="calcDownloadTime()">
+
+        <label>מהירות חיבור אינטרנט (ב-Mbps):</label>
+        <input type="number" id="dlSpeed" value="100" oninput="calcDownloadTime()">
+
+        <div class="result" id="dlResult">הכניסי גודל קובץ לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 המרה בין Megabits ל-Megabytes:</h4>
+            <p>מהירות האינטרנט נמדדת במגה-ביט (Mb), בעוד גודל קבצים נמדד במגה-בייט (MB). 1 Byte שווה ל-8 Bits.</p>
+        </div>
+    </div>
+
+    <!-- מחשבון מדעי -->
     <div class="card">
         <h2>מחשבון מדעי ומקצועי</h2>
         <input type="text" id="calcDisplay" class="calc-screen-u" value="0" readonly>
@@ -150,52 +199,14 @@
         </div>
     </div>
 
+    <!-- סופר מילים ותווים -->
     <div class="card">
-        <h2>תרגום שפות ומילים</h2>
-        <label>טקסט לתרגום:</label>
-        <textarea id="transText" placeholder="הקלידי מילה או משפט..."></textarea>
-        <label>משפה:</label>
-        <select id="transFrom">
-            <option value="he">עברית</option>
-            <option value="en">אנגלית</option>
-            <option value="es">ספרדית</option>
-            <option value="ar">ערבית</option>
-            <option value="fr">צרפתית</option>
-        </select>
-        <label>לשפה:</label>
-        <select id="transTo">
-            <option value="en">אנגלית</option>
-            <option value="he">עברית</option>
-            <option value="es">ספרדית</option>
-            <option value="ar">ערבית</option>
-            <option value="fr">צרפתית</option>
-        </select>
-        <button onclick="translateText()">תרגם טקסט</button>
-        <div class="result" id="transResult">התרגום יופיע כאן</div>
-    </div>
-
-    <div class="card">
-        <h2>מחשבון המרת מידות נעליים ובגדים</h2>
-        <label>בחרי סוג פריט:</label>
-        <select id="sizeCategory" onchange="updateSizeOptions()">
-            <option value="shoes">👟 נעליים (אירופאי / אמריקאי / בריטי)</option>
-            <option value="clothes_women">👗 בגדי נשים (חולצות, שמלות)</option>
-            <option value="clothes_men">👕 בגדי גברים (חולצות, ז'קטים)</option>
-        </select>
-
-        <label>בחרי מידה אירופאית (EU):</label>
-        <select id="sizeSelect" onchange="convertSizes()">
-        </select>
-
-        <div class="result" id="sizeConvertResult">בחרי מידה להצגת ההמרה</div>
-    </div>
-
-    <div class="card">
-        <h2>סופר מילים, תווים ופסקיות</h2>
+        <h2>סופר מילים, תווים וזמן קריאה</h2>
         <textarea id="textToCount" placeholder="הדביקי טקסט כאן..." oninput="countText()"></textarea>
-        <div class="result" id="countResult">תווים: 0 | מילים: 0</div>
+        <div class="result" id="countResult">תווים: 0 | מילים: 0 | זמן קריאה: 0 דק'</div>
     </div>
 
+    <!-- מחולל סיסמאות -->
     <div class="card">
         <h2>מחולל סיסמאות חזקות ומאובטחות</h2>
         <label>אורך הסיסמה (תווים):</label>
@@ -204,22 +215,77 @@
         <div class="result" id="passResult">לחצי להפקת סיסמה</div>
     </div>
 
-    <div class="card">
-        <h2>מחשבון המרות בישול ואפייה</h2>
-        <label>כמות בכוסות מדידה:</label>
-        <input type="number" id="cupInput" value="1" step="0.25" oninput="convertCooking()">
-        <div class="result" id="cookingResult">1 כוס = 240 מ"ל | 200 גרם סוכר | 140 גרם קמח</div>
-    </div>
-
 </div>
 
 <footer>
     <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
 <script>
+    function calcFuel() {
+        var dist = parseFloat(document.getElementById('fuelDistance').value) || 0;
+        var cons = parseFloat(document.getElementById('fuelConsumption').value) || 1;
+        var price = parseFloat(document.getElementById('fuelPrice').value) || 0;
+        var pass = parseInt(document.getElementById('fuelPasseng').value) || 1;
+
+        if (dist <= 0) {
+            document.getElementById('fuelResult').innerText = "הכניסי מרחק נסיעה לחישוב";
+            return;
+        }
+
+        var totalLiters = dist / cons;
+        var totalCost = totalLiters * price;
+        var costPerPerson = totalCost / pass;
+
+        document.getElementById('fuelResult').innerText = "סה\"כ דלק: " + totalLiters.toFixed(1) + " ליטר | עלות כוללת: ₪" + totalCost.toFixed(2) + " (₪" + costPerPerson.toFixed(2) + " לנוסע)";
+    }
+
+    function calcBMI() {
+        var w = parseFloat(document.getElementById('bmiWeight').value) || 0;
+        var hCm = parseFloat(document.getElementById('bmiHeight').value) || 0;
+        var age = parseInt(document.getElementById('bmiAge').value) || 30;
+
+        if (w <= 0 || hCm <= 0) {
+            document.getElementById('bmiResult').innerText = "נא להזין משקל וגובה תקינים";
+            return;
+        }
+
+        var hM = hCm / 100;
+        var bmi = w / (hM * hM);
+        var status = "";
+
+        if (bmi < 18.5) status = "תת-משקל";
+        else if (bmi < 25) status = "משקל תקין";
+        else if (bmi < 30) status = "עודף משקל";
+        else status = "השמנה";
+
+        // BMR משוער
+        var bmr = (10 * w) + (6.25 * hCm) - (5 * age) + 5;
+
+        document.getElementById('bmiResult').innerText = "BMI: " + bmi.toFixed(1) + " (" + status + ") | צריכה קלורית בסיסית (BMR): ~" + Math.round(bmr) + " קלוריות";
+    }
+
+    function calcDownloadTime() {
+        var fileGb = parseFloat(document.getElementById('dlFileSize').value) || 0;
+        var speedMbps = parseFloat(document.getElementById('dlSpeed').value) || 0;
+
+        if (fileGb <= 0 || speedMbps <= 0) {
+            document.getElementById('dlResult').innerText = "הכניסי גודל קובץ לחישוב";
+            return;
+        }
+
+        var totalBits = fileGb * 8 * 1024 * 1024 * 1024; // Bits
+        var totalSpeedBits = speedMbps * 1000 * 1000;
+        var seconds = totalBits / totalSpeedBits;
+
+        var mins = Math.floor(seconds / 60);
+        var secs = Math.round(seconds % 60);
+
+        document.getElementById('dlResult').innerText = "זמן הורדה משוער: " + mins + " דקות ו-" + secs + " שניות";
+    }
+
     var calcExpr = "";
     function pressCalc(val) { if (calcExpr === "0") calcExpr = ""; calcExpr += val; document.getElementById('calcDisplay').value = calcExpr; }
     function clearCalc() { calcExpr = ""; document.getElementById('calcDisplay').value = "0"; }
@@ -239,72 +305,12 @@
         } catch(e) {}
     }
 
-    async function translateText() {
-        var text = document.getElementById('transText').value;
-        var from = document.getElementById('transFrom').value;
-        var to = document.getElementById('transTo').value;
-        if (!text.trim()) return;
-        document.getElementById('transResult').innerText = "מתרגם...";
-        try {
-            var res = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=" + from + "|" + to);
-            var data = await res.json();
-            document.getElementById('transResult').innerText = data.responseData.translatedText;
-        } catch (e) { document.getElementById('transResult').innerText = "שגיאה בתרגום."; }
-    }
-
-    var sizeData = {
-        shoes: {
-            "36": "US 6 | UK 3.5 | INT Small",
-            "37": "US 6.5 | UK 4 | INT Small",
-            "38": "US 7.5 | UK 5 | INT Medium",
-            "39": "US 8.5 | UK 5.5 | INT Medium",
-            "40": "US 9 | UK 6.5 | INT Large",
-            "41": "US 9.5 | UK 7 | INT Large",
-            "42": "US 10.5 | UK 8 | INT XL",
-            "43": "US 11.5 | UK 9 | INT XL"
-        },
-        clothes_women: {
-            "34": "US 2 | UK 6 | INT XS",
-            "36": "US 4 | UK 8 | INT S",
-            "38": "US 6 | UK 10 | INT M",
-            "40": "US 8 | UK 12 | INT L",
-            "42": "US 10 | UK 14 | INT XL",
-            "44": "US 12 | UK 16 | INT XXL"
-        },
-        clothes_men: {
-            "46": "US/UK 36 | INT S (חזה ~92 ס\"מ)",
-            "48": "US/UK 38 | INT M (חזה ~96 ס\"מ)",
-            "50": "US/UK 40 | INT L (חזה ~104 ס\"מ)",
-            "52": "US/UK 42 | INT XL (חזה ~110 ס\"מ)",
-            "54": "US/UK 44 | INT XXL (חזה ~116 ס\"מ)"
-        }
-    };
-
-    function updateSizeOptions() {
-        var cat = document.getElementById('sizeCategory').value;
-        var select = document.getElementById('sizeSelect');
-        select.innerHTML = '';
-        Object.keys(sizeData[cat]).forEach(function(size) {
-            var opt = document.createElement('option');
-            opt.value = size;
-            opt.innerText = "מידה " + size + " (EU)";
-            select.appendChild(opt);
-        });
-        convertSizes();
-    }
-
-    function convertSizes() {
-        var cat = document.getElementById('sizeCategory').value;
-        var val = document.getElementById('sizeSelect').value;
-        var res = sizeData[cat][val];
-        document.getElementById('sizeConvertResult').innerText = "מידה מקבילה: " + res;
-    }
-
     function countText() {
         var txt = document.getElementById('textToCount').value;
         var chars = txt.length;
         var words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
-        document.getElementById('countResult').innerText = "תווים: " + chars + " | מילים: " + words;
+        var readTime = Math.ceil(words / 200);
+        document.getElementById('countResult').innerText = "תווים: " + chars + " | מילים: " + words + " | זמן קריאה: ~" + readTime + " דק'";
     }
 
     function generatePassword() {
@@ -316,18 +322,8 @@
         }
         document.getElementById('passResult').innerText = res;
     }
-
-    function convertCooking() {
-        var cups = parseFloat(document.getElementById('cupInput').value) || 0;
-        var ml = cups * 240;
-        var sugar = cups * 200;
-        var flour = cups * 140;
-        document.getElementById('cookingResult').innerText = cups + " כוסות = " + ml + " מ\"ל | " + sugar + " ג' סוכר | " + flour + " ג' קמח";
-    }
-
-    updateSizeOptions();
 </script>
 
-<script src="nav.js?v=3"></script>
+<script src="nav.js"></script>
 </body>
 </html>
