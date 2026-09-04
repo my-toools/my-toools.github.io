@@ -160,10 +160,16 @@
 
 </div>
 
+<footer>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
+</footer>
+
 <script>
     function toggleAmountInput() {
-        let subj = document.getElementById('claimSubject').value;
-        let wrapper = document.getElementById('amountWrapper');
+        var subj = document.getElementById('claimSubject').value;
+        var wrapper = document.getElementById('amountWrapper');
         if (subj === 'work' || subj === 'family' || subj === 'admin' || subj === 'realestate_use' || subj === 'realestate_ownership') {
             wrapper.style.display = 'none';
         } else {
@@ -172,25 +178,25 @@
     }
 
     function calcCourtDeadline() {
-        let startVal = document.getElementById('courtStartDate').value;
-        let days = parseInt(document.getElementById('daysCount').value);
-        let includeVacation = document.getElementById('includeVacation').checked;
+        var startVal = document.getElementById('courtStartDate').value;
+        var days = parseInt(document.getElementById('daysCount').value);
+        var includeVacation = document.getElementById('includeVacation').checked;
 
         if (!startVal) {
             document.getElementById('deadlineResult').innerText = "יש לבחור תאריך התחלה.";
             return;
         }
 
-        let currDate = new Date(startVal);
-        let addedDays = 0;
+        var currDate = new Date(startVal);
+        var addedDays = 0;
 
         while (addedDays < days) {
             currDate.setDate(currDate.getDate() + 1);
-            let month = currDate.getMonth() + 1;
-            let dateNum = currDate.getDate();
+            var month = currDate.getMonth() + 1;
+            var dateNum = currDate.getDate();
 
             if (includeVacation) {
-                let isSummerVacation = (month === 7 && dateNum >= 21) || (month === 8) || (month === 9 && dateNum <= 5);
+                var isSummerVacation = (month === 7 && dateNum >= 21) || (month === 8) || (month === 9 && dateNum <= 5);
                 if (isSummerVacation) {
                     continue;
                 }
@@ -198,18 +204,18 @@
             addedDays++;
         }
 
-        let dayOfWeek = currDate.getDay();
+        var dayOfWeek = currDate.getDay();
         if (dayOfWeek === 5) currDate.setDate(currDate.getDate() + 2);
         else if (dayOfWeek === 6) currDate.setDate(currDate.getDate() + 1);
 
-        let dateStr = currDate.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-        document.getElementById('deadlineResult').innerText = `תאריך אחרון: ${dateStr}`;
+        var dateStr = currDate.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+        document.getElementById('deadlineResult').innerText = "תאריך אחרון: " + dateStr;
     }
 
     function calcFullJurisdiction() {
-        let subj = document.getElementById('claimSubject').value;
-        let amt = parseFloat(document.getElementById('fullClaimAmount').value) || 0;
-        let res = "";
+        var subj = document.getElementById('claimSubject').value;
+        var amt = parseFloat(document.getElementById('fullClaimAmount').value) || 0;
+        var res = "";
 
         if (subj === 'work') {
             res = "בית הדין האזורי לעבודה";
@@ -234,29 +240,23 @@
     }
 
     function calcDetailedCourtFee() {
-        let amt = parseFloat(document.getElementById('courtFeeClaim').value);
-        let type = document.getElementById('courtTypeSelect').value;
+        var amt = parseFloat(document.getElementById('courtFeeClaim').value);
+        var type = document.getElementById('courtTypeSelect').value;
         if (!amt) {
             document.getElementById('detailedFeeResult').innerText = "יש להזין סכום תביעה.";
             return;
         }
 
         if (type === 'small') {
-            let fee = Math.max(amt * 0.01, 50);
-            document.getElementById('detailedFeeResult').innerText = `אגרת תביעות קטנות: ${fee.toFixed(2)} ₪`;
+            var fee = Math.max(amt * 0.01, 50);
+            document.getElementById('detailedFeeResult').innerText = "אגרת תביעות קטנות: " + fee.toFixed(2) + " ₪";
         } else {
-            let totalFee = amt * 0.025;
-            let half1 = totalFee * 0.5;
-            document.getElementById('detailedFeeResult').innerText = `סך אגרה (2.5%): ${totalFee.toLocaleString()} ₪ | מחצית ראשונה להגשה: ${half1.toLocaleString()} ₪`;
+            var totalFee = amt * 0.025;
+            var half1 = totalFee * 0.5;
+            document.getElementById('detailedFeeResult').innerText = "סך אגרה (2.5%): " + totalFee.toLocaleString() + " ₪ | מחצית ראשונה להגשה: " + half1.toLocaleString() + " ₪";
         }
     }
 </script>
-
-<footer>
-    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
-</footer>
 
 <script src="nav.js"></script>
 </body>
