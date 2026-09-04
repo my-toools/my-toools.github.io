@@ -132,8 +132,14 @@
 
 </div>
 
+<footer>
+    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
+    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
+</footer>
+
 <script>
-    const brailleMap = {
+    var brailleMap = {
         'a': '⠁', 'b': '⠃', 'c': '⠉', 'd': '⠙', 'e': '⠑', 'f': '⠋', 'g': '⠛', 'h': '⠓', 'i': '⠊', 'j': '⠚',
         'k': '⠁', 'l': '⠇', 'm': '⠍', 'n': '⠝', 'o': '⠕', 'p': '⠏', 'q': '⠟', 'r': '⠗', 's': '⠎', 't': '⠞',
         'u': '⠌', 'v': '⠧', 'w': '⠺', 'x': '⠭', 'y': '⠽', 'z': '⠵',
@@ -141,31 +147,33 @@
     };
 
     function convertToBraille() {
-        let txt = document.getElementById('brailleInput').value.toLowerCase();
-        let out = "";
-        for (let char of txt) { out += brailleMap[char] || char; }
+        var txt = document.getElementById('brailleInput').value.toLowerCase();
+        var out = "";
+        for (var i = 0; i < txt.length; i++) {
+            out += brailleMap[txt[i]] || txt[i];
+        }
         document.getElementById('brailleResult').innerText = out || "⠓⠍⠗⠠⠞⠺⠋⠹";
     }
 
     function calcSeverance() {
-        let salary = parseFloat(document.getElementById('severanceSalary').value);
-        let years = parseFloat(document.getElementById('severanceYears').value);
+        var salary = parseFloat(document.getElementById('severanceSalary').value);
+        var years = parseFloat(document.getElementById('severanceYears').value);
         if (!salary || !years) {
             document.getElementById('severanceResult').innerText = "יש להזין שכר וותק תקינים.";
             return;
         }
-        let total = salary * years;
-        document.getElementById('severanceResult').innerText = `סך הפיצויים: ${total.toLocaleString()} ₪`;
+        var total = salary * years;
+        document.getElementById('severanceResult').innerText = "סך הפיצויים: " + total.toLocaleString() + " ₪";
     }
 
     function calcRecuperation() {
-        let years = parseFloat(document.getElementById('recupYears').value);
-        let scope = parseFloat(document.getElementById('recupJobScope').value) / 100;
+        var years = parseFloat(document.getElementById('recupYears').value);
+        var scope = parseFloat(document.getElementById('recupJobScope').value) / 100;
         if (!years || !scope) {
             document.getElementById('recupResult').innerText = "יש להזין נתונים תקינים.";
             return;
         }
-        let days = 0;
+        var days = 0;
         if (years >= 1 && years < 2) days = 5;
         else if (years >= 2 && years < 4) days = 6;
         else if (years >= 4 && years < 11) days = 7;
@@ -173,18 +181,18 @@
         else if (years >= 16 && years < 20) days = 9;
         else if (years >= 20) days = 10;
 
-        let total = days * 418 * scope;
-        document.getElementById('recupResult').innerText = `דמי הבראה: ${total.toLocaleString()} ₪ (${days} ימים)`;
+        var total = days * 418 * scope;
+        document.getElementById('recupResult').innerText = "דמי הבראה: " + total.toLocaleString() + " ₪ (" + days + " ימים)";
     }
 
     async function convertGregToHeb() {
-        let val = document.getElementById('gregInputDate').value;
+        var val = document.getElementById('gregInputDate').value;
         if (!val) return;
-        let parts = val.split('-');
+        var parts = val.split('-');
         try {
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${parts[0]}&gm=${parts[1]}&gd=${parts[2]}&g2h=1`);
-            let data = await res.json();
-            document.getElementById('hebrewConvertResult').innerText = `תאריך עברי: ${data.hebrew}`;
+            var res = await fetch("https://www.hebcal.com/converter?cfg=json&gy=" + parts[0] + "&gm=" + parts[1] + "&gd=" + parts[2] + "&g2h=1");
+            var data = await res.json();
+            document.getElementById('hebrewConvertResult').innerText = "תאריך עברי: " + data.hebrew;
         } catch (e) {
             document.getElementById('hebrewConvertResult').innerText = "שגיאה בחישוב התאריך.";
         }
@@ -193,12 +201,6 @@
     document.getElementById('gregInputDate').valueAsDate = new Date();
     convertGregToHeb();
 </script>
-
-<footer>
-    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי או פיננסי.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
-</footer>
 
 <script src="nav.js"></script>
 </body>
