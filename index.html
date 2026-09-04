@@ -46,19 +46,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .nav-top-row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; flex-wrap: wrap; }
-  .nav-links { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 auto; }
-  .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 700; font-size: 16px; padding: 6px 12px; border-radius: 6px; transition: all 0.2s ease; }
-  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-  .nav-logo-link { display: flex; align-items: center; padding: 0 4px; }
-  .nav-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; transition: transform 0.2s ease; }
-  .nav-logo:hover { transform: scale(1.08); }
-
-  .nav-widgets { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #94a3b8; background: transparent; padding: 4px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; width: 100%; }
-  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .widget-item span { color: #f8fafc; font-weight: 500; }
-  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
-
   .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
   .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
   .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
@@ -96,14 +83,14 @@
 <div class="grid-container">
 
     <div class="card">
-        <h2>ממיר טקסט לכתב ברייל (Braille)</h2>
+        <h2>ממיר טקסט לכתב ברייל</h2>
         <label>הקלידי טקסט או מספרים להמרה:</label>
         <input type="text" id="brailleInput" placeholder="למשל: hello 123" oninput="convertToBraille()">
-        <div class="result braille-output" id="brailleResult">⠓⠍⠗⠠⠞⠺⠋⠹</div>
+        <div class="result braille-output" id="brailleResult">...</div>
     </div>
 
     <div class="card">
-        <h2>מחשבון המרת תאריך לועזי ⇆ עברי</h2>
+        <h2>מחשבון המרת תאריך לועזי ל-עברי</h2>
         <label>בחרי תאריך לועזי להמרה:</label>
         <input type="date" id="gregInputDate" onchange="convertGregToHeb()">
         <button onclick="convertGregToHeb()">המר לתאריך עברי</button>
@@ -152,7 +139,7 @@
         for (var i = 0; i < txt.length; i++) {
             out += brailleMap[txt[i]] || txt[i];
         }
-        document.getElementById('brailleResult').innerText = out || "⠓⠍⠗⠠⠞⠺⠋⠹";
+        document.getElementById('brailleResult').innerText = out || "...";
     }
 
     function calcSeverance() {
