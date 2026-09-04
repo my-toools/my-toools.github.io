@@ -1,112 +1,41 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הכלים שלי - מדיניות פרטיות ותנאי שימוש</title>
-<link rel="icon" type="image/png" href="favicon.png?v=3">
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
-
-  :root {
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --dark-blue: #0f172a;
-    --accent-blue: #1e3a8a;
-  }
-
-  body {
-    font-family: 'Heebo', sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    margin: 0;
-    padding-top: 160px;
-    padding-bottom: 40px;
-    direction: rtl;
-    line-height: 1.7;
-  }
-
-  /* עיצוב מוגן ומאולץ לסרגל הניווט */
-  .nav {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important; right: 0 !important;
-    z-index: 1000 !important;
-    background: #0f172a !important;
-    border-bottom: 3px solid #1d4ed8 !important;
-    padding: 10px 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-  }
-
-  .nav-top-row { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; }
-  .nav-links { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important; margin: 0 auto !important; }
-  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 10px !important; }
-  
-  .nav-logo-link { display: flex !important; align-items: center !important; }
-  .nav-logo { width: 40px !important; height: 40px !important; max-width: 40px !important; max-height: 40px !important; object-fit: contain !important; border-radius: 8px !important; }
-
-  .nav-widgets { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; width: 100% !important; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 6px !important; }
-  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 4px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
-  .widget-item span { color: #ffffff !important; font-weight: 600 !important; }
-  .widget-divider { color: rgba(255,255,255,0.2) !important; }
-
-  .container {
-    max-width: 800px; background: var(--card-bg);
-    border: 1px solid #cbd5e1; padding: 35px; margin: 0 auto;
-    border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  }
-
-  h1 { font-size: 26px; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 20px; }
-  h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 22px; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px; }
-  p, li { color: var(--text-secondary); font-size: 15px; }
-  ul { padding-right: 20px; }
-
-  footer {
-    margin-top: 50px; padding: 24px; background: var(--dark-blue);
-    border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1;
-  }
-  footer p { color: #cbd5e1 !important; margin: 6px 0; }
-  footer a { color: #38bdf8; text-decoration: none; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מדיניות פרטיות ותנאי שימוש - NETOOLS</title>
+    <meta name="description" content="מדיניות הפרטיות ותנאי השימוש של אתר NETOOLS, כולל גילוי נאות לגבי עוגיות ופרסומות AdSense.">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #1e293b; background-color: #f8fafc; margin: 0; padding: 20px 10px; }
+        .container { max-width: 900px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 0; }
+        h2 { color: #0284c7; margin-top: 25px; }
+        p, li { font-size: 15px; color: #334155; }
+        ul { padding-right: 20px; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>מדיניות פרטיות ותנאי שימוש</h1>
+        <p>ברוכים הבאים לאתר <strong>NETOOLS</strong>. פרטיות המשתמשים שלנו חשובה לנו מאוד, ועמוד זה מפרט את אופן איסוף הנתונים, השימוש בהם ומדיניות העוגיות (Cookies) באתר.</p>
 
-<div class="nav"></div>
+        <h2>1. איסוף מידע ופרטיות</h2>
+        <p>האתר אינו דורש הרשמה או הזנת פרטים אישיים לצורך שימוש במחשבונים ובכלים המוצגים בו. כל החישובים מבוצעים ישירות בדפדפן המשתמש ואינם שנאגרים בשרתי האתר.</p>
 
-<div class="container">
-    <h1>מדיניות פרטיות ותנאי שימוש</h1>
-    
-    <h2>1. כללי</h2>
-    <p>ברוכים הבאים לאתר <strong>הכלים שלי</strong>. אנו מכבדים את פרטיות המשתמשים באתר ומחויבים להגן עליה. מסמך זה מפרט את סוגי המידע הנאספים בעת השימוש באתר וכיצד נעשה בהם שימוש.</p>
+        <h2>2. פרסומות Google AdSense ועוגיות (Cookies)</h2>
+        <p>אתר זה משתמש בשירותי פרסום של צד שלישי, בראשם <strong>Google AdSense</strong>. ספקי צד שלישי, כולל גוגל, משתמשים בקובצי Cookie כדי להציג מודעות בהתבסס על ביקוריו הקודמים של המשתמש באתר זה או באתרים אחרים באינטרנט:</p>
+        <ul>
+            <li>השימוש של גוגל בקובצי Cookie של פרסום מאפשר לה ולשותפיה להציג מודעות למשתמשים בהתבסס על הביקור שלהם באתרים שלך ו/או באתרים אחרים באינטרנט.</li>
+            <li>משתמשים יכולים לבטל את ההסכמה לפרסום מותאם אישית על ידי ביקור ב-<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">הגדרות המודעות של גוגל</a>.</li>
+        </ul>
 
-    <h2>2. איסוף מידע וקובצי Cookie</h2>
-    <p>האתר עצמו אינו דורש הרשמה ואינו אוסף פרטים מזהים אישיים (כגון שמות או מספרי תעודת זהות) בעת החישובים במחשבונים. החישובים מבוצעים בדפדפן המשתמש בלבד.</p>
-    <p>עם זאת, האתר עושה שימוש בקובצי Cookie ובטכנולוגיות מעקב סטטיסטיות (כגון Google Analytics) לצורך ניתוח תנועת גולשים ושיפור חווית המשתמש.</p>
+        <h2>3. הבהרה משפטית ופטור מאחריות</h2>
+        <p>המידע, החישובים והתכנים המוצגים באתרNETOOLS מוצגים כהערכה כללית ומידע כללי בלבד. אינם מהווים ייעוץ משפטי, פיננסי או מקצועי. הנהלת האתר אינה נושאת באחריות לכל נזק או תוצאה הנובעת מהסתמכות על נתוני האתר.</p>
 
-    <h2>3. פרסומות צד שלישי (Google AdSense)</h2>
-    <p>ספקים של צד שלישי, כולל גוגל (Google), משתמשים בקובצי Cookie כדי להציג פרסומות בהתבסס על ביקורי המשתמשים הקודמים באתר זה או באתרים אחרים ברשת.</p>
-    <ul>
-        <li>שימוש בקובצי Cookie של Google מאפשר לה ולהתקנים שותפים להציג פרסומות למשתמשים בהתבסס על ביקוריהם באתרים שלהם.</li>
-        <li>המשתמשים יכולים לבטל את השימוש בפרסום מותאם אישית על ידי מעבר אל <a href="https://www.google.com/settings/ads" target="_blank">הגדרות הפרסומות של Google</a>.</li>
-    </ul>
+        <h2>4. יצירת קשר</h2>
+        <p>לכל שאלה, פנייה או דיווח בנושא פרטיות ותוכן האתר, ניתן לפנות אלינו בדוא"ל: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>.</p>
+    </div>
 
-    <h2>4. הגבלת אחריות (Disclaimer)</h2>
-    <p>כל הכלים, המחשבונים והמידע המוצגים באתר מוגשים כאינדיקציה והערכה כללית בלבד ("As-Is"). המידע אינו מהווה ייעוץ משפטי, פיננסי או מקצועי מחייב. הנהלת האתר אינה נושאת באחריות לכל נזק או תוצאה שיגרמו כתוצאה מאי-דיוק בחישובים או מסתמכות על המידע מוצג באתר.</p>
-
-    <h2>5. יצירת קשר</h2>
-    <p>לכל שאלה או פנייה בנושא פרטיות ותנאי השימוש באתר, ניתן לפנות אלינו בדוא"ל: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a></p>
-</div>
-
-<footer>
-    <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
-</footer>
-
-<script src="nav.js"></script>
+    <script src="nav.js"></script>
 </body>
 </html>
