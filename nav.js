@@ -80,7 +80,7 @@
     `;
     document.head.appendChild(navStyle);
 
-    // 3. תיקון אוטומטי - יצירת הניווט אם לא קיים בדף
+    // 3. יצירת או זיהוי אלמנט הניווט
     var navContainer = document.querySelector('.nav');
     if (!navContainer) {
         navContainer = document.createElement('div');
@@ -137,7 +137,7 @@
         </div>
     `;
 
-    // 5. תיקון אוטומטי - יצירת פוטר
+    // 5. יצירת פוטר
     var footerElem = document.querySelector('footer');
     if (!footerElem) {
         footerElem = document.createElement('footer');
@@ -174,7 +174,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת נתונים חיים
+    // 7. טעינת נתונים חיים (מט"ח, מזג אוויר, תאריך עברי, פרשה)
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
