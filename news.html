@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חדשות אונליין - מבזקים בזמן אמת מכל האתרים - הכלים שלי</title>
+    <title>חדשות אונליין - מבזקים וכותרות בזמן אמת - הכלים שלי</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { margin: 0; padding: 0; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
         
         .news-container {
-            max-width: 1150px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 20px;
             background: #ffffff;
@@ -26,10 +26,10 @@
             margin-bottom: 25px;
         }
         
-        /* כפתורי סינון */
+        /* כפתורי סינון אתרי חדשות */
         .news-categories {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
@@ -37,17 +37,18 @@
         .cat-btn {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             color: #334155;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 6px;
         }
+        .cat-btn:hover { background: #e2e8f0; }
         .cat-btn.active {
             background: #ef4444;
             color: #ffffff;
@@ -88,14 +89,20 @@
         .news-source {
             font-size: 12px;
             font-weight: bold;
-            color: #ef4444;
-            background: #fef2f2;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             display: inline-block;
             margin-bottom: 10px;
             width: fit-content;
         }
+        /* תגיות צבע ייחודיות לפי אתר */
+        .source-n12 { background: #fee2e2; color: #dc2626; }
+        .source-c14 { background: #ffedd5; color: #c2410c; }
+        .source-bhadrei { background: #fef3c7; color: #b45309; }
+        .source-ynet { background: #e0f2fe; color: #0284c7; }
+        .source-walla { background: #f3e8ff; color: #7e22ce; }
+        .source-globes { background: #dcfce7; color: #15803d; }
+
         .news-title {
             font-size: 16px;
             font-weight: bold;
@@ -138,26 +145,28 @@
     <div class="news-container">
         <div class="header-card">
             <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין בלייב</h1>
-            <p style="margin: 0; color: #cbd5e1;">מבזקים, כותרות ועדכונים שוטפים מכל אתרי החדשות המובילים בישראל במקום אחד</p>
+            <p style="margin: 0; color: #cbd5e1;">כותרות ראשיות ומבזקים בזמן אמת מ-N12, ערוץ 14, בחדרי חרדים, Ynet, וואלה וגלובס</p>
         </div>
 
-        <!-- תפריט קטגוריות -->
+        <!-- תפריט סינון לפי אתרים -->
         <div class="news-categories">
-            <button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-layer-group"></i> כל הכותרות</button>
+            <button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-layer-group"></i> כל הכותרות הראשיות</button>
+            <button class="cat-btn" onclick="filterCategory('n12', this)"><i class="fa-solid fa-circle-play"></i> N12</button>
+            <button class="cat-btn" onclick="filterCategory('c14', this)"><i class="fa-solid fa-tv"></i> ערוץ 14</button>
+            <button class="cat-btn" onclick="filterCategory('bhadrei', this)"><i class="fa-solid fa-book-bookmark"></i> בחדרי חרדים</button>
             <button class="cat-btn" onclick="filterCategory('ynet', this)"><i class="fa-solid fa-bolt"></i> Ynet</button>
             <button class="cat-btn" onclick="filterCategory('walla', this)"><i class="fa-solid fa-globe"></i> Walla</button>
-            <button class="cat-btn" onclick="filterCategory('globes', this)"><i class="fa-solid fa-chart-line"></i> כלכלה (גלובס)</button>
-            <button class="cat-btn" onclick="filterCategory('haaretz', this)"><i class="fa-solid fa-book-open"></i> הארץ</button>
+            <button class="cat-btn" onclick="filterCategory('globes', this)"><i class="fa-solid fa-chart-line"></i> גלובס כלכלה</button>
         </div>
 
         <!-- תיבת חיפוש -->
-        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: ביטחון, משק, מזג אוויר)..." onkeyup="searchNews()">
+        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: ביטחון, כנסת, חרדים, כלכלה)..." onkeyup="searchNews()">
 
         <!-- גריד כרטיסי החדשות -->
         <div class="news-grid" id="newsGrid">
             <div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px 0;">
                 <i class="fa-solid fa-spinner fa-spin" style="font-size: 32px; color: #ef4444; margin-bottom: 12px; display: block;"></i>
-                טוען כותרות ומבזקים בלייב מכל האתרים...
+                טוען כותרות ראשיות ומבזקים בלייב מכל האתרים...
             </div>
         </div>
     </div>
@@ -170,21 +179,21 @@
         var allArticles = [];
         var currentSource = 'all';
 
-        // רשימת פידי RSS מכל אתרי החדשות המובילים
+        // פידי RSS מורחבים הכוללים את N12, C14 ובחדרי חרדים
         var rssSources = [
-            { name: 'Ynet', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', key: 'ynet' },
-            { name: 'Walla', url: 'https://rss.walla.co.il/feed/1', key: 'walla' },
-            { name: 'גלובס כלכלה', url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?Node=2', key: 'globes' },
-            { name: 'הארץ', url: 'https://www.haaretz.co.il/c2g/1.1620838', key: 'haaretz' }
+            { name: 'N12', url: 'https://mako.co.il/rss/news-main.xml', key: 'n12', cssClass: 'source-n12' },
+            { name: 'ערוץ 14', url: 'https://www.now14.co.il/feed/', key: 'c14', cssClass: 'source-c14' },
+            { name: 'בחדרי חרדים', url: 'https://www.bhol.co.il/rss/rss.xml', key: 'bhadrei', cssClass: 'source-bhadrei' },
+            { name: 'Ynet', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', key: 'ynet', cssClass: 'source-ynet' },
+            { name: 'Walla', url: 'https://rss.walla.co.il/feed/1', key: 'walla', cssClass: 'source-walla' },
+            { name: 'גלובס כלכלה', url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?Node=2', key: 'globes', cssClass: 'source-globes' }
         ];
 
         async function fetchAllNews() {
-            var grid = document.getElementById('newsGrid');
             allArticles = [];
 
             try {
                 for (var source of rssSources) {
-                    // שימוש ב-API ציבורי להמרת RSS ל-JSON
                     var apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`;
                     var res = await fetch(apiUrl);
                     var data = await res.json();
@@ -194,6 +203,7 @@
                             allArticles.push({
                                 sourceName: source.name,
                                 sourceKey: source.key,
+                                cssClass: source.cssClass,
                                 title: item.title,
                                 link: item.link,
                                 pubDate: item.pubDate,
@@ -204,22 +214,22 @@
                 }
 
                 if (allArticles.length > 0) {
-                    // מיון לפי תאריך וזמן יורד
                     allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
                     renderNews(allArticles);
                 } else {
-                    renderFallbackNews();
+                    useFallbackNews();
                 }
             } catch (e) {
-                renderFallbackNews();
+                useFallbackNews();
             }
         }
 
-        function renderFallbackNews() {
+        function useFallbackNews() {
             allArticles = [
-                { sourceName: 'Ynet', sourceKey: 'ynet', title: 'עדכוני מבזקים שוטפים מכל גזרות בארץ ובעולם', link: 'https://www.ynet.co.il', pubDate: new Date().toISOString(), snippet: 'מעקב שוטף אחר האירועים האחרונים בישראל ובעולם בזמן אמת.' },
-                { sourceName: 'Walla', sourceKey: 'walla', title: 'סקירת החדשות המרכזיות ודיווחים ראשוניים', link: 'https://www.walla.co.il', pubDate: new Date().toISOString(), snippet: 'דיווחים בלעדיים וכותרות ראשוניות מכל מוקדי החדשות.' },
-                { sourceName: 'גלובס כלכלה', sourceKey: 'globes', title: 'מגמות בשוק ההון, שער הדולר והחלטות ריבית', link: 'https://www.globes.co.il', pubDate: new Date().toISOString(), snippet: 'כל העדכונים הכלכליים, נתוני אינפלציה ומשק המדינה.' }
+                { sourceName: 'N12', sourceKey: 'n12', cssClass: 'source-n12', title: 'עדכוני חדשות 12 בלייב מכל המוקדים', link: 'https://www.n12.co.il', pubDate: new Date().toISOString(), snippet: 'דיווחים ראשוניים ומבזקים שוטפים מצוות כתבי חדשות 12.' },
+                { sourceName: 'ערוץ 14', sourceKey: 'c14', cssClass: 'source-c14', title: 'כותרות עכשיו 14 ועדכונים מדיניים-ביטחוניים', link: 'https://www.now14.co.il', pubDate: new Date().toISOString(), snippet: 'כל העדכונים השוטפים מערוץ 14 והפרשנויות המובילות.' },
+                { sourceName: 'בחדרי חרדים', sourceKey: 'bhadrei', cssClass: 'source-bhadrei', title: 'עדכוני חצרות הקודש, עולם התורה והפוליטיקה', link: 'https://www.bhol.co.il', pubDate: new Date().toISOString(), snippet: 'כל הידיעות והחדשות מהמגזר החרדי ועולם הישיבות.' },
+                { sourceName: 'Ynet', sourceKey: 'ynet', cssClass: 'source-ynet', title: 'כותרות ראשיות ומבזקים שוטפים', link: 'https://www.ynet.co.il', pubDate: new Date().toISOString(), snippet: 'מעקב שוטף אחר האירועים האחרונים בישראל ובעולם.' }
             ];
             renderNews(allArticles);
         }
@@ -242,7 +252,7 @@
                 card.className = 'news-card';
                 card.innerHTML = `
                     <div>
-                        <span class="news-source">${art.sourceName}</span>
+                        <span class="news-source ${art.cssClass}">${art.sourceName}</span>
                         <div class="news-title">${art.title}</div>
                         <div class="news-snippet">${art.snippet}</div>
                     </div>
