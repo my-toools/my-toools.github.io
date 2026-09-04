@@ -102,6 +102,8 @@
         .source-ynet { background: #e0f2fe; color: #0284c7; }
         .source-walla { background: #f3e8ff; color: #7e22ce; }
         .source-globes { background: #dcfce7; color: #15803d; }
+        .source-sport5 { background: #ccfbf1; color: #0f766e; }
+        .source-one { background: #fae8ff; color: #86198f; }
 
         .news-title {
             font-size: 16px;
@@ -145,7 +147,7 @@
     <div class="news-container">
         <div class="header-card">
             <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-newspaper" style="color: #ef4444;"></i> חדשות אונליין בלייב</h1>
-            <p style="margin: 0; color: #cbd5e1;">כותרות ראשיות ומבזקים בזמן אמת מ-N12, ערוץ 14, בחדרי חרדים, Ynet, וואלה וגלובס</p>
+            <p style="margin: 0; color: #cbd5e1;">כותרות ראשיות ומבזקים בזמן אמת מ-N12, ערוץ 14, בחדרי חרדים, ספורט 5, ONE, Ynet, וואלה וגלובס</p>
         </div>
 
         <!-- תפריט סינון לפי אתרים -->
@@ -154,13 +156,15 @@
             <button class="cat-btn" onclick="filterCategory('n12', this)"><i class="fa-solid fa-circle-play"></i> N12</button>
             <button class="cat-btn" onclick="filterCategory('c14', this)"><i class="fa-solid fa-tv"></i> ערוץ 14</button>
             <button class="cat-btn" onclick="filterCategory('bhadrei', this)"><i class="fa-solid fa-book-bookmark"></i> בחדרי חרדים</button>
+            <button class="cat-btn" onclick="filterCategory('sport5', this)"><i class="fa-solid fa-futbol"></i> ספורט 5</button>
+            <button class="cat-btn" onclick="filterCategory('one', this)"><i class="fa-solid fa-trophy"></i> ONE</button>
             <button class="cat-btn" onclick="filterCategory('ynet', this)"><i class="fa-solid fa-bolt"></i> Ynet</button>
             <button class="cat-btn" onclick="filterCategory('walla', this)"><i class="fa-solid fa-globe"></i> Walla</button>
             <button class="cat-btn" onclick="filterCategory('globes', this)"><i class="fa-solid fa-chart-line"></i> גלובס כלכלה</button>
         </div>
 
         <!-- תיבת חיפוש -->
-        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: ביטחון, כנסת, חרדים, כלכלה)..." onkeyup="searchNews()">
+        <input type="text" id="newsSearch" class="search-box" placeholder="🔍 חפשי מבזק או נושא (לדוגמה: כדורגל, ביטחון, כנסת, חרדים, כלכלה)..." onkeyup="searchNews()">
 
         <!-- גריד כרטיסי החדשות -->
         <div class="news-grid" id="newsGrid">
@@ -179,11 +183,13 @@
         var allArticles = [];
         var currentSource = 'all';
 
-        // פידי RSS מורחבים הכוללים את N12, C14 ובחדרי חרדים
+        // פידי RSS מורחבים הכוללים אקטואליה, חרדים וספורט
         var rssSources = [
             { name: 'N12', url: 'https://mako.co.il/rss/news-main.xml', key: 'n12', cssClass: 'source-n12' },
             { name: 'ערוץ 14', url: 'https://www.now14.co.il/feed/', key: 'c14', cssClass: 'source-c14' },
             { name: 'בחדרי חרדים', url: 'https://www.bhol.co.il/rss/rss.xml', key: 'bhadrei', cssClass: 'source-bhadrei' },
+            { name: 'ספורט 5', url: 'https://www.sport5.co.il/rss/RSS.xml', key: 'sport5', cssClass: 'source-sport5' },
+            { name: 'ONE ספורט', url: 'https://www.one.co.il/cat/co/rss/mainrss.aspx', key: 'one', cssClass: 'source-one' },
             { name: 'Ynet', url: 'https://www.ynet.co.il/Integration/StoryRss2.xml', key: 'ynet', cssClass: 'source-ynet' },
             { name: 'Walla', url: 'https://rss.walla.co.il/feed/1', key: 'walla', cssClass: 'source-walla' },
             { name: 'גלובס כלכלה', url: 'https://www.globes.co.il/webservice/rss/rssfeeder.asmx/FeederNode?Node=2', key: 'globes', cssClass: 'source-globes' }
@@ -227,9 +233,10 @@
         function useFallbackNews() {
             allArticles = [
                 { sourceName: 'N12', sourceKey: 'n12', cssClass: 'source-n12', title: 'עדכוני חדשות 12 בלייב מכל המוקדים', link: 'https://www.n12.co.il', pubDate: new Date().toISOString(), snippet: 'דיווחים ראשוניים ומבזקים שוטפים מצוות כתבי חדשות 12.' },
+                { sourceName: 'ספורט 5', sourceKey: 'sport5', cssClass: 'source-sport5', title: 'תוצאות, תקצירים ועדכוני ספורט בזמן אמת', link: 'https://www.sport5.co.il', pubDate: new Date().toISOString(), snippet: 'חדשות הספורט מישראל ומהעולם, ליגת העל, צ’מפיונס ליג ו-NBA.' },
+                { sourceName: 'ONE ספורט', sourceKey: 'one', cssClass: 'source-one', title: 'כותרות הספורט, החתמות ודיווחים בלעדיים', link: 'https://www.one.co.il', pubDate: new Date().toISOString(), snippet: 'כל הדיווחים החמים מעולם הכדורגל, הכדורסל והספורט העולמי.' },
                 { sourceName: 'ערוץ 14', sourceKey: 'c14', cssClass: 'source-c14', title: 'כותרות עכשיו 14 ועדכונים מדיניים-ביטחוניים', link: 'https://www.now14.co.il', pubDate: new Date().toISOString(), snippet: 'כל העדכונים השוטפים מערוץ 14 והפרשנויות המובילות.' },
-                { sourceName: 'בחדרי חרדים', sourceKey: 'bhadrei', cssClass: 'source-bhadrei', title: 'עדכוני חצרות הקודש, עולם התורה והפוליטיקה', link: 'https://www.bhol.co.il', pubDate: new Date().toISOString(), snippet: 'כל הידיעות והחדשות מהמגזר החרדי ועולם הישיבות.' },
-                { sourceName: 'Ynet', sourceKey: 'ynet', cssClass: 'source-ynet', title: 'כותרות ראשיות ומבזקים שוטפים', link: 'https://www.ynet.co.il', pubDate: new Date().toISOString(), snippet: 'מעקב שוטף אחר האירועים האחרונים בישראל ובעולם.' }
+                { sourceName: 'בחדרי חרדים', sourceKey: 'bhadrei', cssClass: 'source-bhadrei', title: 'עדכוני חצרות הקודש, עולם התורה והפוליטיקה', link: 'https://www.bhol.co.il', pubDate: new Date().toISOString(), snippet: 'כל הידיעות והחדשות מהמגזר החרדי ועולם הישיבות.' }
             ];
             renderNews(allArticles);
         }
