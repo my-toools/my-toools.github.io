@@ -45,18 +45,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .nav-top-row { display: flex; align-items: center; justify-content: center; width: 100%; }
-  .nav-links { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 auto; }
-  .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 700; font-size: 16px; padding: 6px 12px; border-radius: 6px; }
-  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-  .nav-logo-link { display: flex; align-items: center; padding: 0 4px; }
-  .nav-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
-
-  .nav-widgets { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #94a3b8; padding: 4px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; width: 100%; }
-  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .widget-item span { color: #f8fafc; font-weight: 500; }
-  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
-
   .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
   .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
   .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
@@ -69,10 +57,27 @@
   input, select, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
   textarea { min-height: 80px; resize: vertical; }
 
-  .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
-  .calc-btn { background: #f1f5f9; color: var(--dark-blue); border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; }
-  .calc-btn.op { background: var(--accent-blue); color: #ffffff; }
-  .calc-screen { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; }
+  /* מחשבון עמוד כלים - כפתורים מימין בסגנון Microsoft */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 12px;
+    direction: rtl;
+  }
+  .calc-btn-u {
+    background: #f1f5f9;
+    color: var(--dark-blue);
+    border: 1px solid #cbd5e1;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .calc-btn-u.op { background: var(--accent-blue); color: #ffffff; }
+  .calc-btn-u.sci { background: #e2e8f0; color: #1e3a8a; font-size: 13px; }
+  .calc-screen-u { font-size: 22px; text-align: left; direction: ltr; font-weight: 700; background: #f8fafc; }
 
   button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; }
   button:hover { background: #1e4ed8; }
@@ -98,29 +103,38 @@
 <div class="grid-container">
 
     <div class="card">
-        <h2>מחשבון רגיל ומדעי</h2>
-        <input type="text" id="calcDisplay" class="calc-screen" value="0" readonly>
+        <h2>מחשבון מדעי ומקצועי</h2>
+        <input type="text" id="calcDisplay" class="calc-screen-u" value="0" readonly>
         <div class="calc-grid">
-            <button class="calc-btn" onclick="clearCalc()">C</button>
-            <button class="calc-btn" onclick="pressCalc('(')">(</button>
-            <button class="calc-btn" onclick="pressCalc(')')">)</button>
-            <button class="calc-btn op" onclick="pressCalc('/')">/</button>
-            <button class="calc-btn" onclick="pressCalc('7')">7</button>
-            <button class="calc-btn" onclick="pressCalc('8')">8</button>
-            <button class="calc-btn" onclick="pressCalc('9')">9</button>
-            <button class="calc-btn op" onclick="pressCalc('*')">*</button>
-            <button class="calc-btn" onclick="pressCalc('4')">4</button>
-            <button class="calc-btn" onclick="pressCalc('5')">5</button>
-            <button class="calc-btn" onclick="pressCalc('6')">6</button>
-            <button class="calc-btn op" onclick="pressCalc('-')">-</button>
-            <button class="calc-btn" onclick="pressCalc('1')">1</button>
-            <button class="calc-btn" onclick="pressCalc('2')">2</button>
-            <button class="calc-btn" onclick="pressCalc('3')">3</button>
-            <button class="calc-btn op" onclick="pressCalc('+')">+</button>
-            <button class="calc-btn" onclick="pressCalc('0')">0</button>
-            <button class="calc-btn" onclick="pressCalc('.')">.</button>
-            <button class="calc-btn" onclick="scientificCalc('sqrt')">√</button>
-            <button class="calc-btn op" onclick="evalCalc()">=</button>
+            <button class="calc-btn-u op" onclick="pressCalc('/')">÷</button>
+            <button class="calc-btn-u" onclick="clearCalc()">C</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('sin')">sin</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('cos')">cos</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('tan')">tan</button>
+
+            <button class="calc-btn-u op" onclick="pressCalc('*')">×</button>
+            <button class="calc-btn-u" onclick="pressCalc('9')">9</button>
+            <button class="calc-btn-u" onclick="pressCalc('8')">8</button>
+            <button class="calc-btn-u" onclick="pressCalc('7')">7</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('sqrt')">√</button>
+
+            <button class="calc-btn-u op" onclick="pressCalc('-')">-</button>
+            <button class="calc-btn-u" onclick="pressCalc('6')">6</button>
+            <button class="calc-btn-u" onclick="pressCalc('5')">5</button>
+            <button class="calc-btn-u" onclick="pressCalc('4')">4</button>
+            <button class="calc-btn-u sci" onclick="scientificCalc('sqr')">x²</button>
+
+            <button class="calc-btn-u op" onclick="pressCalc('+')">+</button>
+            <button class="calc-btn-u" onclick="pressCalc('3')">3</button>
+            <button class="calc-btn-u" onclick="pressCalc('2')">2</button>
+            <button class="calc-btn-u" onclick="pressCalc('1')">1</button>
+            <button class="calc-btn-u sci" onclick="pressCalc('**')">xʸ</button>
+
+            <button class="calc-btn-u op" onclick="evalCalc()">=</button>
+            <button class="calc-btn-u" onclick="pressCalc('0')">0</button>
+            <button class="calc-btn-u" onclick="pressCalc('.')">.</button>
+            <button class="calc-btn-u" onclick="pressCalc('(')">(</button>
+            <button class="calc-btn-u" onclick="pressCalc(')')">)</button>
         </div>
     </div>
 
@@ -198,7 +212,19 @@
     function pressCalc(val) { if (calcExpr === "0") calcExpr = ""; calcExpr += val; document.getElementById('calcDisplay').value = calcExpr; }
     function clearCalc() { calcExpr = ""; document.getElementById('calcDisplay').value = "0"; }
     function evalCalc() { try { var res = eval(calcExpr); document.getElementById('calcDisplay').value = res; calcExpr = res.toString(); } catch(e) { document.getElementById('calcDisplay').value = "שגיאה"; calcExpr = ""; } }
-    function scientificCalc(op) { try { var val = eval(calcExpr || "0"); var res = Math.sqrt(val); document.getElementById('calcDisplay').value = res.toFixed(4); calcExpr = res.toString(); } catch(e) {} }
+    function scientificCalc(type) {
+        try {
+            var val = eval(calcExpr || "0");
+            var res = 0;
+            if (type === 'sin') res = Math.sin(val * Math.PI / 180);
+            else if (type === 'cos') res = Math.cos(val * Math.PI / 180);
+            else if (type === 'tan') res = Math.tan(val * Math.PI / 180);
+            else if (type === 'sqrt') res = Math.sqrt(val);
+            else if (type === 'sqr') res = Math.pow(val, 2);
+            document.getElementById('calcDisplay').value = res.toFixed(4);
+            calcExpr = res.toString();
+        } catch(e) {}
+    }
 
     async function translateText() {
         var text = document.getElementById('transText').value;
