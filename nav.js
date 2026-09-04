@@ -65,18 +65,36 @@
             background: #ef4444;
             color: #ffffff;
             text-align: center;
-            padding: 6px;
+            padding: 8px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
             width: 100%;
+            box-shadow: 0 2px 10px rgba(239,68,68,0.5);
+        }
+        .sound-toggle-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ffffff;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .sound-toggle-btn.active {
+            background: #22c55e;
+            border-color: #16a34a;
         }
     `;
     document.head.appendChild(navStyle);
 
-    // 4. הזרקת סרגל ניווט עליון (כולל הסמל האדום להתראות)
+    // 4. הזרקת סרגל ניווט עליון
     var navContainer = document.querySelector('.nav');
     if (navContainer) {
         var navHTML = `
+            <audio id="alertSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
             <div id="alertBanner"><i class="fa-solid fa-triangle-exclamation"></i> <span id="alertText">התראת צבע אדום פעילה!</span></div>
             <div class="nav-top-row">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -105,6 +123,9 @@
                     <a href="alerts.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-bell" style="color: #ef4444;"></i> התראות וצבע אדום
                     </a>
+                    <button id="soundToggle" class="sound-toggle-btn" onclick="toggleAlertSound()">
+                        <i class="fa-solid fa-volume-xmark" id="soundIcon"></i> <span id="soundText">צליל כבוי</span>
+                    </button>
                     <a href="utility.html" style="color: #ffffff; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 4px;">
                         <i class="fa-solid fa-toolbox" style="color: #f97316;"></i> כלים שימושיים
                     </a>
@@ -162,7 +183,29 @@
         footerElem.innerHTML = footerHTML;
     }
 
-    // 6. עדכון שעה ותאריך לועזי
+    // 6. כפתור הפעלת צליל התראה
+    window.soundEnabled = false;
+    window.toggleAlertSound = function() {
+        var btn = document.getElementById('soundToggle');
+        var icon = document.getElementById('soundIcon');
+        var text = document.getElementById('soundText');
+        var audio = document.getElementById('alertSound');
+
+        window.soundEnabled = !window.soundEnabled;
+
+        if (window.soundEnabled) {
+            btn.classList.add('active');
+            icon.className = 'fa-solid fa-volume-high';
+            text.innerText = 'צליל פעיל';
+            if (audio) { audio.play(); audio.pause(); } // אישור דפדפן להשמעת שמע
+        } else {
+            btn.classList.remove('active');
+            icon.className = 'fa-solid fa-volume-xmark';
+            text.innerText = 'צליל כבוי';
+        }
+    };
+
+    // 7. עדכון שעה ותאריך לועזי
     function updateClockAndDate() {
         var now = new Date();
         var hours = String(now.getHours()).padStart(2, '0');
@@ -181,7 +224,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת נתונים בלייב
+    // 8. טעינת נתונים בלייב
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
