@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מפות ושעוני עולם בזמן אמת - הכלים שלי</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .world-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .header-card {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .clock-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .clock-card:hover {
+            transform: translateY(-3px);
+            border-color: #38bdf8;
+        }
+        .clock-card h3 {
+            margin: 0 0 5px 0;
+            color: #1e293b;
+            font-size: 18px;
+        }
+        .clock-card .country {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        .clock-card .time {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0284c7;
+            font-family: monospace;
+        }
+        .clock-card .date {
+            font-size: 12px;
+            color: #475569;
+            margin-top: 5px;
+        }
+        .map-box {
+            width: 100%;
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="nav"></div>
+
+    <div class="world-container">
+        <div class="header-card">
+            <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-globe" style="color: #38bdf8;"></i> שעוני עולם ומפה אינטראקטיבית</h1>
+            <p style="margin: 0; color: #cbd5e1;">זמנים ושעונים בלייב סביב הגלובוס ומפת עולם אינטראקטיבית</p>
+        </div>
+
+        <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 20px;">
+            <i class="fa-regular fa-clock"></i> שעונים בערי העולם
+        </h2>
+
+        <div class="clocks-grid">
+            <div class="clock-card">
+                <h3>ניו יורק</h3>
+                <div class="country">ארצות הברית (EDT)</div>
+                <div class="time" id="clock-ny">--:--:--</div>
+                <div class="date" id="date-ny">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>לונדון</h3>
+                <div class="country">בריטניה (BST)</div>
+                <div class="time" id="clock-london">--:--:--</div>
+                <div class="date" id="date-london">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>פריז</h3>
+                <div class="country">צרפת (CEST)</div>
+                <div class="time" id="clock-paris">--:--:--</div>
+                <div class="date" id="date-paris">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>טוקיו</h3>
+                <div class="country">יפן (JST)</div>
+                <div class="time" id="clock-tokyo">--:--:--</div>
+                <div class="date" id="date-tokyo">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>לוס אנג'לס</h3>
+                <div class="country">ארצות הברית (PDT)</div>
+                <div class="time" id="clock-la">--:--:--</div>
+                <div class="date" id="date-la">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>דובאי</h3>
+                <div class="country">איחוד האמירויות (GST)</div>
+                <div class="time" id="clock-dubai">--:--:--</div>
+                <div class="date" id="date-dubai">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>בנגקוק</h3>
+                <div class="country">תאילנד (ICT)</div>
+                <div class="time" id="clock-bangkok">--:--:--</div>
+                <div class="date" id="date-bangkok">--/--/----</div>
+            </div>
+            <div class="clock-card">
+                <h3>סידני</h3>
+                <div class="country">אוסטרליה (AEST)</div>
+                <div class="time" id="clock-sydney">--:--:--</div>
+                <div class="date" id="date-sydney">--/--/----</div>
+            </div>
+        </div>
+
+        <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 20px;">
+            <i class="fa-solid fa-map-location-dot"></i> מפת עולם אינטראקטיבית
+        </h2>
+
+        <div class="map-box">
+            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=he&amp;q=Israel+(My%20Business%20Name)&amp;t=&amp;z=3&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="nav.js"></script>
+    <script>
+        function updateWorldClocks() {
+            var cities = [
+                { idTime: 'clock-ny', idDate: 'date-ny', tz: 'America/New_York' },
+                { idTime: 'clock-london', idDate: 'date-london', tz: 'Europe/London' },
+                { idTime: 'clock-paris', idDate: 'date-paris', tz: 'Europe/Paris' },
+                { idTime: 'clock-tokyo', idDate: 'date-tokyo', tz: 'Asia/Tokyo' },
+                { idTime: 'clock-la', idDate: 'date-la', tz: 'America/Los_Angeles' },
+                { idTime: 'clock-dubai', idDate: 'date-dubai', tz: 'Asia/Dubai' },
+                { idTime: 'clock-bangkok', idDate: 'date-bangkok', tz: 'Asia/Bangkok' },
+                { idTime: 'clock-sydney', idDate: 'date-sydney', tz: 'Australia/Sydney' }
+            ];
+
+            var now = new Date();
+
+            cities.forEach(function(city) {
+                var timeStr = now.toLocaleTimeString('he-IL', { timeZone: city.tz, hour12: false });
+                var dateStr = now.toLocaleDateString('he-IL', { timeZone: city.tz });
+                
+                var timeElem = document.getElementById(city.idTime);
+                var dateElem = document.getElementById(city.idDate);
+                
+                if (timeElem) timeElem.innerText = timeStr;
+                if (dateElem) dateElem.innerText = dateStr;
+            });
+        }
+
+        setInterval(updateWorldClocks, 1000);
+        updateWorldClocks();
+    </script>
+</body>
+</html>
