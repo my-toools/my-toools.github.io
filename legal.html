@@ -7,14 +7,6 @@
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <title>הכלים שלי - מחשבונים וכלים משפטיים</title>
 
-<meta property="og:title" content="הכלים שלי - מחשבונים וכלים משפטיים">
-<meta property="og:description" content="חישוב מועדים ופגרות לפי תקנות סדר הדין האזרחי, בדיקת סמכות עניינית ואגרות בית משפט.">
-<meta property="og:image" content="https://my-toools.github.io/favicon.png">
-<meta property="og:url" content="https://my-toools.github.io/legal.html">
-<meta property="og:type" content="website">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6942869057091051" crossorigin="anonymous"></script>
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
 
@@ -40,7 +32,6 @@
     line-height: 1.6;
   }
 
-  /* סרגל עליון קבוע בכחול כהה (Sticky) */
   .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -55,258 +46,50 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .nav-top-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    position: relative;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  .nav-top-row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; flex-wrap: wrap; }
+  .nav-links { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 auto; }
+  .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 700; font-size: 16px; padding: 6px 12px; border-radius: 6px; transition: all 0.2s ease; }
+  .nav-links a:hover { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
+  .nav-logo-link { display: flex; align-items: center; padding: 0 4px; }
+  .nav-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; transition: transform 0.2s ease; }
+  .nav-logo:hover { transform: scale(1.08); }
 
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 22px; /* מוגדל לכותרת ראשית */
-    color: #ffffff;
-    white-space: nowrap;
-    position: absolute;
-    right: 0;
-  }
+  .nav-widgets { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #94a3b8; background: transparent; padding: 4px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; width: 100%; }
+  .widget-item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .widget-item span { color: #f8fafc; font-weight: 500; }
+  .widget-divider { color: rgba(255, 255, 255, 0.2); font-weight: 300; }
 
-  .nav-logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    object-fit: contain;
-  }
-
-  .nav-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 0 auto;
-  }
-
-  /* כותרות סרגל מוגדלות ובולטות */
-  .nav-links a {
-    color: #cbd5e1;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px; /* מוגדל */
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-  }
-
-  .nav-links a:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  .nav-widgets {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    font-size: 13px;
-    color: #38bdf8;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 16px;
-    border-radius: 20px;
-    flex-wrap: wrap;
-  }
-
-  .widget-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .widget-item span {
-    color: #ffffff;
-    font-weight: 600;
-  }
-
-  .hero-header {
-    max-width: 900px;
-    margin: 0 auto 20px auto;
-    text-align: center;
-  }
-
+  .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
   .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
   .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
 
-  /* גריד כרטיסיות */
-  .grid-container {
-    max-width: 940px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 0 10px;
-  }
+  .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
+  .card { background: var(--card-bg); border: 1px solid #e2e8f0; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
+  .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
-  .card {
-    background: var(--card-bg);
-    border: 1px solid #e2e8f0;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
-    text-align: right;
-  }
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
+  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
 
-  .card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-  }
+  .checkbox-group { display: flex; align-items: center; gap: 8px; margin: 14px 0; }
+  .checkbox-group input { width: auto; margin: 0; cursor: pointer; }
+  .checkbox-group label { margin: 0; cursor: pointer; }
 
-  .card h2 {
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-top: 0;
-    margin-bottom: 16px;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 8px;
-  }
+  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; transition: all 0.2s ease; margin-top: 16px; }
+  button:hover { background: #1e4ed8; }
 
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-    margin-top: 12px;
-  }
+  .result { font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; }
 
-  input, select {
-    width: 100%;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 10px 12px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-family: inherit;
-    transition: all 0.2s ease;
-  }
-
-  input:focus, select:focus {
-    outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
-  }
-
-  .checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 14px 0;
-  }
-
-  .checkbox-group input {
-    width: auto;
-    margin: 0;
-    cursor: pointer;
-  }
-
-  .checkbox-group label {
-    margin: 0;
-    cursor: pointer;
-  }
-
-  button {
-    width: 100%;
-    background: var(--accent-blue);
-    color: #ffffff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 15px;
-    font-family: inherit;
-    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
-    transition: all 0.2s ease;
-    margin-top: 16px;
-  }
-
-  button:hover {
-    background: #1e4ed8;
-    transform: translateY(-1px);
-  }
-
-  .result {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-top: 16px;
-    text-align: center;
-    background: #f1f5f9;
-    border: 1px solid #cbd5e1;
-    padding: 12px;
-    border-radius: 8px;
-  }
-
-  footer {
-    margin-top: 50px;
-    padding: 24px;
-    background: var(--dark-blue);
-    border-top: 3px solid #1d4ed8;
-    text-align: center;
-    font-size: 13px;
-    color: #cbd5e1;
-  }
-
+  footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
+  footer p { color: #cbd5e1 !important; margin: 6px 0; }
   footer a { color: #38bdf8; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 768px) {
-    body { padding-top: 190px; }
-    .grid-container { grid-template-columns: 1fr; }
-    .nav-brand { position: static; justify-content: center; }
-    .nav-top-row { flex-direction: column; }
-  }
+  @media (max-width: 768px) { body { padding-top: 190px; } .grid-container { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<div class="nav">
-    <div class="nav-top-row">
-        <div class="nav-brand">
-            <img src="favicon.png" alt="לוגו הכלים שלי" class="nav-logo">
-            <span>הכלים שלי</span>
-        </div>
-
-        <div class="nav-links">
-            <a href="index.html">💼 זכויות עובדים</a>
-            <a href="legal.html">⚖️ כלים משפטיים</a>
-            <a href="finance.html">💰 מט"ח ופיננסים</a>
-            <a href="utility.html">🛠️ כלים שימושיים</a>
-            <a href="guides.html">📚 מדריכים</a>
-            <a href="about.html">ℹ️ אודות</a>
-        </div>
-    </div>
-
-    <div class="nav-widgets">
-        <div class="widget-item">📅 <span id="navGregDate">טוען...</span></div>
-        <div class="widget-item">📜 תאריך עברי: <span id="navHebrewDate">טוען...</span></div>
-        <div class="widget-item">⏰ שעה: <span id="navLiveTime">00:00:00</span></div>
-        <div class="widget-item">🌅 זריחה: <span id="navSunrise">--:--</span></div>
-        <div class="widget-item">🌇 שקיעה: <span id="navSunset">--:--</span></div>
-        <div class="widget-item">💵 דולר: <span id="navUsd">טוען...</span></div>
-        <div class="widget-item">💶 אירו: <span id="navEur">טוען...</span></div>
-        <div class="widget-item">🌤️ מזג אוויר: <span id="navWeather">טוען...</span></div>
-    </div>
-</div>
+<div class="nav"></div>
 
 <div class="hero-header">
     <h1>מחשבונים וכלים משפטיים מתקדמים</h1>
@@ -315,7 +98,6 @@
 
 <div class="grid-container">
 
-    <!-- כרטיסייה 1: מועדים ופגרות -->
     <div class="card">
         <h2>מחשבון מועדים, ימי תגובה ופגרות</h2>
         <label>תאריך המצאת הכתב / החלטה:</label>
@@ -339,7 +121,6 @@
         <div class="result" id="deadlineResult">הכניסי תאריך לחישוב</div>
     </div>
 
-    <!-- כרטיסייה 2: סמכות עניינית -->
     <div class="card">
         <h2>מחשבון סמכות עניינית מקיף</h2>
         <label>מהות התביעה / הנושא:</label>
@@ -361,7 +142,6 @@
         <div class="result" id="fullJurisResult">תוצאה תופיע כאן</div>
     </div>
 
-    <!-- כרטיסייה 3: אגרות בית משפט -->
     <div class="card" style="grid-column: span 2;">
         <h2>מחשבון אגרת בית משפט וחלוקה למחציות</h2>
         <label>סכום התביעה (בש"ח):</label>
@@ -470,56 +250,14 @@
             document.getElementById('detailedFeeResult').innerText = `סך אגרה (2.5%): ${totalFee.toLocaleString()} ₪ | מחצית ראשונה להגשה: ${half1.toLocaleString()} ₪`;
         }
     }
-
-    function updateClockAndDate() {
-        let now = new Date();
-        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('navGregDate').innerText = now.toLocaleDateString('he-IL', options);
-        let timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('navLiveTime').innerText = timeStr;
-    }
-
-    async function loadNavData() {
-        try {
-            let now = new Date();
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
-            let data = await res.json();
-            document.getElementById('navHebrewDate').innerText = data.hebrew;
-        } catch (e) {}
-
-        try {
-            let res = await fetch('https://open.er-api.com/v6/latest/USD');
-            let data = await res.json();
-            document.getElementById('navUsd').innerText = `₪ ${data.rates.ILS.toFixed(2)}`;
-            document.getElementById('navEur').innerText = `₪ ${(data.rates.ILS / data.rates.EUR).toFixed(2)}`;
-        } catch (e) {}
-
-        try {
-            let wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.0853&longitude=34.7818&current_weather=true&daily=sunrise,sunset&timezone=auto');
-            let wData = await wRes.json();
-            let temp = Math.round(wData.current_weather.temperature);
-            document.getElementById('navWeather').innerText = `${temp}°C`;
-
-            let sunrise = wData.daily.sunrise[0].split('T')[1];
-            let sunset = wData.daily.sunset[0].split('T')[1];
-            document.getElementById('navSunrise').innerText = sunrise;
-            document.getElementById('navSunset').innerText = sunset;
-        } catch (e) {
-            document.getElementById('navSunrise').innerText = "06:20";
-            document.getElementById('navSunset').innerText = "19:10";
-        }
-    }
-
-    updateClockAndDate();
-    setInterval(updateClockAndDate, 1000);
-    loadNavData();
 </script>
 
 <footer>
     <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
-    <p style="font-size: 12px; color: #cbd5e1; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
+    <p style="font-size: 12px; margin: 8px 0;"><strong>הבהרה:</strong> הנתונים והחישובים המופיעים באתר מוצגים כהערכה כללית בלבד ואינם מהווים ייעוץ משפטי.</p>
     <p>ליצירת קשר: <a href="mailto:mytooolsweb@gmail.com">mytooolsweb@gmail.com</a> | <a href="privacy.html">מדיניות פרטיות ותנאי שימוש</a> | <a href="about.html">אודות והצהרת נגישות</a></p>
 </footer>
 
+<script src="nav.js"></script>
 </body>
 </html>
