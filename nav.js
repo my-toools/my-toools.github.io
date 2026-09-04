@@ -15,23 +15,52 @@
         document.head.appendChild(favicon);
     }
 
-    // 3. הזרקת CSS לנעילת גודל וסגנון אחיד למניעת שינויי גודל בין עמודים
+    // 3. הזרקת CSS לנעילת ממידי הסרגל ומניעת תזוזות/קפיצות בגודל
     var navStyle = document.createElement('style');
     navStyle.innerHTML = `
+        html {
+            overflow-y: scroll !important; /* מונע קפיצת רוחב כתוצאה מפס הגלילה */
+        }
         .nav {
             box-sizing: border-box !important;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+            padding: 8px 0 !important;
+            margin: 0 !important;
             line-height: 1.2 !important;
+            min-height: 80px !important;
+            width: 100% !important;
+        }
+        .nav-top-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            width: 100% !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            padding: 0 10px !important;
+            box-sizing: border-box !important;
+            height: 44px !important;
         }
         .nav-top-row a {
             box-sizing: border-box !important;
             font-size: 14px !important;
             line-height: 1 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .nav-logo-link img {
+            width: 42px !important;
+            height: 42px !important;
+            max-height: 42px !important;
+            object-fit: contain !important;
         }
         .nav-widgets {
             box-sizing: border-box !important;
             font-size: 12px !important;
             line-height: 1 !important;
+            margin-top: 5px !important;
+            padding-top: 5px !important;
         }
     `;
     document.head.appendChild(navStyle);
@@ -40,7 +69,7 @@
     var navContainer = document.querySelector('.nav');
     if (navContainer) {
         var navHTML = `
-            <div class="nav-top-row" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 10px;">
+            <div class="nav-top-row">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <a href="index.html" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px;">
                         <i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i> זכויות עובדים
@@ -53,8 +82,9 @@
                     </a>
                 </div>
 
+                <!-- בלחיצה על הלוגו נפתח המחשבון / עמוד הבית -->
                 <a href="index.html" class="nav-logo-link" style="display: flex; align-items: center; justify-content: center; margin: 0 8px;">
-                    <img src="logo.png" alt="לוגו האתר" class="nav-logo" onerror="this.src='favicon.png';" style="width: 42px; height: 42px; object-fit: contain;">
+                    <img src="logo.png" alt="לוגו האתר" class="nav-logo" onerror="this.src='favicon.png';">
                 </a>
 
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -70,7 +100,7 @@
                 </div>
             </div>
 
-            <div class="nav-widgets" id="navWidgets" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; width: 100%; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 5px; margin-top: 5px; font-size: 12px; color: #cbd5e1;">
+            <div class="nav-widgets" id="navWidgets" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; width: 100%; border-top: 1px solid rgba(255,255,255,0.15); color: #cbd5e1;">
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-clock" style="color: #60a5fa;"></i> <span id="navTime" style="color: #ffffff; font-weight: 700;">--:--:--</span></div>
                 <div class="widget-divider" style="color: rgba(255,255,255,0.2);">|</div>
                 <div class="widget-item" style="display: flex; align-items: center; gap: 4px;"><i class="fa-regular fa-calendar" style="color: #38bdf8;"></i> <span id="navGregorianDate" style="color: #ffffff; font-weight: 700;">--/--/----</span></div>
@@ -96,7 +126,7 @@
         navContainer.innerHTML = navHTML;
     }
 
-    // 5. הזרקת הסרגל התחתון (פוטר)
+    // 5. הזרקת פוטר
     var footerElem = document.querySelector('footer');
     var footerHTML = `
         <p><strong>הכלים שלי</strong> - פלטפורמה חינמית לחישוב זכויות עובדים, כלים משפטיים ופיננסיים.</p>
@@ -132,7 +162,7 @@
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת APIs
+    // 7. טעינת נתונים בלייב
     async function updateNavData() {
         try {
             var res = await fetch("https://open.er-api.com/v6/latest/USD");
