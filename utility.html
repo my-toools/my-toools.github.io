@@ -3,348 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מרכז הכלים השימושיים - הכלים שלי</title>
-    <link rel="stylesheet" href="style.css">
+    <title>כלים שימושיים ומחשבונים - NETOOLS</title>
+    <meta name="description" content="אוסף מחשבונים וכלים שימושיים: מחשבון מע\"מ, המרת מידות נעליים ובגדים, מחשבון BMI משקל וגובה, מחשבון אחוזים ומחולל סיסמאות.">
     <style>
-        .utility-container {
-            max-width: 1150px;
-            margin: 30px auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        .header-card {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        /* גריד כרטיסיות צבעוני ובולט */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-        .tool-card {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 15px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .tool-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .tool-card i {
-            font-size: 26px;
-        }
-        .tool-card span {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1e293b;
-        }
-
-        /* עיצוב כרטיס פעיל לכל כלי */
-        .tool-card[data-tool="vatTool"].active { border-color: #2563eb; background: #eff6ff; }
-        .tool-card[data-tool="vatTool"] i { color: #2563eb; }
-
-        .tool-card[data-tool="percentTool"].active { border-color: #0d9488; background: #ccfbf1; }
-        .tool-card[data-tool="percentTool"] i { color: #0d9488; }
-
-        .tool-card[data-tool="sigTool"].active { border-color: #8b5cf6; background: #f3e8ff; }
-        .tool-card[data-tool="sigTool"] i { color: #8b5cf6; }
-
-        .tool-card[data-tool="waTool"].active { border-color: #16a34a; background: #f0fdf4; }
-        .tool-card[data-tool="waTool"] i { color: #16a34a; }
-
-        .tool-card[data-tool="passTool"].active { border-color: #ea580c; background: #ffedd5; }
-        .tool-card[data-tool="passTool"] i { color: #ea580c; }
-
-        .tool-card[data-tool="gematriaTool"].active { border-color: #d97706; background: #fef3c7; }
-        .tool-card[data-tool="gematriaTool"] i { color: #d97706; }
-
-        .tool-card[data-tool="counterTool"].active { border-color: #0284c7; background: #e0f2fe; }
-        .tool-card[data-tool="counterTool"] i { color: #0284c7; }
-
-        /* אזור הכלי הפעיל */
-        .tool-panel {
-            display: none;
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 25px;
-            border-radius: 10px;
-        }
-        .tool-panel.active {
-            display: block;
-        }
-
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: bold; color: #1e293b; }
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            font-size: 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .result-box {
-            margin-top: 15px;
-            padding: 15px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            color: #0f172a;
-            font-weight: bold;
-            font-size: 15px;
-        }
-        #sigCanvas {
-            border: 2px dashed #94a3b8;
-            background: #ffffff;
-            border-radius: 6px;
-            cursor: crosshair;
-            touch-action: none;
-        }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; color: #1e293b; }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; text-align: center; padding: 35px 20px; }
+        .hero h1 { font-size: 28px; margin: 0 0 8px 0; }
+        .hero p { font-size: 16px; color: #94a3b8; margin: 0; }
+        
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .section-title { font-size: 20px; color: #0284c7; margin: 30px 0 15px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .calc-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .calc-card h3 { margin-top: 0; color: #0f172a; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 14px; color: #475569; margin-bottom: 4px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        
+        button.btn-calc { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 5px; }
+        button.btn-calc:hover { background: #0369a1; }
+        
+        .result-box { margin-top: 15px; padding: 12px; background: #f8fafc; border-radius: 6px; border-right: 4px solid #0284c7; font-size: 14px; color: #0f172a; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <!-- הסרגל העליון מוזרק לכאן -->
-    <div class="nav"></div>
-
-    <div class="utility-container">
-        <div class="header-card">
-            <h1 style="margin: 0 0 10px 0;"><i class="fa-solid fa-toolbox" style="color: #f97316;"></i> מרכז הכלים השימושיים</h1>
-            <p style="margin: 0; color: #cbd5e1;">בחרי כלי מתוך התפריט הצבעוני לקבלת מחשבון מהיר</p>
-        </div>
-
-        <!-- תפריט כרטיסים צבעוני ובולט -->
-        <div class="tools-grid">
-            <div class="tool-card active" data-tool="vatTool" onclick="selectTool('vatTool', this)">
-                <i class="fa-solid fa-calculator"></i>
-                <span>מחשבון מע"מ</span>
-            </div>
-            <div class="tool-card" data-tool="percentTool" onclick="selectTool('percentTool', this)">
-                <i class="fa-solid fa-percent"></i>
-                <span>מחשבון אחוזים</span>
-            </div>
-            <div class="tool-card" data-tool="sigTool" onclick="selectTool('sigTool', this)">
-                <i class="fa-solid fa-signature"></i>
-                <span>חתימה דיגיטלית</span>
-            </div>
-            <div class="tool-card" data-tool="waTool" onclick="selectTool('waTool', this)">
-                <i class="fa-brands fa-whatsapp"></i>
-                <span>WhatsApp מהיר</span>
-            </div>
-            <div class="tool-card" data-tool="passTool" onclick="selectTool('passTool', this)">
-                <i class="fa-solid fa-key"></i>
-                <span>מחולל סיסמאות</span>
-            </div>
-            <div class="tool-card" data-tool="gematriaTool" onclick="selectTool('gematriaTool', this)">
-                <i class="fa-solid fa-arrow-down-1-9"></i>
-                <span>מחשבון גימטריה</span>
-            </div>
-            <div class="tool-card" data-tool="counterTool" onclick="selectTool('counterTool', this)">
-                <i class="fa-solid fa-align-right"></i>
-                <span>מונה תווים</span>
-            </div>
-        </div>
-
-        <!-- 1. מע"מ -->
-        <div id="vatTool" class="tool-panel active">
-            <h2><i class="fa-solid fa-calculator" style="color: #2563eb;"></i> מחשבון מע"מ מהיר</h2>
-            <div class="form-group">
-                <label>הכניסי סכום (₪):</label>
-                <input type="number" id="vatAmount" class="form-control" placeholder="לדוגמה: 1000" oninput="calcVat()">
-            </div>
-            <div class="result-box" id="vatResult">הכניסי סכום לקבלת חישוב מפורט...</div>
-        </div>
-
-        <!-- 2. אחוזים -->
-        <div id="percentTool" class="tool-panel">
-            <h2><i class="fa-solid fa-percent" style="color: #0d9488;"></i> מחשבון אחוזים</h2>
-            <div class="form-group">
-                <label>כמה הם (אחוז %):</label>
-                <input type="number" id="pctVal" class="form-control" placeholder="15" style="width: 140px; display: inline-block;">
-                <label style="display: inline-block; margin: 0 10px;">מתוך סכום:</label>
-                <input type="number" id="pctTotal" class="form-control" placeholder="200" style="width: 140px; display: inline-block;">
-                <button class="btn-primary" onclick="calcPercent()" style="background: #0d9488; margin-right: 10px;">חשב</button>
-            </div>
-            <div class="result-box" id="pctResult">הכניסי נתונים לחישוב...</div>
-        </div>
-
-        <!-- 3. חתימה -->
-        <div id="sigTool" class="tool-panel">
-            <h2><i class="fa-solid fa-signature" style="color: #8b5cf6;"></i> יוצר חתימה דיגיטלית</h2>
-            <p>חתומי בעכבר/אצבע והורידי תמונה שקופה (PNG):</p>
-            <canvas id="sigCanvas" width="500" height="180"></canvas>
-            <div style="margin-top: 10px; display: flex; gap: 10px;">
-                <button class="btn-primary" style="background: #8b5cf6;" onclick="downloadSig()">הורד חתימה (PNG)</button>
-                <button class="btn-primary" style="background: #64748b;" onclick="clearSig()">נקה</button>
-            </div>
-        </div>
-
-        <!-- 4. וואטסאפ -->
-        <div id="waTool" class="tool-panel">
-            <h2><i class="fa-brands fa-whatsapp" style="color: #16a34a;"></i> WhatsApp ללא שמירת איש קשר</h2>
-            <div class="form-group">
-                <label>מספר טלפון:</label>
-                <input type="text" id="waPhone" class="form-control" placeholder="0501234567">
-            </div>
-            <div class="form-group">
-                <label>הודעה מראש (אופציונלי):</label>
-                <input type="text" id="waText" class="form-control" placeholder="שלום, אני פונה בנוגע ל...">
-            </div>
-            <button class="btn-primary" style="background: #16a34a;" onclick="openWa()"><i class="fa-brands fa-whatsapp"></i> פתח שיחה</button>
-        </div>
-
-        <!-- 5. סיסמאות -->
-        <div id="passTool" class="tool-panel">
-            <h2><i class="fa-solid fa-key" style="color: #ea580c;"></i> מחולל סיסמאות מאובטחות</h2>
-            <div class="form-group">
-                <label>אורך הסיסמה:</label>
-                <input type="number" id="passLen" class="form-control" value="12" min="6" max="32" style="width: 100px;">
-            </div>
-            <button class="btn-primary" style="background: #ea580c;" onclick="genPassword()">צור סיסמה</button>
-            <div class="result-box" id="passResult" style="font-family: monospace; font-size: 18px;">לחצי ליצירת סיסמה...</div>
-        </div>
-
-        <!-- 6. גימטריה -->
-        <div id="gematriaTool" class="tool-panel">
-            <h2><i class="fa-solid fa-arrow-down-1-9" style="color: #d97706;"></i> מחשבון גימטריה</h2>
-            <div class="form-group">
-                <label>הכניסי מילה או משפט בעברית:</label>
-                <input type="text" id="gemText" class="form-control" placeholder="שלום עליכם" oninput="calcGematria()">
-            </div>
-            <div class="result-box" id="gemResult">ערך גימטרי: 0</div>
-        </div>
-
-        <!-- 7. מונה תווים -->
-        <div id="counterTool" class="tool-panel">
-            <h2><i class="fa-solid fa-align-right" style="color: #0284c7;"></i> מונה מילים ותווים</h2>
-            <div class="form-group">
-                <textarea id="counterText" class="form-control" rows="5" placeholder="הדביקי טקסט לכאן..." oninput="countWords()"></textarea>
-            </div>
-            <div class="result-box" id="counterResult">תווים: 0 | מילים: 0 | זמן קריאה: 0 דק'</div>
-        </div>
+    <div class="hero">
+        <h1>כלים שימושיים ומחשבונים יומיומיים</h1>
+        <p>מחשבוני קניות, מידות, בריאות, פיננסים וכלים טכנולוגיים מהירים</p>
     </div>
 
-    <!-- הסרגל התחתון מוזרק לכאן -->
-    <footer></footer>
+    <div class="container">
 
-    <script src="nav.js"></script>
+        <!-- קטגוריה 1: קניות וקמעונאות -->
+        <div class="section-title"><i class="fa-solid fa-cart-shopping"></i> קניות וצרכנות</div>
+        <div class="grid">
+            
+            <!-- מחשבון מע"מ -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-percent"></i> מחשבון מע"מ (17%)</h3>
+                <div class="form-group">
+                    <label>סכום בש"ח:</label>
+                    <input type="number" id="vat-amount" placeholder="הכניסי סכום">
+                </div>
+                <div class="form-group">
+                    <label>סוג החישוב:</label>
+                    <select id="vat-type">
+                        <option value="add">הוספת מע"מ (לפני מע"מ)</option>
+                        <option value="sub">הפחתת מע"מ (כולל מע"מ)</option>
+                    </select>
+                </div>
+                <button class="btn-calc" onclick="calcVAT()">חשב מע"מ</button>
+                <div class="result-box" id="vat-result">הזיני סכום ולחצי על חישוב</div>
+            </div>
+
+            <!-- המרת מידות נעליים -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-shoe-prints"></i> המרת מידות נעליים</h3>
+                <div class="form-group">
+                    <label>מידה אירופאית / ישראל (EU):</label>
+                    <input type="number" id="shoe-eu" placeholder="למשל: 38">
+                </div>
+                <div class="form-group">
+                    <label>קטגוריה:</label>
+                    <select id="shoe-cat">
+                        <option value="women">נשים</option>
+                        <option value="men">גברים</option>
+                    </select>
+                </div>
+                <button class="btn-calc" onclick="calcShoe()">המר מידה</button>
+                <div class="result-box" id="shoe-result">בחרי מידה להמרה</div>
+            </div>
+
+            <!-- המרת מידות בגדים -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-shirt"></i> המרת מידות בגדים</h3>
+                <div class="form-group">
+                    <label>מידה בינלאומית:</label>
+                    <select id="clothes-size">
+                        <option value="XS">XS (34)</option>
+                        <option value="S">S (36)</option>
+                        <option value="M">M (38)</option>
+                        <option value="L">L (40)</option>
+                        <option value="XL">XL (42)</option>
+                        <option value="XXL">XXL (44)</option>
+                    </select>
+                </div>
+                <button class="btn-calc" onclick="calcClothes()">הצג מידות מקבילות</button>
+                <div class="result-box" id="clothes-result">בחרי מידה להצגה</div>
+            </div>
+
+        </div>
+
+        <!-- קטגוריה 2: בריאות וכושר -->
+        <div class="section-title"><i class="fa-solid fa-heart-pulse"></i> בריאות וכושר</div>
+        <div class="grid">
+
+            <!-- מחשבון BMI (משקל וגובה) -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-weight-scale"></i> מחשבון BMI (גובה ומשקל)</h3>
+                <div class="form-group">
+                    <label>גובה (בס"מ):</label>
+                    <input type="number" id="bmi-height" placeholder="למשל: 165">
+                </div>
+                <div class="form-group">
+                    <label>משקל (בק"ג):</label>
+                    <input type="number" id="bmi-weight" placeholder="למשל: 60">
+                </div>
+                <button class="btn-calc" onclick="calcBMI()">חשב BMI</button>
+                <div class="result-box" id="bmi-result">הזיני גובה ומשקל לחישוב</div>
+            </div>
+
+            <!-- מחשבון שתיית מים יומית -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-glass-water"></i> מחשבון שתיית מים יומית</h3>
+                <div class="form-group">
+                    <label>משקל גוף (בק"ג):</label>
+                    <input type="number" id="water-weight" placeholder="למשל: 70">
+                </div>
+                <button class="btn-calc" onclick="calcWater()">חשב מים מומלצים</button>
+                <div class="result-box" id="water-result">הזיני משקל גוף לחישוב</div>
+            </div>
+
+        </div>
+
+        <!-- קטגוריה 3: מחשבונים מתמטיים ושימושיים -->
+        <div class="section-title"><i class="fa-solid fa-calculator"></i> מתמטיקה וכלים יומיים</div>
+        <div class="grid">
+
+            <!-- מחשבון אחוזים -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-calculator"></i> מחשבון אחוזים</h3>
+                <div class="form-group">
+                    <label>כמה הם (אחוזים %):</label>
+                    <input type="number" id="pct-val" placeholder="למשל: 15">
+                </div>
+                <div class="form-group">
+                    <label>מתוך סכום של:</label>
+                    <input type="number" id="pct-total" placeholder="למשל: 200">
+                </div>
+                <button class="btn-calc" onclick="calcPercentage()">חשב אחוזים</button>
+                <div class="result-box" id="pct-result">הזיני נתונים לחישוב</div>
+            </div>
+
+            <!-- מחולל סיסמאות מאובטחות -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-key"></i> מחולל סיסמאות חזקות</h3>
+                <div class="form-group">
+                    <label>אורך הסיסמה:</label>
+                    <select id="pwd-length">
+                        <option value="8">8 תווים</option>
+                        <option value="12" selected>12 תווים (מומלץ)</option>
+                        <option value="16">16 תווים</option>
+                    </select>
+                </div>
+                <button class="btn-calc" onclick="generatePassword()">צור סיסמה</button>
+                <div class="result-box" id="pwd-result" style="word-break: break-all;">לחצי על היצירה</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- סקריפטים לחישובים -->
     <script>
-        function selectTool(toolId, cardElem) {
-            document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
-            document.getElementById(toolId).classList.add('active');
-            cardElem.classList.add('active');
+        // חישוב מע"מ
+        function calcVAT() {
+            let amount = parseFloat(document.getElementById('vat-amount').value);
+            let type = document.getElementById('vat-type').value;
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('vat-result').innerText = "אנא הזיני סכום תקין.";
+                return;
+            }
+            if (type === 'add') {
+                let vat = amount * 0.17;
+                let total = amount + vat;
+                document.getElementById('vat-result').innerHTML = `מע"מ (17%): <strong>${vat.toFixed(2)} ₪</strong><br>סה"כ כולל מע"מ: <strong>${total.toFixed(2)} ₪</strong>`;
+            } else {
+                let base = amount / 1.17;
+                let vat = amount - base;
+                document.getElementById('vat-result').innerHTML = `סכום לפני מע"מ: <strong>${base.toFixed(2)} ₪</strong><br>רכיב המע"מ: <strong>${vat.toFixed(2)} ₪</strong>`;
+            }
         }
 
-        function calcVat() {
-            var val = parseFloat(document.getElementById('vatAmount').value);
-            var res = document.getElementById('vatResult');
-            if (isNaN(val) || val <= 0) { res.innerText = "הכניסי סכום לקבלת חישוב מפורט..."; return; }
-            var vatRate = 0.18;
-            var vatAdded = val * vatRate;
-            var totalWithVat = val + vatAdded;
-            var valBeforeVat = val / (1 + vatRate);
-            var vatExtracted = val - valBeforeVat;
-            res.innerHTML = `
-                <div>• סכום כולל מע"מ (הוספת 18%): <strong>₪${totalWithVat.toFixed(2)}</strong> (מע"מ: ₪${vatAdded.toFixed(2)})</div>
-                <div style="margin-top: 5px;">• סכום לפני מע"מ (ניכוי מע"מ): <strong>₪${valBeforeVat.toFixed(2)}</strong> (מע"מ: ₪${vatExtracted.toFixed(2)})</div>
-            `;
+        // המרת מידות נעליים
+        function calcShoe() {
+            let eu = parseFloat(document.getElementById('shoe-eu').value);
+            let cat = document.getElementById('shoe-cat').value;
+            if (isNaN(eu)) {
+                document.getElementById('shoe-result').innerText = "אנא הזיני מידה תקינה.";
+                return;
+            }
+            let us = (cat === 'women') ? (eu - 30.5) : (eu - 33);
+            let uk = us - 1;
+            document.getElementById('shoe-result').innerHTML = `ארה"ב (US): <strong>${us > 0 ? us.toFixed(1) : '-'}</strong> | בריטניה (UK): <strong>${uk > 0 ? uk.toFixed(1) : '-'}</strong>`;
         }
 
-        function calcPercent() {
-            var pct = parseFloat(document.getElementById('pctVal').value);
-            var total = parseFloat(document.getElementById('pctTotal').value);
-            var res = document.getElementById('pctResult');
-            if (isNaN(pct) || isNaN(total)) { res.innerText = "הכניסי מספרים תקינים."; return; }
-            res.innerText = `${pct}% מתוך ${total} הם: ${(pct / 100) * total}`;
+        // המרת מידות בגדים
+        function calcClothes() {
+            let size = document.getElementById('clothes-size').value;
+            let map = {
+                'XS': 'ישראל/אירופה: 34 | ארה"ב: 2-4 | בריטניה: 6',
+                'S': 'ישראל/אירופה: 36 | ארה"ב: 6-8 | בריטניה: 8-10',
+                'M': 'ישראל/אירופה: 38 | ארה"ב: 10-12 | בריטניה: 12-14',
+                'L': 'ישראל/אירופה: 40 | ארה"ב: 14-16 | בריטניה: 16-18',
+                'XL': 'ישראל/אירופה: 42 | ארה"ב: 18-20 | בריטניה: 20-22',
+                'XXL': 'ישראל/אירופה: 44 | ארה"ב: 22-24 | בריטניה: 24-26'
+            };
+            document.getElementById('clothes-result').innerHTML = `מידה <strong>${size}</strong>:<br>${map[size]}`;
         }
 
-        var canvas = document.getElementById('sigCanvas');
-        if (canvas) {
-            var ctx = canvas.getContext('2d');
-            var drawing = false;
-            canvas.addEventListener('mousedown', () => drawing = true);
-            canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
-            canvas.addEventListener('mousemove', (e) => {
-                if (!drawing) return;
-                var rect = canvas.getBoundingClientRect();
-                ctx.lineWidth = 3;
-                ctx.lineCap = 'round';
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-            });
-        }
-        function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        function downloadSig() {
-            var link = document.createElement('a');
-            link.download = 'signature.png';
-            link.href = canvas.toDataURL();
-            link.click();
+        // חישוב BMI
+        function calcBMI() {
+            let h = parseFloat(document.getElementById('bmi-height').value) / 100;
+            let w = parseFloat(document.getElementById('bmi-weight').value);
+            if (isNaN(h) || isNaN(w) || h <= 0 || w <= 0) {
+                document.getElementById('bmi-result').innerText = "אנא הזיני גובה ומשקל תקינים.";
+                return;
+            }
+            let bmi = (w / (h * h)).toFixed(1);
+            let status = "";
+            if (bmi < 18.5) status = "תת-משקל";
+            else if (bmi < 25) status = "משקל תקין";
+            else if (bmi < 30) status = "משקל עודף";
+            else status = "השמנה";
+            document.getElementById('bmi-result').innerHTML = `תוצאת BMI: <strong>${bmi}</strong> (${status})`;
         }
 
-        function openWa() {
-            var phone = document.getElementById('waPhone').value.replace(/\D/g, '');
-            var text = encodeURIComponent(document.getElementById('waText').value);
-            if (!phone) { alert('נא להזין מספר טלפון'); return; }
-            if (phone.startsWith('0')) phone = '972' + phone.substring(1);
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        // חישוב מים
+        function calcWater() {
+            let w = parseFloat(document.getElementById('water-weight').value);
+            if (isNaN(w) || w <= 0) {
+                document.getElementById('water-result').innerText = "אנא הזיני משקל תקין.";
+                return;
+            }
+            let liters = (w * 0.035).toFixed(1);
+            document.getElementById('water-result').innerHTML = `מומלץ לשתות כ-<strong>${liters} ליטר</strong> מים ביום (כ-${Math.round(liters * 5)} כוסות).`;
         }
 
-        function genPassword() {
-            var len = parseInt(document.getElementById('passLen').value) || 12;
-            var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-            var pass = "";
-            for (var i = 0; i < len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
-            document.getElementById('passResult').innerText = pass;
+        // חישוב אחוזים
+        function calcPercentage() {
+            let val = parseFloat(document.getElementById('pct-val').value);
+            let total = parseFloat(document.getElementById('pct-total').value);
+            if (isNaN(val) || isNaN(total)) {
+                document.getElementById('pct-result').innerText = "אנא הזיני מספרים תקינים.";
+                return;
+            }
+            let res = (val / 100) * total;
+            document.getElementById('pct-result').innerHTML = `<strong>${val}%</strong> מתוך ${total} הם: <strong>${res.toFixed(2)}</strong>`;
         }
 
-        function calcGematria() {
-            var str = document.getElementById('gemText').value;
-            var map = {'א':1,'ב':2,'ג':3,'ד':4,'ה':5,'ו':6,'ז':7,'ח':8,'ט':9,'י':10,'כ':20,'ך':20,'ל':30,'מ':40,'ם':40,'נ':50,'ן':50,'ס':60,'ע':70,'פ':80,'ף':80,'צ':90,'ץ':90,'ק':100,'ר':200,'ש':300,'ת':400};
-            var sum = 0;
-            for (var i = 0; i < str.length; i++) { if (map[str[i]]) sum += map[str[i]]; }
-            document.getElementById('gemResult').innerText = "ערך גימטרי: " + sum;
-        }
-
-        function countWords() {
-            var text = document.getElementById('counterText').value;
-            var chars = text.length;
-            var words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            var readTime = Math.ceil(words / 200);
-            document.getElementById('counterResult').innerText = `תווים: ${chars} | מילים: ${words} | זמן קריאה משוער: כ-${readTime} דק'`;
+        // מחולל סיסמאות
+        function generatePassword() {
+            let len = parseInt(document.getElementById('pwd-length').value);
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+            let pwd = "";
+            for (let i = 0; i < len; i++) {
+                pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('pwd-result').innerHTML = `סיסמה שנוצרה: <strong style="color:#0284c7;">${pwd}</strong>`;
         }
     </script>
+
+    <script src="nav.js"></script>
 </body>
 </html>
