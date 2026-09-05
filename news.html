@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חדשות ושידורים חיים | NETOOLS</title>
+    <title>ערוצי שידור וחדשות | NETOOLS</title>
     <style>
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -11,280 +11,392 @@
             color: #f8fafc;
             margin: 0;
             padding: 0;
+            direction: rtl;
         }
 
         .news-container {
-            max-width: 1400px;
-            margin: 30px auto;
+            max-width: 1250px;
+            margin: 40px auto;
             padding: 0 20px;
         }
 
         .page-header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 45px;
         }
 
         .page-header h1 {
-            font-size: 30px;
+            font-size: 32px;
             color: #38bdf8;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .page-header p {
             color: #94a3b8;
             font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* גריד קיר מסכים */
-        .live-wall-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 500px) {
-            .live-wall-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .channel-screen-card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .channel-screen-card:hover {
-            border-color: #38bdf8;
-            transform: translateY(-3px);
-        }
-
-        .screen-header {
-            background: #0f172a;
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #334155;
-        }
-
-        .channel-info {
+        .category-title {
+            font-size: 22px;
+            color: #ffffff;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
         }
 
-        .channel-badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: #38bdf8;
-            color: #0f172a;
+        .category-title i {
+            color: #38bdf8;
+        }
+
+        /* גריד כרטיסיות מעוצב */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .channel-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 18px;
+            padding: 24px 20px;
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        .channel-title {
-            font-size: 17px;
-            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
             color: #ffffff;
-        }
-
-        .live-indicator {
-            background: #ef4444;
-            color: white;
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .video-box {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            padding-bottom: 56.25%; /* יחס 16:9 */
-            height: 0;
-            background: #000;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .video-box iframe {
+        .channel-card::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color, #38bdf8);
+            opacity: 0.8;
+            transition: height 0.2s;
         }
 
-        /* סקציית ערוצים חיצוניים נוספים */
-        .external-channels-section {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 20px;
+        .channel-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-color, #38bdf8);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--glow-color, rgba(56, 189, 248, 0.2));
+            background: #243347;
         }
 
-        .external-channels-section h3 {
-            margin-top: 0;
-            color: #38bdf8;
-            font-size: 18px;
-            margin-bottom: 15px;
+        .channel-card:hover::before {
+            height: 6px;
         }
 
-        .ext-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .ext-card {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
+        /* תגית בלייב */
+        .live-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: white;
-            transition: all 0.2s;
+            gap: 5px;
         }
 
-        .ext-card:hover {
-            border-color: #38bdf8;
-            background: #1e293b;
-            transform: translateY(-2px);
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
         }
 
-        .ext-title {
-            font-weight: 700;
-            font-size: 15px;
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
-        .ext-sub {
-            font-size: 12px;
+        /* אייקון / אריח לוגו */
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent-color, #38bdf8);
+            margin: 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .channel-card:hover .logo-box {
+            transform: scale(1.08);
+        }
+
+        .channel-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .channel-subtitle {
+            font-size: 13px;
             color: #94a3b8;
+            margin-bottom: 20px;
+            line-height: 1.4;
         }
 
-        .ext-btn {
-            background: #38bdf8;
+        /* כפתור צפייה */
+        .watch-btn {
+            width: 100%;
+            padding: 10px 0;
+            background: var(--accent-color, #38bdf8);
             color: #0f172a;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: filter 0.2s;
         }
+
+        .channel-card:hover .watch-btn {
+            filter: brightness(1.1);
+        }
+
+        /* צבעי ערכות נושא */
+        .card-kan11 { --accent-color: #38bdf8; --glow-color: rgba(56, 189, 248, 0.3); }
+        .card-n12 { --accent-color: #ef4444; --glow-color: rgba(239, 68, 68, 0.3); }
+        .card-reshet13 { --accent-color: #a855f7; --glow-color: rgba(168, 85, 247, 0.3); }
+        .card-now14 { --accent-color: #f59e0b; --glow-color: rgba(245, 158, 11, 0.3); }
+        .card-i24 { --accent-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.3); }
+        .card-knesset { --accent-color: #06b6d4; --glow-color: rgba(6, 182, 212, 0.3); }
+        .card-glz { --accent-color: #ec4899; --glow-color: rgba(236, 72, 153, 0.3); }
+        .card-makan { --accent-color: #f97316; --glow-color: rgba(249, 115, 22, 0.3); }
+        
+        .card-globes { --accent-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.3); }
+        .card-calcalist { --accent-color: #38bdf8; --glow-color: rgba(56, 189, 248, 0.3); }
+        .card-themarker { --accent-color: #a855f7; --glow-color: rgba(168, 85, 247, 0.3); }
+
+        .card-natgeo { --accent-color: #f59e0b; --glow-color: rgba(245, 158, 11, 0.3); }
+        .card-shopping { --accent-color: #ec4899; --glow-color: rgba(236, 72, 153, 0.3); }
+        
+        .card-educational { --accent-color: #06b6d4; --glow-color: rgba(6, 182, 212, 0.3); }
+        .card-kids { --accent-color: #f97316; --glow-color: rgba(249, 115, 22, 0.3); }
+        .card-meir { --accent-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.3); }
     </style>
 </head>
 <body>
 
     <div class="news-container">
         <div class="page-header">
-            <h1><i class="fa-solid fa-tv"></i> קיר שידורים חיים - חדשות בלייב</h1>
-            <p>צפייה מקבילה בזמן אמת בכל ערוצי האקטואליה והחדשות המובילים</p>
+            <h1><i class="fa-solid fa-tower-broadcast"></i> פורטל שידורים וחדשות</h1>
+            <p>גישה מהירה וישירה לשידורי הבלייב, הערוצים והפורטלים המובילים בישראל</p>
         </div>
 
-        <!-- קיר המסכים המוצגים במקביל -->
-        <div class="live-wall-grid">
+        <!-- קטגוריה 1: חדשות ואקטואליה -->
+        <div class="category-title"><i class="fa-solid fa-newspaper"></i> חדשות ואקטואליה</div>
+        <div class="news-grid">
 
-            <!-- מסך 1: כאן 11 -->
-            <div class="channel-screen-card">
-                <div class="screen-header">
-                    <div class="channel-info">
-                        <div class="channel-badge" style="background: #38bdf8;">11</div>
-                        <div class="channel-title">כאן 11 - שידור חי</div>
-                    </div>
-                    <div class="live-indicator"><i class="fa-solid fa-circle"></i> LIVE</div>
+            <a href="https://www.kan.org.il/live/" target="_blank" class="channel-card card-kan11">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">11</div>
+                <div>
+                    <div class="channel-title">כאן 11</div>
+                    <div class="channel-subtitle">תאגיד השידור הישראלי - חדשות, תחקירים ואקטואליה</div>
                 </div>
-                <div class="video-box">
-                    <iframe src="https://www.kan.org.il/live/" allowfullscreen></iframe>
-                </div>
-            </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
 
-            <!-- מסך 2: עכשיו 14 -->
-            <div class="channel-screen-card">
-                <div class="screen-header">
-                    <div class="channel-info">
-                        <div class="channel-badge" style="background: #f59e0b;">14</div>
-                        <div class="channel-title">עכשיו 14 - שידור חי</div>
-                    </div>
-                    <div class="live-indicator"><i class="fa-solid fa-circle"></i> LIVE</div>
+            <a href="https://www.mako.co.il/mako-vod-index/live-tv" target="_blank" class="channel-card card-n12">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">12</div>
+                <div>
+                    <div class="channel-title">חדשות 12 / N12</div>
+                    <div class="channel-subtitle">שידורי הדיגיטל והלייב הרשמיים של חברת החדשות</div>
                 </div>
-                <div class="video-box">
-                    <iframe src="https://www.now14.co.il/live/" allowfullscreen></iframe>
-                </div>
-            </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
 
-            <!-- מסך 3: i24NEWS -->
-            <div class="channel-screen-card">
-                <div class="screen-header">
-                    <div class="channel-info">
-                        <div class="channel-badge" style="background: #22c55e;">i24</div>
-                        <div class="channel-title">i24NEWS - בעברית</div>
-                    </div>
-                    <div class="live-indicator"><i class="fa-solid fa-circle"></i> LIVE</div>
+            <a href="https://13tv.co.il/live/" target="_blank" class="channel-card card-reshet13">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">13</div>
+                <div>
+                    <div class="channel-title">רשת 13</div>
+                    <div class="channel-subtitle">חדשות 13, תוכניות המקור ושידורי האקטואליה</div>
                 </div>
-                <div class="video-box">
-                    <iframe src="https://www.i24news.tv/he/live" allowfullscreen></iframe>
-                </div>
-            </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
 
-            <!-- מסך 4: ערוץ כנסת -->
-            <div class="channel-screen-card">
-                <div class="screen-header">
-                    <div class="channel-info">
-                        <div class="channel-badge" style="background: #a855f7;">99</div>
-                        <div class="channel-title">ערוץ כנסת - שידור חי</div>
-                    </div>
-                    <div class="live-indicator"><i class="fa-solid fa-circle"></i> LIVE</div>
+            <a href="https://www.now14.co.il/live/" target="_blank" class="channel-card card-now14">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">14</div>
+                <div>
+                    <div class="channel-title">עכשיו 14</div>
+                    <div class="channel-subtitle">שידורי חדשות, הפנאליסטים ותוכניות האקטואליה</div>
                 </div>
-                <div class="video-box">
-                    <iframe src="https://www.knesset.tv/live/" allowfullscreen></iframe>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
+
+            <a href="https://www.i24news.tv/he/live" target="_blank" class="channel-card card-i24">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">i24</div>
+                <div>
+                    <div class="channel-title">i24NEWS בעברית</div>
+                    <div class="channel-subtitle">ערוץ החדשות הבינלאומי בשידורים חיים מסביב לשעון</div>
                 </div>
-            </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
+
+            <a href="https://www.knesset.tv/live/" target="_blank" class="channel-card card-knesset">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">99</div>
+                <div>
+                    <div class="channel-title">ערוץ כנסת</div>
+                    <div class="channel-subtitle">שידורים חיים מוועדות הכנסת, מליאות ודיונים פוליטיים</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
+
+            <a href="https://glz.co.il/" target="_blank" class="channel-card card-glz">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box"><i class="fa-solid fa-radio"></i></div>
+                <div>
+                    <div class="channel-title">גלי צה"ל וגלגלצ</div>
+                    <div class="channel-subtitle">שידורי רדיו חיים, מבזקי חדשות ומוזיקה</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-headphones"></i> האזנה בלייב</div>
+            </a>
+
+            <a href="https://www.makan.org.il/" target="_blank" class="channel-card card-makan">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">33</div>
+                <div>
+                    <div class="channel-title">מכאן مكان</div>
+                    <div class="channel-subtitle">ערוץ החדשות והאקטואליה של תאגיד השידור בערבית</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
 
         </div>
 
-        <!-- ערוצים לפתיחה ישירה באתר המקור -->
-        <div class="external-channels-section">
-            <h3><i class="fa-solid fa-arrow-up-right-from-square"></i> ערוצים נוספים בצפייה ישירה באתר המקור:</h3>
-            <div class="ext-grid">
-                
-                <a href="https://www.mako.co.il/mako-vod-index/live-tv" target="_blank" class="ext-card">
-                    <div>
-                        <div class="ext-title">חדשות 12 / N12</div>
-                        <div class="ext-sub">שידור חי רשמי ב-mako</div>
-                    </div>
-                    <span class="ext-btn">צפה עכשיו</span>
-                </a>
+        <!-- קטגוריה 2: כלכלה ועסקים -->
+        <div class="category-title"><i class="fa-solid fa-chart-line"></i> כלכלה, שוק ההון ועסקים</div>
+        <div class="news-grid">
 
-                <a href="https://13tv.co.il/live/" target="_blank" class="ext-card">
-                    <div>
-                        <div class="ext-title">רשת 13</div>
-                        <div class="ext-sub">שידור חי רשמי באתר 13TV</div>
-                    </div>
-                    <span class="ext-btn">צפה עכשיו</span>
-                </a>
+            <a href="https://www.globes.co.il/" target="_blank" class="channel-card card-globes">
+                <div class="logo-box"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                <div>
+                    <div class="channel-title">גלובס (Globes)</div>
+                    <div class="channel-subtitle">ערוץ הכלכלה ושוק ההון המוביל בישראל - עדכוני בורסה בלייב</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לפורטל</div>
+            </a>
 
-            </div>
+            <a href="https://www.calcalist.co.il/" target="_blank" class="channel-card card-calcalist">
+                <div class="logo-box"><i class="fa-solid fa-wallet"></i></div>
+                <div>
+                    <div class="channel-title">כלכליסט</div>
+                    <div class="channel-subtitle">חדשות כלכלה, טכנולוגיה, נדל"ן ושווקים בארץ ובעולם</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לפורטל</div>
+            </a>
+
+            <a href="https://www.themarker.com/" target="_blank" class="channel-card card-themarker">
+                <div class="logo-box"><i class="fa-solid fa-chart-pie"></i></div>
+                <div>
+                    <div class="channel-title">TheMarker</div>
+                    <div class="channel-subtitle">עיתונות כלכלית חוקרת, נתוני בורסה וניתוחים פיננסיים</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לפורטל</div>
+            </a>
+
+        </div>
+
+        <!-- קטגוריה 3: לייפסטייל, טבע וקניות -->
+        <div class="category-title"><i class="fa-solid fa-compass"></i> טבע, מדע וצרכנות</div>
+        <div class="news-grid">
+
+            <a href="https://www.nationalgeographic.com/" target="_blank" class="channel-card card-natgeo">
+                <div class="logo-box"><i class="fa-solid fa-earth-americas"></i></div>
+                <div>
+                    <div class="channel-title">נשיונל ג'אוגרפיק</div>
+                    <div class="channel-subtitle">טבע, מדע, חקר חלל, היסטוריה ותרבויות מרחבי העולם</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לאתר</div>
+            </a>
+
+            <a href="https://www.21.tv/" target="_blank" class="channel-card card-shopping">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">21</div>
+                <div>
+                    <div class="channel-title">ערוץ הקניות (21)</div>
+                    <div class="channel-subtitle">שידורי קניות בלייב, מבצעים בלעדיים ומוצרי צריכה</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-cart-shopping"></i> צפייה בלייב</div>
+            </a>
+
+        </div>
+
+        <!-- קטגוריה 4: ילדים, נוער וחינוך -->
+        <div class="category-title"><i class="fa-solid fa-child"></i> ילדים, נוער וחינוך</div>
+        <div class="news-grid">
+
+            <a href="https://www.kan.org.il/page.aspx?pageid=98" target="_blank" class="channel-card card-educational">
+                <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+                <div class="logo-box">80</div>
+                <div>
+                    <div class="channel-title">כאן חינוכית</div>
+                    <div class="channel-subtitle">סדרות חינוכיות, תוכניות ילדים מבית תאגיד השידור</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-play"></i> צפייה בשידור חי</div>
+            </a>
+
+            <a href="https://www.kidstv.co.il/" target="_blank" class="channel-card card-kids">
+                <div class="logo-box"><i class="fa-solid fa-gamepad"></i></div>
+                <div>
+                    <div class="channel-title">ערוץ הילדים</div>
+                    <div class="channel-subtitle">הסדרות, התוכניות והתכנים המובילים לילדים ולנוער</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לערוץ</div>
+            </a>
+
+            <a href="https://www.meirkids.co.il/" target="_blank" class="channel-card card-meir">
+                <div class="logo-box"><i class="fa-solid fa-face-smile"></i></div>
+                <div>
+                    <div class="channel-title">ערוץ מאיר לילדים</div>
+                    <div class="channel-subtitle">תוכניות ערכיות, חינוכיות ואיכותיות לילדים ולכל המשפחה</div>
+                </div>
+                <div class="watch-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> מעבר לערוץ</div>
+            </a>
+
         </div>
 
     </div>
