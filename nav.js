@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. הגדרת פאביקון לטאב בדפדפן
+    // 1. פאביקון לטאב בדפדפן
     let favicon = document.querySelector("link[rel*='icon']");
     if (!favicon) {
         favicon = document.createElement("link");
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     favicon.href = "favicon.png";
 
-    // 2. טעינת FontAwesome
+    // 2. FontAwesome
     if (!document.querySelector('link[href*="font-awesome"]')) {
         const fontLink = document.createElement("link");
         fontLink.rel = "stylesheet";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS מקיף
+    // 3. עיצוב CSS: יישור ממורכז מושלם (3 עמודות) + מסגרות עדינות
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -32,43 +32,57 @@ document.addEventListener("DOMContentLoaded", function () {
                 z-index: 10000;
                 width: 100%;
             }
+            
+            /* גריד של 3 חלקים למרכוז מדויק לחלוטין */
             .header-container {
                 max-width: 1300px;
                 margin: 0 auto;
                 padding: 12px 24px;
-                display: flex;
-                justify-content: space-between;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
                 align-items: center;
-                flex-wrap: wrap;
                 gap: 15px;
             }
+            
             .brand-name {
                 font-size: 22px;
                 font-weight: 800;
                 color: #ffffff !important;
                 text-decoration: none;
                 letter-spacing: 1px;
+                white-space: nowrap;
             }
+
+            .main-nav-wrapper {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
             .main-nav {
                 display: flex;
-                gap: 10px;
+                gap: 8px;
                 list-style: none;
-                margin: 0 auto; /* יישור הקטגוריות למרכז */
+                margin: 0;
                 padding: 0;
                 align-items: center;
                 flex-wrap: wrap;
+                justify-content: center;
             }
+            
             .main-nav a {
                 color: #ffffff !important;
                 text-decoration: none;
                 font-weight: 500;
                 font-size: 14px;
-                padding: 6px 14px;
+                padding: 6px 13px;
                 border-radius: 6px;
                 transition: all 0.2s ease-in-out;
                 display: inline-block;
                 background: rgba(255, 255, 255, 0.02);
+                white-space: nowrap;
             }
+            
             .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
             .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
             .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
@@ -81,15 +95,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 background: rgba(255, 255, 255, 0.08);
             }
 
-            .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 6px; cursor: pointer; }
-            .center-logo img { height: 36px; width: 36px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
+            .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
+            .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
             .center-logo img:hover { transform: scale(1.1); }
 
             .secondary-bar {
                 background: #1e293b; color: #cbd5e1; font-size: 13.5px; padding: 9px 24px; border-top: 1px solid #334155;
             }
             .secondary-container {
-                max-width: 1300px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px;
+                max-width: 1300px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 18px;
             }
             .widget-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 500; }
             .widget-item strong { color: #ffffff; }
@@ -103,13 +117,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8);
                 backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 99999;
             }
-            .calc-modal { background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 20px; width: 360px; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+            .calc-modal { background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 20px; width: 350px; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
             .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
             .calc-header h3 { margin: 0; font-size: 16px; color: #38bdf8; }
             .calc-close { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
             .calc-display { width: 100%; height: 50px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #ffffff; font-size: 20px; text-align: left; padding: 0 12px; box-sizing: border-box; margin-bottom: 12px; }
             .calc-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-            .calc-btn { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 10px 5px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; transition: background 0.15s; }
+            .calc-btn { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 10px 5px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; }
             .calc-btn:hover { background: #334155; }
             .calc-btn.op { background: #0284c7; color: #ffffff; }
             .calc-btn.sci { background: #334155; color: #38bdf8; }
@@ -131,10 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="header-container">
                 <a href="index.html" class="brand-name">NETOOLS</a>
                 
-                <nav style="flex-grow: 1;">
+                <div class="main-nav-wrapper">
                     <ul class="main-nav">
                         <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
-                        <li><a href="workers.html" class="nav-item-rights">זכויות עובדים</a></li>
+                        <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
                         <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
                         
                         <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון מדעי">
@@ -145,17 +159,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="utility.html" class="nav-item-utility">כלים שימושיים</a></li>
                         <li><a href="news.html" class="nav-item-news">חדשות</a></li>
                     </ul>
-                </nav>
+                </div>
+
+                <div style="width: 80px;"></div> <!-- איזון ויזואלי למרכוז -->
             </div>
 
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
                     <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> טוען תאריך עברי...</span>
-                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> טוען פרשה...</span>
+                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
                     <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: -- ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: -- ₪</span>
+                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪</span>
                     <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong></span>
                     <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
                 </div>
@@ -235,22 +251,17 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת תאריך עברי אונליין בלייב כולל יום בשבוע
-    const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
-    const todayName = days[new Date().getDay()];
-
+    // 7. תאריך עברי אונליין בלייב
     fetch("https://www.hebcal.com/etc/hdate-he.json")
         .then(res => res.json())
         .then(data => {
             const hebEl = document.getElementById("nav-hebrew");
+            const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
+            const todayName = days[new Date().getDay()];
             if (hebEl && data.hebrew) {
                 hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
             }
-        })
-        .catch(() => {
-            const hebEl = document.getElementById("nav-hebrew");
-            if (hebEl) hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}`;
-        });
+        }).catch(() => {});
 
     // 8. פרשת שבוע
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
@@ -264,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // 9. שערי מט"ח
+    // 9. מט"ח
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
         .then(res => res.json())
         .then(data => {
@@ -279,17 +290,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }).catch(() => {});
 });
 
-// פונקציות המחשבון המדעי
 function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
 function closeNavCalculator() { document.getElementById("navCalcModal").style.display = "none"; }
 
 let calcExpr = "";
 function calcInput(val) {
     const disp = document.getElementById("calcDisplay");
-    if (val === 'C') {
-        calcExpr = "";
-        disp.value = "0";
-    } else if (val === '=') {
+    if (val === 'C') { calcExpr = ""; disp.value = "0"; }
+    else if (val === '=') {
         try {
             let parsed = calcExpr.replace(/sin/g, 'Math.sin')
                                  .replace(/cos/g, 'Math.cos')
@@ -300,12 +308,6 @@ function calcInput(val) {
                                  .replace(/pow/g, '**2');
             disp.value = eval(parsed);
             calcExpr = disp.value;
-        } catch {
-            disp.value = "שגיאה";
-            calcExpr = "";
-        }
-    } else {
-        calcExpr += val;
-        disp.value = calcExpr;
-    }
+        } catch { disp.value = "שגיאה"; calcExpr = ""; }
+    } else { calcExpr += val; disp.value = calcExpr; }
 }
