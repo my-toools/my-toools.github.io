@@ -1,36 +1,104 @@
 // ==========================================
-// NETOOLS - nav.js (קובץ ניווט, נגישות ועיצוב מרכזי)
+// NETOOLS - nav.js (קובץ ניווט, נגישות ועיצוב נעול)
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. יצירת סרגל הניווט העליון (Header & Nav)
-    const headerHTML = `
-        <header class="main-header">
-            <div class="header-container">
-                <a href="index.html" class="logo">NETOOLS</a>
-                <nav class="navbar">
-                    <a href="index.html" class="nav-link">דף הבית</a>
-                    <a href="calculators.html" class="nav-link">מחשבונים</a>
-                    <a href="news.html" class="nav-link">חדשות ולייב</a>
-                    <a href="about.html" class="nav-link">אודות</a>
-                </nav>
-            </div>
-        </header>
-    `;
-    document.body.insertAdjacentHTML("afterbegin", headerHTML);
+    
+    // 1. הזרקת עיצוב נעול (CSS) לסרגל העליון, הכותרת המוגדלת והנגישות
+    const navStyle = document.createElement('style');
+    navStyle.innerHTML = `
+        /* עיצוב הסרגל והכותרת המוגדלת */
+        header.main-header, .main-header {
+            background-color: #0f172a !important;
+            border-bottom: 1px solid #334155 !important;
+            padding: 20px 30px !important;
+            min-height: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+        }
+        .header-container {
+            max-width: 1300px !important;
+            margin: 0 auto !important;
+            width: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+        .logo, header h1, nav h1 {
+            font-size: 28px !important;
+            font-weight: 800 !important;
+            color: #38bdf8 !important;
+            text-decoration: none !important;
+            letter-spacing: -0.5px !important;
+        }
+        .navbar, nav {
+            display: flex !important;
+            gap: 15px !important;
+            align-items: center !important;
+        }
+        .nav-link, nav a, header a {
+            color: #f8fafc !important;
+            text-decoration: none !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            padding: 10px 16px !important;
+            border-radius: 8px !important;
+            transition: background-color 0.2s, color 0.2s !important;
+        }
+        .nav-link:hover, nav a:hover, header a:hover {
+            background-color: #1e293b !important;
+            color: #38bdf8 !important;
+        }
 
-    // 2. יצירת פוטר מובנה בתחתית העמוד
-    const footerHTML = `
-        <footer class="main-footer">
-            <div class="footer-container">
-                <p>© ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
-                <p class="disclaimer">המידע והמחשבונים באתר מספקים הערכה כללית בלבד ואינם מהווים ייעוץ מקצועי.</p>
-            </div>
-        </footer>
+        /* עיצוב הפוטר */
+        .main-footer {
+            background-color: #0f172a !important;
+            border-top: 1px solid #334155 !important;
+            padding: 25px 20px !important;
+            text-align: center !important;
+            color: #94a3b8 !important;
+            font-size: 14px !important;
+            margin-top: 60px !important;
+        }
+        .main-footer p {
+            margin: 5px 0 !important;
+        }
     `;
-    document.body.insertAdjacentHTML("beforeend", footerHTML);
+    document.head.appendChild(navStyle);
 
-    // 3. הזרקת רכיב נגישות צף (♿)
+    // 2. יצירת סרגל הניווט העליון
+    if (!document.querySelector(".main-header")) {
+        const headerHTML = `
+            <header class="main-header">
+                <div class="header-container">
+                    <a href="index.html" class="logo">NETOOLS</a>
+                    <nav class="navbar">
+                        <a href="index.html" class="nav-link">דף הבית</a>
+                        <a href="calculators.html" class="nav-link">מחשבונים</a>
+                        <a href="news.html" class="nav-link">חדשות ולייב</a>
+                        <a href="about.html" class="nav-link">אודות</a>
+                    </nav>
+                </div>
+            </header>
+        `;
+        document.body.insertAdjacentHTML("afterbegin", headerHTML);
+    }
+
+    // 3. יצירת הפוטר בתחתית העמוד
+    if (!document.querySelector(".main-footer")) {
+        const footerHTML = `
+            <footer class="main-footer">
+                <div class="footer-container">
+                    <p>© ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
+                    <p style="font-size: 12px; opacity: 0.8;">המידע והמחשבונים באתר מספקים הערכה כללית בלבד ואינם מהווים ייעוץ מקצועי.</p>
+                </div>
+            </footer>
+        `;
+        document.body.insertAdjacentHTML("beforeend", footerHTML);
+    }
+
+    // 4. הזרקת רכיב הנגישות הנגיש והמובנה (♿)
     if (!document.getElementById("acc-floating-btn")) {
         const accContainer = document.createElement("div");
         accContainer.id = "acc-floating-btn";
@@ -52,26 +120,3 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(accContainer);
     }
 });
-
-// 4. הגדלת הסרגל, הכותרת והסרגל הצמוד אליו דרך CSS דינמי
-const customHeaderStyle = document.createElement('style');
-customHeaderStyle.innerHTML = `
-    /* הגדלת הסרגל הראשי והסרגל הצמוד */
-    header, nav, .main-header, .navbar, .sub-nav, .secondary-nav {
-        padding: 20px 25px !important;
-        min-height: 80px !important;
-    }
-
-    /* הגדלת הכותרת והלוגו */
-    header h1, .logo, .navbar-brand, nav h1 {
-        font-size: 28px !important;
-        font-weight: 800 !important;
-    }
-
-    /* הגדלת הקישורים בכל הסרגלים */
-    header a, nav a, .nav-link, .sub-nav a, .secondary-nav a {
-        font-size: 18px !important;
-        padding: 10px 15px !important;
-    }
-`;
-document.head.appendChild(customHeaderStyle);
