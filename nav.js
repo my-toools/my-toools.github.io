@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
             }
             
-            /* גריד למרכוז מדויק לחלוטין */
             .header-container {
                 max-width: 1300px;
                 margin: 0 auto;
@@ -165,18 +164,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="width: 80px;"></div>
             </div>
 
-            <!-- סרגל משני: כולל מזג אוויר בצד שמאל -->
+            <!-- סרגל משני -->
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
                     <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
-                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> טוען תאריך עברי...</span>
+                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> טוען פרשה...</span>
                     <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪</span>
+                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: -- ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: -- ₪</span>
                     <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong></span>
                     <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
-                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> טוען מזג אוויר...</span>
+                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> טוען...</span>
                 </div>
             </div>
         </header>
@@ -292,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }).catch(() => {});
 
-    // 10. מזג אוויר בלייב (ירושלים / ישראל)
+    // 10. מזג אוויר בלייב
     fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true")
         .then(res => res.json())
         .then(data => {
