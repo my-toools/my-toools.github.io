@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS: NETOOLS בלבן בצד ימין, קטגוריות במרכז
+    // 3. עיצוב CSS מקיף
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin: 0 auto;
                 padding: 12px 24px;
                 display: flex;
-                justify-content: space-between; /* הצמדת NETOOLS לימין */
+                justify-content: space-between;
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 15px;
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .brand-name {
                 font-size: 22px;
                 font-weight: 800;
-                color: #ffffff !important; /* טקסט לבן */
+                color: #ffffff !important;
                 text-decoration: none;
                 letter-spacing: 1px;
             }
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 display: flex;
                 gap: 10px;
                 list-style: none;
-                margin: 0;
+                margin: 0 auto; /* יישור הקטגוריות למרכז */
                 padding: 0;
                 align-items: center;
                 flex-wrap: wrap;
@@ -82,7 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 6px; cursor: pointer; }
-            .center-logo img { height: 36px; width: 36px; object-fit: contain; border-radius: 6px; }
+            .center-logo img { height: 36px; width: 36px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
+            .center-logo img:hover { transform: scale(1.1); }
 
             .secondary-bar {
                 background: #1e293b; color: #cbd5e1; font-size: 13.5px; padding: 9px 24px; border-top: 1px solid #334155;
@@ -97,18 +98,21 @@ document.addEventListener("DOMContentLoaded", function () {
             .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
             .icon-eur { color: #06b6d4; } .icon-prime { color: #f97316; } .icon-wage { color: #ec4899; }
 
+            /* מודל המחשבון המדעי */
             .calc-modal-overlay {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75);
-                backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 99999;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8);
+                backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 99999;
             }
-            .calc-modal { background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 20px; width: 320px; color: #ffffff; }
-            .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+            .calc-modal { background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 20px; width: 360px; color: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+            .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
             .calc-header h3 { margin: 0; font-size: 16px; color: #38bdf8; }
-            .calc-close { background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; }
-            .calc-display { width: 100%; height: 50px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #ffffff; font-size: 22px; text-align: left; padding: 0 12px; box-sizing: border-box; margin-bottom: 15px; }
-            .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-            .calc-btn { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+            .calc-close { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
+            .calc-display { width: 100%; height: 50px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #ffffff; font-size: 20px; text-align: left; padding: 0 12px; box-sizing: border-box; margin-bottom: 12px; }
+            .calc-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+            .calc-btn { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 10px 5px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; transition: background 0.15s; }
+            .calc-btn:hover { background: #334155; }
             .calc-btn.op { background: #0284c7; color: #ffffff; }
+            .calc-btn.sci { background: #334155; color: #38bdf8; }
             .calc-btn.eq { background: #22c55e; color: #ffffff; grid-column: span 2; }
             .calc-btn.clear { background: #ef4444; color: #ffffff; }
 
@@ -125,16 +129,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerHtml = `
         <header class="main-header">
             <div class="header-container">
-                <!-- NETOOLS מוצמד לימין ובצבע לבן -->
                 <a href="index.html" class="brand-name">NETOOLS</a>
                 
-                <nav>
+                <nav style="flex-grow: 1;">
                     <ul class="main-nav">
                         <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
-                        <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
+                        <li><a href="workers.html" class="nav-item-rights">זכויות עובדים</a></li>
                         <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
                         
-                        <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון">
+                        <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון מדעי">
                             <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
                         </li>
                         
@@ -159,42 +162,53 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         </header>
 
+        <!-- מודל המחשבון המדעי המקצועי -->
         <div class="calc-modal-overlay" id="navCalcModal">
             <div class="calc-modal">
                 <div class="calc-header">
-                    <h3><i class="fa-solid fa-calculator"></i> מחשבון מקצועי</h3>
+                    <h3><i class="fa-solid fa-flask"></i> מחשבון מדעי מקצועי</h3>
                     <button class="calc-close" onclick="closeNavCalculator()">&times;</button>
                 </div>
                 <input type="text" class="calc-display" id="calcDisplay" readonly value="0">
                 <div class="calc-buttons">
                     <button class="calc-btn clear" onclick="calcInput('C')">C</button>
+                    <button class="calc-btn sci" onclick="calcInput('sin')">sin</button>
+                    <button class="calc-btn sci" onclick="calcInput('cos')">cos</button>
+                    <button class="calc-btn sci" onclick="calcInput('tan')">tan</button>
                     <button class="calc-btn op" onclick="calcInput('/')">&divide;</button>
+
+                    <button class="calc-btn sci" onclick="calcInput('sqrt')">&radic;</button>
+                    <button class="calc-btn sci" onclick="calcInput('pow')">x&sup2;</button>
+                    <button class="calc-btn sci" onclick="calcInput('(')">(</button>
+                    <button class="calc-btn sci" onclick="calcInput(')')">)</button>
                     <button class="calc-btn op" onclick="calcInput('*')">&times;</button>
-                    <button class="calc-btn op" onclick="calcInput('-')">-</button>
-                    
+
                     <button class="calc-btn" onclick="calcInput('7')">7</button>
                     <button class="calc-btn" onclick="calcInput('8')">8</button>
                     <button class="calc-btn" onclick="calcInput('9')">9</button>
-                    <button class="calc-btn op" onclick="calcInput('+')">+</button>
-                    
+                    <button class="calc-btn sci" onclick="calcInput('pi')">&pi;</button>
+                    <button class="calc-btn op" onclick="calcInput('-')">-</button>
+
                     <button class="calc-btn" onclick="calcInput('4')">4</button>
                     <button class="calc-btn" onclick="calcInput('5')">5</button>
                     <button class="calc-btn" onclick="calcInput('6')">6</button>
+                    <button class="calc-btn sci" onclick="calcInput('log')">log</button>
+                    <button class="calc-btn op" onclick="calcInput('+')">+</button>
 
                     <button class="calc-btn" onclick="calcInput('1')">1</button>
                     <button class="calc-btn" onclick="calcInput('2')">2</button>
                     <button class="calc-btn" onclick="calcInput('3')">3</button>
-                    
-                    <button class="calc-btn" onclick="calcInput('0')">0</button>
-                    <button class="calc-btn" onclick="calcInput('.')">.</button>
                     <button class="calc-btn eq" onclick="calcInput('=')">=</button>
+
+                    <button class="calc-btn" onclick="calcInput('0')" style="grid-column: span 2;">0</button>
+                    <button class="calc-btn" onclick="calcInput('.')">.</button>
                 </div>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
-    // 5. הפוטר
+    // 5. הזרקת הפוטר
     const oldFooter = document.querySelector("footer.main-footer");
     if (oldFooter) oldFooter.remove();
 
@@ -210,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.body.insertAdjacentHTML("beforeend", footerHtml);
 
-    // 6. שעון ותאריכים
+    // 6. שעון ותאריך לועזי
     function updateClockAndDate() {
         const now = new Date();
         const clockEl = document.getElementById("nav-clock");
@@ -221,13 +235,22 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. תאריך עברי
+    // 7. טעינת תאריך עברי אונליין בלייב כולל יום בשבוע
+    const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
+    const todayName = days[new Date().getDay()];
+
     fetch("https://www.hebcal.com/etc/hdate-he.json")
         .then(res => res.json())
         .then(data => {
             const hebEl = document.getElementById("nav-hebrew");
-            if (hebEl && data.hebrew) hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${data.hebrew}`;
-        }).catch(() => {});
+            if (hebEl && data.hebrew) {
+                hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
+            }
+        })
+        .catch(() => {
+            const hebEl = document.getElementById("nav-hebrew");
+            if (hebEl) hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}`;
+        });
 
     // 8. פרשת שבוע
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
@@ -241,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // 9. מט"ח
+    // 9. שערי מט"ח
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
         .then(res => res.json())
         .then(data => {
@@ -256,15 +279,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }).catch(() => {});
 });
 
+// פונקציות המחשבון המדעי
 function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
 function closeNavCalculator() { document.getElementById("navCalcModal").style.display = "none"; }
 
-let calcState = "";
+let calcExpr = "";
 function calcInput(val) {
     const disp = document.getElementById("calcDisplay");
-    if (val === 'C') { calcState = ""; disp.value = "0"; }
-    else if (val === '=') {
-        try { calcState = eval(calcState).toString(); disp.value = calcState; }
-        catch { disp.value = "שגיאה"; calcState = ""; }
-    } else { calcState += val; disp.value = calcState; }
+    if (val === 'C') {
+        calcExpr = "";
+        disp.value = "0";
+    } else if (val === '=') {
+        try {
+            let parsed = calcExpr.replace(/sin/g, 'Math.sin')
+                                 .replace(/cos/g, 'Math.cos')
+                                 .replace(/tan/g, 'Math.tan')
+                                 .replace(/sqrt/g, 'Math.sqrt')
+                                 .replace(/log/g, 'Math.log10')
+                                 .replace(/pi/g, 'Math.PI')
+                                 .replace(/pow/g, '**2');
+            disp.value = eval(parsed);
+            calcExpr = disp.value;
+        } catch {
+            disp.value = "שגיאה";
+            calcExpr = "";
+        }
+    } else {
+        calcExpr += val;
+        disp.value = calcExpr;
+    }
 }
