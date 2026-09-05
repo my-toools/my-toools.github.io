@@ -3,38 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מבזקי חדשות אונליין - NETOOLS</title>
-    <meta name="description" content="מבזקי חדשות ועדכונים בזמן אמת מכל אתרי החדשות המובילים בישראל: Ynet, וואלה, News24, מעריב, ערוץ 7 וספורט.">
+    <title>חדשות - NETOOLS</title>
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; color: #1e293b; }
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; text-align: center; padding: 35px 20px; }
-        .hero h1 { font-size: 28px; margin: 0 0 8px 0; }
-        .hero p { font-size: 16px; color: #94a3b8; margin: 0; }
-        
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        .news-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        .tab-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; color: #475569; transition: all 0.2s; }
+        .hero { background: #0f172a; color: #ffffff; text-align: center; padding: 30px 20px; }
+        .hero h1 { font-size: 26px; margin: 0 0 8px 0; }
+        .hero p { font-size: 15px; color: #94a3b8; margin: 0; }
+        .container { max-width: 1200px; margin: 25px auto; padding: 0 20px; }
+        .news-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .tab-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; color: #475569; }
         .tab-btn.active, .tab-btn:hover { background: #0284c7; color: #ffffff; border-color: #0284c7; }
-        
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .news-card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; }
-        .news-card h3 { margin: 0 0 10px 0; font-size: 17px; color: #0f172a; line-height: 1.4; }
-        .news-card p { font-size: 14px; color: #64748b; margin: 0 0 15px 0; line-height: 1.5; }
-        .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+        .news-card { background: #ffffff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; }
+        .news-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #0f172a; }
+        .news-card p { font-size: 13px; color: #64748b; margin: 0 0 12px 0; }
+        .news-meta { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 8px; }
         .news-meta a { color: #0284c7; text-decoration: none; font-weight: bold; }
-        .news-meta a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div class="hero">
-        <h1>מבזקי חדשות בזמן אמת</h1>
-        <p>עדכונים שוטפים מכל גופי התקשורת המובילים בישראל</p>
+        <h1>מבזקי חדשות אונליין</h1>
+        <p>עדכונים שוטפים בזמן אמת</p>
     </div>
 
     <div class="container">
-        
-        <!-- סרגל סינון לפי מקורות -->
         <div class="news-tabs">
             <button class="tab-btn active" onclick="filterNews('all')">כל המקורות</button>
             <button class="tab-btn" onclick="filterNews('ynet')">Ynet</button>
@@ -44,17 +38,12 @@
             <button class="tab-btn" onclick="filterNews('inn')">ערוץ 7</button>
         </div>
 
-        <!-- רשת הידיעות -->
         <div class="news-grid" id="news-container">
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
-                <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br>טוען מבזקי חדשות בלייב...
-            </div>
+            <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: #64748b;">טוען מבזקים...</div>
         </div>
-
     </div>
 
     <script>
-        // מקורות ה-RSS המעודכנים (כולל News24 וללא בחדרי חרדים)
         const newsFeeds = [
             { name: 'Ynet', source: 'ynet', url: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.ynet.co.il%2FIntegration%2Fstory_rss1854.xml' },
             { name: 'וואלה!', source: 'walla', url: 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Frss.walla.co.il%2Ffeed%2F1' },
@@ -76,41 +65,35 @@
                                     title: item.title,
                                     link: item.link,
                                     pubDate: item.pubDate,
-                                    description: item.description.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...',
+                                    description: item.description.replace(/<[^>]*>?/gm, '').substring(0, 100) + '...',
                                     sourceName: feed.name,
                                     sourceCode: feed.source
                                 }));
                             }
                             return [];
-                        })
-                        .catch(() => [])
+                        }).catch(() => [])
                 );
 
                 const results = await Promise.all(promises);
                 allArticles = results.flat().sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
                 renderNews(allArticles);
             } catch (err) {
-                document.getElementById('news-container').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #ef4444;">שגיאה שטעינת החדשות. נסו לרענן את הדף.</div>';
+                document.getElementById('news-container').innerHTML = '<div style="grid-column: 1/-1; text-align: center;">שגיאה בטעינת חדשות.</div>';
             }
         }
 
         function renderNews(articles) {
             const container = document.getElementById('news-container');
-            if (articles.length === 0) {
-                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">לא נמצאו מבזקים.</div>';
-                return;
-            }
-
             container.innerHTML = articles.slice(0, 24).map(item => `
-                <div class="news-card" data-source="${item.sourceCode}">
+                <div class="news-card">
                     <div>
                         <h3>${item.title}</h3>
                         <p>${item.description}</p>
                     </div>
                     <div class="news-meta">
-                        <span><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'})}</span>
+                        <span>${new Date(item.pubDate).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'})}</span>
                         <span>מקור: <strong>${item.sourceName}</strong></span>
-                        <a href="${item.link}" target="_blank" rel="noopener">לכתבה המלאה &laquo;</a>
+                        <a href="${item.link}" target="_blank" rel="noopener">לכתבה &laquo;</a>
                     </div>
                 </div>
             `).join('');
@@ -119,13 +102,7 @@
         function filterNews(source) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-
-            if (source === 'all') {
-                renderNews(allArticles);
-            } else {
-                const filtered = allArticles.filter(a => a.sourceCode === source);
-                renderNews(filtered);
-            }
+            renderNews(source === 'all' ? allArticles : allArticles.filter(a => a.sourceCode === source));
         }
 
         document.addEventListener('DOMContentLoaded', fetchNews);
