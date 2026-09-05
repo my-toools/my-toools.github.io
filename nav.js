@@ -393,3 +393,26 @@ if (!document.querySelector('script[src="accessibility.js"]')) {
     accScript.src = "accessibility.js";
     document.head.appendChild(accScript);
 }
+// הזרקה אוטומטית של תפריט נגישות דרך nav.js
+document.addEventListener("DOMContentLoaded", function () {
+    if (!document.getElementById("acc-floating-btn")) {
+        const accContainer = document.createElement("div");
+        accContainer.id = "acc-floating-btn";
+        accContainer.style.cssText = "position: fixed; bottom: 20px; left: 20px; z-index: 999999;";
+        
+        accContainer.innerHTML = `
+            <button onclick="document.getElementById('acc-panel').style.display = document.getElementById('acc-panel').style.display === 'none' ? 'block' : 'none'" 
+                    style="background: #0284c7; color: white; border: 2px solid white; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" 
+                    title="נגישות">♿</button>
+            
+            <div id="acc-panel" style="display: none; position: absolute; bottom: 60px; left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 15px; width: 220px; color: white; direction: rtl; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; text-align: center; color: #38bdf8;">התאמות נגישות</div>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הגדלת טקסט +</button>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הקטנת טקסט -</button>
+                <button onclick="document.body.style.filter = document.body.style.filter === 'grayscale(100%)' ? 'none' : 'grayscale(100%)'" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">גווני אפור</button>
+                <button onclick="document.body.style.zoom = '100%'; document.body.style.filter = 'none';" style="width:100%; padding:6px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">איפוס</button>
+            </div>
+        `;
+        document.body.appendChild(accContainer);
+    }
+});
