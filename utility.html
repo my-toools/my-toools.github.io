@@ -15,7 +15,7 @@
         .section-title { font-size: 20px; color: #0284c7; margin: 30px 0 15px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .calc-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .calc-card { background: #ffffff; padding: 22px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
         .calc-card h3 { margin-top: 0; color: #0f172a; font-size: 18px; display: flex; align-items: center; gap: 8px; }
         
         .form-group { margin-bottom: 12px; }
@@ -101,7 +101,7 @@
         <div class="section-title"><i class="fa-solid fa-heart-pulse"></i> בריאות וכושר</div>
         <div class="grid">
 
-            <!-- מחשבון BMI (משקל וגובה) -->
+            <!-- מחשבון BMI -->
             <div class="calc-card">
                 <h3><i class="fa-solid fa-weight-scale"></i> מחשבון BMI (גובה ומשקל)</h3>
                 <div class="form-group">
@@ -148,7 +148,7 @@
                 <div class="result-box" id="pct-result">הזיני נתונים לחישוב</div>
             </div>
 
-            <!-- מחולל סיסמאות מאובטחות -->
+            <!-- מחולל סיסמאות -->
             <div class="calc-card">
                 <h3><i class="fa-solid fa-key"></i> מחולל סיסמאות חזקות</h3>
                 <div class="form-group">
@@ -167,9 +167,7 @@
 
     </div>
 
-    <!-- סקריפטים לחישובים -->
     <script>
-        // חישוב מע"מ
         function calcVAT() {
             let amount = parseFloat(document.getElementById('vat-amount').value);
             let type = document.getElementById('vat-type').value;
@@ -188,7 +186,6 @@
             }
         }
 
-        // המרת מידות נעליים
         function calcShoe() {
             let eu = parseFloat(document.getElementById('shoe-eu').value);
             let cat = document.getElementById('shoe-cat').value;
@@ -201,7 +198,6 @@
             document.getElementById('shoe-result').innerHTML = `ארה"ב (US): <strong>${us > 0 ? us.toFixed(1) : '-'}</strong> | בריטניה (UK): <strong>${uk > 0 ? uk.toFixed(1) : '-'}</strong>`;
         }
 
-        // המרת מידות בגדים
         function calcClothes() {
             let size = document.getElementById('clothes-size').value;
             let map = {
@@ -215,7 +211,6 @@
             document.getElementById('clothes-result').innerHTML = `מידה <strong>${size}</strong>:<br>${map[size]}`;
         }
 
-        // חישוב BMI
         function calcBMI() {
             let h = parseFloat(document.getElementById('bmi-height').value) / 100;
             let w = parseFloat(document.getElementById('bmi-weight').value);
@@ -232,7 +227,6 @@
             document.getElementById('bmi-result').innerHTML = `תוצאת BMI: <strong>${bmi}</strong> (${status})`;
         }
 
-        // חישוב מים
         function calcWater() {
             let w = parseFloat(document.getElementById('water-weight').value);
             if (isNaN(w) || w <= 0) {
@@ -243,7 +237,6 @@
             document.getElementById('water-result').innerHTML = `מומלץ לשתות כ-<strong>${liters} ליטר</strong> מים ביום (כ-${Math.round(liters * 5)} כוסות).`;
         }
 
-        // חישוב אחוזים
         function calcPercentage() {
             let val = parseFloat(document.getElementById('pct-val').value);
             let total = parseFloat(document.getElementById('pct-total').value);
@@ -255,7 +248,6 @@
             document.getElementById('pct-result').innerHTML = `<strong>${val}%</strong> מתוך ${total} הם: <strong>${res.toFixed(2)}</strong>`;
         }
 
-        // מחולל סיסמאות
         function generatePassword() {
             let len = parseInt(document.getElementById('pwd-length').value);
             let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
