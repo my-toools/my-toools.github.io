@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. הוספת פאביקון לטאב בדפדפן
+    // 1. הפעלה/החזרה של הפביקון המקורי עם קובץ הלוגו האישי
     let favicon = document.querySelector("link[rel*='icon']");
     if (!favicon) {
         favicon = document.createElement("link");
         favicon.rel = "shortcut icon";
-        favicon.type = "image/x-icon";
         document.head.appendChild(favicon);
     }
-    favicon.href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>";
+    favicon.href = "logo.png";
 
     // 2. טעינת FontAwesome עבור האייקונים
     if (!document.querySelector('link[href*="font-awesome"]')) {
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS מורחב, ממורכז וצבעוני
+    // 3. עיצוב CSS מלא, ממורכז עם מסגרות צבעוניות לאייקונים
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -37,16 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
             }
             
-            /* סרגל ניווט עליון ראשי - מוגדל וממורכז */
+            /* סרגל ניווט עליון ראשי - ממורכז לאמצע */
             .header-container {
                 max-width: 1300px;
                 margin: 0 auto;
-                padding: 16px 24px;
+                padding: 14px 24px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: center; /* ריכוז כל הכותרות והלוגו לאמצע */
                 align-items: center;
                 flex-wrap: wrap;
-                gap: 20px;
+                gap: 30px;
             }
             .logo-area {
                 font-size: 26px;
@@ -57,9 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 align-items: center;
                 gap: 10px;
             }
+            .logo-area img {
+                height: 36px;
+                width: auto;
+            }
             .main-nav {
                 display: flex;
-                gap: 22px;
+                gap: 18px;
                 list-style: none;
                 margin: 0;
                 padding: 0;
@@ -69,23 +72,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 color: #f1f5f9;
                 text-decoration: none;
                 font-weight: 600;
-                font-size: 16px;
-                transition: color 0.2s, transform 0.2s;
+                font-size: 15px;
+                transition: all 0.2s;
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
+            
+            /* מסגרת צבעונית מסביב לסמלי הכותרות */
+            .main-nav a i {
+                width: 28px;
+                height: 28px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                font-size: 13px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+            .nav-icon-home { border: 1.5px solid #38bdf8; color: #38bdf8; }
+            .nav-icon-rights { border: 1.5px solid #22c55e; color: #22c55e; }
+            .nav-icon-legal { border: 1.5px solid #a855f7; color: #a855f7; }
+            .nav-icon-finance { border: 1.5px solid #06b6d4; color: #06b6d4; }
+            .nav-icon-utility { border: 1.5px solid #f97316; color: #f97316; }
+            .nav-icon-news { border: 1.5px solid #f59e0b; color: #f59e0b; }
+
             .main-nav a:hover {
                 color: #38bdf8;
                 transform: translateY(-2px);
             }
 
-            /* הסרגל המשני - מוגדל, צבעוני וממורכז לאמצע */
+            /* הסרגל המשני - ממורכז */
             .secondary-bar {
                 background: #1e293b;
                 color: #cbd5e1;
                 font-size: 14px;
-                padding: 12px 24px;
+                padding: 10px 24px;
                 border-top: 1px solid #334155;
                 box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
             }
@@ -93,15 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 max-width: 1300px;
                 margin: 0 auto;
                 display: flex;
-                justify-content: center; /* ריכוז כל הרכיבים לאמצע */
+                justify-content: center; /* ריכוז הווידג'טים לאמצע */
                 align-items: center;
                 flex-wrap: wrap;
-                gap: 22px;
+                gap: 20px;
             }
             .widget-item {
                 display: flex;
                 align-items: center;
-                gap: 7px;
+                gap: 6px;
                 white-space: nowrap;
                 font-weight: 500;
             }
@@ -109,15 +131,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 color: #ffffff;
             }
 
-            /* סמלים צבעוניים */
-            .icon-clock { color: #38bdf8; }       /* כחול בהיר */
-            .icon-hebrew { color: #f59e0b; }      /* זהב */
-            .icon-parasha { color: #a855f7; }     /* סגול */
-            .icon-sun { color: #fbbf24; }         /* צהוב שמש */
-            .icon-usd { color: #22c55e; }         /* ירוק דולר */
-            .icon-eur { color: #06b6d4; }         /* טורקיז אירו */
-            .icon-prime { color: #f97316; }       /* כתום */
-            .icon-wage { color: #ec4899; }        /* ורוד */
+            /* צבעי סמלים לסרגל הנתונים */
+            .icon-clock { color: #38bdf8; }
+            .icon-date { color: #38bdf8; }
+            .icon-hebrew { color: #f59e0b; }
+            .icon-parasha { color: #a855f7; }
+            .icon-sun { color: #fbbf24; }
+            .icon-usd { color: #22c55e; }
+            .icon-eur { color: #06b6d4; }
+            .icon-prime { color: #f97316; }
+            .icon-wage { color: #ec4899; }
 
             /* פוטר תחתון */
             footer.main-footer {
@@ -138,33 +161,35 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(style);
     }
 
-    // 4. הזרקת הסרגל הראשי והסרגל המשני הממורכז
+    // 4. הזרקת ה-Header
     const oldHeader = document.querySelector("header.main-header");
     if (oldHeader) oldHeader.remove();
 
     const headerHtml = `
         <header class="main-header">
-            <!-- סרגל 1: לוגו וקטגוריות -->
+            <!-- סרגל 1: לוגו תמונה וקטגוריות ממורכזות -->
             <div class="header-container">
                 <a href="index.html" class="logo-area">
-                    NETOOLS <i class="fa-solid fa-screwdriver-wrench icon-clock"></i>
+                    <img src="logo.png" alt="NETOOLS Logo" onerror="this.style.display='none'">
+                    NETOOLS
                 </a>
                 <nav>
                     <ul class="main-nav">
-                        <li><a href="index.html"><i class="fa-solid fa-house icon-clock"></i> דף הבית</a></li>
-                        <li><a href="rights.html"><i class="fa-solid fa-briefcase icon-usd"></i> זכויות עובדים</a></li>
-                        <li><a href="legal.html"><i class="fa-solid fa-scale-balanced icon-parasha"></i> כלים משפטיים</a></li>
-                        <li><a href="finance.html"><i class="fa-solid fa-chart-line icon-eur"></i> פיננסים ומט"ח</a></li>
-                        <li><a href="utility.html"><i class="fa-solid fa-toolbox icon-prime"></i> כלים שימושיים</a></li>
-                        <li><a href="news.html"><i class="fa-solid fa-newspaper icon-hebrew"></i> חדשות</a></li>
+                        <li><a href="index.html"><i class="fa-solid fa-house nav-icon-home"></i> דף הבית</a></li>
+                        <li><a href="rights.html"><i class="fa-solid fa-briefcase nav-icon-rights"></i> זכויות עובדים</a></li>
+                        <li><a href="legal.html"><i class="fa-solid fa-scale-balanced nav-icon-legal"></i> כלים משפטיים</a></li>
+                        <li><a href="finance.html"><i class="fa-solid fa-chart-line nav-icon-finance"></i> פיננסים ומט"ח</a></li>
+                        <li><a href="utility.html"><i class="fa-solid fa-toolbox nav-icon-utility"></i> כלים שימושיים</a></li>
+                        <li><a href="news.html"><i class="fa-solid fa-newspaper nav-icon-news"></i> חדשות</a></li>
                     </ul>
                 </nav>
             </div>
 
-            <!-- סרגל 2: ווידג'טים בלייב ממורכזים באמצע -->
+            <!-- סרגל 2: שעה, תאריך לועזי, תאריך עברי ונתונים בלייב -->
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
+                    <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
                     <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> טוען תאריך עברי...</span>
                     <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> טוען פרשה...</span>
                     <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
@@ -193,18 +218,23 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.body.insertAdjacentHTML("beforeend", footerHtml);
 
-    // 6. הפעלת שעון בזמן אמת
-    function updateClock() {
+    // 6. הפעלת שעון ותאריך לועזי
+    function updateClockAndDate() {
         const now = new Date();
         const clockEl = document.getElementById("nav-clock");
+        const dateEl = document.getElementById("nav-greg-date");
+        
         if (clockEl) {
             clockEl.innerHTML = `<i class="fa-regular fa-clock icon-clock"></i> ${now.toLocaleTimeString('he-IL')}`;
         }
+        if (dateEl) {
+            dateEl.innerHTML = `<i class="fa-regular fa-calendar icon-date"></i> ${now.toLocaleDateString('he-IL')}`;
+        }
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClockAndDate, 1000);
+    updateClockAndDate();
 
-    // 7. טעינת תאריך עברי ופרשת שבוע מ-Hebcal API
+    // 7. טעינה אמינה של תאריך עברי מ-Hebcal
     fetch("https://www.hebcal.com/etc/hdate-he.json")
         .then(res => res.json())
         .then(data => {
@@ -212,24 +242,25 @@ document.addEventListener("DOMContentLoaded", function () {
             if (hebEl && data.hebrew) {
                 hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${data.hebrew}`;
             }
-        }).catch(() => {
+        })
+        .catch(() => {
             const hebEl = document.getElementById("nav-hebrew");
             if (hebEl) hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> תאריך עברי זמין`;
         });
 
+    // 8. טעינת פרשת שבוע
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
         .then(res => res.json())
         .then(data => {
             const parashaItem = data.items.find(i => i.category === "parashat");
             if (parashaItem && parashaItem.hebrew) {
                 const parEl = document.getElementById("nav-parasha");
-                // הסרת המילה "פרשת" מתוך המחרוזת במידה והיא כבר קיימת כדי למנוע כפילות
                 let pName = parashaItem.hebrew.replace(/^פרשת\s+/, '');
                 if (parEl) parEl.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${pName}</strong>`;
             }
         }).catch(() => {});
 
-    // 8. טעינת שערי מט"ח בלייב (דולר + אירו עם סמלים נפרדים)
+    // 9. טעינת שערי מט"ח בלייב
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
         .then(res => res.json())
         .then(data => {
