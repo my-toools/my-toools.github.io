@@ -55,7 +55,6 @@
             color: #38bdf8;
         }
 
-        /* גריד קוביות אחיד ויוקרתי */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -86,21 +85,24 @@
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
         }
 
-        /* מכולת הלוגו במרכז הקובייה */
         .logo-box {
-            width: 120px;
+            width: 130px;
             height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #334155;
         }
 
         .logo-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
             transition: transform 0.2s;
         }
 
@@ -115,7 +117,6 @@
             text-align: center;
         }
 
-        /* תגית LIVE עדינה */
         .live-tag {
             position: absolute;
             top: 10px;
@@ -146,7 +147,8 @@
             <a href="https://www.kan.org.il/live/" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Kan11Logo.svg" alt="כאן 11">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4fe.png" alt="כאן 11" style="display:none;" onerror="this.style.display='none'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Kan11_2022.svg" alt="כאן 11" crossorigin="anonymous">
                 </div>
                 <div class="channel-name">כאן 11</div>
             </a>
@@ -154,7 +156,7 @@
             <a href="https://www.mako.co.il/mako-vod-index/live-tv" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Keshet12_2017.svg" alt="חדשות 12">
+                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Keshet12.svg" alt="חדשות 12" onerror="this.src='https://thumb.wikimedia.org/wikipedia/he/thumb/4/4d/Keshet12.svg/960px-Keshet12.svg.png'">
                 </div>
                 <div class="channel-name">חדשות 12 / N12</div>
             </a>
@@ -162,7 +164,7 @@
             <a href="https://13tv.co.il/live/" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Reshet_13_logo_2019.svg" alt="רשת 13">
+                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Reshet13Logo2022.svg" alt="רשת 13" onerror="this.src='https://upload.wikimedia.org/wikipedia/he/thumb/1/17/Reshet13Logo2022.svg/330px-Reshet13Logo2022.svg.png'">
                 </div>
                 <div class="channel-name">רשת 13</div>
             </a>
@@ -178,7 +180,7 @@
             <a href="https://www.i24news.tv/he/live" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/I24NEWS_Logo.svg" alt="i24NEWS">
+                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSabPaltSLX8X6TcjAiz15VerOrpzpNsBxEZlIV7ASOdZd97HAZxv7EJqwTIyCC4NlWzpPaSiw6X27mTO4" alt="i24NEWS">
                 </div>
                 <div class="channel-name">i24NEWS</div>
             </a>
@@ -186,7 +188,7 @@
             <a href="https://www.knesset.tv/live/" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/c/c2/Knesset_channel_logo_2020.svg/512px-Knesset_channel_logo_2020.svg.png" alt="ערוץ כנסת">
+                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Knessetch10.svg" alt="ערוץ כנסת" onerror="this.src='https://upload.wikimedia.org/wikipedia/he/thumb/4/43/Knessetch10.svg/1280px-Knessetch10.svg.png'">
                 </div>
                 <div class="channel-name">ערוץ כנסת</div>
             </a>
@@ -215,14 +217,14 @@
 
             <a href="https://www.globes.co.il/" target="_blank" class="channel-card">
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Globes_logo.svg/512px-Globes_logo.svg.png" alt="גלובס">
+                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/d/dc/Globes_logo.svg/1280px-Globes_logo.svg.png" alt="גלובס">
                 </div>
                 <div class="channel-name">גלובס (Globes)</div>
             </a>
 
             <a href="https://www.calcalist.co.il/" target="_blank" class="channel-card">
                 <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Calcalist_logo.svg/512px-Calcalist_logo.svg.png" alt="כלכליסט">
+                    <img src="https://thumb.wikimedia.org/wikipedia/he/thumb/d/db/Calcalist.svg/1280px-Calcalist.svg.png" alt="כלכליסט">
                 </div>
                 <div class="channel-name">כלכליסט</div>
             </a>
