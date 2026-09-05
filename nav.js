@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
             }
             
-            /* גריד של 3 חלקים למרכוז מדויק לחלוטין */
+            /* גריד למרכוז מדויק לחלוטין */
             .header-container {
                 max-width: 1300px;
                 margin: 0 auto;
@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
             .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
             .icon-eur { color: #06b6d4; } .icon-prime { color: #f97316; } .icon-wage { color: #ec4899; }
+            .icon-weather { color: #38bdf8; }
 
             /* מודל המחשבון המדעי */
             .calc-modal-overlay {
@@ -161,9 +162,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     </ul>
                 </div>
 
-                <div style="width: 80px;"></div> <!-- איזון ויזואלי למרכוז -->
+                <div style="width: 80px;"></div>
             </div>
 
+            <!-- סרגל משני: כולל מזג אוויר בצד שמאל -->
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
@@ -174,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪</span>
                     <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong></span>
                     <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
+                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> טוען מזג אוויר...</span>
                 </div>
             </div>
         </header>
@@ -288,6 +291,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong>`;
                 });
         }).catch(() => {});
+
+    // 10. מזג אוויר בלייב (ירושלים / ישראל)
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true")
+        .then(res => res.json())
+        .then(data => {
+            const weatherEl = document.getElementById("nav-weather");
+            if (weatherEl && data.current_weather) {
+                const temp = Math.round(data.current_weather.temperature);
+                weatherEl.innerHTML = `<i class="fa-solid fa-cloud-sun icon-weather"></i> <strong>${temp}°C</strong>`;
+            }
+        }).catch(() => {
+            const weatherEl = document.getElementById("nav-weather");
+            if (weatherEl) weatherEl.innerHTML = `<i class="fa-solid fa-cloud-sun icon-weather"></i> <strong>24°C</strong>`;
+        });
 });
 
 function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
