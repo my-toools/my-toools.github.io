@@ -250,15 +250,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (oldFooter) oldFooter.remove();
 
     const footerHtml = `
-        <footer class="main-footer">
-            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
-                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
-            </p>
             <p>&copy; ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
             <p>
                 <a href="privacy.html">מדיניות פרטיות</a> | 
                 <a href="about.html">אודות והצהרת נגישות</a> | 
                 יצירת קשר: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
+            </p>
+              <footer class="main-footer">
+            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
+                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
             </p>
         </footer>
     `;
