@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS: ללא שינוי
+    // 3. עיצוב CSS יציב ויוקרתי
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
             .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
             .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
+            .nav-item-zmanim { border: 1px solid rgba(236, 72, 153, 0.6); }
             .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
             .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
             .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
@@ -109,10 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
             .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
-            .icon-eur { color: #06b6d4; } .icon-prime { color: #f97316; } .icon-wage { color: #ec4899; }
+            .icon-eur { color: #06b6d4; } .icon-btc { color: #f59e0b; } .icon-prime { color: #f97316; } .icon-cpi { color: #a855f7; } .icon-wage { color: #ec4899; }
             .icon-weather { color: #38bdf8; }
 
-            /* מודל המחשבון */
+            /* מודל המחשבון המדעי */
             .calc-modal-overlay {
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85);
                 backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999;
@@ -162,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
                         <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
                         <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
+                        <li><a href="zmanim.html" class="nav-item-zmanim">זמנים</a></li>
                         
                         <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון מדעי">
                             <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
@@ -176,17 +178,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="width: 80px;"></div>
             </div>
 
+            <!-- סרגל משני: מזג אוויר הכי מימין, ביטקוין, פריים ומדד המחירים -->
             <div class="secondary-bar">
                 <div class="secondary-container">
+                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
                     <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
-                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> טוען...</span>
+                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> טוען...</span>
                     <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪</span>
-                    <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong></span>
+                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: -- ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: -- ₪ | <i class="fa-bold icon-btc"></i> ביטקוין: -- $</span>
+                    <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
+                    <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד המחירים: <strong>+0.3%</strong></span>
                     <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
-                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
                 </div>
             </div>
         </header>
@@ -266,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. תאריך עברי אמינה בזמן אמת עם גיבוי מיידי
+    // 7. תאריך עברי
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
@@ -277,8 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (hebEl && data.hebrew) {
                 hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
             }
-        })
-        .catch(() => {});
+        }).catch(() => {});
 
     // 8. פרשת שבוע
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
@@ -292,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // 9. מט"ח
+    // 9. מט"ח + ביטקוין בלייב
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
         .then(res => res.json())
         .then(data => {
@@ -301,8 +304,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(res => res.json())
                 .then(eurData => {
                     const eur = eurData.rates.ILS ? eurData.rates.ILS.toFixed(2) : "3.50";
-                    const forexEl = document.getElementById("nav-forex");
-                    if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong>`;
+                    fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
+                        .then(res => res.json())
+                        .then(btcData => {
+                            const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
+                            const forexEl = document.getElementById("nav-forex");
+                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong> | <i class="fa-bold icon-btc"></i> ביטקוין: <strong>$${btc}</strong>`;
+                        }).catch(() => {
+                            const forexEl = document.getElementById("nav-forex");
+                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong> | <i class="fa-bold icon-btc"></i> ביטקוין: <strong>$62,500</strong>`;
+                        });
                 });
         }).catch(() => {});
 
