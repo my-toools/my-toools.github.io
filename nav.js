@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 יצירת קשר: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
             </p>
               <p style="font-size: 12.5px; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
-                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
+                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או תחליף לייעוץ מקצועי פרטני.
             </p>
         </footer>
     `;
@@ -386,4 +386,10 @@ function calcInput(val) {
         calcExpr += val;
         disp.value = calcExpr;
     }
+}
+// טעינה אוטומטית של רכיב הנגישות לכל עמודי האתר
+if (!document.querySelector('script[src="accessibility.js"]')) {
+    const accScript = document.createElement("script");
+    accScript.src = "accessibility.js";
+    document.head.appendChild(accScript);
 }
