@@ -245,12 +245,15 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
-    // 5. הזרקת הפוטר
+    // 5. הזרקת פוטר אחיד ומעודכן כולל הבהרה משפטית
     const oldFooter = document.querySelector("footer.main-footer");
     if (oldFooter) oldFooter.remove();
 
     const footerHtml = `
         <footer class="main-footer">
+            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
+                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
+            </p>
             <p>&copy; ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
             <p>
                 <a href="privacy.html">מדיניות פרטיות</a> | 
@@ -272,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. תאריך עברי אונליין סנכרון רציף
+    // 7. תאריך עברי אונליין
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
