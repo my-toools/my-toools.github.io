@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     favicon.href = "favicon.png";
 
-    // 2. טעינת FontAwesome עבור האייקונים בסרגל המשני
+    // 2. טעינת FontAwesome עבור האייקונים
     if (!document.querySelector('link[href*="font-awesome"]')) {
         const fontLink = document.createElement("link");
         fontLink.rel = "stylesheet";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS יוקרתי: טקסט לבן + מסגרת דקה וצבעונית לכל קטגוריה
+    // 3. עיצוב CSS מלא: יישור למרכז, מסגרות עדינות ועיצוב חלון המחשבון המקצועי
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -36,25 +36,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 width: 100%;
             }
             
-            /* סרגל ניווט עליון ראשי - פריסה מותאמת */
+            /* סרגל ניווט עליון ראשי - ממורכז לחלוטין לאמצע */
             .header-container {
                 max-width: 1300px;
                 margin: 0 auto;
                 padding: 12px 24px;
                 display: flex;
-                justify-content: space-between; /* הצמדת השם לימין והקטגוריות משמאל */
+                justify-content: center; /* יישור כל הרכיבים למרכז */
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 15px;
             }
             
-            /* השם NETOOLS מוצמד לימין */
             .brand-name {
-                font-size: 24px;
+                font-size: 22px;
                 font-weight: 800;
                 color: #38bdf8;
                 text-decoration: none;
                 letter-spacing: 1px;
+                margin-left: 10px;
             }
 
             .main-nav {
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             /* טקסט לבן עם מסגרת דקה, עדינה ויוקרתית */
             .main-nav a {
-                color: #ffffff !important; /* טקסט לבן בלבד */
+                color: #ffffff !important;
                 text-decoration: none;
                 font-weight: 500;
                 font-size: 14px;
@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 background: rgba(255, 255, 255, 0.02);
             }
             
-            /* מסגרות צבעוניות דקות ועדינות בלבד */
             .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
             .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
             .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
@@ -99,13 +98,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 4px;
+                margin: 0 6px;
+                cursor: pointer;
             }
             .center-logo img {
-                height: 34px;
-                width: 34px;
+                height: 36px;
+                width: 36px;
                 object-fit: contain;
                 border-radius: 6px;
+                transition: transform 0.2s;
+            }
+            .center-logo img:hover {
+                transform: scale(1.1);
             }
 
             /* הסרגל המשני - ממורכז */
@@ -148,6 +152,98 @@ document.addEventListener("DOMContentLoaded", function () {
             .icon-prime { color: #f97316; }
             .icon-wage { color: #ec4899; }
 
+            /* עיצוב המודל של המחשבון המקצועי */
+            .calc-modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(15, 23, 42, 0.75);
+                backdrop-filter: blur(4px);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 99999;
+            }
+            .calc-modal {
+                background: #0f172a;
+                border: 1px solid #334155;
+                border-radius: 16px;
+                padding: 20px;
+                width: 320px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+                color: #ffffff;
+            }
+            .calc-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #1e293b;
+                padding-bottom: 10px;
+            }
+            .calc-header h3 {
+                margin: 0;
+                font-size: 16px;
+                color: #38bdf8;
+            }
+            .calc-close {
+                background: none;
+                border: none;
+                color: #94a3b8;
+                font-size: 18px;
+                cursor: pointer;
+            }
+            .calc-display {
+                width: 100%;
+                height: 50px;
+                background: #1e293b;
+                border: 1px solid #334155;
+                border-radius: 8px;
+                color: #ffffff;
+                font-size: 22px;
+                text-align: left;
+                padding: 0 12px;
+                box-sizing: border-border-box;
+                margin-bottom: 15px;
+            }
+            .calc-buttons {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .calc-btn {
+                background: #1e293b;
+                border: 1px solid #334155;
+                color: #f1f5f9;
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .calc-btn:hover {
+                background: #334155;
+            }
+            .calc-btn.op {
+                background: #0284c7;
+                color: #ffffff;
+            }
+            .calc-btn.op:hover {
+                background: #0369a1;
+            }
+            .calc-btn.eq {
+                background: #22c55e;
+                color: #ffffff;
+                grid-column: span 2;
+            }
+            .calc-btn.clear {
+                background: #ef4444;
+                color: #ffffff;
+            }
+
             /* פוטר תחתון */
             footer.main-footer {
                 background: #0f172a;
@@ -167,14 +263,13 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(style);
     }
 
-    // 4. הזרקת ה-Header: שם מוצמד לימין + לוגו במרכז בין "כלים משפטיים" ל"פיננסים ומט"ח"
+    // 4. הזרקת ה-Header הממורכז
     const oldHeader = document.querySelector("header.main-header");
     if (oldHeader) oldHeader.remove();
 
     const headerHtml = `
         <header class="main-header">
             <div class="header-container">
-                <!-- השם NETOOLS מוצמד מימין -->
                 <a href="index.html" class="brand-name">NETOOLS</a>
                 
                 <nav>
@@ -183,11 +278,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="workers.html" class="nav-item-rights">זכויות עובדים</a></li>
                         <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
                         
-                        <!-- הלוגו במרכז בדיוק בין כלים משפטיים לפיננסים ומט"ח -->
-                        <li class="center-logo">
-                            <a href="index.html">
-                                <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
-                            </a>
+                        <!-- הלוגו במרכז - בלחיצה פותח מחשבון -->
+                        <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון">
+                            <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
                         </li>
                         
                         <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
@@ -211,6 +304,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             </div>
         </header>
+
+        <!-- חלון קופץ של המחשבון המקצועי -->
+        <div class="calc-modal-overlay" id="navCalcModal">
+            <div class="calc-modal">
+                <div class="calc-header">
+                    <h3><i class="fa-solid fa-calculator"></i> מחשבון מקצועי</h3>
+                    <button class="calc-close" onclick="closeNavCalculator()">&times;</button>
+                </div>
+                <input type="text" class="calc-display" id="calcDisplay" readonly value="0">
+                <div class="calc-buttons">
+                    <button class="calc-btn clear" onclick="calcInput('C')">C</button>
+                    <button class="calc-btn op" onclick="calcInput('/')">&divide;</button>
+                    <button class="calc-btn op" onclick="calcInput('*')">&times;</button>
+                    <button class="calc-btn op" onclick="calcInput('-')">-</button>
+                    
+                    <button class="calc-btn" onclick="calcInput('7')">7</button>
+                    <button class="calc-btn" onclick="calcInput('8')">8</button>
+                    <button class="calc-btn" onclick="calcInput('9')">9</button>
+                    <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                    
+                    <button class="calc-btn" onclick="calcInput('4')">4</button>
+                    <button class="calc-btn" onclick="calcInput('5')">5</button>
+                    <button class="calc-btn" onclick="calcInput('6')">6</button>
+
+                    <button class="calc-btn" onclick="calcInput('1')">1</button>
+                    <button class="calc-btn" onclick="calcInput('2')">2</button>
+                    <button class="calc-btn" onclick="calcInput('3')">3</button>
+                    
+                    <button class="calc-btn" onclick="calcInput('0')">0</button>
+                    <button class="calc-btn" onclick="calcInput('.')">.</button>
+                    <button class="calc-btn eq" onclick="calcInput('=')">=</button>
+                </div>
+            </div>
+        </div>
     `;
     document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
@@ -246,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינת תאריך עברי
+    // 7. טעינה דינמית תקינה של תאריך עברי מעודכן
     fetch("https://www.hebcal.com/etc/hdate-he.json")
         .then(res => res.json())
         .then(data => {
@@ -288,3 +415,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }).catch(() => {});
 });
+
+// פונקציות להפעלת המחשבון המקצועי בחלון קופץ
+function openNavCalculator() {
+    document.getElementById("navCalcModal").style.display = "flex";
+}
+
+function closeNavCalculator() {
+    document.getElementById("navCalcModal").style.display = "none";
+}
+
+let calcState = "";
+function calcInput(val) {
+    const disp = document.getElementById("calcDisplay");
+    if (val === 'C') {
+        calcState = "";
+        disp.value = "0";
+    } else if (val === '=') {
+        try {
+            calcState = eval(calcState).toString();
+            disp.value = calcState;
+        } catch {
+            disp.value = "שגיאה";
+            calcState = "";
+        }
+    } else {
+        calcState += val;
+        disp.value = calcState;
+    }
+}
