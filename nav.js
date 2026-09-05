@@ -275,10 +275,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <p>
                 <a href="privacy.html">מדיניות פרטיות</a> | 
                 <a href="about.html">אודות והצהרת נגישות</a> | 
-                יצירת קשר: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
+                <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
             </p>
               <p style="font-size: 12.5px; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
-                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או תחליף לייעוץ מקצועי פרטני.
+                <strong>הבהרה משפטית:</strong> המוצגים באתר מהווים אומדן כללי בלבד ואינם מהווים תחליף לייעוץ מקצועי, משפטי או פיננסי.
             </p>
         </footer>
     `;
