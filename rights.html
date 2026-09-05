@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבוני זכויות עובדים - NETOOLS</title>
+    <meta name="description" content="מחשבוני זכויות עובדים בדיני עבודה: חישוב פיצויי פיטורין, דמי הבראה, פדיון ימי חופשה ושכר מינימום.">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; color: #1e293b; }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; text-align: center; padding: 35px 20px; }
+        .hero h1 { font-size: 28px; margin: 0 0 8px 0; }
+        .hero p { font-size: 16px; color: #94a3b8; margin: 0; }
+        
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .calc-card { background: #ffffff; padding: 22px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .calc-card h3 { margin-top: 0; color: #0f172a; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 14px; color: #475569; margin-bottom: 4px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        
+        button.btn-calc { width: 100%; background: #22c55e; color: #ffffff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 5px; }
+        button.btn-calc:hover { background: #16a34a; }
+        
+        .result-box { margin-top: 15px; padding: 12px; background: #f8fafc; border-radius: 6px; border-right: 4px solid #22c55e; font-size: 14px; color: #0f172a; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>מחשבוני זכויות עובדים ודיני עבודה</h1>
+        <p>חישוב מהיר ומדויק של זכויות סוציאליות, פיצויים, הבראה וחופשה</p>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            
+            <!-- מחשבון פיצויי פיטורין -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-hand-holding-dollar"></i> מחשבון פיצויי פיטורין</h3>
+                <div class="form-group">
+                    <label>משכורת חודשית ברוטו (בש"ח):</label>
+                    <input type="number" id="sev-salary" placeholder="למשל: 10000">
+                </div>
+                <div class="form-group">
+                    <label>וותק בעבודה (בשנים):</label>
+                    <input type="number" step="0.1" id="sev-years" placeholder="למשל: 3.5">
+                </div>
+                <button class="btn-calc" onclick="calcSeverance()">חשב פיצויים</button>
+                <div class="result-box" id="sev-result">הזיני משכורת ופזם לחישוב</div>
+            </div>
+
+            <!-- מחשבון דמי הבראה -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-umbrella-beach"></i> מחשבון דמי הבראה</h3>
+                <div class="form-group">
+                    <label>שנות וותק במקום העבודה:</label>
+                    <input type="number" id="rec-years" placeholder="למשל: 2">
+                </div>
+                <button class="btn-calc" onclick="calcRecuperation()">חשב דמי הבראה</button>
+                <div class="result-box" id="rec-result">הזיני וותק לחישוב לפי 418 ₪ ליום</div>
+            </div>
+
+            <!-- מחשבון פדיון ימי חופשה -->
+            <div class="calc-card">
+                <h3><i class="fa-solid fa-calendar-check"></i> מחשבון פדיון ימי חופשה</h3>
+                <div class="form-group">
+                    <label>משכורת חודשית ברוטו (בש"ח):</label>
+                    <input type="number" id="vac-salary" placeholder="למשל: 9000">
+                </div>
+                <div class="form-group">
+                    <label>יתרת ימי חופשה שלא נוצלו:</label>
+                    <input type="number" step="0.5" id="vac-days" placeholder="למשל: 12">
+                </div>
+                <button class="btn-calc" onclick="calcVacation()">חשב פדיון חופשה</button>
+                <div class="result-box" id="vac-result">הזיני נתונים לחישוב</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function calcSeverance() {
+            let sal = parseFloat(document.getElementById('sev-salary').value);
+            let yrs = parseFloat(document.getElementById('sev-years').value);
+            if (isNaN(sal) || isNaN(yrs) || sal <= 0 || yrs <= 0) {
+                document.getElementById('sev-result').innerText = "אנא הזיני משכורת ווותק תקינים.";
+                return;
+            }
+            let total = sal * yrs;
+            document.getElementById('sev-result').innerHTML = `זכאות לפיצויי פיטורין: <strong>${total.toLocaleString()} ₪</strong>`;
+        }
+
+        function calcRecuperation() {
+            let yrs = parseInt(document.getElementById('rec-years').value);
+            if (isNaN(yrs) || yrs < 1) {
+                document.getElementById('rec-result').innerText = "זכאות לדמי הבראה קיימת החל מהשנה הראשונה.";
+                return;
+            }
+            let daysMap = [0, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8];
+            let days = yrs >= 11 ? 8 : daysMap[yrs];
+            let rate = 418; // תעריף ליום במגזר הפרטי
+            let total = days * rate;
+            document.getElementById('rec-result').innerHTML = `ימי הבראה בשנה: <strong>${days} ימים</strong><br>סך הכל לתשלום: <strong>${total.toLocaleString()} ₪</strong>`;
+        }
+
+        function calcVacation() {
+            let sal = parseFloat(document.getElementById('vac-salary').value);
+            let days = parseFloat(document.getElementById('vac-days').value);
+            if (isNaN(sal) || isNaN(days) || sal <= 0 || days <= 0) {
+                document.getElementById('vac-result').innerText = "אנא הזיני נתונים תקינים.";
+                return;
+            }
+            let dayRate = sal / 22; // ממוצע ימי עבודה בחודש
+            let total = dayRate * days;
+            document.getElementById('vac-result').innerHTML = `ערך יום חופשה: <strong>${dayRate.toFixed(2)} ₪</strong><br>סך הכל פדיון חופשה: <strong>${total.toFixed(2)} ₪</strong>`;
+        }
+    </script>
+
+    <script src="nav.js"></script>
+</body>
+</html>
