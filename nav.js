@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS יציב ויוקרתי
+    // 3. עיצוב CSS: סרגל משני מורחב בשורה אחת
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -34,9 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             .header-container {
-                max-width: 1300px;
+                max-width: 1400px;
                 margin: 0 auto;
-                padding: 12px 24px;
+                padding: 12px 20px;
                 display: grid;
                 grid-template-columns: auto 1fr auto;
                 align-items: center;
@@ -99,13 +99,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
             .center-logo img:hover { transform: scale(1.1); }
 
+            /* סרגל משני רחב מותאם לשורה אחת */
             .secondary-bar {
-                background: #1e293b; color: #cbd5e1; font-size: 13.5px; padding: 9px 24px; border-top: 1px solid #334155;
+                background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
             }
             .secondary-container {
-                max-width: 1300px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 18px;
+                max-width: 1550px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 10px; overflow-x: auto; white-space: nowrap;
             }
-            .widget-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 500; }
+            .secondary-container::-webkit-scrollbar { display: none; }
+            .widget-item { display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
             .widget-item strong { color: #ffffff; }
 
             .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
@@ -178,18 +180,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="width: 80px;"></div>
             </div>
 
-            <!-- סרגל משני: מזג אוויר הכי מימין, ביטקוין, פריים ומדד המחירים -->
+            <!-- סרגל משני בשורה אחת -->
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
                     <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
                     <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> טוען...</span>
-                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> טוען...</span>
+                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
                     <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: -- ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: -- ₪ | <i class="fa-bold icon-btc"></i> ביטקוין: -- $</span>
+                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪ | <i class="fa-bold icon-btc"></i> ביטקוין: $62,500</span>
                     <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
-                    <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד המחירים: <strong>+0.3%</strong></span>
+                    <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
                     <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
                 </div>
             </div>
@@ -270,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. תאריך עברי
+    // 7. תאריך עברי אונליין סנכרון רציף
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
@@ -310,10 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
                             const forexEl = document.getElementById("nav-forex");
                             if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong> | <i class="fa-bold icon-btc"></i> ביטקוין: <strong>$${btc}</strong>`;
-                        }).catch(() => {
-                            const forexEl = document.getElementById("nav-forex");
-                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong> | <i class="fa-bold icon-btc"></i> ביטקוין: <strong>$62,500</strong>`;
-                        });
+                        }).catch(() => {});
                 });
         }).catch(() => {});
 
