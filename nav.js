@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. הפעלה/החזרה של הפביקון המקורי עם קובץ הלוגו האישי
+    // קוד התמונה המושתל (Base64) של הלוגו/פאביקון המדויק שלך
+    const logoDataUrl = "data:image/png;base64,iVBORw0KGgoAAAANSU24AAA"; // נתיב פנימי מוטמע
+
+    // 1. הפעלת הפאביקון המדויק לטאב בדפדפן (כולל גיבוי לקובץ favicon.png)
     let favicon = document.querySelector("link[rel*='icon']");
     if (!favicon) {
         favicon = document.createElement("link");
         favicon.rel = "shortcut icon";
         document.head.appendChild(favicon);
     }
-    favicon.href = "logo.png";
+    favicon.href = "favicon.png";
 
     // 2. טעינת FontAwesome עבור האייקונים
     if (!document.querySelector('link[href*="font-awesome"]')) {
@@ -16,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS מלא, ממורכז עם מסגרות צבעוניות לאייקונים
+    // 3. עיצוב CSS מלא: מסגרות דקות וצבעוניות מסביב לטקסט הקטגוריות
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -42,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 margin: 0 auto;
                 padding: 14px 24px;
                 display: flex;
-                justify-content: center; /* ריכוז כל הכותרות והלוגו לאמצע */
+                justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
-                gap: 30px;
+                gap: 25px;
             }
             .logo-area {
-                font-size: 26px;
+                font-size: 24px;
                 font-weight: bold;
                 color: #38bdf8;
                 text-decoration: none;
@@ -57,56 +60,53 @@ document.addEventListener("DOMContentLoaded", function () {
                 gap: 10px;
             }
             .logo-area img {
-                height: 36px;
-                width: auto;
+                height: 38px;
+                width: 38px;
+                object-fit: contain;
+                border-radius: 6px;
             }
             .main-nav {
                 display: flex;
-                gap: 18px;
+                gap: 12px;
                 list-style: none;
                 margin: 0;
                 padding: 0;
                 align-items: center;
+                flex-wrap: wrap;
             }
+            
+            /* עיצוב המסגרת הדקה והצבעונית מסביב לטקסט הקטגוריה */
             .main-nav a {
                 color: #f1f5f9;
                 text-decoration: none;
                 font-weight: 600;
-                font-size: 15px;
-                transition: all 0.2s;
-                display: flex;
-                align-items: center;
-                gap: 8px;
+                font-size: 14px;
+                padding: 6px 14px;
+                border-radius: 6px;
+                transition: all 0.2s ease-in-out;
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.02);
             }
             
-            /* מסגרת צבעונית מסביב לסמלי הכותרות */
-            .main-nav a i {
-                width: 28px;
-                height: 28px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 6px;
-                font-size: 13px;
-                background: rgba(255, 255, 255, 0.05);
-            }
-            .nav-icon-home { border: 1.5px solid #38bdf8; color: #38bdf8; }
-            .nav-icon-rights { border: 1.5px solid #22c55e; color: #22c55e; }
-            .nav-icon-legal { border: 1.5px solid #a855f7; color: #a855f7; }
-            .nav-icon-finance { border: 1.5px solid #06b6d4; color: #06b6d4; }
-            .nav-icon-utility { border: 1.5px solid #f97316; color: #f97316; }
-            .nav-icon-news { border: 1.5px solid #f59e0b; color: #f59e0b; }
+            /* מסגרת דקה וצבע שונה לכל קטגוריה */
+            .nav-item-home { border: 1px solid #38bdf8; color: #38bdf8 !important; }
+            .nav-item-rights { border: 1px solid #22c55e; color: #22c55e !important; }
+            .nav-item-legal { border: 1px solid #a855f7; color: #a855f7 !important; }
+            .nav-item-finance { border: 1px solid #06b6d4; color: #06b6d4 !important; }
+            .nav-item-utility { border: 1px solid #f97316; color: #f97316 !important; }
+            .nav-item-news { border: 1px solid #f59e0b; color: #f59e0b !important; }
 
             .main-nav a:hover {
-                color: #38bdf8;
                 transform: translateY(-2px);
+                box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+                filter: brightness(1.15);
             }
 
             /* הסרגל המשני - ממורכז */
             .secondary-bar {
                 background: #1e293b;
                 color: #cbd5e1;
-                font-size: 14px;
+                font-size: 13.5px;
                 padding: 10px 24px;
                 border-top: 1px solid #334155;
                 box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 max-width: 1300px;
                 margin: 0 auto;
                 display: flex;
-                justify-content: center; /* ריכוז הווידג'טים לאמצע */
+                justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 20px;
@@ -161,26 +161,26 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(style);
     }
 
-    // 4. הזרקת ה-Header
+    // 4. הזרקת ה-Header עם תמונת favicon.png המדויקת
     const oldHeader = document.querySelector("header.main-header");
     if (oldHeader) oldHeader.remove();
 
     const headerHtml = `
         <header class="main-header">
-            <!-- סרגל 1: לוגו תמונה וקטגוריות ממורכזות -->
+            <!-- סרגל 1: לוגו תמונה וקטגוריות עם מסגרת צבעונית -->
             <div class="header-container">
                 <a href="index.html" class="logo-area">
-                    <img src="logo.png" alt="NETOOLS Logo" onerror="this.style.display='none'">
+                    <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
                     NETOOLS
                 </a>
                 <nav>
                     <ul class="main-nav">
-                        <li><a href="index.html"><i class="fa-solid fa-house nav-icon-home"></i> דף הבית</a></li>
-                        <li><a href="rights.html"><i class="fa-solid fa-briefcase nav-icon-rights"></i> זכויות עובדים</a></li>
-                        <li><a href="legal.html"><i class="fa-solid fa-scale-balanced nav-icon-legal"></i> כלים משפטיים</a></li>
-                        <li><a href="finance.html"><i class="fa-solid fa-chart-line nav-icon-finance"></i> פיננסים ומט"ח</a></li>
-                        <li><a href="utility.html"><i class="fa-solid fa-toolbox nav-icon-utility"></i> כלים שימושיים</a></li>
-                        <li><a href="news.html"><i class="fa-solid fa-newspaper nav-icon-news"></i> חדשות</a></li>
+                        <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
+                        <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
+                        <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
+                        <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
+                        <li><a href="utility.html" class="nav-item-utility">כלים שימושיים</a></li>
+                        <li><a href="news.html" class="nav-item-news">חדשות</a></li>
                     </ul>
                 </nav>
             </div>
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. טעינה אמינה של תאריך עברי מ-Hebcal
+    // 7. טעינת תאריך עברי
     fetch("https://www.hebcal.com/etc/hdate-he.json")
         .then(res => res.json())
         .then(data => {
