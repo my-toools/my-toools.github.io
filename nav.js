@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS: סרגל משני מורחב בשורה אחת
+    // 3. עיצוב CSS: סרגל משני מורחב + פוטר בטקסט לבן אחיד
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
             .center-logo img:hover { transform: scale(1.1); }
 
-            /* סרגל משני רחב מותאם לשורה אחת */
+            /* סרגל משני */
             .secondary-bar {
                 background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
             }
@@ -145,8 +145,29 @@ document.addEventListener("DOMContentLoaded", function () {
             .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
             .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
 
-            footer.main-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 28px 20px; margin-top: 50px; border-top: 1px solid #1e293b; font-size: 14px; }
-            footer.main-footer a { color: #38bdf8; text-decoration: none; margin: 0 8px; }
+            /* עיצוב פוטר בטקסט לבן בוהק ואחיד */
+            footer.main-footer {
+                background: #0f172a !important;
+                color: #ffffff !important;
+                text-align: center;
+                padding: 28px 20px;
+                margin-top: 50px;
+                border-top: 1px solid #1e293b;
+                font-size: 14px;
+            }
+            footer.main-footer p {
+                color: #ffffff !important;
+                margin: 6px 0;
+            }
+            footer.main-footer a {
+                color: #38bdf8 !important;
+                text-decoration: none;
+                margin: 0 8px;
+                font-weight: 500;
+            }
+            footer.main-footer a:hover {
+                text-decoration: underline;
+            }
         `;
         document.head.appendChild(style);
     }
@@ -180,7 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="width: 80px;"></div>
             </div>
 
-            <!-- סרגל משני בשורה אחת -->
             <div class="secondary-bar">
                 <div class="secondary-container">
                     <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
@@ -245,20 +265,20 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
-    // 5. הזרקת פוטר אחיד ומעודכן כולל הבהרה משפטית
+    // 5. הזרקת פוטר אחיד בטקסט לבן
     const oldFooter = document.querySelector("footer.main-footer");
     if (oldFooter) oldFooter.remove();
 
     const footerHtml = `
+        <footer class="main-footer">
+            <p style="font-size: 12.5px; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
+                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
+            </p>
             <p>&copy; ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
             <p>
                 <a href="privacy.html">מדיניות פרטיות</a> | 
                 <a href="about.html">אודות והצהרת נגישות</a> | 
                 יצירת קשר: <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
-            </p>
-              <footer class="main-footer">
-            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
-                <strong>הבהרה משפטית:</strong> התוצאות המוצגות במחשבונים מהוות אומדן כללי בלבד ואינן מהוות ייעוץ משפטי, פיננסי או חליף לייעוץ מקצועי פרטני.
             </p>
         </footer>
     `;
@@ -275,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // 7. תאריך עברי אונליין
+    // 7. תאריך עברי
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
