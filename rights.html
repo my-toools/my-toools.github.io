@@ -10,13 +10,11 @@
 
     <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
         
-        <!-- כותרת ראשית -->
         <div style="text-align: center; margin-bottom: 30px; color: #ffffff;">
             <h1 style="font-size: 30px; font-weight: 800; margin-bottom: 8px;">מחשבוני זכויות עובדים ודיני עבודה</h1>
-            <p style="color: #94a3b8; font-size: 16px;">חישוב מהיר, מדויק ומונגש של זכויות סוציאליות, פיצויים ושעות עבודה</p>
+            <p style="color: #94a3b8; font-size: 16px;">חישוב מהיר, מדויק ומונגש של זכויות סוציאליות, פיצויים, שעות עבודה ופנסיה</p>
         </div>
 
-        <!-- סרגל נתונים מהיר בראש העמוד -->
         <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 25px; color: #f8fafc; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 15px; text-align: center;">
             <div><strong>שכר מינימום שעתי:</strong> 32.30 ₪</div>
             <div><strong>שכר מינימום חודשי:</strong> 5,880 ₪</div>
@@ -24,10 +22,8 @@
             <div><strong>מקסימום נסיעות ליום:</strong> 22.60 ₪</div>
         </div>
 
-        <!-- רשת המחשבונים והכלים (Grid) -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
 
-            <!-- 1. מחשבון פיצויי פיטורין -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">💰 מחשבון פיצויי פיטורין</h3>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">משכורת חודשית ברוטו (ש"ח):</label>
@@ -36,10 +32,9 @@
                 <input type="number" id="pitzuim-years" step="0.1" placeholder="3.5" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
                 <button onclick="calcPitzuim()" style="width: 100%; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">חשב פיצויים</button>
                 <div id="pitzuim-result" style="margin-top: 10px; padding: 8px; background: #f8fafc; border-right: 4px solid #22c55e; font-size: 14px; font-weight: bold;">הזינו נתונים לחישוב</div>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>טיפ משפטי:</strong> לפי סעיף 14 לחוק פיצויי פיטורים, הפרשות המעסיק לקופה נשארות של העובד ברוב המקרים גם בעת התפטרות.</div>
+                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>טיפ משפטי:</strong> לפי סעיף 14 לחוק פיצויי פיטורים, ההפרשות בקופה נשארות של העובד ברוב המקרים גם בעת התפטרות.</div>
             </div>
 
-            <!-- 2. מחשבון דמי הבראה -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">🏖️ מחשבון דמי הבראה</h3>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שנות ותק בעבודה:</label>
@@ -49,7 +44,6 @@
                 <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>זכאות:</strong> תשלום דמי הבראה מגיע לאחר השלמת שנת עבודה מלאה. שנה 1 = 5 ימים, שנים 2-3 = 6 ימים.</div>
             </div>
 
-            <!-- 3. מחשבון פדיון ימי חופשה -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">📅 מחשבון פדיון ימי חופשה</h3>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">משכורת חודשית ברוטו (ש"ח):</label>
@@ -58,130 +52,45 @@
                 <input type="number" id="vacation-days" step="0.5" placeholder="12" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
                 <button onclick="calcVacation()" style="width: 100%; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">חשב פדיון חופשה</button>
                 <div id="vacation-result" style="margin-top: 10px; padding: 8px; background: #f8fafc; border-right: 4px solid #22c55e; font-size: 14px; font-weight: bold;">הזינו נתונים לחישוב</div>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>פדיון כספי:</strong> מותר לפדות ימי חופשה בכסף אך ורק בסיום יחסי עבודה. במהלך העבודה חובה לנצל ימים בפועל.</div>
+                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>פדיון כספי:</strong> מותר לפדות ימי חופשה בכסף אך ורק בסיום יחסי עבודה.</div>
             </div>
 
-            <!-- 4. מחשבון שעות נוספות חכם -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">⏰ מחשבון שעות נוספות</h3>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">⏰ מחשבון שעות נוספות ושבת/חג</h3>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שכר שעתי בסיס (ש"ח):</label>
                 <input type="number" id="overtime-rate" placeholder="50" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
-                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שעות נוספות (125%):</label>
-                <input type="number" id="overtime-125" placeholder="שעות ראשונות" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
-                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שעות נוספות (150%):</label>
-                <input type="number" id="overtime-150" placeholder="החל מהשעה השלישית/שבת" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שעות 125% (2 שעות נוספות ראשונות):</label>
+                <input type="number" id="overtime-125" placeholder="0" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שעות 150% (החל מהשעה ה-3 נוספת):</label>
+                <input type="number" id="overtime-150" placeholder="0" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">שעות עבודה בשבת/חג (150% בסיס):</label>
+                <input type="number" id="overtime-sat" placeholder="0" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
                 <button onclick="calcOvertime()" style="width: 100%; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">חשב תגמול נוסף</button>
                 <div id="overtime-result" style="margin-top: 10px; padding: 8px; background: #f8fafc; border-right: 4px solid #22c55e; font-size: 14px; font-weight: bold;">הזינו שעות לחישוב</div>
             </div>
 
-            <!-- 5. מחשבון הודעה מוקדמת (פיטורין / התפטרות) -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">✉️ מחשבון הודעה מוקדמת</h3>
+                <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">סוג העסקה:</label>
+                <select id="notice-type" style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                    <option value="monthly">עובד חודשי (משכורת קבועה)</option>
+                    <option value="hourly">עובד שעתי / יומי</option>
+                </select>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">ותק בעבודה (בחודשים):</label>
                 <input type="number" id="notice-months" placeholder="10" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
                 <button onclick="calcNotice()" style="width: 100%; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">חשב ימי הודעה מוקדמת</button>
                 <div id="notice-result" style="margin-top: 10px; padding: 8px; background: #f8fafc; border-right: 4px solid #22c55e; font-size: 14px; font-weight: bold;">הזינו ותק לחישוב</div>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>עובד בשכר חודשי:</strong> בשנת העבודה הראשונה מגיע יום אחד לכל חודש ב-6 החודשים הראשונים, ו-2.5 ימים לכל חודש נוסף. תום שנה = 30 יום.</div>
             </div>
 
-            <!-- 6. מחשבון ניכויי פנסיה וקופות גמל -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">🛡️ מחשבון הפרשות פנסיה</h3>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">🛡️ מחשבון ניכוי קופות גמל ופנסיה</h3>
                 <label style="display:block; margin-bottom: 4px; font-size: 13px; font-weight: 600;">משכורת ברוטו לפנסיה (ש"ח):</label>
                 <input type="number" id="pension-salary" placeholder="8500" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
                 <button onclick="calcPension()" style="width: 100%; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">חשב הפרשות חודשיות</button>
                 <div id="pension-result" style="margin-top: 10px; padding: 8px; background: #f8fafc; border-right: 4px solid #22c55e; font-size: 13px; font-weight: bold;">הזינו שכר לחישוב</div>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>אחוזי מינימום בחוק:</strong> עובד: 6% | מעסיק תגמולים: 6.5% | מעסיק פיצויים: 6%. סה"כ חיסכון: 18.5%.</div>
+                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">💡 <strong>חובת החוק:</strong> עובד: 6% | מעסיק תגמולים: 6.5% | מעסיק פיצויים: 6%.</div>
             </div>
 
-            <!-- 7. כלי אינטראקטיבי: צ'ק-ליסט זכויות בשימוע -->
             <div class="calc-card" style="background: #ffffff; padding: 20px; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">📋 בדיקת תקינות זימון לשימוע</h3>
-                <div style="font-size: 13px; line-height: 1.8;">
-                    <label><input type="checkbox" id="chk1"> קיבלתי זימון בכתב מראש (לפחות 48 שעות)</label><br>
-                    <label><input type="checkbox" id="chk2"> הזימון כולל נימוקים מפורטים וטענות</label><br>
-                    <label><input type="checkbox" id="chk3"> נמסרה לי זכות להביא ייצוג / עו"ד / מלווה</label><br>
-                    <label><input type="checkbox" id="chk4"> נמסרו לי פרוטוקול והחלטה בכתב לאחר השימוע</label>
-                </div>
-                <button onclick="checkHearing()" style="width: 100%; padding: 8px; margin-top: 12px; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">בדוק תקינות הליך</button>
-                <div id="hearing-result" style="margin-top: 10px; padding: 8px; font-size: 13px; font-weight: bold;"></div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- סקריפטים של החישובים -->
-    <script>
-        function calcPitzuim() {
-            const s = parseFloat(document.getElementById('pitzuim-salary').value) || 0;
-            const y = parseFloat(document.getElementById('pitzuim-years').value) || 0;
-            document.getElementById('pitzuim-result').innerText = 'סך פיצויים משוער: ' + (s * y).toLocaleString() + ' ₪';
-        }
-
-        function calcHavraa() {
-            const y = parseFloat(document.getElementById('havraa-years').value) || 0;
-            let days = 0;
-            if (y >= 1 && y < 2) days = 5;
-            else if (y >= 2 && y < 4) days = 6;
-            else if (y >= 4 && y < 11) days = 7;
-            else if (y >= 11) days = 8;
-            document.getElementById('havraa-result').innerText = 'זכאות: ' + days + ' ימים (' + (days * 418).toLocaleString() + ' ₪)';
-        }
-
-        function calcVacation() {
-            const s = parseFloat(document.getElementById('vacation-salary').value) || 0;
-            const d = parseFloat(document.getElementById('vacation-days').value) || 0;
-            document.getElementById('vacation-result').innerText = 'ערך פדיון חופשה: ' + Math.round((s / 22) * d).toLocaleString() + ' ₪';
-        }
-
-        function calcOvertime() {
-            const r = parseFloat(document.getElementById('overtime-rate').value) || 0;
-            const h125 = parseFloat(document.getElementById('overtime-125').value) || 0;
-            const h150 = parseFloat(document.getElementById('overtime-150').value) || 0;
-            const total = (h125 * r * 1.25) + (h150 * r * 1.5);
-            document.getElementById('overtime-result').innerText = 'תוספת תשלום: ' + total.toFixed(2) + ' ₪';
-        }
-
-        function calcNotice() {
-            const m = parseFloat(document.getElementById('notice-months').value) || 0;
-            let days = 0;
-            if (m <= 6) days = m;
-            else if (m < 12) days = 6 + ((m - 6) * 2.5);
-            else days = 30;
-            document.getElementById('notice-result').innerText = 'הודעה מוקדמת נדרשת: ' + Math.min(days, 30) + ' ימים';
-        }
-
-        function calcPension() {
-            const s = parseFloat(document.getElementById('pension-salary').value) || 0;
-            const worker = s * 0.06;
-            const bossTagmulim = s * 0.065;
-            const bossPitzuim = s * 0.06;
-            document.getElementById('pension-result').innerHTML = `
-                עובד (6%): ${worker.toFixed(0)} ₪<br>
-                מעסיק תגמולים (6.5%): ${bossTagmulim.toFixed(0)} ₪<br>
-                מעסיק פיצויים (6%): ${bossPitzuim.toFixed(0)} ₪<br>
-                <strong>סה"כ מופרש לקופה: ${(worker + bossTagmulim + bossPitzuim).toFixed(0)} ₪ לחודש</strong>
-            `;
-        }
-
-        function checkHearing() {
-            let count = 0;
-            if (document.getElementById('chk1').checked) count++;
-            if (document.getElementById('chk2').checked) count++;
-            if (document.getElementById('chk3').checked) count++;
-            if (document.getElementById('chk4').checked) count++;
-
-            const res = document.getElementById('hearing-result');
-            if (count === 4) {
-                res.style.color = '#16a34a';
-                res.innerText = '✅ הליך השימוע עומד בכללי החוק והפסיקה.';
-            } else {
-                res.style.color = '#dc2626';
-                res.innerText = `⚠️ סומנו ${count} מתוך 4 תנאים. ייתכן קיומו של פגם פרוצדורלי בהליך.`;
-            }
-        }
-    </script>
-
-    <script src="nav.js"></script>
-</body>
-</html>
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">📈 הערכת צבירה פנסיונית</h3>
+                <label
