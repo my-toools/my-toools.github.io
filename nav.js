@@ -1,95 +1,40 @@
 // ==========================================
-// NETOOLS - nav.js (התאמה מלאה למובייל ולכל המסכים)
+// NETOOLS - nav.js (העיצוב המקורי + התאמה לכל המסכים)
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", function () {
-    
-    const styleFix = document.createElement('style');
-    styleFix.innerHTML = `
-        /* ===== הגדרות כלליות למחשב ולמסך רחב ===== */
-        header, .main-header {
-            background-color: #0f172a !important;
-            padding: 15px 20px !important;
-        }
-
-        .header-container {
-            max-width: 1200px !important;
-            margin: 0 auto !important;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            flex-wrap: wrap !important;
-            gap: 15px !important;
-        }
-
-        .logo {
-            font-size: 28px !important;
-            font-weight: 900 !important;
-            color: #38bdf8 !important;
-            text-decoration: none !important;
-            white-space: nowrap !important;
-        }
-
-        .navbar {
-            display: flex !important;
-            flex-wrap: wrap !important;
-            gap: 8px !important;
-            justify-content: center !important;
-        }
-
-        .nav-link, header a, nav a {
-            font-size: 16px !important;
-            padding: 8px 12px !important;
-            font-weight: 700 !important;
-            border-radius: 6px !important;
-            text-decoration: none !important;
-            white-space: nowrap !important;
-        }
-
-        /* ===== התאמה מיוחדת למובייל (מסכים מתחת ל-768 פיקסלים) ===== */
-        @media screen and (max-width: 768px) {
-            .header-container {
-                flex-direction: column !important;
-                align-items: center !important;
-                padding: 5px !important;
-            }
-
-            .logo {
-                font-size: 24px !important;
-                margin-bottom: 5px !important;
-            }
-
-            /* סידור הכפתורים במובייל בשורות נקיות וקומפקטיות */
-            .navbar {
-                width: 100% !important;
-                justify-content: center !important;
-                gap: 6px !important;
-            }
-
-            .nav-link, header a, nav a {
-                font-size: 13px !important;
-                padding: 6px 10px !important;
-            }
-
-            /* סרגל המבזקים והנתונים במובייל - גלילה אופקית נקייה */
-            .ticker, .ticker-bar, .sub-header, .top-bar, [class*="ticker"], [class*="bar"] {
-                overflow-x: auto !important;
-                white-space: nowrap !important;
-                font-size: 12px !important;
-                padding: 6px 10px !important;
-                justify-content: flex-start !important;
-            }
-
-            /* מניעת חריגת הטקסט הראשי במובייל */
-            h1, h2, .hero-title {
-                font-size: 24px !important;
-                word-wrap: break-word !important;
-            }
-        }
+    // 1. יצירת סרגל הניווט העליון (Header & Nav)
+    const headerHTML = `
+        <header class="main-header">
+            <div class="header-container">
+                <a href="index.html" class="logo">NETOOLS</a>
+                <nav class="navbar">
+                    <a href="index.html" class="nav-link">דף הבית</a>
+                    <a href="calculators.html" class="nav-link">מחשבונים</a>
+                    <a href="news.html" class="nav-link">חדשות ולייב</a>
+                    <a href="about.html" class="nav-link">אודות</a>
+                </nav>
+            </div>
+        </header>
     `;
-    document.head.appendChild(styleFix);
+    if (!document.querySelector(".main-header")) {
+        document.body.insertAdjacentHTML("afterbegin", headerHTML);
+    }
 
-    // הזרקת רכיב הנגישות הצף (♿)
+    // 2. יצירת פוטר מובנה בתחתית העמוד
+    const footerHTML = `
+        <footer class="main-footer">
+            <div class="footer-container">
+                <p>© ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
+                <p class="disclaimer">המידע והמחשבונים באתר מספקים הערכה כללית בלבד ואינם מהווים ייעוץ מקצועי.</p>
+            </div>
+        </footer>
+    `;
+    if (!document.querySelector(".main-footer")) {
+        document.body.insertAdjacentHTML("beforeend", footerHTML);
+    }
+
+    // 3. הזרקת רכיב נגישות צף (♿)
     if (!document.getElementById("acc-floating-btn")) {
         const accContainer = document.createElement("div");
         accContainer.id = "acc-floating-btn";
@@ -97,17 +42,63 @@ document.addEventListener("DOMContentLoaded", function () {
         
         accContainer.innerHTML = `
             <button onclick="document.getElementById('acc-panel').style.display = document.getElementById('acc-panel').style.display === 'none' ? 'block' : 'none'" 
-                    style="background: #0284c7; color: white; border: 2px solid white; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" 
+                    style="background: #0284c7; color: white; border: 2px solid white; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" 
                     title="נגישות">♿</button>
             
-            <div id="acc-panel" style="display: none; position: absolute; bottom: 55px; left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 12px; width: 200px; color: white; direction: rtl; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-                <div style="font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 4px; text-align: center; color: #38bdf8; font-size: 14px;">התאמות נגישות</div>
-                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1)" style="width:100%; margin-bottom:5px; padding:5px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer; font-size:12px;">הגדלת טקסט +</button>
-                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1)" style="width:100%; margin-bottom:5px; padding:5px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer; font-size:12px;">הקטנת טקסט -</button>
-                <button onclick="document.body.style.filter = document.body.style.filter === 'grayscale(100%)' ? 'none' : 'grayscale(100%)'" style="width:100%; margin-bottom:5px; padding:5px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer; font-size:12px;">גווני אפור</button>
-                <button onclick="document.body.style.zoom = '100%'; document.body.style.filter = 'none';" style="width:100%; padding:5px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px;">איפוס</button>
+            <div id="acc-panel" style="display: none; position: absolute; bottom: 60px; left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 15px; width: 220px; color: white; direction: rtl; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; text-align: center; color: #38bdf8;">התאמות נגישות</div>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הגדלת טקסט +</button>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הקטנת טקסט -</button>
+                <button onclick="document.body.style.filter = document.body.style.filter === 'grayscale(100%)' ? 'none' : 'grayscale(100%)'" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">גווני אפור</button>
+                <button onclick="document.body.style.zoom = '100%'; document.body.style.filter = 'none';" style="width:100%; padding:6px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">איפוס</button>
             </div>
         `;
         document.body.appendChild(accContainer);
     }
 });
+
+// 4. העיצוב המקורי שלך + הגדרת תאימות אוטומטית למסכים קטנים/מובייל
+const customHeaderStyle = document.createElement('style');
+customHeaderStyle.innerHTML = `
+    /* העיצוב המקורי שלך */
+    header, nav, .main-header, .navbar, .sub-nav, .secondary-nav {
+        padding: 20px 25px !important;
+        min-height: 80px !important;
+    }
+
+    header h1, .logo, .navbar-brand, nav h1 {
+        font-size: 28px !important;
+        font-weight: 800 !important;
+    }
+
+    header a, nav a, .nav-link, .sub-nav a, .secondary-nav a {
+        font-size: 18px !important;
+        padding: 10px 15px !important;
+    }
+
+    /* התאמה טכנית בלבד למובייל ולכל גודל מסך (ללא שינוי עיצוב) */
+    @media screen and (max-width: 768px) {
+        header, nav, .main-header, .navbar {
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            padding: 10px !important;
+        }
+        .header-container {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        .navbar, nav {
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+        }
+        header a, nav a, .nav-link {
+            font-size: 15px !important;
+            padding: 6px 10px !important;
+        }
+        .ticker, .ticker-bar, .sub-header, .top-bar {
+            overflow-x: auto !important;
+            white-space: nowrap !important;
+        }
+    }
+`;
+document.head.appendChild(customHeaderStyle);
