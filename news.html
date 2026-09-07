@@ -3,295 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ערוצי שידור וחדשות | NETOOLS</title>
+    <title>חדשות ושידור חי - NETOOLS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            margin: 0;
-            padding: 0;
-            direction: rtl;
-        }
-
-        .news-container {
-            max-width: 1250px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .page-header h1 {
-            font-size: 32px;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        .page-header p {
-            color: #94a3b8;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .category-title {
-            font-size: 20px;
-            color: #ffffff;
-            font-weight: 700;
-            margin: 40px 0 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 10px;
-        }
-
-        .category-title i {
-            color: #38bdf8;
-        }
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
+        * { font-family: 'Rubik', system-ui, sans-serif !important; }
         .channel-card {
             background: #1e293b;
             border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 20px 15px;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            transition: transform 0.2s, border-color 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            height: 160px;
-            box-sizing: border-box;
             position: relative;
         }
-
         .channel-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             border-color: #38bdf8;
-            background: #243347;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
         }
-
-        .logo-box {
-            width: 130px;
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .channel-logo-box {
+            width: 70px;
             height: 70px;
+            background: #0f172a;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             margin-bottom: 10px;
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 8px;
-            box-sizing: border-box;
+            color: #38bdf8;
             border: 1px solid #334155;
-        }
-
-        .logo-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.2s;
-        }
-
-        .channel-card:hover .logo-box img {
-            transform: scale(1.08);
-        }
-
-        .channel-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        .live-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="news-container">
-        <div class="page-header">
-            <h1><i class="fa-solid fa-tv"></i> ערוצי שידור וחדשות</h1>
-            <p>צפייה ישירה ומהירה בכל ערוצי התקשורת והתוכן המובילים בישראל</p>
+    <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        
+        <div style="text-align: center; margin-bottom: 30px; color: #ffffff;">
+            <h1 style="font-size: 30px; font-weight: 800; margin-bottom: 8px;">📺 ערוצי שידור וחדשות בזמן אמת</h1>
+            <p style="color: #94a3b8; font-size: 16px;">צפייה ישירה והאזנה לכל ערוצי הטלוויזיה, עיתוני הכלכלה ותחנות הרדיו המובילות בישראל</p>
         </div>
 
-        <!-- חדשות ואקטואליה -->
-        <div class="category-title"><i class="fa-solid fa-newspaper"></i> חדשות ואקטואליה</div>
-        <div class="news-grid">
-
+        <!-- 1. טלוויזיה וחדשות אקטואליה -->
+        <h2 style="color: #38bdf8; font-size: 20px; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 15px;">📡 ערוצי טלוויזיה בלייב</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 35px;">
             <a href="https://www.kan.org.il/live/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4fe.png" alt="כאן 11" style="display:none;" onerror="this.style.display='none'">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Kan11_2022.svg" alt="כאן 11" crossorigin="anonymous">
-                </div>
-                <div class="channel-name">כאן 11</div>
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box"><i class="fa-solid fa-tv"></i></div>
+                <strong>כאן 11</strong>
             </a>
-
-            <a href="https://www.mako.co.il/mako-vod-index/live-tv" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Keshet12.svg" alt="חדשות 12" onerror="this.src='https://thumb.wikimedia.org/wikipedia/he/thumb/4/4d/Keshet12.svg/960px-Keshet12.svg.png'">
-                </div>
-                <div class="channel-name">חדשות 12 / N12</div>
+            <a href="https://www.mako.co.il/mako-vod-index/live-channels" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #f59e0b;"><i class="fa-solid fa-play"></i></div>
+                <strong>חדשות 12 / N12</strong>
             </a>
-
             <a href="https://13tv.co.il/live/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Reshet13Logo2022.svg" alt="רשת 13" onerror="this.src='https://upload.wikimedia.org/wikipedia/he/thumb/1/17/Reshet13Logo2022.svg/330px-Reshet13Logo2022.svg.png'">
-                </div>
-                <div class="channel-name">רשת 13</div>
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #ec4899;"><i class="fa-solid fa-bolt"></i></div>
+                <strong>רשת 13</strong>
             </a>
-
             <a href="https://www.now14.co.il/live/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://magazine.now14.co.il/wp-content/uploads/2022/02/%D7%9C%D7%95%D7%92%D7%95_%D7%A2%D7%9B%D7%A9%D7%99%D7%95-14-01.png" alt="עכשיו 14">
-                </div>
-                <div class="channel-name">עכשיו 14</div>
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #ef4444;"><i class="fa-solid fa-tower-broadcast"></i></div>
+                <strong>עכשיו 14</strong>
             </a>
-
-            <a href="https://www.i24news.tv/he/live" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSabPaltSLX8X6TcjAiz15VerOrpzpNsBxEZlIV7ASOdZd97HAZxv7EJqwTIyCC4NlWzpPaSiw6X27mTO4" alt="i24NEWS">
-                </div>
-                <div class="channel-name">i24NEWS</div>
+            <a href="https://www.i24news.tv/he" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #3b82f6;"><i class="fa-solid fa-globe"></i></div>
+                <strong>i24NEWS</strong>
             </a>
-
-            <a href="https://www.knesset.tv/live/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://cdn.jsdelivr.net/gh/wikimedia-commons/Wikimedia-Commons@master/files/Knessetch10.svg" alt="ערוץ כנסת" onerror="this.src='https://upload.wikimedia.org/wikipedia/he/thumb/4/43/Knessetch10.svg/1280px-Knessetch10.svg.png'">
-                </div>
-                <div class="channel-name">ערוץ כנסת</div>
+            <a href="https://main.knesset.gov.il/Activity/Tv/pages/default.aspx" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #10b981;"><i class="fa-solid fa-building-columns"></i></div>
+                <strong>ערוץ הכנסת</strong>
             </a>
+        </div>
 
+        <!-- 2. תחנות רדיו בלייב (חלק חדש) -->
+        <h2 style="color: #38bdf8; font-size: 20px; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 15px;">📻 תחנות רדיו בהאזנה ישירה</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 35px;">
             <a href="https://glz.co.il/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/2/23/GLZ_logo.svg/512px-GLZ_logo.svg.png" alt="גלי צה\"ל">
-                </div>
-                <div class="channel-name">גלי צה"ל / גלגלצ</div>
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #22c55e;"><i class="fa-solid fa-radio"></i></div>
+                <strong>גלגלצ</strong>
             </a>
-
-            <a href="https://www.makan.org.il/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Makan_33_logo.svg/512px-Makan_33_logo.svg.png" alt="מכאן 33">
-                </div>
-                <div class="channel-name">מכאן مكان</div>
+            <a href="https://glz.co.il/גלצ" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #8b5cf6;"><i class="fa-solid fa-microphone-lines"></i></div>
+                <strong>גלי צה"ל (גל"צ)</strong>
             </a>
-
+            <a href="https://www.kan.org.il/radio/kan-bet/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #0284c7;"><i class="fa-solid fa-headphones"></i></div>
+                <strong>כאן ב'</strong>
+            </a>
+            <a href="https://www.kan.org.il/radio/kan-gimel/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #f43f5e;"><i class="fa-solid fa-music"></i></div>
+                <strong>כאן גימל</strong>
+            </a>
+            <a href="https://103fm.maariv.co.il/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #eab308;"><i class="fa-solid fa-podcast"></i></div>
+                <strong>103FM רדיו ללא הפסקה</strong>
+            </a>
+            <a href="https://www.eco99fm.co.il/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #06b6d4;"><i class="fa-solid fa-wave-square"></i></div>
+                <strong>Eco99FM</strong>
+            </a>
+            <a href="https://91fm.co.il/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #a855f7;"><i class="fa-solid fa-compact-disc"></i></div>
+                <strong>רדיו לב המדינה 91FM</strong>
+            </a>
+            <a href="https://www.radiodarom.co.il/" target="_blank" class="channel-card">
+                <span class="live-badge">LIVE</span>
+                <div class="channel-logo-box" style="color: #f97316;"><i class="fa-solid fa-sun"></i></div>
+                <strong>רדיו דרום</strong>
+            </a>
         </div>
 
-        <!-- כלכלה ועסקים -->
-        <div class="category-title"><i class="fa-solid fa-chart-line"></i> כלכלה ועסקים</div>
-        <div class="news-grid">
-
+        <!-- 3. כלכלה ועסקים -->
+        <h2 style="color: #38bdf8; font-size: 20px; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 15px;">📈 כלכלה ושוק ההון</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
             <a href="https://www.globes.co.il/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/d/dc/Globes_logo.svg/1280px-Globes_logo.svg.png" alt="גלובס">
-                </div>
-                <div class="channel-name">גלובס (Globes)</div>
+                <div class="channel-logo-box" style="color: #ef4444;"><i class="fa-solid fa-chart-line"></i></div>
+                <strong>גלובס (Globes)</strong>
             </a>
-
             <a href="https://www.calcalist.co.il/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://thumb.wikimedia.org/wikipedia/he/thumb/d/db/Calcalist.svg/1280px-Calcalist.svg.png" alt="כלכליסט">
-                </div>
-                <div class="channel-name">כלכליסט</div>
+                <div class="channel-logo-box" style="color: #eab308;"><i class="fa-solid fa-coins"></i></div>
+                <strong>כלכליסט</strong>
             </a>
-
             <a href="https://www.themarker.com/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TheMarker_logo.svg/512px-TheMarker_logo.svg.png" alt="TheMarker">
-                </div>
-                <div class="channel-name">TheMarker</div>
+                <div class="channel-logo-box" style="color: #3b82f6;"><i class="fa-solid fa-briefcase"></i></div>
+                <strong>TheMarker</strong>
             </a>
-
+            <a href="https://www.bizportal.co.il/" target="_blank" class="channel-card">
+                <div class="channel-logo-box" style="color: #10b981;"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <strong>ביזפורטל (Bizportal)</strong>
+            </a>
         </div>
 
-        <!-- טבע, צרכנות וקניות -->
-        <div class="category-title"><i class="fa-solid fa-compass"></i> טבע, צרכנות וקניות</div>
-        <div class="news-grid">
+    </main>
 
-            <a href="https://www.nationalgeographic.com/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/National_Geographic_Logo.svg" alt="נשיונל ג'אוגרפיק">
-                </div>
-                <div class="channel-name">נשיונל ג'אוגרפיק</div>
-            </a>
-
-            <a href="https://www.21.tv/" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/4/4e/Channel_21_Israel_logo.svg/512px-Channel_21_Israel_logo.svg.png" alt="ערוץ הקניות">
-                </div>
-                <div class="channel-name">ערוץ הקניות (21)</div>
-            </a>
-
-        </div>
-
-        <!-- ילדים, נוער וחינוך -->
-        <div class="category-title"><i class="fa-solid fa-child"></i> ילדים, נוער וחינוך</div>
-        <div class="news-grid">
-
-            <a href="https://www.kan.org.il/page.aspx?pageid=98" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Kan_Hinuchit_2022.svg/512px-Kan_Hinuchit_2022.svg.png" alt="כאן חינוכית">
-                </div>
-                <div class="channel-name">כאן חינוכית</div>
-            </a>
-
-            <a href="https://www.kidstv.co.il/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/f/f6/Arutz_HaYeladim_Logo_2023.svg/512px-Arutz_HaYeladim_Logo_2023.svg.png" alt="ערוץ הילדים">
-                </div>
-                <div class="channel-name">ערוץ הילדים</div>
-            </a>
-
-            <a href="https://www.meirkids.co.il/" target="_blank" class="channel-card">
-                <div class="logo-box">
-                    <img src="https://upload.wikimedia.org/wikipedia/he/thumb/0/0f/Meir_kids_logo.svg/512px-Meir_kids_logo.svg.png" alt="ערוץ מאיר לילדים">
-                </div>
-                <div class="channel-name">ערוץ מאיר לילדים</div>
-            </a>
-
-        </div>
-
-    </div>
-
-    <!-- טעינת הניווט והנגישות האוטומטיים -->
     <script src="nav.js"></script>
-    <script src="accessibility.js"></script>
-
 </body>
 </html>
