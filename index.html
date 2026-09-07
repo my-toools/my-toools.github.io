@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NETOOLS - בקרוב</title>
+    
+    <!-- 1. לוגו בכרטיסייה למעלה (Favicon) -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -50,13 +54,25 @@
             background: linear-gradient(90deg, #38bdf8, #0284c7);
         }
 
-        .brand-logo {
+        .brand-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .brand-logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-logo-text {
             font-size: 42px;
             font-weight: 900;
             color: #38bdf8;
             letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: inline-block;
         }
 
         .badge-tag {
@@ -123,8 +139,12 @@
     <div></div> <!-- Spacer -->
 
     <div class="holding-container">
-        <div class="brand-logo">NETOOLS</div>
-        <br>
+        <!-- 2. לוגו משולב (תמונה + טקסט) במרכז הדף -->
+        <div class="brand-header">
+            <img src="images/logo.png" alt="NETOOLS Logo" class="brand-logo-img" onerror="this.style.display='none';">
+            <span class="brand-logo-text">NETOOLS</span>
+        </div>
+
         <div class="badge-tag"><i class="fa-solid fa-code" style="margin-left: 6px;"></i> האתר בהקמה ופיתוח</div>
         
         <h1>פורטל הכלים והזכויות הדיגיטלי המתקדם בישראל</h1>
