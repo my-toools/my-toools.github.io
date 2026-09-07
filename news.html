@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { font-family: 'Rubik', system-ui, sans-serif !important; }
-        
-        .section-title {
+        * { 
+            font-family: 'Rubik', system-ui, -apple-system, sans-serif !important; 
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0b1120 !important;
             color: #f8fafc;
-            font-size: 18px;
-            font-weight: 700;
-            margin: 25px 0 15px 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section-title {
+            color: #38bdf8;
+            font-size: 20px;
+            font-weight: 800;
+            margin: 35px 0 18px 0;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -21,38 +33,38 @@
 
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
         }
 
         .news-card {
             background: #1e293b;
             border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 24px 16px;
+            border-radius: 14px;
+            padding: 20px 15px;
             text-align: center;
             text-decoration: none;
             color: #ffffff;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.25s ease-in-out;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
         }
 
         .news-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             border-color: #38bdf8;
             background: #243348;
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
         }
 
         .live-tag {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 10px;
+            right: 10px;
             background: #ef4444;
             color: #ffffff;
             font-size: 10px;
@@ -62,11 +74,29 @@
             letter-spacing: 0.5px;
         }
 
+        .logo-wrapper {
+            width: 80px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            background: #0f172a;
+            border-radius: 10px;
+            padding: 8px;
+            border: 1px solid #334155;
+        }
+
+        .logo-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
         .brand-text {
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 700;
             color: #f8fafc;
-            margin-top: 6px;
         }
 
         .brand-sub {
@@ -78,46 +108,64 @@
 </head>
 <body>
 
-    <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+    <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 25px 20px;">
         
-        <!-- כותרת ראשית -->
-        <div style="text-align: center; margin-bottom: 30px; color: #ffffff;">
-            <h1 style="font-size: 30px; font-weight: 800; margin-bottom: 8px;">📺 ערוצי שידור וחדשות</h1>
-            <p style="color: #94a3b8; font-size: 16px;">צפייה ישירה והאזנה לכל ערוצי התקשורת והתוכן המובילים בישראל</p>
+        <!-- כותרת עליונה -->
+        <div style="text-align: center; margin-bottom: 35px; color: #ffffff;">
+            <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 10px; color: #ffffff;">📺 ערוצי שידור וחדשות בלייב</h1>
+            <p style="color: #94a3b8; font-size: 16px; margin: 0;">צפייה ישירה והאזנה לכל ערוצי הטלוויזיה, הרדיו ועיתוני הכלכלה המובילים בישראל</p>
         </div>
 
-        <!-- 1. חדשות ואקטואליה -->
-        <div class="section-title">📺 חדשות ואקטואליה</div>
+        <!-- 1. טלוויזיה וחדשות -->
+        <div class="section-title">📡 ערוצי טלוויזיה ואקטואליה</div>
         <div class="news-grid">
             <a href="https://www.kan.org.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Kan_11_logo_2024.svg" alt="כאן 11">
+                </div>
                 <div class="brand-text">כאן 11</div>
-                <div class="brand-sub">תאגיד השידור הישראלי</div>
+                <div class="brand-sub">תאגיד השידור</div>
             </a>
             <a href="https://www.mako.co.il/mako-vod-index/live-channels" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Keshet_12_logo.svg" alt="חדשות 12">
+                </div>
                 <div class="brand-text">חדשות 12 / N12</div>
-                <div class="brand-sub">שידור חי קשת 12</div>
+                <div class="brand-sub">קשת 12</div>
             </a>
             <a href="https://13tv.co.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Reshet_13_Logo.svg" alt="רשת 13">
+                </div>
                 <div class="brand-text">רשת 13</div>
-                <div class="brand-sub">ערוץ 13 בלייב</div>
+                <div class="brand-sub">שידור חי</div>
             </a>
             <a href="https://www.now14.co.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Now_14_Logo.svg" alt="עכשיו 14">
+                </div>
                 <div class="brand-text">עכשיו 14</div>
-                <div class="brand-sub">חדשות ואקטואליה</div>
+                <div class="brand-sub">אקטואליה וחדשות</div>
             </a>
             <a href="https://www.i24news.tv/he" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/I24NEWS_logo.svg" alt="i24NEWS">
+                </div>
                 <div class="brand-text">i24NEWS</div>
-                <div class="brand-sub">ערוץ החדשות הבינלאומי</div>
+                <div class="brand-sub">ערוץ חדשות בינלאומי</div>
             </a>
             <a href="https://main.knesset.gov.il/Activity/Tv/pages/default.aspx" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Knesset_logo.svg" alt="ערוץ הכנסת">
+                </div>
                 <div class="brand-text">ערוץ הכנסת</div>
-                <div class="brand-sub">שידורים ישירים מהמשכן</div>
+                <div class="brand-sub">שידורי המשכן</div>
             </a>
         </div>
 
@@ -126,54 +174,84 @@
         <div class="news-grid">
             <a href="https://glz.co.il/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Galgalatz_logo.svg" alt="גלגלצ">
+                </div>
                 <div class="brand-text">גלגלצ</div>
                 <div class="brand-sub">מוזיקה ודיווחים</div>
             </a>
             <a href="https://glz.co.il/גלצ" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Galei_Tzahal_logo.svg" alt="גלצ">
+                </div>
                 <div class="brand-text">גלי צה"ל (גל"צ)</div>
                 <div class="brand-sub">שידורי אקטואליה</div>
             </a>
             <a href="https://www.kan.org.il/radio/kan-bet/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Kan_Bet_Logo.svg" alt="כאן ב">
+                </div>
                 <div class="brand-text">כאן ב'</div>
                 <div class="brand-sub">חדשות ואקטואליה</div>
             </a>
             <a href="https://www.kan.org.il/radio/kan-gimel/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Kan_Gimel_Logo.svg" alt="כאן גימל">
+                </div>
                 <div class="brand-text">כאן גימל</div>
                 <div class="brand-sub">מוזיקה ישראלית</div>
             </a>
             <a href="https://103fm.maariv.co.il/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/103FM_logo.svg" alt="103FM">
+                </div>
                 <div class="brand-text">103FM</div>
                 <div class="brand-sub">רדיו ללא הפסקה</div>
             </a>
             <a href="https://www.eco99fm.co.il/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Eco99fm_logo.svg" alt="Eco99FM">
+                </div>
                 <div class="brand-text">Eco99FM</div>
                 <div class="brand-sub">מוזיקה ופודקאסטים</div>
             </a>
         </div>
 
         <!-- 3. כלכלה ועסקים -->
-        <div class="section-title">📈 כלכלה ועסקים</div>
+        <div class="section-title">📈 כלכלה ושוק ההון</div>
         <div class="news-grid">
             <a href="https://www.globes.co.il/" target="_blank" class="news-card">
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Globes_logo.svg" alt="גלובס">
+                </div>
                 <div class="brand-text">גלובס</div>
-                <div class="brand-sub">עיתון העסקים של ישראל</div>
+                <div class="brand-sub">עיתון העסקים</div>
             </a>
             <a href="https://www.calcalist.co.il/" target="_blank" class="news-card">
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Calcalist_logo.svg" alt="כלכליסט">
+                </div>
                 <div class="brand-text">כלכליסט</div>
-                <div class="brand-sub">חדשות כלכלה ושוק ההון</div>
+                <div class="brand-sub">חדשות כלכלה</div>
             </a>
             <a href="https://www.themarker.com/" target="_blank" class="news-card">
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/TheMarker_Logo.svg" alt="TheMarker">
+                </div>
                 <div class="brand-text">TheMarker</div>
-                <div class="brand-sub">עיתונות כלכלית חוקרת</div>
+                <div class="brand-sub">עיתונות כלכלית</div>
             </a>
             <a href="https://www.bizportal.co.il/" target="_blank" class="news-card">
+                <div class="logo-wrapper">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Bizportal_Logo.svg" alt="ביזפורטל">
+                </div>
                 <div class="brand-text">ביזפורטל</div>
-                <div class="brand-sub">נתוני שוק ההון בזמן אמת</div>
+                <div class="brand-sub">נתוני שוק ההון</div>
             </a>
         </div>
 
