@@ -1,3 +1,11 @@
+// טעינת ספריית האייקונים באופן אוטומטי לכל עמוד שטוען את nav.js
+if (!document.getElementById("fa-cdn")) {
+    var faLink = document.createElement("link");
+    faLink.id = "fa-cdn";
+    faLink.rel = "stylesheet";
+    faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css";
+    document.head.appendChild(faLink);
+}
 document.addEventListener("DOMContentLoaded", function () {
     // 1. פאביקון לטאב בדפדפן
     let favicon = document.querySelector("link[rel*='icon']");
