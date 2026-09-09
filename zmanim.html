@@ -123,61 +123,72 @@
         </div>
     </div>
 
-    <script>
-        async function loadZmanim() {
-            var geonameid = document.getElementById('citySelector').value;
+  <script>
+    async function loadZmanim() {
+        var geonameid = document.getElementById('citySelector').value;
+        
+        // 1. שליפת נתוני שבת ופרשת השבוע בצורה מאובטחת
+        try {
+            var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}`);
+            var shabbatData = await shabbatRes.json();
             
-            // 1. שליפה אמינה ותקינה של פרשת השבוע וכניסת/יציאת שבת
-            try {
-                var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}`);
-                var shabbatData = await shabbatRes.json();
-                if (shabbatData && shabbatData.items) {
-                    var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
-                    var candleItem = shabbatData.items.find(i => i.category === 'candles');
-                    var havdalahItem = shabbatData.items.find(i => i.category === 'havdalah');
-
-                    if (parashaItem) {
-                        document.getElementById('shabbatParasha').innerText = parashaItem.hebrew || parashaItem.title;
-                    }
-                    
-                    if (candleItem) {
-                        var candleTime = new Date(candleItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                        document.getElementById('shabbatIn').innerText = candleTime !== 'Invalid Date' ? candleTime : (candleItem.title.split(':').pop().trim());
-                    }
-                    
-                    if (havdalahItem) {
-                        var havdalahTime = new Date(havdalahItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                        document.getElementById('shabbatOut').innerText = havdalahTime !== 'Invalid Date' ? havdalahTime : (havdalahItem.title.split(':').pop().trim());
-                    }
+            if (shabbatData && shabbatData.items) {
+                // איתור פרשת השבוע
+                var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
+                if (parashaItem) {
+                    document.getElementById('shabbatParasha').innerText = parashaItem.hebrew || parashaItem.title;
                 }
-            } catch(e) {
-                console.error("שגיאה בטעינת נתוני שבת", e);
-            }
 
-            // 2. שליפת זמני היום בהלכה
-            try {
-                var zRes = await fetch(`https://www.hebcal.com/zmanim?cfg=json&geonameid=${geonameid}`);
-                var zData = await zRes.json();
-                if (zData && zData.times) {
-                    var formatTime = function(isoStr) {
-                        if(!isoStr) return '--:--';
-                        var d = new Date(isoStr);
-                        return d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                    };
-                    document.getElementById('zAlot').innerText = formatTime(zData.times.alotHaShachar);
-                    document.getElementById('zSunrise').innerText = formatTime(zData.times.sunrise);
-                    document.getElementById('zShma').innerText = formatTime(zData.times.sofZmanShma);
-                    document.getElementById('zTfila').innerText = formatTime(zData.times.sofZmanTfilla);
-                    document.getElementById('zMinchaG').innerText = formatTime(zData.times.minchaGedola);
-                    document.getElementById('zSunset').innerText = formatTime(zData.times.sunset);
+                // איתור כניסת שבת (הדלקת נרות)
+                var candleItem = shabbatData.items.find(i => i.category === 'candles');
+                if (candleItem && candleItem.date) {
+                    let candleTime = new Date(candleItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                    document.getElementById('shabbatIn').innerText = candleTime !== 'Invalid Date' ? candleTime : '--:--';
+                }
+
+                // איתור יציאת שבת (צאת הכוכבים / הבדלה)
+                var havdalahItem = shabbatData.items.find(i => i.category === 'havdalah' || i.category === 'mzei');
+                if (havdalahItem && havdalahItem.date) {
+                    let havdalahTime = new Date(havdalahItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                    document.getElementById('shabbatOut').innerText = havdalahTime !== 'Invalid Date' ? havdalahTime : '--:--';
+                }
+            }
+        } catch(e) {
+            console.error("שגיאה בטעינת נתוני שבת", e);
+        }
+
+        // 2. שליפת זמני היום בהלכה (כולל צאת הכוכבים היומי)
+        try {
+            var zRes = await fetch(`https://www.hebcal.com/zmanim?cfg=json&geonameid=${geonameid}`);
+            var zData = await zRes.json();
+            
+            if (zData && zData.times) {
+                var formatTime = function(isoStr) {
+                    if(!isoStr) return '--:--';
+                    var d = new Date(isoStr);
+                    return d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                };
+
+                document.getElementById('zAlot').innerText = formatTime(zData.times.alotHaShachar);
+                document.getElementById('zSunrise').innerText = formatTime(zData.times.sunrise);
+                document.getElementById('zShma').innerText = formatTime(zData.times.sofZmanShma);
+                document.getElementById('zTfila').innerText = formatTime(zData.times.sofZmanTfilla);
+                document.getElementById('zMinchaG').innerText = formatTime(zData.times.minchaGedola);
+                document.getElementById('zSunset').innerText = formatTime(zData.times.sunset);
+                
+                // צאת הכוכבים היומי מתוך זמני היום
+                if (zData.times.tzait) {
                     document.getElementById('zTzet').innerText = formatTime(zData.times.tzait);
                 }
-            } catch(e) {
-                console.error("שגיאה בטעינת זמני היום", e);
             }
+        } catch(e) {
+            console.error("שגיאה בטעינת זמני היום", e);
         }
-        loadZmanim();
-    </script>
+    }
+
+    // הפעלת הטעינה בטעינת הדף ובכל שינוי עיר
+    loadZmanim();
+</script>
 
     <!-- טעינת קובץ הסרגל והפוטר האחיד של האתר -->
     <script src="header.js"></script>
