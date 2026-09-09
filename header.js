@@ -90,6 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
             .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
             .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
+            .nav-item-alerts { border: 1px solid rgba(239, 68, 68, 0.8); color: #ef4444 !important; }
+            .nav-item-world { border: 1px solid rgba(14, 165, 233, 0.6); }
 
             .main-nav a:hover {
                 transform: translateY(-2px);
