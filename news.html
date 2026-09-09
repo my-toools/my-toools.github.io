@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJLYPZR735"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YJLYPZR735');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ערוצי שידור וחדשות - NETOOLS</title>
-<!-- טעינת ספריות האייקונים המלאות לתיקון הסרגל העליון -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <link rel="stylesheet" href="style.css">
+    <title>ערוצי שידור וחדשות בלייב - NETOOLS</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
@@ -89,13 +97,26 @@
             border-radius: 10px;
             padding: 6px;
             border: 1px solid #334155;
+            font-weight: 900;
+            font-size: 20px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
 
-        .logo-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+        /* מראה מיתוגי מותאם לכל ערוץ */
+        .logo-kan11 { color: #000000; font-size: 24px; font-weight: 900; }
+        .logo-k2 { color: #e11d48; font-size: 26px; font-weight: 900; }
+        .logo-r13 { color: #0284c7; font-size: 26px; font-weight: 900; }
+        .logo-ch14 { color: #d97706; font-size: 26px; font-weight: 900; }
+        .logo-i24 { color: #0f172a; font-size: 18px; font-weight: 900; }
+        .logo-knesset { color: #1e3a8a; font-size: 16px; font-weight: 800; }
+        .logo-glglz { color: #15803d; font-size: 20px; font-weight: 900; }
+        .logo-glz { color: #1e40af; font-size: 22px; font-weight: 900; }
+        .logo-kanb { color: #b91c1c; font-size: 22px; font-weight: 900; }
+        .logo-103 { color: #c026d3; font-size: 20px; font-weight: 900; }
+        .logo-globes { color: #b91c1c; font-size: 18px; font-weight: 900; }
+        .logo-calcalist { color: #0284c7; font-size: 18px; font-weight: 900; }
+        .logo-themarker { color: #000000; font-size: 17px; font-weight: 900; }
+        .logo-bizportal { color: #2563eb; font-size: 18px; font-weight: 900; }
 
         .brand-text {
             font-size: 16px;
@@ -112,6 +133,9 @@
 </head>
 <body>
 
+    <!-- טעינת הסרגל העליון האחיד -->
+    <div id="main-header"></div>
+
     <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 25px 20px;">
         
         <!-- כותרת עליונה -->
@@ -125,49 +149,37 @@
         <div class="news-grid">
             <a href="https://www.kan.org.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://images.wsj.net/im-829391?width=300" alt="כאן 11" style="object-fit:cover;">
-                </div>
+                <div class="logo-box logo-kan11">כאן 11</div>
                 <div class="brand-text">כאן 11</div>
                 <div class="brand-sub">תאגיד השידור</div>
             </a>
             <a href="https://www.mako.co.il/mako-vod-index/live-channels" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://img.mako.co.il/2017/10/23/keshet12_logo_i.jpg" alt="חדשות 12">
-                </div>
+                <div class="logo-box logo-k2">קשת 12</div>
                 <div class="brand-text">חדשות 12 / N12</div>
                 <div class="brand-sub">קשת 12</div>
             </a>
             <a href="https://13tv.co.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://13tv.co.il/wp-content/uploads/2019/01/13_logo_desktop.png" alt="רשת 13">
-                </div>
+                <div class="logo-box logo-r13">רשת 13</div>
                 <div class="brand-text">רשת 13</div>
                 <div class="brand-sub">שידור חי</div>
             </a>
             <a href="https://www.now14.co.il/live/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://www.now14.co.il/wp-content/uploads/2021/11/logo14.png" alt="עכשיו 14">
-                </div>
+                <div class="logo-box logo-ch14">14</div>
                 <div class="brand-text">עכשיו 14</div>
                 <div class="brand-sub">אקטואליה וחדשות</div>
             </a>
             <a href="https://www.i24news.tv/he" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://www.i24news.tv/assets/images/i24news_logo_he.svg" alt="i24NEWS">
-                </div>
+                <div class="logo-box logo-i24">i24NEWS</div>
                 <div class="brand-text">i24NEWS</div>
                 <div class="brand-sub">חדשות בינלאומיות</div>
             </a>
             <a href="https://main.knesset.gov.il/Activity/Tv/pages/default.aspx" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://main.knesset.gov.il/Activity/Tv/PublishingImages/knesset-tv-logo.png" alt="ערוץ הכנסת">
-                </div>
+                <div class="logo-box logo-knesset">הכנסת</div>
                 <div class="brand-text">ערוץ הכנסת</div>
                 <div class="brand-sub">שידורי המשכן</div>
             </a>
@@ -178,51 +190,27 @@
         <div class="news-grid">
             <a href="https://glz.co.il/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://glz.co.il/media/1218/galgalatz_logo.png" alt="גלגלצ">
-                </div>
+                <div class="logo-box logo-glglz">גלגלצ</div>
                 <div class="brand-text">גלגלצ</div>
                 <div class="brand-sub">מוזיקה ודיווחים</div>
             </a>
             <a href="https://glz.co.il/גלצ" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://glz.co.il/media/1217/glz_logo.png" alt="גלצ">
-                </div>
+                <div class="logo-box logo-glz">גל"צ</div>
                 <div class="brand-text">גלי צה"ל (גל"צ)</div>
                 <div class="brand-sub">שידורי אקטואליה</div>
             </a>
             <a href="https://www.kan.org.il/radio/kan-bet/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://www.kan.org.il/assets/images/kan-bet-logo.png" alt="כאן ב">
-                </div>
+                <div class="logo-box logo-kanb">כאן ב'</div>
                 <div class="brand-text">כאן ב'</div>
                 <div class="brand-sub">חדשות ואקטואליה</div>
             </a>
-            <a href="https://www.kan.org.il/radio/kan-gimel/" target="_blank" class="news-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://www.kan.org.il/assets/images/kan-gimel-logo.png" alt="כאן גימל">
-                </div>
-                <div class="brand-text">כאן גימל</div>
-                <div class="brand-sub">מוזיקה ישראלית</div>
-            </a>
             <a href="https://103fm.maariv.co.il/" target="_blank" class="news-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://103fm.maariv.co.il/images/logo.png" alt="103FM">
-                </div>
+                <div class="logo-box logo-103">103FM</div>
                 <div class="brand-text">103FM</div>
                 <div class="brand-sub">רדיו ללא הפסקה</div>
-            </a>
-            <a href="https://www.eco99fm.co.il/" target="_blank" class="news-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box">
-                    <img src="https://www.eco99fm.co.il/assets/images/logo.png" alt="Eco99FM">
-                </div>
-                <div class="brand-text">Eco99FM</div>
-                <div class="brand-sub">מוזיקה ופודקאסטים</div>
             </a>
         </div>
 
@@ -230,30 +218,22 @@
         <div class="section-title">📈 כלכלה ושוק ההון</div>
         <div class="news-grid">
             <a href="https://www.globes.co.il/" target="_blank" class="news-card">
-                <div class="logo-box">
-                    <img src="https://www.globes.co.il/news/images/globes_logo_red.png" alt="גלובס">
-                </div>
+                <div class="logo-box logo-globes">גלובס</div>
                 <div class="brand-text">גלובס</div>
                 <div class="brand-sub">עיתון העסקים</div>
             </a>
             <a href="https://www.calcalist.co.il/" target="_blank" class="news-card">
-                <div class="logo-box">
-                    <img src="https://www.calcalist.co.il/images/calcalist_logo.png" alt="כלכליסט">
-                </div>
+                <div class="logo-box logo-calcalist">כלכליסט</div>
                 <div class="brand-text">כלכליסט</div>
                 <div class="brand-sub">חדשות כלכלה</div>
             </a>
             <a href="https://www.themarker.com/" target="_blank" class="news-card">
-                <div class="logo-box">
-                    <img src="https://www.themarker.com/assets/images/themarker-logo.svg" alt="TheMarker">
-                </div>
+                <div class="logo-box logo-themarker">TheMarker</div>
                 <div class="brand-text">TheMarker</div>
                 <div class="brand-sub">עיתונות כלכלית</div>
             </a>
             <a href="https://www.bizportal.co.il/" target="_blank" class="news-card">
-                <div class="logo-box">
-                    <img src="https://www.bizportal.co.il/images/logo.png" alt="ביזפורטל">
-                </div>
+                <div class="logo-box logo-bizportal">ביזפורטל</div>
                 <div class="brand-text">ביזפורטל</div>
                 <div class="brand-sub">נתוני שוק ההון</div>
             </a>
@@ -261,6 +241,7 @@
 
     </main>
 
-    <script src="nav.js"></script>
+    <!-- טעינת ה-Header הדינמי -->
+    <script src="header.js"></script>
 </body>
 </html>
