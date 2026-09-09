@@ -10,18 +10,30 @@
 
       gtag('config', 'G-YJLYPZR735');
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ערוצי שידור וחדשות בלייב - NETOOLS</title>
 
-    <!-- טעינת ספריית האייקונים וקובצי העיצוב (ללא כפילויות) -->
+    <!-- 1. טעינת ספריית האייקונים FontAwesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- 2. טעינת גופן Rubik ועיצוב האתר -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     
     <style>
-        * { 
-            font-family: 'Rubik', system-ui, -apple-system, sans-serif !important; 
+        /* תיקון קריטי: הגדרת הפונט Rubik ללא דריסת האייקונים של FontAwesome */
+        body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div { 
+            font-family: 'Rubik', system-ui, -apple-system, sans-serif; 
+        }
+
+        /* הגנה על גופן האייקונים שלא יידרס */
+        .fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+        }
+
+        * {
             box-sizing: border-box;
         }
 
@@ -134,7 +146,7 @@
 </head>
 <body>
 
-    <!-- טעינת הסרגל העליון האחיד -->
+    <!-- אלמנט הזרקת הסרגל העליון -->
     <div id="main-header"></div>
 
     <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 25px 20px;">
@@ -242,7 +254,7 @@
 
     </main>
 
-    <!-- טעינה יחידה ותקינה של ה-Header וה-Footer -->
+    <!-- טעינה אחת בלבד של הסרגל והפוטר -->
     <script src="header.js"></script>
 </body>
 </html>
