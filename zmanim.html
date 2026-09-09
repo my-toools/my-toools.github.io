@@ -176,9 +176,16 @@
                 document.getElementById('zMinchaG').innerText = formatTime(zData.times.minchaGedola);
                 document.getElementById('zSunset').innerText = formatTime(zData.times.sunset);
                 
-                // צאת הכוכבים היומי מתוך זמני היום
-                if (zData.times.tzait) {
-                    document.getElementById('zTzet').innerText = formatTime(zData.times.tzait);
+             // צאת הכוכבים היומי - בדיקת כל המפתחות האפשריים או חישוב גיבוי אוטומטי
+                let tzeitVal = zData.times.tzait || zData.times.nightfall || zData.times.tzeit;
+                if (!tzeitVal && zData.times.sunset) {
+                    // גיבוי: הוספת 20 דקות משקיעת החמה אם השרת לא החזיר שדה ישיר
+                    let sunsetDate = new Date(zData.times.sunset);
+                    sunsetDate.setMinutes(sunsetDate.getMinutes() + 20);
+                    tzeitVal = sunsetDate.toISOString();
+                }
+                if (tzeitVal) {
+                    document.getElementById('zTzet').innerText = formatTime(tzeitVal);
                 }
             }
         } catch(e) {
