@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .center-logo img:hover { transform: scale(1.1); }
 
             /* סרגל משני */
-            .secondary-bar {
+              .secondary-bar {
                 background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
             }
             .secondary-container {
