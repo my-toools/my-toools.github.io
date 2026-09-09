@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(btcData => {
                             const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
                             const forexEl = document.getElementById("nav-forex");
-                       if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>${eur} ₪</strong> | <i class="fa-brands fa-bitcoin icon-btc"></i> ביטקוין: <strong>$${btc}</strong>`;
+                       if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>: <strong>${usd} ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i>: <strong>${eur} ₪</strong> | <i class="fa-brands fa-bitcoin icon-btc"></i>: <strong>$${btc}</strong>`;
                         }).catch(() => {});
                 });
         }).catch(() => {});
