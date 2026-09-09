@@ -20,9 +20,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            font-family: 'Rubik', system-ui, -apple-system, sans-serif !important;
-        }
+       /* הגדרת פונט Rubik לטקסטים בלבד - ללא דריסת FontAwesome */
+body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div { 
+    font-family: 'Rubik', system-ui, -apple-system, sans-serif; 
+}
+
+/* הגנת על גופן הסמלים */
+.fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
+* {
+    box-sizing: border-box;
+}
     </style>
 </head>
 <body>
