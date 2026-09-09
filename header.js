@@ -1,3 +1,5 @@
+
+
 // טעינת ספריית האייקונים באופן אוטומטי
 if (!document.getElementById("fa-cdn")) {
     var faLink = document.createElement("link");
@@ -273,7 +275,7 @@ const targetContainer = document.getElementById("main-header");
         targetContainer.innerHTML = headerHtml;
     } else {
         document.body.insertAdjacentHTML("afterbegin", headerHtml);
-    }    }
+    }   
 
     // 4. הזרקת פוטר אחיד
     if (!document.querySelector("footer.main-footer")) {
