@@ -75,7 +75,7 @@
 </head>
 <body>
 
-    <!-- תיקון: מזהה מדויק לקליטת הסרגל האחיד -->
+    <!-- הסרגל העליון האחיד מוזרק לכאן -->
     <div id="main-header"></div>
 
     <div class="zmanim-container">
@@ -127,7 +127,7 @@
         async function loadZmanim() {
             var geonameid = document.getElementById('citySelector').value;
             
-            // 1. תיקון שליפת שבת ופרשת שבוע עם כתובת API נקייה ותקינה
+            // 1. שליפה אמינה ותקינה של פרשת השבוע וכניסת/יציאת שבת
             try {
                 var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}`);
                 var shabbatData = await shabbatRes.json();
@@ -141,13 +141,12 @@
                     }
                     
                     if (candleItem) {
-                        // חילוץ שעה בטוח ממבנה הנתונים של Hebcal
-                        let candleTime = new Date(candleItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                        var candleTime = new Date(candleItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
                         document.getElementById('shabbatIn').innerText = candleTime !== 'Invalid Date' ? candleTime : (candleItem.title.split(':').pop().trim());
                     }
                     
                     if (havdalahItem) {
-                        let havdalahTime = new Date(havdalahItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                        var havdalahTime = new Date(havdalahItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
                         document.getElementById('shabbatOut').innerText = havdalahTime !== 'Invalid Date' ? havdalahTime : (havdalahItem.title.split(':').pop().trim());
                     }
                 }
@@ -180,7 +179,7 @@
         loadZmanim();
     </script>
 
-    <!-- תיקון: טעינת קובץ הסרגל והפוטר האחיד של האתר -->
+    <!-- טעינת קובץ הסרגל והפוטר האחיד של האתר -->
     <script src="header.js"></script>
 </body>
 </html>
