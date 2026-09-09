@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
                         <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
                         <li><a href="zmanim.html" class="nav-item-zmanim">זמנים</a></li>
-                        
+                        <li><a href="world.html" class="nav-item-world">עולם ומפות</a></li>
                         <li class="center-logo" onclick="openNavCalculator()" title="לחצי לפתיחת מחשבון מדעי">
                             <img src="favicon.png" alt="NETOOLS Logo" onerror="this.src='favicon.ico'">
                         </li>
@@ -193,6 +193,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
                         <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
                         <li><a href="news.html" class="nav-item-news">חדשות</a></li>
+                        <li><a href="alerts.html" class="nav-item-alerts">התרעות חירום</a></li>
+
                     </ul>
                 </div>
 
