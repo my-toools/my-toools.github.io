@@ -1,93 +1,77 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הכלים שלי - מחשבונים וכלים משפטיים</title>
-<link rel="icon" type="image/png" href="favicon.png?v=3">
+    <!-- טעינת ספריית האייקונים FontAwesome 6.5.1 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כלים ומחשבונים משפטיים - NETOOLS</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap');
+    <!-- טעינת גופן Rubik -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-  :root {
-    --bg-main: #f8fafc;
-    --card-bg: #ffffff;
-    --input-bg: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --dark-blue: #0f172a;
-    --accent-blue: #1e3a8a;
-    --border-color: #cbd5e1;
-  }
+    <style>
+        /* הגנה על גופן האייקונים ומניעת דריסה */
+        body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div { 
+            font-family: 'Rubik', system-ui, -apple-system, sans-serif !important; 
+        }
 
-  body {
-    font-family: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    margin: 0;
-    padding-top: 160px;
-    padding-bottom: 40px;
-    direction: rtl;
-    line-height: 1.6;
-  }
+        .fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-brands {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+        }
 
-  /* דריסת CSS היקפית לסרגל */
-  .nav {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important; right: 0 !important;
-    z-index: 1000 !important;
-    background: #0f172a !important;
-    border-bottom: 3px solid #1d4ed8 !important;
-    padding: 10px 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-  }
+        :root {
+            --bg-main: #0b1120;
+            --card-bg: #1e293b;
+            --input-bg: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --dark-blue: #0f172a;
+            --accent-blue: #38bdf8;
+            --border-color: #334155;
+        }
 
-  .nav-top-row { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; }
-  .nav-links { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important; margin: 0 auto !important; }
-  .nav-links a { color: #f8fafc !important; text-decoration: none !important; font-weight: 700 !important; font-size: 15px !important; padding: 6px 10px !important; }
-  
-  .nav-logo-link { display: flex !important; align-items: center !important; }
-  .nav-logo { width: 40px !important; height: 40px !important; max-width: 40px !important; max-height: 40px !important; object-fit: contain !important; border-radius: 8px !important; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            margin: 0;
+            padding-top: 20px; /* רווח נקי מתחת לסרגל הנדבק */
+            padding-bottom: 40px;
+            direction: rtl;
+            line-height: 1.6;
+        }
 
-  .nav-widgets { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; width: 100% !important; border-top: 1px solid rgba(255,255,255,0.1) !important; padding-top: 6px !important; }
-  .widget-item { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 4px !important; white-space: nowrap !important; color: #cbd5e1 !important; font-size: 13px !important; }
-  .widget-item span { color: #ffffff !important; font-weight: 600 !important; }
-  .widget-divider { color: rgba(255,255,255,0.2) !important; }
+        .hero-header { max-width: 900px; margin: 20px auto; text-align: center; }
+        .hero-header h1 { font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
+        .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
 
-  .hero-header { max-width: 900px; margin: 0 auto 20px auto; text-align: center; }
-  .hero-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
-  .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+        .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.25); text-align: right; }
+        .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
 
-  .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
-  .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: right; }
-  .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+        label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
+        input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
 
-  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-  input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
+        button { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
+        button:hover { background: #0369a1; }
 
-  button { width: 100%; background: var(--accent-blue); color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
-  button:hover { background: #1e4ed8; }
+        .result { font-size: 15px; font-weight: 700; color: #38bdf8; margin-top: 16px; text-align: center; background: #0f172a; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; word-break: break-all; }
 
-  .result { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; word-break: break-all; }
+        .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #0f172a; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
+        .guide-box h4 { margin: 0 0 6px 0; color: #ffffff; font-size: 14px; }
+        
+        .legal-disclaimer { font-size: 11px; color: #64748b; margin-top: 8px; text-align: justify; }
 
-  .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
-  .guide-box h4 { margin: 0 0 6px 0; color: var(--dark-blue); font-size: 14px; }
-  
-  .legal-disclaimer { font-size: 11px; color: #64748b; margin-top: 8px; text-align: justify; }
-
-  footer { margin-top: 50px; padding: 24px; background: var(--dark-blue); border-top: 3px solid #1d4ed8; text-align: center; font-size: 13px; color: #cbd5e1; }
-  footer p { color: #cbd5e1 !important; margin: 6px 0; }
-  footer a { color: #38bdf8; text-decoration: none; }
-
-  @media (max-width: 768px) { body { padding-top: 190px; } .grid-container { grid-template-columns: 1fr; } }
-</style>
+        @media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
 
-<div class="nav"></div>
+<!-- אלמנט הזרקת הסרגל העליון -->
+<div id="main-header"></div>
 
 <div class="hero-header">
     <h1>כלים ומחשבונים משפטיים</h1>
@@ -193,10 +177,9 @@
 
         while (added < days) {
             curr.setDate(curr.getDate() + 1);
-            var m = curr.getMonth() + 1; // 1-12
+            var m = curr.getMonth() + 1;
             var d = curr.getDate();
 
-            // קיזוז פגרת הקיץ (21 ביולי - 5 בספטמבר)
             var isSummerVac = (m === 7 && d >= 21) || (m === 8) || (m === 9 && d <= 5);
             if (!isSummerVac) {
                 added++;
@@ -258,6 +241,7 @@
     }
 </script>
 
-<script src="nav.js"></script>
+<!-- טעינה יחידה ותקינה של הסרגל והפוטר האחידים -->
+<script src="header.js"></script>
 </body>
 </html>
