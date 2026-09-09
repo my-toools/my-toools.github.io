@@ -268,11 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-    const targetContainer = document.getElementById("main-header");
-    if (targetContainer) {
-        targetContainer.innerHTML = headerHtml;
-    } else {
-        document.body.insertAdjacentHTML("afterbegin", headerHtml);
+ document.body.insertAdjacentHTML("afterbegin", headerHtml);
     }
 
     // 4. הזרקת פוטר אחיד
