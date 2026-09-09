@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         favicon.rel = "shortcut icon";
         document.head.appendChild(favicon);
     }
-    favicon.href = "favicon.png";
+    favicon.href = "logo.png";
 
     // 2. עיצוב CSS המקורי והמדויק
     const styleId = "netools-nav-style";
