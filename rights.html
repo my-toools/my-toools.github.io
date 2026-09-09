@@ -2,14 +2,14 @@
 <html lang="he" dir="rtl">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJLYPZR735"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJLYPZR735"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-YJLYPZR735');
-</script>
+      gtag('config', 'G-YJLYPZR735');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>זכויות עובדים - NETOOLS</title>
@@ -26,6 +26,9 @@
     </style>
 </head>
 <body>
+
+    <!-- הסרגל העליון האחיד נטען כאן -->
+    <div id="main-header"></div>
 
     <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
         
@@ -233,7 +236,7 @@
             `;
         }
 
-       function checkHearing() {
+        function checkHearing() {
             let count = 0;
             if (document.getElementById('chk1').checked) count++;
             if (document.getElementById('chk2').checked) count++;
@@ -251,6 +254,7 @@
         }
     </script>
 
-    <script src="nav.js"></script>
+    <!-- טעינת ה-Header הדינמי -->
+    <script src="header.js"></script>
 </body>
 </html>
