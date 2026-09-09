@@ -199,19 +199,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="width: 80px;"></div>
             </div>
 
-            <div class="secondary-bar">
-                <div class="secondary-container">
-                    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
-                    <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
-                    <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
-                    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
-                    <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: 3.01 ₪ | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: 3.50 ₪ | <i class="fa-bold icon-btc"></i> ביטקוין: $62,500</span>
-                    <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
-                    <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
-                    <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
-                </div>
+         <div class="secondary-bar">
+    <div class="secondary-container">
+        <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
+        <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
+        <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
+        <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+        <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+        <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
+        <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i> דולר: <strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i> אירו: <strong>3.50 ₪</strong> | <i class="fa-brands fa-bitcoin icon-btc"></i> ביטקוין: <strong>$62,500</strong></span>
+        <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
+        <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
+        <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
+    </div>
+</div>
             </div>
         </header>
 
