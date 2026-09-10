@@ -72,7 +72,8 @@
         .alert-item-time { font-size: 12px; color: #94a3b8; text-align: left; }
 
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
-        .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #38bdf8; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
+        /* הפס הצידי בהיסטוריה שונה לאדום מרשים */
+        .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #ef4444; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -223,6 +224,7 @@
                     const text = await response.text();
                     cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
                     
+                    // שמירת התרעות אמת בלבד בהיסטוריה
                     cachedAlerts.forEach(newAlert => {
                         const exists = historicalAlerts.some(h => h.date === newAlert.date && h.time === newAlert.time && JSON.stringify(h.data) === JSON.stringify(newAlert.data));
                         if (!exists) {
@@ -263,7 +265,6 @@
             alerts.forEach((alert) => {
                 const cities = alert.data || [];
                 
-                // בדיקה האם אחד מהיישובים או האזורים שהוגדרו תואם לאזעקה
                 if (userInputs.length > 0) {
                     const matched = cities.some(city => userInputs.some(input => city.toLowerCase().includes(input)));
                     if (matched) isUserAlerted = true;
@@ -314,10 +315,7 @@
             cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
             
-            historicalAlerts.unshift(fakeAlert[0]);
-            localStorage.setItem('netools_history', JSON.stringify(historicalAlerts));
-            renderHistory();
-            
+            // שימו לב: הסימולציה מפעילה את המסך החי בלבד ואינה נשמרת בהיסטוריה האמיתית!
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (simulationTimer) clearTimeout(simulationTimer);
