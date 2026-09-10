@@ -464,5 +464,25 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
         document.body.appendChild(accContainer);
+        document.body.insertAdjacentHTML("afterbegin", headerHtml);
+
+// פונקציה לשאיפה אוטומטית של פרשת השבוע האמיתית
+async function loadParashatHaShavua() {
+    try {
+        const response = await fetch('https://www.hebcal.com/shabbat?cfg=json&il=true');
+        if (!response.ok) return;
+        const data = await response.json();
+        const parashaItem = data.items.find(item => item.category === 'parashat');
+        
+        if (parashaItem) {
+            const parashaContainer = document.getElementById('nav-parasha');
+            if (parashaContainer) {
+                parashaContainer.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${parashaItem.hebrew || parashaItem.title}</strong>`;
+            }
+        }
+    } catch (e) {}
+}
+
+loadParashatHaShavua();
     }
 });
