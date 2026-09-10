@@ -36,8 +36,13 @@ if (!document.getElementById(styleId)) {
             min-height: 100vh;
         }
 
-        /* תוכן האתר המרכזי ממלא את המרחב ודוחף את הפוטר לתחתית */
-        .grid-container, main, .content-wrapper {
+        /* מניעת כיווץ של תכני העמוד במסשבי שולחן עבודה */
+        body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
             flex: 1;
         }
 
@@ -195,6 +200,11 @@ if (!document.getElementById(styleId)) {
         @media (max-width: 768px) {
             .secondary-container { font-size: 11px; padding: 5px; }
             footer.main-footer { font-size: 13px; padding: 20px 10px; }
+            body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+                max-width: 100% !important;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -312,7 +322,7 @@ if (!document.querySelector("footer.main-footer")) {
     document.body.insertAdjacentHTML("beforeend", footerHtml);
 }
 
-// 5. סคריפטים של שעונים, מזג אוויר ונתונים
+// 5. סקריפטים של שעונים, מזג אוויר ונתונים
 document.addEventListener("DOMContentLoaded", function () {
     function updateClockAndDate() {
         const now = new Date();
