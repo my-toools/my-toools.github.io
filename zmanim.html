@@ -105,7 +105,7 @@
         }
         .print-btn:hover { background: #0369a1; transform: translateY(-2px); }
 
-        /* גריד עליון: פרשת שבוע, כניסת ויציאת שבת (שתי קוביות גדולות ומאוזנות) */
+        /* גריד עליון: פרשת שבוע, כניסת ויציאת שבת */
         .top-section-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -555,8 +555,10 @@
             if (data && data.items) {
                 data.items.forEach(item => {
                     let dStr = item.date.split('T')[0];
+                    // איסוף חגים, ראשי חודשים ופרשות שבוע
                     if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat') {
                         if (!monthEvents[dStr]) monthEvents[dStr] = [];
+                        // שמירת סדר: אם יש גם חג וגם פרשת שבוע באותו יום (או סמוך), נאפשר הצגה כפולה
                         monthEvents[dStr].push(item.hebrew || item.title);
                     }
                     if (item.category === 'candles') {
@@ -597,7 +599,20 @@
             if (currentDayOfWeek === 6) cell.classList.add('shabbat');
 
             let dFormatted = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            let eventName = monthEvents[dFormatted] ? monthEvents[dFormatted][0] : (currentDayOfWeek === 6 ? 'שבת קודש' : '');
+            
+            // בניית תוכן האירועים ביום (חג, פרשת שבוע, שבת קודש)
+            let eventsList = monthEvents[dFormatted] || [];
+            let eventsHtml = "";
+            
+            if (eventsList.length > 0) {
+                eventsList.forEach(evText => {
+                    let cleanEv = evText.replace(/^פרשת\s+/, 'פרשת ');
+                    eventsHtml += `<div class="cal-holiday" title="${cleanEv}">${cleanEv}</div>`;
+                });
+            } else if (currentDayOfWeek === 6) {
+                eventsHtml = `<div class="cal-holiday">שבת קודש</div>`;
+            }
+
             let candleTimeStr = (currentDayOfWeek === 5 && candleTimes[dFormatted]) ? `כניסת שבת: ${candleTimes[dFormatted]}` : '';
             let havdalahTimeStr = (currentDayOfWeek === 6 && havdalahTimes[dFormatted]) ? `יציאת שבת: ${havdalahTimes[dFormatted]}` : '';
 
@@ -617,7 +632,7 @@
                 </div>
                 ${candleTimeStr ? `<div class="cal-candle"><i class="fa-solid fa-candle-holder"></i> ${candleTimeStr}</div>` : ''}
                 ${havdalahTimeStr ? `<div class="cal-havdalah"><i class="fa-solid fa-star"></i> ${havdalahTimeStr}</div>` : ''}
-                <div class="cal-holiday" title="${eventName}">${eventName}</div>
+                ${eventsHtml}
             `;
             container.appendChild(cell);
         }
