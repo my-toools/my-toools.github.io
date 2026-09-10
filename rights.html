@@ -34,6 +34,29 @@ body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div {
 * {
     box-sizing: border-box;
 }
+
+/* עיצוב כותרת ראשית עם רקע כהה ויוקרתי */
+.hero-header {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-bottom: 4px solid #38bdf8;
+}
+.hero-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+.hero-header p {
+    color: #94a3b8;
+    font-size: 16px;
+    margin: 0;
+}
     </style>
 </head>
 <body>
@@ -43,9 +66,9 @@ body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div {
 
     <main class="main-content" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
         
-        <div style="text-align: center; margin-bottom: 30px; color: #ffffff;">
-            <h1 style="font-size: 30px; font-weight: 800; margin-bottom: 8px;">מחשבוני זכויות עובדים ודיני עבודה</h1>
-            <p style="color: #94a3b8; font-size: 16px;">חישוב מהיר, ומונגש של זכויות סוציאליות, פיצויים, שעות עבודה ופנסיה</p>
+        <div class="hero-header">
+            <h1>מחשבוני זכויות עובדים ודיני עבודה</h1>
+            <p>חישוב מהיר, ומונגש של זכויות סוציאליות, פיצויים, שעות עבודה ופנסיה</p>
         </div>
 
         <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 25px; color: #f8fafc; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 15px; text-align: center;">
