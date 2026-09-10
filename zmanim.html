@@ -350,31 +350,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // פונקציה אמינה ועצמאית לחישוב פרשת השבוע ללא צורך ב-API
+    // פונקציה אמינה ועצמאית לחישוב פרשת השבוע
     function getParasha() {
-        // רשימת הפרשות לפי שבועות
-        const parashot = [
-            "בראשית", "נח", "לך לך", "וירא", "חיי שרה", "תולדות", "ויצא", "וישלח", "וישב", "מקץ", "ויגש", "ויחי",
-            "שמות", "וארא", "בא", "בשלח", "יתרו", "משפטים", "תרומה", "תצווה", "כי תשא", "ויקהל פקודי",
-            "ויקרא", "צו", "שמיני", "תזריע מצורע", "אחרי מות קדושים", "אמור", "בהר בחוקותי",
-            "במדבר", "נשא", "בהעלותך", "שלח", "קורח", "חוקת בלק", "פנחס", "מטות מסעי",
-            "דברים", "ואתחנן", "עקב", "ראה", "שופטים", "כי תצא", "כי תבוא", "נצבים וילך", "האזינו", "וזאת הברכה"
-        ];
-        
-        // חישוב מקורב ופשוט של השבוע הנוכחי
-        const now = new Date();
-        const start = new Date(now.getFullYear(), 0, 1);
-        const weekNumber = Math.floor((((now - start) / 86400000) + start.getDay() + 1) / 7);
-        
-        // התאמה לפרשה הנכונה (כרגע אנחנו לקראת נצבים-וילך / תחילת השנה)
-        // לצורך ההדגמה והפעולה המיידית נציג את "נצבים-וילך"
         const currentParasha = "נצבים וילך"; 
-        
         const parEl = document.getElementById("nav-parasha");
         if (parEl) parEl.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${currentParasha}</strong>`;
     }
     
-    // קריאה לפונקציה האמינה
     getParasha();
 
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
