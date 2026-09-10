@@ -158,7 +158,7 @@
                 <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
             <div class="history-list" id="history-alerts-container">
-                <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מההיסטוריה...</p>
+                <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מהארכיון...</p>
             </div>
         </div>
     </main>
@@ -166,15 +166,8 @@
     <script src="header.js"></script>
     <script>
         let cachedAlerts = [];
+        let historicalAlerts = [];
         let currentRange = '24h';
-        
-        // איפוס מוחלט של זיכרון המטמון הישן וטעינת נתוני אמת בלבד
-        if (!localStorage.getItem('netools_clean_truth_initialized')) {
-            localStorage.removeItem('netools_history');
-            localStorage.setItem('netools_clean_truth_initialized', 'true');
-        }
-
-        let historicalAlerts = JSON.parse(localStorage.getItem('netools_history')) || [];
 
         document.getElementById('user-city').value = localStorage.getItem('netools_alert_city') || '';
         document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
@@ -216,26 +209,34 @@
             renderHistory();
         }
 
+        // שאיבת נתוני אמת חיים וגם חיבור לארכיון ההתרעות
         async function fetchAlerts() {
             try {
+                // שאיבת נתונים חיים מפיקוד העורף
                 const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.oref.org.il/WarningMessages/History/Alerts.json');
                 const response = await fetch(proxyUrl);
                 if (response.ok) {
                     const text = await response.text();
                     cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
-                    
-                    // הוספת התרעות אמת בלבד (ללא שום קשר לסימולציה)
-                    cachedAlerts.forEach(newAlert => {
-                        const exists = historicalAlerts.some(h => h.date === newAlert.date && h.time === newAlert.time && JSON.stringify(h.data) === JSON.stringify(newAlert.data));
-                        if (!exists) {
-                            historicalAlerts.unshift(newAlert);
-                        }
-                    });
-                    localStorage.setItem('netools_history', JSON.stringify(historicalAlerts));
                 }
                 processAlerts(cachedAlerts);
             } catch (e) {
                 processAlerts([]);
+            }
+
+            // שאיבת ארכיון ההתרעות המלא (בדומה לצופר) דרך פרוקסי מאובטח
+            try {
+                const archiveUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.tzevaadom.co.il/static/historical/all.json');
+                const archiveRes = await fetch(archiveUrl);
+                if (archiveRes.ok) {
+                    const archiveData = await archiveRes.json();
+                    if (Array.isArray(archiveData)) {
+                        historicalAlerts = archiveData;
+                    }
+                }
+            } catch (e) {
+                // גיבוי למקרה שהארכיון החיצוני תפוס
+                historicalAlerts = cachedAlerts;
             }
             renderHistory();
         }
@@ -288,18 +289,25 @@
 
         function renderHistory() {
             const historyContainer = document.getElementById('history-alerts-container');
-            
-            if (!historicalAlerts || historicalAlerts.length === 0) {
-                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין היסטוריית אמת להצגה כרגע (המערכת ממתינה לנתונים מפיקוד העורף).</p>';
+            const sourceList = (historicalAlerts && historicalAlerts.length > 0) ? historicalAlerts : cachedAlerts;
+
+            if (!sourceList || sourceList.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין היסטוריה זמינה כרגע.</p>';
                 return;
             }
 
             let historyHtml = '';
-            historicalAlerts.forEach(alert => {
-                const cities = alert.data || [];
+            // הצגת עד 100 האירועים האחרונים מתוך הארכיון
+            sourceList.slice(0, 100).forEach(alert => {
+                const cities = alert.data || alert.cities || [];
+                const title = alert.title || 'התרעה';
+                const date = alert.date || '';
+                const time = alert.time || '';
+                const citiesText = Array.isArray(cities) ? cities.join(', ') : cities;
+
                 historyHtml += `<div class="history-item">
-                    <strong style="color: #f8fafc;">${alert.title || 'התרעה'}</strong>: ${cities.join(', ')} 
-                    <span style="color: #64748b; float: left;">${alert.date || ''} ${alert.time || ''}</span>
+                    <strong style="color: #f8fafc;">${title}</strong>: ${citiesText} 
+                    <span style="color: #64748b; float: left;">${date} ${time}</span>
                 </div>`;
             });
 
@@ -315,7 +323,6 @@
             cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
             
-            // הסימולציה מציגה את עצמה על המסך החי בלבד ואינה נשמרת לעולם בהיסטוריה האמיתית
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (simulationTimer) clearTimeout(simulationTimer);
