@@ -335,8 +335,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
-    
-    fetch('https://www.hebcal.com/converter?cfg=json&g2h=1&strict=1')
+
+    // בדיקה ששדות החובה אינם ריקים לפני שליחת הבקשה ל-Hebcal
+if (typeof gy !== 'undefined' && gy && gm && gd) {
+    fetch(`https://www.hebcal.com/converter?cfg=json&gy=${gy}&gm=${gm}&gd=${gd}&g2h=1&lg=he`)
+        .then(response => response.json())
+        .then(data => {
+            // טיפול בתוצאה
+        });
+}
         .then(res => res.json())
         .then(data => {
             const hebEl = document.getElementById("nav-hebrew");
