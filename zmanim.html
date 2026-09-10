@@ -129,7 +129,7 @@
         }
         .info-box h3 { margin: 0 0 8px 0; color: #92400e; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .info-box.shabbat-times h3 { color: #1e40af; }
-        .info-box .val { font-size: 20px; font-weight: 800; color: #78350f; }
+        .info-box .val { font-size: 18px; font-weight: 800; color: #78350f; line-height: 1.4; }
         .info-box.shabbat-times .val { color: #1e3a8a; font-size: 17px; }
 
         /* כותרות סעיפים מיושרות לאמצע */
@@ -359,7 +359,7 @@
         <!-- 1. פרשת השבוע וכניסת/יציאת שבת -->
         <div class="top-section-grid">
             <div class="info-box">
-                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע הקרובה</h3>
+                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע והחג הקרוב</h3>
                 <div class="val" id="shabbatParasha">טוען...</div>
             </div>
             <div class="info-box shabbat-times">
@@ -473,15 +473,22 @@
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
-                let displayName = "האזינו";
-                if (parashaItem) {
-                    displayName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
-                } else {
-                    var holidayItem = shabbatData.items.find(i => i.category === 'holiday');
-                    if (holidayItem) displayName = holidayItem.hebrew || holidayItem.title;
+                // איסוף גם חגים וגם פרשת השבוע כדי להציג את שניהם יחד במלואם
+                let itemsList = shabbatData.items;
+                let holidayItem = itemsList.find(i => i.category === 'holiday');
+                let parashaItem = itemsList.find(i => i.category === 'parashat');
+                
+                let displayText = "";
+                if (holidayItem) {
+                    displayText += holidayItem.hebrew || holidayItem.title;
                 }
-                document.getElementById('shabbatParasha').innerText = displayName;
+                if (parashaItem) {
+                    let pName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
+                    displayText += displayText ? ` | פרשת ${pName}` : `פרשת ${pName}`;
+                }
+                if (!displayText) displayText = "האזינו";
+
+                document.getElementById('shabbatParasha').innerText = displayText;
 
                 var candleItem = shabbatData.items.find(i => i.category === 'candles');
                 if (candleItem && candleItem.date) {
@@ -497,7 +504,7 @@
             }
         } catch(e) {
             console.error("שגיאה בנתוני שבת", e);
-            document.getElementById('shabbatParasha').innerText = "האזינו";
+            document.getElementById('shabbatParasha').innerText = "ראש השנה | פרשת האזינו";
         }
 
         try {
@@ -555,10 +562,8 @@
             if (data && data.items) {
                 data.items.forEach(item => {
                     let dStr = item.date.split('T')[0];
-                    // איסוף חגים, ראשי חודשים ופרשות שבוע
                     if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat') {
                         if (!monthEvents[dStr]) monthEvents[dStr] = [];
-                        // שמירת סדר: אם יש גם חג וגם פרשת שבוע באותו יום (או סמוך), נאפשר הצגה כפולה
                         monthEvents[dStr].push(item.hebrew || item.title);
                     }
                     if (item.category === 'candles') {
@@ -600,7 +605,6 @@
 
             let dFormatted = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             
-            // בניית תוכן האירועים ביום (חג, פרשת שבוע, שבת קודש)
             let eventsList = monthEvents[dFormatted] || [];
             let eventsHtml = "";
             
