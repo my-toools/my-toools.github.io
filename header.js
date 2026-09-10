@@ -85,34 +85,15 @@ const headerHtml = `
         </div>
         <div class="secondary-bar">
             <div class="secondary-container">
-                <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun"></i> 24°C</span>
-                <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock"></i> --:--:--</span>
-                <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar"></i> --/--/----</span>
-                <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days"></i> --</span>
-                <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran"></i> פרשת השבוע: <strong id="parasha-text">נצבים-וילך</strong></span>
-                <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
+                <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
+                <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
+                <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
+                <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+                <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+                <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
                 <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign"></i>:<strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign"></i>:<strong>3.50 ₪</strong></span>
             </div>
         </div>
     </header>
 `;
-
 document.body.insertAdjacentHTML("afterbegin", headerHtml);
-
-// עדכון דינמי של השעון, התאריך ופרשת השבוע
-function updateHeaderWidgets() {
-    const now = new Date();
-    
-    const clockEl = document.getElementById('nav-clock');
-    if (clockEl) {
-        clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('he-IL')}`;
-    }
-
-    const dateEl = document.getElementById('nav-greg-date');
-    if (dateEl) {
-        dateEl.innerHTML = `<i class="fa-regular fa-calendar"></i> ${now.toLocaleDateString('he-IL')}`;
-    }
-}
-
-setInterval(updateHeaderWidgets, 1000);
-updateHeaderWidgets();
