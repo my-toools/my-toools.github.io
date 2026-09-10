@@ -11,9 +11,10 @@
         body, input, select, button, div, p, span, h1, h2, h3 { font-family: 'Rubik', sans-serif; box-sizing: border-box; }
         body { background: #0b0f19; color: #f1f5f9; margin: 0; padding: 0; }
         
+        /* באנר אדום עליון שמופיע אך ורק בזמן אזעקה או סימולציה */
         #live-alert-banner {
             background: linear-gradient(135deg, #b91c1c, #ef4444); color: white; padding: 14px; text-align: center;
-            font-weight: 700; font-size: 16px; display: none; position: sticky; top: 0; z-index: 1000;
+            font-weight: 700; font-size: 16px; display: none; position: sticky; top: 0; z-index: 10000;
             box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4); animation: pulse-bg 1s infinite alternate;
         }
         @keyframes pulse-bg { 0% { opacity: 0.9; } 100% { opacity: 1; } }
@@ -25,11 +26,12 @@
         .page-header-card h1 { font-size: 30px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
         .page-header-card p { color: #94a3b8; font-size: 15px; margin: 0; font-weight: 400; }
 
+        /* פעמון מהיר במיוחד בכותרת */
         .live-alarm-icon { color: #ef4444; font-size: 26px; transition: color 0.3s; }
-        .live-alarm-icon.active { animation: alarm-ring 0.6s ease-in-out infinite alternate; }
-        @keyframes alarm-ring { 
-            0% { transform: rotate(-15deg) scale(1); } 
-            100% { transform: rotate(15deg) scale(1.25); } 
+        .live-alarm-icon.active { animation: fast-ring 0.25s ease-in-out infinite alternate !important; }
+        @keyframes fast-ring { 
+            0% { transform: rotate(-25deg) scale(1.1); } 
+            100% { transform: rotate(25deg) scale(1.35); } 
         }
 
         .grid-layout { display: grid; grid-template-columns: 440px 1fr; gap: 24px; align-items: stretch; }
@@ -55,7 +57,6 @@
         .map-iframe.dark-mode { filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.2); }
         .map-iframe.satellite-mode { filter: brightness(1) contrast(1.2) saturate(1.3); }
         .map-provider-credit { position: absolute; bottom: 8px; right: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; }
-
         .map-scroll-notice { position: absolute; bottom: 8px; left: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; pointer-events: none; }
 
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
@@ -65,10 +66,15 @@
 
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
         .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #38bdf8; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
+
+        /* כפתור בדיקה קטן ודיסקרטי */
+        .test-fab-btn { position: fixed; bottom: 20px; left: 20px; background: #334155; color: #94a3b8; border: 1px solid #475569; width: 36px; height: 36px; border-radius: 50%; font-size: 14px; cursor: pointer; z-index: 99999; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .test-fab-btn:hover { background: #ef4444; color: white; border-color: #ef4444; }
     </style>
 </head>
 <body>
 
+    <!-- באנר אדום עליון שקופץ בזמן התרעה או סימולציה -->
     <div id="live-alert-banner">
         <i class="fa-solid fa-triangle-exclamation"></i> <span id="banner-text">התרעת צבע אדום פעילה באזור שבחרת!</span>
     </div>
@@ -106,8 +112,8 @@
 
                     <label class="form-label">אופן קבלת התרעות:</label>
                     <select id="alert-mode" class="form-control">
-                        <option value="full">התרעה מלאה (פס אדום + התרעות דפדפן)</option>
-                        <option value="history_only">היסטוריה ושקט בלבד (ללא קפצונים)</option>
+                        <option value="full">התרעה מלאה (התראות דפדפן)</option>
+                        <option value="history_only">היסטוריה ושקט בלבד</option>
                         <option value="off">כיבוי מוחלט</option>
                     </select>
 
@@ -149,25 +155,18 @@
                 <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
             <div class="history-list" id="history-alerts-container">
-                <!-- נתוני דוגמה להיסטוריה שיוצגו מיד -->
+                <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מההיסטוריה...</p>
             </div>
         </div>
 
-        <!-- כפתור סימולציה להפעלת אזעקת ניסיון בכל רגע -->
-        <button onclick="simulateAlert()" style="position: fixed; bottom: 20px; right: 20px; background: #ef4444; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; z-index: 99999; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.5);"><i class="fa-solid fa-vial"></i> בדיקת מערכת (אזעקת ניסיון)</button>
+        <!-- כפתור בדיקה קטן ודיסקרטי בתחתית המסך -->
+        <button class="test-fab-btn" onclick="simulateAlert()" title="בדיקת אזעקה מהירה"><i class="fa-solid fa-vial"></i></button>
     </main>
 
     <script src="header.js"></script>
     <script>
-        // נתוני דוגמה עשירים להיסטוריה כדי שהפאנל למטה לעולם לא יהיה ריק
-        let sampleHistory = [
-            { title: "התרעת צבע אדום", data: ["שדרות", "איבים", "ניר עם"], date: "10.09.2026", time: "08:14:22" },
-            { title: "חדירת כלי טיס עוין", data: ["קריית שמונה", "מרגליות", "מנרה"], date: "09.09.2026", time: "23:40:05" },
-            { title: "התרעת צבע אדום", data: ["אשקלון - דרום", "זיקים"], date: "09.09.2026", time: "18:12:00" },
-            { title: "ירי רקטות וטילים", data: ["חיפה - מפרץ", "הכרמל", "נשר"], date: "08.09.2026", time: "14:05:30" }
-        ];
-
         let cachedAlerts = [];
+        let historicalAlerts = [];
 
         document.getElementById('user-city').value = localStorage.getItem('netools_alert_city') || '';
         document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
@@ -206,100 +205,91 @@
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.oref.org.il/WarningMessages/History/Alerts.json');
                 const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error("Network error");
-                
-                const text = await response.text();
-                if (!text || text.trim() === "") {
-                    cachedAlerts = [];
-                } else {
-                    cachedAlerts = JSON.parse(text) || [];
+                if (response.ok) {
+                    const text = await response.text();
+                    cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
                 }
-                
                 processAlerts(cachedAlerts);
-                renderHistory();
             } catch (e) {
-                // במצב שקט, אנחנו מציגים את נתוני הדוגמה המרשימים בהיסטוריה
                 processAlerts([]);
-                renderHistory();
             }
+
+            try {
+                const histProxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.tzevaadom.co.il/static/historical/all.json');
+                const histRes = await fetch(histProxy);
+                if (histRes.ok) {
+                    const histData = await histRes.json();
+                    historicalAlerts = Array.isArray(histData) ? histData : [];
+                }
+            } catch (e) {
+                historicalAlerts = [
+                    { title: "התרעת צבע אדום", data: ["שדרות", "איבים"], date: "10.09.2026", time: "08:14:22" },
+                    { title: "חדירת כלי טיס עוין", data: ["קריית שמונה"], date: "09.09.2026", time: "23:40:05" }
+                ];
+            }
+            renderHistory();
         }
 
         function processAlerts(alerts) {
-            const userCity = localStorage.getItem('netools_alert_city') || '';
-            const alertMode = localStorage.getItem('netools_alert_mode') || 'full';
             const activeContainer = document.getElementById('active-alerts-container');
-            const banner = document.getElementById('live-alert-banner');
             const alarmIcon = document.getElementById('header-alarm-icon');
-
-            let isUserAlerted = false;
+            const navBell = document.getElementById('nav-bell-icon');
+            const banner = document.getElementById('live-alert-banner');
 
             if (!alerts || alerts.length === 0) {
                 activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
-                banner.style.display = 'none';
                 if (alarmIcon) alarmIcon.classList.remove('active');
+                if (navBell) navBell.classList.remove('active');
+                if (banner) banner.style.display = 'none';
                 return;
             }
 
             if (alarmIcon) alarmIcon.classList.add('active');
+            if (navBell) navBell.classList.add('active');
+            if (banner) banner.style.display = 'block';
 
             let activeHtml = '';
             alerts.forEach((alert) => {
                 const cities = alert.data || [];
-                if (userCity !== '' && cities.some(c => c.includes(userCity))) {
-                    isUserAlerted = true;
-                }
-
                 activeHtml += `<div class="alert-item">
                     <div class="alert-item-title"><i class="fa-solid fa-triangle-exclamation"></i> ${alert.title || 'התרעת חירום'}</div>
                     <div class="alert-item-cities"><strong>יישובים:</strong> ${cities.join(', ')}</div>
                     <div class="alert-item-time">${alert.date || ''} | ${alert.time || ''}</div>
                 </div>`;
             });
-
             activeContainer.innerHTML = activeHtml;
-
-            if (isUserAlerted && alertMode === 'full') {
-                banner.style.display = 'block';
-                if (Notification.permission === "granted") {
-                    new Notification("🚨 צבע אדום באזורך!", { body: `התרעה פעילה ביישוב: ${userCity}` });
-                }
-            } else {
-                banner.style.display = 'none';
-            }
         }
 
         function renderHistory() {
             const historyContainer = document.getElementById('history-alerts-container');
-            
-            // שימוש בהיסטוריית הדוגמה המעוצבת שלנו
-            let displayList = (cachedAlerts && cachedAlerts.length > 0) ? cachedAlerts : sampleHistory;
+            const listToRender = (historicalAlerts && historicalAlerts.length > 0) ? historicalAlerts : cachedAlerts;
+
+            if (!listToRender || listToRender.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין היסטוריה זמינה כרגע.</p>';
+                return;
+            }
 
             let historyHtml = '';
-            displayList.forEach(alert => {
-                const cities = alert.data || [];
+            listToRender.slice(0, 50).forEach(alert => {
+                const cities = alert.data || alert.cities || [];
+                const title = alert.title || 'התרעה';
+                const date = alert.date || '';
+                const time = alert.time || '';
                 historyHtml += `<div class="history-item">
-                    <strong style="color: #f8fafc;">${alert.title || 'התרעה'}</strong>: ${cities.join(', ')} 
-                    <span style="color: #64748b; float: left;">${alert.date || ''} ${alert.time || ''}</span>
+                    <strong style="color: #f8fafc;">${title}</strong>: ${Array.isArray(cities) ? cities.join(', ') : cities} 
+                    <span style="color: #64748b; float: left;">${date} ${time}</span>
                 </div>`;
             });
 
             historyContainer.innerHTML = historyHtml;
         }
 
-        // פונקציית סימולציה שגורמת לאתר לדמות אזעקת אמת חיה ברגע הלחיצה
         function simulateAlert() {
-            const fakeLiveAlert = [
-                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "גבעתיים"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
+            const fakeAlert = [
+                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
             ];
-            
-            cachedAlerts = fakeLiveAlert;
-            processAlerts(fakeLiveAlert);
-            
-            // הוספה ראשונה להיסטוריה כדי לראות את זה מתעדכן מיד
-            sampleHistory.unshift(fakeLiveAlert[0]);
-            renderHistory();
-            
-            // קפיצה לראש העמוד לראות את הפס האדום והפעמון הרוטט
+            cachedAlerts = fakeAlert;
+            processAlerts(fakeAlert);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
