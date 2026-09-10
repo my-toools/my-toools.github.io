@@ -121,7 +121,6 @@ if (!document.getElementById(styleId)) {
         .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
         .center-logo img:hover { transform: scale(1.1); }
 
-        /* עיצוב אייקון הפעמון האדום הקיצוני בצד שמאל */
         .header-alert-btn {
             color: #ef4444 !important;
             font-size: 20px;
@@ -140,7 +139,6 @@ if (!document.getElementById(styleId)) {
             transform: scale(1.05);
         }
 
-        /* סרגל משני רספונסיבי */
         .secondary-bar {
             background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
         }
@@ -156,7 +154,6 @@ if (!document.getElementById(styleId)) {
         .icon-eur { color: #06b6d4; } .icon-btc { color: #f59e0b; } .icon-prime { color: #f97316; } .icon-cpi { color: #a855f7; } .icon-wage { color: #ec4899; }
         .icon-weather { color: #38bdf8; }
 
-        /* מודל המחשבון המדעי */
         .calc-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999;
@@ -186,7 +183,6 @@ if (!document.getElementById(styleId)) {
         .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
         .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
 
-        /* פוטר מקצועי שנצמד אוטומטית לתחתית המסך */
         footer.main-footer {
             background: #0f172a !important;
             color: #ffffff !important;
@@ -198,19 +194,9 @@ if (!document.getElementById(styleId)) {
             width: 100%;
             box-sizing: border-box;
         }
-        footer.main-footer p {
-            color: #ffffff !important;
-            margin: 6px 0;
-        }
-        footer.main-footer a {
-            color: #38bdf8 !important;
-            text-decoration: none;
-            margin: 0 8px;
-            font-weight: 500;
-        }
-        footer.main-footer a:hover {
-            text-decoration: underline;
-        }
+        footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
+        footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
+        footer.main-footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .secondary-container { font-size: 11px; padding: 5px; }
@@ -225,7 +211,7 @@ if (!document.getElementById(styleId)) {
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header עם כפתור אזעקה אדום בקצה השמאלי ביותר
+// 3. הזרקת ה-Header פעם אחת בלבד במקומו הנכון
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
@@ -249,7 +235,6 @@ const headerHtml = `
                 </ul>
             </div>
 
-            <!-- פעמון אדום בולט ומעוצב בצד שמאל הקיצוני -->
             <div>
                 <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
                     <i class="fa-solid fa-bell"></i>
@@ -273,7 +258,6 @@ const headerHtml = `
         </div>
     </header>
 
-    <!-- מודל המחשבון המדעי -->
     <div class="calc-modal-overlay" id="navCalcModal">
         <div class="calc-modal">
             <div class="calc-header">
@@ -464,25 +448,5 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
         document.body.appendChild(accContainer);
-        document.body.insertAdjacentHTML("afterbegin", headerHtml);
-
-// פונקציה לשאיפה אוטומטית של פרשת השבוע האמיתית
-async function loadParashatHaShavua() {
-    try {
-        const response = await fetch('https://www.hebcal.com/shabbat?cfg=json&il=true');
-        if (!response.ok) return;
-        const data = await response.json();
-        const parashaItem = data.items.find(item => item.category === 'parashat');
-        
-        if (parashaItem) {
-            const parashaContainer = document.getElementById('nav-parasha');
-            if (parashaContainer) {
-                parashaContainer.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${parashaItem.hebrew || parashaItem.title}</strong>`;
-            }
-        }
-    } catch (e) {}
-}
-
-loadParashatHaShavua();
     }
 });
