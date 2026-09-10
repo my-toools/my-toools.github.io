@@ -105,7 +105,7 @@
         }
         .print-btn:hover { background: #0369a1; transform: translateY(-2px); }
 
-        /* גריד עליון: פרשת שבוע, כניסת ויציאת שבת */
+        /* גריד עליון: פרשת שבוע וחג, כניסת ויציאת שבת */
         .top-section-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -129,7 +129,7 @@
         }
         .info-box h3 { margin: 0 0 8px 0; color: #92400e; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .info-box.shabbat-times h3 { color: #1e40af; }
-        .info-box .val { font-size: 20px; font-weight: 800; color: #78350f; }
+        .info-box .val { font-size: 18px; font-weight: 800; color: #78350f; line-height: 1.4; }
         .info-box.shabbat-times .val { color: #1e3a8a; font-size: 17px; }
 
         /* כותרות סעיפים מיושרות לאמצע */
@@ -314,6 +314,7 @@
         .cal-gregorian { font-weight: 800; font-size: 15px; color: var(--primary); }
         .cal-hebrew { font-size: 11px; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.1); padding: 2px 5px; border-radius: 6px; }
         .cal-holiday { font-size: 10px; background: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .cal-yahrzeit { font-size: 9.5px; background: #f1f5f9; color: #475569; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .cal-candle { font-size: 10px; background: #eff6ff; color: #1e40af; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; }
         .cal-havdalah { font-size: 10px; background: #f3e8ff; color: #6b21a8; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; }
 
@@ -356,10 +357,10 @@
             </div>
         </div>
 
-        <!-- 1. פרשת השבוע וכניסת/יציאת שבת (ללא שם החג בכותרת) -->
+        <!-- 1. פרשת השבוע וחג, כניסת ויציאת שבת -->
         <div class="top-section-grid">
             <div class="info-box">
-                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע הקרובה</h3>
+                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע והחג הקרוב</h3>
                 <div class="val" id="shabbatParasha">טוען...</div>
             </div>
             <div class="info-box shabbat-times">
@@ -483,13 +484,21 @@
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                // הצגת פרשת השבוע בלבד בכותרת העליונה (סינון החג)
-                let parashaItem = shabbatData.items.find(i => i.category === 'parashat');
-                let displayName = "האזינו";
-                if (parashaItem) {
-                    displayName = "פרשת " + (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
+                let itemsList = shabbatData.items;
+                let holidayItem = itemsList.find(i => i.category === 'holiday');
+                let parashaItem = itemsList.find(i => i.category === 'parashat');
+                
+                let displayText = "";
+                if (holidayItem) {
+                    displayText += holidayItem.hebrew || holidayItem.title;
                 }
-                document.getElementById('shabbatParasha').innerText = displayName;
+                if (parashaItem) {
+                    let pName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
+                    displayText += displayText ? ` | פרשת ${pName}` : `פרשת ${pName}`;
+                }
+                if (!displayText) displayText = "פרשת האזינו";
+
+                document.getElementById('shabbatParasha').innerText = displayText;
 
                 var candleItem = shabbatData.items.find(i => i.category === 'candles');
                 if (candleItem && candleItem.date) {
@@ -505,7 +514,7 @@
             }
         } catch(e) {
             console.error("שגיאה בנתוני שבת", e);
-            document.getElementById('shabbatParasha').innerText = "פרשת האזינו";
+            document.getElementById('shabbatParasha').innerText = "ראש השנה | פרשת האזינו";
         }
 
         try {
@@ -554,19 +563,24 @@
         container.innerHTML = `<div style="grid-column: span 7; text-align: center; padding: 30px; color: var(--text-muted); font-weight: 700;">טוען את נתוני החודש במהירות...</div>`;
 
         let monthEvents = {};
+        let yahrzeits = {};
         let candleTimes = {};
         let havdalahTimes = {};
-        let hebDatesMap = {};
+        
         try {
             let geonameid = document.getElementById('citySelector').value;
-            let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=${geonameid}&m=55&lg=he&s=on`);
+            // הפרמטרים מוגדרים לכלול חגים, מועדים, פרשות, ימים מיוחדים ויארצייט (o=on)
+            let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=${geonameid}&m=55&lg=he&s=on&o=on`);
             let data = await res.json();
             if (data && data.items) {
                 data.items.forEach(item => {
                     let dStr = item.date.split('T')[0];
-                    if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat') {
+                    if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat' || item.category === 'modern') {
                         if (!monthEvents[dStr]) monthEvents[dStr] = [];
                         monthEvents[dStr].push(item.hebrew || item.title);
+                    } else if (item.category === 'yahrzeit') {
+                        if (!yahrzeits[dStr]) yahrzeits[dStr] = [];
+                        yahrzeits[dStr].push(item.hebrew || item.title);
                     }
                     if (item.category === 'candles') {
                         let timeStr = new Date(item.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -608,21 +622,26 @@
             let dFormatted = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             
             let eventsList = monthEvents[dFormatted] || [];
+            let yahrzeitList = yahrzeits[dFormatted] || [];
             let eventsHtml = "";
             
-            if (eventsList.length > 0) {
-                eventsList.forEach(evText => {
-                    let cleanEv = evText.replace(/^פרשת\s+/, 'פרשת ');
-                    eventsHtml += `<div class="cal-holiday" title="${cleanEv}">${cleanEv}</div>`;
-                });
-            } else if (currentDayOfWeek === 6) {
+            eventsList.forEach(evText => {
+                let cleanEv = evText.replace(/^פרשת\s+/, 'פרשת ');
+                eventsHtml += `<div class="cal-holiday" title="${cleanEv}">${cleanEv}</div>`;
+            });
+
+            yahrzeitList.forEach(yText => {
+                eventsHtml += `<div class="cal-yahrzeit" title="${yText}"><i class="fa-solid fa-candle-holder"></i> ${yText}</div>`;
+            });
+
+            if (eventsList.length === 0 && yahrzeitList.length === 0 && currentDayOfWeek === 6) {
                 eventsHtml = `<div class="cal-holiday">שבת קודש</div>`;
             }
 
             let candleTimeStr = (currentDayOfWeek === 5 && candleTimes[dFormatted]) ? `כניסת שבת: ${candleTimes[dFormatted]}` : '';
             let havdalahTimeStr = (currentDayOfWeek === 6 && havdalahTimes[dFormatted]) ? `יציאת שבת: ${havdalahTimes[dFormatted]}` : '';
 
-            // יצירת תאריך עברי עם גימטריה (למשל: ו' תשרי)
+            // יצירת תאריך עברי עם גימטריה תקנית
             let hebDayText = "";
             try {
                 let dObj = new Date(year, month, day);
