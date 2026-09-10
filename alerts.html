@@ -110,8 +110,25 @@
                         <button class="header-test-link" onclick="simulateAlert()" title="הפעלת בדיקת אזעקה"><i class="fa-solid fa-bell fa-shake" style="color: #ef4444;"></i> בדיקת התרעה</button>
                     </div>
                     
-                    <label class="form-label">יישובים או אזורים מועדפים (מופרדים בפסיקים):</label>
-                    <input type="text" id="user-city" class="form-control" placeholder="למשל: תל אביב, מרכז הארץ, חיפה, קריות...">
+                    <!-- בחירת אזורים מתקדמת -->
+                    <label class="form-label"><i class="fa-solid fa-location-dot" style="color: #0284c7;"></i> בחירת יישובים או אזורים מועדפים:</label>
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <input type="text" id="city-search-input" class="form-control" placeholder="הזן את שם היישוב (למשל: תל אביב, מסילת ציון)..." style="margin-bottom: 0; flex: 1;">
+                        <button type="button" onclick="addCityFromInput()" style="background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0 16px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;">הוסף</button>
+                        <button type="button" onclick="clearAllCities()" style="background: #1e293b; color: #f87171; border: 1px solid #334155; padding: 0 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;" title="נקה בחירה">נקה בחירה</button>
+                    </div>
+
+                    <!-- אזור תגיות היישובים הנבחרים -->
+                    <div id="selected-cities-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; min-height: 10px;"></div>
+
+                    <!-- כפתור סימון להתרעות שקטות באזורים שלא נבחרו -->
+                    <div style="background: #0b0f19; border: 1px solid #334155; padding: 12px 14px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="silent-other-areas" style="width: 18px; height: 18px; accent-color: #0284c7; margin-top: 2px; cursor: pointer;">
+                        <div>
+                            <label for="silent-other-areas" style="font-size: 13.5px; font-weight: 700; color: #f8fafc; cursor: pointer; display: block; margin-bottom: 2px;">התרעות שקטות באזורים שלא נבחרו</label>
+                            <span style="font-size: 11.5px; color: #94a3b8; display: block;">קבלת התרעות שקטות עבור שאר האזורים שלא נבחרו ברשימה המועדפת</span>
+                        </div>
+                    </div>
 
                     <label class="form-label">אופן קבלת התרעות:</label>
                     <select id="alert-mode" class="form-control">
@@ -168,12 +185,81 @@
         let cachedAlerts = [];
         let historicalAlerts = [];
         let currentRange = '24h';
+        let selectedCitiesArray = [];
 
-        document.getElementById('user-city').value = localStorage.getItem('netools_alert_city') || '';
-        document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
+        // טעינת הגדרות בעליית העמוד
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedCities = localStorage.getItem('netools_selected_cities');
+            if (savedCities) {
+                try { selectedCitiesArray = JSON.parse(savedCities); } catch(e) { selectedCitiesArray = []; }
+            } else {
+                // תמיכה בנתונים ישנים במידה והיו
+                const oldCity = localStorage.getItem('netools_alert_city');
+                if (oldCity) {
+                    selectedCitiesArray = oldCity.split(',').map(s => s.trim()).filter(Boolean);
+                }
+            }
+
+            const isSilentOther = localStorage.getItem('netools_silent_other') === 'true';
+            document.getElementById('silent-other-areas').checked = isSilentOther;
+            document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
+
+            renderCityTags();
+        });
+
+        function addCityFromInput() {
+            const input = document.getElementById('city-search-input');
+            const cityName = input.value.trim();
+            if (!cityName) return;
+
+            if (!selectedCitiesArray.includes(cityName)) {
+                selectedCitiesArray.push(cityName);
+                renderCityTags();
+            }
+            input.value = '';
+        }
+
+        document.getElementById('city-search-input')?.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addCityFromInput();
+            }
+        });
+
+        function removeCity(cityName) {
+            selectedCitiesArray = selectedCitiesArray.filter(c => c !== cityName);
+            renderCityTags();
+        }
+
+        function clearAllCities() {
+            selectedCitiesArray = [];
+            renderCityTags();
+        }
+
+        function renderCityTags() {
+            const container = document.getElementById('selected-cities-tags');
+            if (!container) return;
+
+            if (selectedCitiesArray.length === 0) {
+                container.innerHTML = '<span style="color: #64748b; font-size: 12.5px;">לא נבחרו יישובים (יוצגו כל ההתרעות)</span>';
+                return;
+            }
+
+            let html = '';
+            selectedCitiesArray.forEach(city => {
+                html += `
+                    <div style="background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                        <span>${city}</span>
+                        <span onclick="removeCity('${city}')" style="cursor: pointer; color: #f87171; font-weight: bold; font-size: 14px;" title="הסר">×</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
 
         function saveSettings() {
-            localStorage.setItem('netools_alert_city', document.getElementById('user-city').value.trim());
+            localStorage.setItem('netools_selected_cities', JSON.stringify(selectedCitiesArray));
+            localStorage.setItem('netools_silent_other', document.getElementById('silent-other-areas').checked);
             localStorage.setItem('netools_alert_mode', document.getElementById('alert-mode').value);
             
             if (document.getElementById('alert-mode').value === 'full' && "Notification" in window) {
@@ -181,8 +267,10 @@
             }
 
             const msg = document.getElementById('save-msg');
-            msg.style.display = 'block';
-            setTimeout(() => msg.style.display = 'none', 3000);
+            if (msg) {
+                msg.style.display = 'block';
+                setTimeout(() => msg.style.display = 'none', 3000);
+            }
         }
 
         function setMapStyle(mode, btn) {
@@ -209,12 +297,10 @@
             renderHistory();
         }
 
-        // שאיבת נתוני אמת חיים וגם חיבור לארכיון ההתרעות
+        // שאיבת נתונים דרך שרת ה-API העצמאי שיצרנו ב-Vercel (/api/alerts)
         async function fetchAlerts() {
             try {
-                // שאיבת נתונים חיים מפיקוד העורף
-                const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.oref.org.il/WarningMessages/History/Alerts.json');
-                const response = await fetch(proxyUrl);
+                const response = await fetch('/api/alerts');
                 if (response.ok) {
                     const text = await response.text();
                     cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
@@ -224,7 +310,7 @@
                 processAlerts([]);
             }
 
-            // שאיבת ארכיון ההתרעות המלא (בדומה לצופר) דרך פרוקסי מאובטח
+            // שאיבת ארכיון ההתרעות המלא
             try {
                 const archiveUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.tzevaadom.co.il/static/historical/all.json');
                 const archiveRes = await fetch(archiveUrl);
@@ -235,20 +321,19 @@
                     }
                 }
             } catch (e) {
-                // גיבוי למקרה שהארכיון החיצוני תפוס
                 historicalAlerts = cachedAlerts;
             }
             renderHistory();
         }
 
         function processAlerts(alerts) {
-            const userInputs = (localStorage.getItem('netools_alert_city') || '').toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
             const activeContainer = document.getElementById('active-alerts-container');
             const alarmIcon = document.getElementById('header-alarm-icon');
             const navBell = document.getElementById('nav-bell-icon');
             const banner = document.getElementById('live-alert-banner');
-
+            
             let isUserAlerted = false;
+            const silentOther = document.getElementById('silent-other-areas')?.checked || localStorage.getItem('netools_silent_other') === 'true';
 
             if (!alerts || alerts.length === 0) {
                 activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
@@ -266,14 +351,22 @@
             alerts.forEach((alert) => {
                 const cities = alert.data || [];
                 
-                if (userInputs.length > 0) {
-                    const matched = cities.some(city => userInputs.some(input => city.toLowerCase().includes(input)));
-                    if (matched) isUserAlerted = true;
+                let isMatchedForUser = false;
+                if (selectedCitiesArray.length > 0) {
+                    isMatchedForUser = cities.some(city => selectedCitiesArray.some(input => city.toLowerCase().includes(input.toLowerCase())));
+                    if (isMatchedForUser) isUserAlerted = true;
+                } else {
+                    isUserAlerted = true;
+                }
+
+                let itemStyle = "background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444;";
+                if (silentOther && selectedCitiesArray.length > 0 && !isMatchedForUser) {
+                    itemStyle = "background: #0f172a; border: 1px solid #334155; border-right: 5px solid #64748b; opacity: 0.6;";
                 }
 
                 const citiesBadges = cities.map(city => `<span class="city-badge">${city}</span>`).join(' ');
 
-                activeHtml += `<div class="alert-item">
+                activeHtml += `<div class="alert-item" style="${itemStyle}">
                     <div class="alert-item-title"><i class="fa-solid fa-triangle-exclamation"></i> ${alert.title || 'התרעת חירום'}</div>
                     <div class="alert-item-cities"><strong>יישובים במרחב:</strong> ${citiesBadges}</div>
                     <div class="alert-item-time">${alert.date || ''} | ${alert.time || ''}</div>
@@ -283,7 +376,7 @@
 
             const alertMode = localStorage.getItem('netools_alert_mode') || 'full';
             if (isUserAlerted && alertMode === 'full' && "Notification" in window && Notification.permission === "granted") {
-                new Notification("🚨 צבע אדום באזורך!", { body: `התרעה פעילה באחד מהיישובים או האזורים שבחרת` });
+                new Notification("🚨 צבע אדום באזורך!", { body: `התרעה פעילה באחד מהיישובים שבחרת` });
             }
         }
 
@@ -297,7 +390,6 @@
             }
 
             let historyHtml = '';
-            // הצגת עד 100 האירועים האחרונים מתוך הארכיון
             sourceList.slice(0, 100).forEach(alert => {
                 const cities = alert.data || alert.cities || [];
                 const title = alert.title || 'התרעה';
@@ -318,7 +410,7 @@
 
         function simulateAlert() {
             const fakeAlert = [
-                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מרכז הארץ", "גבעתיים"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
+                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון", "מרכז הארץ"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
             ];
             cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
