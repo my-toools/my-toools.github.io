@@ -105,11 +105,11 @@
         }
         .print-btn:hover { background: #0369a1; transform: translateY(-2px); }
 
-        /* גריד עליון: פרשת שבוע, מולדות, כניסת שבת */
+        /* גריד עליון: פרשת שבוע, כניסת ויציאת שבת (שתי קוביות גדולות ומאוזנות) */
         .top-section-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
             margin-bottom: 35px;
         }
         .info-box {
@@ -122,21 +122,14 @@
             transition: transform 0.2s ease;
         }
         .info-box:hover { transform: translateY(-3px); }
-        .info-box.molad {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            border-color: #86efac;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.1);
-        }
         .info-box.shabbat-times {
             background: linear-gradient(135deg, #eff6ff, #dbeafe);
             border-color: #93c5fd;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
         }
         .info-box h3 { margin: 0 0 8px 0; color: #92400e; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .info-box.molad h3 { color: #166534; }
         .info-box.shabbat-times h3 { color: #1e40af; }
         .info-box .val { font-size: 20px; font-weight: 800; color: #78350f; }
-        .info-box.molad .val { color: #14532d; }
         .info-box.shabbat-times .val { color: #1e3a8a; font-size: 17px; }
 
         /* כותרות סעיפים מיושרות לאמצע */
@@ -351,7 +344,7 @@
 
         <div class="header-card">
             <h1><i class="fa-solid fa-synagogue" style="color: var(--accent-gold);"></i> זמני שבת, הלכה ולוח שנה פרימיום</h1>
-            <p>מערכת חכמה, מהירה ומאובטחת לניהול זמני היום, פרשת השבוע ומולדות</p>
+            <p>מערכת חכמה, מהירה ומאובטחת לניהול זמני היום ופרשת השבוע</p>
             <div class="city-select-wrapper">
                 <label for="citySelector" style="color: #ffffff; font-weight: 700; font-size: 14px;">בחר/י עיר: </label>
                 <select id="citySelector" class="city-select" onchange="loadZmanim()">
@@ -363,15 +356,11 @@
             </div>
         </div>
 
-        <!-- 1. פרשת השבוע, מולדות וכניסת שבת -->
+        <!-- 1. פרשת השבוע וכניסת/יציאת שבת -->
         <div class="top-section-grid">
             <div class="info-box">
                 <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע הקרובה</h3>
                 <div class="val" id="shabbatParasha">טוען...</div>
-            </div>
-            <div class="info-box molad">
-                <h3><i class="fa-solid fa-moon"></i> מולדות החודש הנוכחי</h3>
-                <div class="val" id="moladText">טוען מולד...</div>
             </div>
             <div class="info-box shabbat-times">
                 <h3><i class="fa-solid fa-candle-holder"></i> כניסת ויציאת שבת</h3>
@@ -478,7 +467,6 @@
     async function loadZmanim() {
         var geonameid = document.getElementById('citySelector').value;
         document.getElementById('shabbatParasha').innerText = "טוען...";
-        document.getElementById('moladText').innerText = "טוען מולד...";
 
         try {
             var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
@@ -510,19 +498,6 @@
         } catch(e) {
             console.error("שגיאה בנתוני שבת", e);
             document.getElementById('shabbatParasha').innerText = "האזינו";
-        }
-
-        try {
-            let now = new Date();
-            let hebConvRes = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
-            let hebConvData = await hebConvRes.json();
-            if(hebConvData && hebConvData.hm && hebConvData.hy) {
-                document.getElementById('moladText').innerText = `חודש ${hebConvData.hm} שנת ${hebConvData.hy}`;
-            } else {
-                document.getElementById('moladText').innerText = "חודש תשרי תשפ\"ז";
-            }
-        } catch {
-            document.getElementById('moladText').innerText = "חודש תשרי תשפ\"ז";
         }
 
         try {
@@ -560,7 +535,6 @@
         renderCalendar();
     }
 
-    // פונקציית לוח שנה כולל כניסת שבת בשישי ויציאת שבת בשבת
     async function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
