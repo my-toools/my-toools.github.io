@@ -336,21 +336,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
-    // בדיקה ששדות החובה אינם ריקים לפני שליחת הבקשה ל-Hebcal
-if (typeof gy !== 'undefined' && gy && gm && gd) {
-    fetch(`https://www.hebcal.com/converter?cfg=json&gy=${gy}&gm=${gm}&gd=${gd}&g2h=1&lg=he`)
-        .then(response => response.json())
-        .then(data => {
-            // טיפול בתוצאה
-        });
-}
-        .then(res => res.json())
-        .then(data => {
-            const hebEl = document.getElementById("nav-hebrew");
-            if (hebEl && data.hebrew) {
-                hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
-            }
-        }).catch(() => {});
+    // קריאה מבוקרת ומוגנת ל-Hebcal למניעת שגיאות 400
+    const nowForHeb = new Date();
+    const gy = nowForHeb.getFullYear();
+    const gm = nowForHeb.getMonth() + 1;
+    const gd = nowForHeb.getDate();
+
+    if (gy && gm && gd) {
+        fetch(`https://www.hebcal.com/converter?cfg=json&gy=${gy}&gm=${gm}&gd=${gd}&g2h=1&lg=he`)
+            .then(res => res.json())
+            .then(data => {
+                const hebEl = document.getElementById("nav-hebrew");
+                if (hebEl && data.hebrew) {
+                    hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
+                }
+            }).catch(() => {});
+    }
 
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
         .then(res => res.json())
@@ -414,13 +415,13 @@ function calcInput(val) {
     else if (val === '=') {
         try {
             let parsed = calcExpr.replace(/sin/g, 'Math.sin')
-                                 .replace(/cos/g, 'Math.cos')
-                                 .replace(/tan/g, 'Math.tan')
-                                 .replace(/sqrt/g, 'Math.sqrt')
-                                 .replace(/log/g, 'Math.log10')
-                                 .replace(/pi/g, 'Math.PI')
-                                 .replace(/pow2/g, '**2')
-                                 .replace(/pow3/g, '**3');
+                                   .replace(/cos/g, 'Math.cos')
+                                   .replace(/tan/g, 'Math.tan')
+                                   .replace(/sqrt/g, 'Math.sqrt')
+                                   .replace(/log/g, 'Math.log10')
+                                   .replace(/pi/g, 'Math.PI')
+                                   .replace(/pow2/g, '**2')
+                                   .replace(/pow3/g, '**3');
             disp.value = eval(parsed);
             calcExpr = disp.value;
         } catch { disp.value = "שגיאה"; calcExpr = ""; }
