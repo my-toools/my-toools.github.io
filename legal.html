@@ -43,7 +43,7 @@
             line-height: 1.6;
         }
 
-        /* קופסת כותרת כהה, מרכזית ויוקרתיות עם סמל מאזניים */
+        /* קופסת כותרת כהה, מרכזית ויוקרתית עם סמל מאזניים */
         .hero-header { 
             max-width: 940px; 
             margin: 20px auto; 
@@ -115,20 +115,22 @@
 <div class="hero-header">
     <i class="fa-solid fa-scale-balanced"></i>
     <h1>כלים ומחשבונים משפטיים מתקדמים</h1>
-    <p>מחשבוני מועדים ופגרות, אגרות בית משפט, בדיקת סמכות עניינית והפרשי הצמדה וריבית.</p>
+    <p>פורטל מקצועי למשרדי עורכי דין, מזכירות משפטית ולכל העוסקים במערכת המשפט.</p>
     
     <!-- קישורים חיצוניים רשמיים ושימושיים למערכות משפטיות -->
     <div class="legal-quick-links">
         <a href="https://www.net.court.gov.il/" target="_blank"><i class="fa-solid fa-landmark"></i> נט המשפט</a>
+        <a href="https://www.israelbar.org.il/" target="_blank"><i class="fa-solid fa-balance-scale"></i> לשכת עוה"ד</a>
         <a href="https://www.gov.il/he/departments/execution_office/govil-landing-page" target="_blank"><i class="fa-solid fa-file-invoice-dollar"></i> הוצאה לפועל</a>
         <a href="https://www.gov.il/he/departments/rabbinical_courts/govil-landing-page" target="_blank"><i class="fa-solid fa-gavel"></i> בתי הדין הרבניים</a>
+        <a href="https://www.gov.il/he/departments/legal_aid/govil-landing-page" target="_blank"><i class="fa-solid fa-hands-holding-child"></i> סיוע משפטי</a>
         <a href="https://www.kolzchut.org.il/" target="_blank"><i class="fa-solid fa-book-open"></i> פורטל כל זכות</a>
     </div>
 </div>
 
 <div class="grid-container">
 
-    <!-- מחשבון מועדים ופגרות -->
+    <!-- 1. מחשבון מועדים ופגרות -->
     <div class="card">
         <h2>מחשבון מועדים ופגרות בתי המשפט</h2>
         <label>תאריך קבלת כתב הטענות / החלטה:</label>
@@ -145,7 +147,7 @@
         <div class="legal-disclaimer">* הבהרה: החישוב כולל קיזוז פגרות רשמיות. חובה לאמת את המועד הסופי מול מזכירות הערכאה השיפוטית.</div>
     </div>
 
-    <!-- מחשבון אגרות בית משפט -->
+    <!-- 2. מחשבון אגרות בית משפט -->
     <div class="card">
         <h2>מחשבון אגרת פתיחת הליך כספי</h2>
         <label>סוג ההליך / הערכאה:</label>
@@ -166,7 +168,7 @@
         <div class="legal-disclaimer">* בתביעות קטנות האגרה עומדת על 1% מסכום התביעה (לפחות 50 ₪).</div>
     </div>
 
-    <!-- מחשבון סמכות עניינית -->
+    <!-- 3. מחשבון סמכות עניינית -->
     <div class="card">
         <h2>מחשבון דיאגנוסטי לסמכות עניינית</h2>
         <label>נושא התביעה המרכזי:</label>
@@ -188,7 +190,7 @@
         <div class="legal-disclaimer">* בדיקה זו כללית בלבד. סמכות בית הדין לעבודה ובית המשפט לענייני משפחה גוברת לפי מהות הסכסוך.</div>
     </div>
 
-    <!-- מחשבון הצמדה וריבית -->
+    <!-- 4. מחשבון הפרשי הצמדה וריבית -->
     <div class="card">
         <h2>מחשבון הפרשי הצמדה וריבית לפי חוק</h2>
         <label>סכום החוב המקורי (₪):</label>
@@ -210,10 +212,65 @@
         <div class="legal-disclaimer">* החישוב נסמך על שיעור ריבית משפטית ממוצע מותאם.</div>
     </div>
 
+    <!-- 5. מחשבון שכר טרחת עו"ד רשמי לפי לשכת עורכי הדין -->
+    <div class="card">
+        <h2>אומדן שכר טרחת עו"ד (לשכת עורכי הדין)</h2>
+        <label>סכום התביעה / שווי ההליך (₪):</label>
+        <input type="number" id="barClaimAmount" placeholder="לדוגמה: 150000">
+        <button onclick="calcBarLawyerFee()">חשב שכר טרחה מינימלי מומלץ</button>
+        <div class="result" id="barFeeResult">הכנס סכום לחישוב שכר טרחה</div>
+
+        <div class="guide-box">
+            <h4>💡 כללי לשכת עורכי הדין (התעריף המינימלי):</h4>
+            <p>משקף את שיעור שכר הטרחה המינימלי המקובל בהליכים אזרחיים שונים להבטחת תגמול ראוי בערכאות השיפוט השונות.</p>
+        </div>
+        <div class="legal-disclaimer">* מבוסס על אחוז מדורג מינימלי מקובל. אינו מחליף חוזה שכר טרחה פרטני.</div>
+    </div>
+
+    <!-- 6. מחשבון חישוב מועד המצאה ומשלוח דואר (תקנות סדר הדין האזרחי) -->
+    <div class="card">
+        <h2>מחשבון חישוב מועד המצאה ומשלוח דואר</h2>
+        <label>תאריך משלוח המסמך בדואר רשום:</label>
+        <input type="date" id="mailStartDate">
+        <label>סוג ההמצאה לפי התקנות:</label>
+        <select id="mailType">
+            <option value="3">דואר רשום / שליחה רגילה (תוספת 3 ימים)</option>
+            <option value="5">המצאה מיוחדת או מחוץ לארץ</option>
+        </select>
+        <button onclick="calcMailDeadline()">חשב תאריך תחילת מרוץ המועדים</button>
+        <div class="result" id="mailResult">בחרי תאריך משלוח לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 תקנות סדר הדין האזרחי (מועד המצאה):</h4>
+            <p>המצאת כתב בי-דין באמצעות דואר רשום מוסיפה ימים קבועים מראש למועד שממנו מתחיל להיספר מניין הימים להגשת כתב טענות נגדי.</p>
+        </div>
+        <div class="legal-disclaimer">* כלי עזר למזכירות משפטית לווידוא מועדים פרוצדורליים מדויקים.</div>
+    </div>
+
+    <!-- 7. מחשבון מדד המחירים לצרכן ועדכון סכומי פסקי דין -->
+    <div class="card">
+        <h2>מחשבון מדד המחירים לצרכן ועדכון פסקי דין</h2>
+        <label>סכום הקרן המקורי / פסק הדין (₪):</label>
+        <input type="number" id="cpiBaseAmount" placeholder="לדוגמה: 50000">
+        <label>מדד התחלתי (במועד הפסיקה):</label>
+        <input type="number" id="cpiStartVal" placeholder="לדוגמה: 105.2" step="0.1">
+        <label>מדד נוכחי (ידוע אחרון):</label>
+        <input type="number" id="cpiCurrentVal" placeholder="לדוגמה: 109.8" step="0.1">
+        <button onclick="calcCPILegalUpdate()">חשב סכום מעודכן למדד</button>
+        <div class="result" id="cpiLegalResult">הכנס נתוני מדד לחישוב</div>
+
+        <div class="guide-box">
+            <h4>💡 עדכון קרן חוב ופסקי דין לפי מדד:</h4>
+            <p>הזנת מדד התחלתי מול מדד נוכחי מאפשרת לחשב במדויק את הפרשי ההצמדה למדד המחירים לצרכן לצורך עדכון קרן חוב בהוצאה לפועל.</p>
+        </div>
+        <div class="legal-disclaimer">* לחישוב רשמי מחייב בלשכת ההוצאה לפועל יש להסתמך על פלט מערכת השדר.</div>
+    </div>
+
 </div>
 
 <script>
     document.getElementById('legalStartDate').valueAsDate = new Date();
+    document.getElementById('mailStartDate').valueAsDate = new Date();
 
     function calcLegalDeadline() {
         var start = new Date(document.getElementById('legalStartDate').value);
@@ -286,6 +343,42 @@
         var total = amt + interestPart;
 
         document.getElementById('interestResult').innerText = "סה\"כ כולל ריבית: ₪ " + total.toLocaleString() + " (רכיב ריבית: ₪ " + interestPart.toLocaleString() + ")";
+    }
+
+    function calcBarLawyerFee() {
+        var amt = parseFloat(document.getElementById('barClaimAmount').value) || 0;
+        if (amt <= 0) {
+            document.getElementById('barFeeResult').innerText = "נא להזין סכום תביעה תקין";
+            return;
+        }
+        var fee = Math.max(5000, amt * 0.10);
+        document.getElementById('barFeeResult').innerText = "אומדן שכר טרחה מינימלי (לשכה): ₪ " + fee.toLocaleString();
+    }
+
+    function calcMailDeadline() {
+        var start = new Date(document.getElementById('mailStartDate').value);
+        var addDays = parseInt(document.getElementById('mailType').value) || 3;
+        if (!start || isNaN(start.getTime())) return;
+
+        var curr = new Date(start);
+        curr.setDate(curr.getDate() + addDays);
+
+        document.getElementById('mailResult').innerText = "תאריך תחילת מרוץ (לאחר תוספת דואר): " + curr.toLocaleDateString('he-IL');
+    }
+
+    function calcCPILegalUpdate() {
+        var base = parseFloat(document.getElementById('cpiBaseAmount').value) || 0;
+        var startVal = parseFloat(document.getElementById('cpiStartVal').value) || 0;
+        var currentVal = parseFloat(document.getElementById('cpiCurrentVal').value) || 0;
+
+        if (base <= 0 || startVal <= 0 || currentVal <= 0) {
+            document.getElementById('cpiLegalResult').innerText = "נא להזין את כל נתוני הבסיס והמדדים במדויק";
+            return;
+        }
+
+        var updated = base * (currentVal / startVal);
+        var diff = updated - base;
+        document.getElementById('cpiLegalResult').innerText = "סכום מעודכן: ₪ " + updated.toLocaleString(undefined, {maximumFractionDigits: 2}) + " (הפרש הצמדה: ₪ " + diff.toLocaleString(undefined, {maximumFractionDigits: 2}) + ")";
     }
 </script>
 
