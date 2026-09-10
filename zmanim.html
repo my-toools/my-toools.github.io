@@ -129,7 +129,7 @@
         }
         .info-box h3 { margin: 0 0 8px 0; color: #92400e; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .info-box.shabbat-times h3 { color: #1e40af; }
-        .info-box .val { font-size: 18px; font-weight: 800; color: #78350f; line-height: 1.4; }
+        .info-box .val { font-size: 20px; font-weight: 800; color: #78350f; }
         .info-box.shabbat-times .val { color: #1e3a8a; font-size: 17px; }
 
         /* כותרות סעיפים מיושרות לאמצע */
@@ -356,10 +356,10 @@
             </div>
         </div>
 
-        <!-- 1. פרשת השבוע וכניסת/יציאת שבת -->
+        <!-- 1. פרשת השבוע וכניסת/יציאת שבת (ללא שם החג בכותרת) -->
         <div class="top-section-grid">
             <div class="info-box">
-                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע והחג הקרוב</h3>
+                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע הקרובה</h3>
                 <div class="val" id="shabbatParasha">טוען...</div>
             </div>
             <div class="info-box shabbat-times">
@@ -450,6 +450,16 @@
   <script>
     let currentDate = new Date();
 
+    // המרת מספרים עבריים לתצוגה תקנית (למשל 6 ל- ו')
+    function toHebrewGematria(n) {
+        const letters = {
+            1: "א'", 2: "ב'", 3: "ג'", 4: "ד'", 5: "ה'", 6: "ו'", 7: "ז'", 8: "ח'", 9: "ט'",
+            10: "י'", 11: "י\"א", 12: "י\"ב", 13: "י\"ג", 14: "י\"ד", 15: "ט\"ו", 16: "ט\"ז", 17: "י\"ז", 18: "י\"ח", 19: "י\"ט",
+            20: "כ'", 21: "כ\"א", 22: "כ\"ב", 23: "כ\"ג", 24: "כ\"ד", 25: "כ\"ה", 26: "כ\"ו", 27: "כ\"ז", 28: "כ\"ח", 29: "כ\"ט", 30: "ל'"
+        };
+        return letters[n] || n;
+    }
+
     function initYearSelect() {
         const yearSelect = document.getElementById('calYearSelect');
         yearSelect.innerHTML = "";
@@ -473,22 +483,13 @@
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                // איסוף גם חגים וגם פרשת השבוע כדי להציג את שניהם יחד במלואם
-                let itemsList = shabbatData.items;
-                let holidayItem = itemsList.find(i => i.category === 'holiday');
-                let parashaItem = itemsList.find(i => i.category === 'parashat');
-                
-                let displayText = "";
-                if (holidayItem) {
-                    displayText += holidayItem.hebrew || holidayItem.title;
-                }
+                // הצגת פרשת השבוע בלבד בכותרת העליונה (סינון החג)
+                let parashaItem = shabbatData.items.find(i => i.category === 'parashat');
+                let displayName = "האזינו";
                 if (parashaItem) {
-                    let pName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
-                    displayText += displayText ? ` | פרשת ${pName}` : `פרשת ${pName}`;
+                    displayName = "פרשת " + (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
                 }
-                if (!displayText) displayText = "האזינו";
-
-                document.getElementById('shabbatParasha').innerText = displayText;
+                document.getElementById('shabbatParasha').innerText = displayName;
 
                 var candleItem = shabbatData.items.find(i => i.category === 'candles');
                 if (candleItem && candleItem.date) {
@@ -504,7 +505,7 @@
             }
         } catch(e) {
             console.error("שגיאה בנתוני שבת", e);
-            document.getElementById('shabbatParasha').innerText = "ראש השנה | פרשת האזינו";
+            document.getElementById('shabbatParasha').innerText = "פרשת האזינו";
         }
 
         try {
@@ -555,6 +556,7 @@
         let monthEvents = {};
         let candleTimes = {};
         let havdalahTimes = {};
+        let hebDatesMap = {};
         try {
             let geonameid = document.getElementById('citySelector').value;
             let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=${geonameid}&m=55&lg=he&s=on`);
@@ -620,11 +622,15 @@
             let candleTimeStr = (currentDayOfWeek === 5 && candleTimes[dFormatted]) ? `כניסת שבת: ${candleTimes[dFormatted]}` : '';
             let havdalahTimeStr = (currentDayOfWeek === 6 && havdalahTimes[dFormatted]) ? `יציאת שבת: ${havdalahTimes[dFormatted]}` : '';
 
+            // יצירת תאריך עברי עם גימטריה (למשל: ו' תשרי)
             let hebDayText = "";
             try {
                 let dObj = new Date(year, month, day);
-                let formatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', { day: 'numeric', month: 'short' });
-                hebDayText = formatter.format(dObj).replace(' בשבט', '').replace(' באדר', '');
+                let formatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', { day: 'numeric', month: 'long' });
+                let parts = formatter.formatToParts(dObj);
+                let dayNum = parseInt(parts.find(p => p.type === 'day')?.value || '1');
+                let monthName = parts.find(p => p.type === 'month')?.value || '';
+                hebDayText = `${toHebrewGematria(dayNum)} ${monthName}`;
             } catch(err) {
                 hebDayText = "";
             }
