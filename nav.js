@@ -24,17 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(fontLink);
     }
 
-    // 3. עיצוב CSS: סרגל משני מורחב + פוטר בטקסט לבן אחיד
+    // 3. עיצוב CSS מתוקן לניגודיות מושלמת ותקנית
     const styleId = "netools-nav-style";
     if (!document.getElementById(styleId)) {
         const style = document.createElement("style");
         style.id = styleId;
         style.textContent = `
-            body { margin: 0 !important; padding-top: 0 !important; }
+            body { margin: 0 !important; padding-top: 0 !important; color: #f8fafc !important; }
             header.main-header {
-                background: #0f172a;
+                background: #0b0f19;
                 color: #ffffff;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
                 position: sticky;
                 top: 0;
                 z-index: 10000;
@@ -80,106 +80,72 @@ document.addEventListener("DOMContentLoaded", function () {
             .main-nav a {
                 color: #ffffff !important;
                 text-decoration: none;
-                font-weight: 500;
-                font-size: 14px;
-                padding: 6px 13px;
+                font-weight: 600;
+                font-size: 14.5px;
+                padding: 6px 14px;
                 border-radius: 6px;
                 transition: all 0.2s ease-in-out;
                 display: inline-block;
-                background: rgba(255, 255, 255, 0.02);
+                background: rgba(255, 255, 255, 0.05);
                 white-space: nowrap;
             }
             
-            .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
-            .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
-            .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
-            .nav-item-zmanim { border: 1px solid rgba(236, 72, 153, 0.6); }
-            .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
-            .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
-            .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
+            .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.8); }
+            .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.8); }
+            .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.8); }
+            .nav-item-zmanim { border: 1px solid rgba(236, 72, 153, 0.8); }
+            .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.8); }
+            .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.8); }
+            .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.8); }
 
             .main-nav a:hover {
                 transform: translateY(-2px);
-                background: rgba(255, 255, 255, 0.08);
+                background: rgba(255, 255, 255, 0.15);
             }
 
             .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
             .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
             .center-logo img:hover { transform: scale(1.1); }
 
-            /* סרגל משני */
+            /* סרגל משני עם ניגודיות גבוהה */
             .secondary-bar {
-                background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
+                background: #131c2e; color: #f1f5f9; font-size: 13px; padding: 8px 14px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
             }
             .secondary-container {
-                max-width: 1550px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 10px; overflow-x: auto; white-space: nowrap;
+                max-width: 1550px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 12px; overflow-x: auto; white-space: nowrap;
             }
             .secondary-container::-webkit-scrollbar { display: none; }
-            .widget-item { display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
+            .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: #f8fafc; }
             .widget-item strong { color: #ffffff; }
 
-            .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
-            .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
-            .icon-eur { color: #06b6d4; } .icon-btc { color: #f59e0b; } .icon-prime { color: #f97316; } .icon-cpi { color: #a855f7; } .icon-wage { color: #ec4899; }
+            .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #fbbf24; }
+            .icon-parasha { color: #c084fc; } .icon-sun { color: #fbbf24; } .icon-usd { color: #4ade80; }
+            .icon-eur { color: #22d3ee; } .icon-btc { color: #fbbf24; } .icon-prime { color: #fb923c; } .icon-cpi { color: #c084fc; } .icon-wage { color: #f472b6; }
             .icon-weather { color: #38bdf8; }
 
-            /* מודל המחשבון המדעי */
-            .calc-modal-overlay {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85);
-                backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999;
-            }
-            .calc-modal {
-                background: #0f172a; border: 1px solid #334155; border-radius: 20px; padding: 22px; width: 380px;
-                color: #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.6); direction: ltr;
-            }
-            .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; direction: rtl; }
-            .calc-header h3 { margin: 0; font-size: 17px; color: #38bdf8; font-weight: 700; }
-            .calc-close { background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; transition: color 0.2s; }
-            .calc-close:hover { color: #ef4444; }
-            .calc-display {
-                width: 100%; height: 55px; background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-                color: #38bdf8; font-size: 24px; font-weight: 700; text-align: right; padding: 0 16px; box-sizing: border-box; margin-bottom: 16px;
-                letter-spacing: 1px;
-            }
-            .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-            .c-btn {
-                background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 12px 0;
-                font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center;
-            }
-            .c-btn:hover { background: #334155; transform: translateY(-1px); }
-            .c-btn.btn-op { border: 1px solid #38bdf8; color: #38bdf8; font-size: 15px; }
-            .c-btn.btn-sci { border: 1px solid #a855f7; color: #c084fc; }
-            .c-btn.btn-mem { border: 1px solid #f59e0b; color: #fbbf24; }
-            .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
-            .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
-
-            /* עיצוב פוטר בטקסט לבן בוהק ואחיד */
+            /* פוטר בניגודיות גבוהה וברורה */
             footer.main-footer {
-                background: #0f172a !important;
+                background: #0b0f19 !important;
                 color: #ffffff !important;
                 text-align: center;
-                padding: 28px 20px;
+                padding: 30px 20px;
                 margin-top: 50px;
                 border-top: 1px solid #1e293b;
-                font-size: 14px;
+                font-size: 14.5px;
             }
             footer.main-footer p {
                 color: #ffffff !important;
-                margin: 6px 0;
+                margin: 8px 0;
             }
             footer.main-footer a {
                 color: #38bdf8 !important;
-                text-decoration: none;
-                margin: 0 8px;
-                font-weight: 500;
-            }
-            footer.main-footer a:hover {
                 text-decoration: underline;
+                margin: 0 8px;
+                font-weight: 600;
             }
         `;
         document.head.appendChild(style);
     }
-
     // 4. הזרקת ה-Header
     const oldHeader = document.querySelector("header.main-header");
     if (oldHeader) oldHeader.remove();
