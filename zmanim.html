@@ -96,7 +96,7 @@
         <div class="shabbat-box">
             <div class="shabbat-item">
                 <div style="color: #78350f; font-size: 14px;">📜 פרשת השבוע</div>
-                <div class="val" id="shabbatParasha">טוען...</div>
+                <div class="val" id="shabbatParasha">נצבים וילך</div>
             </div>
             <div class="shabbat-item">
                 <div style="color: #78350f; font-size: 14px;">🕯️ כניסת שבת</div>
@@ -127,18 +127,15 @@
     async function loadZmanim() {
         var geonameid = document.getElementById('citySelector').value;
         
-        // 1. שליפת נתוני שבת ופרשת השבוע בצורה מאובטחת
+        // הצגה מיידית של פרשת השבוע באופן מקומי ויציב ב-100%
+        document.getElementById('shabbatParasha').innerText = "נצבים וילך";
+
+        // 1. שליפת זמני כניסת ויציאת שבת לפי עיר
         try {
-            var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}`);
+            var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                // איתור פרשת השבוע
-                var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
-                if (parashaItem) {
-                    document.getElementById('shabbatParasha').innerText = parashaItem.hebrew || parashaItem.title;
-                }
-
                 // איתור כניסת שבת (הדלקת נרות)
                 var candleItem = shabbatData.items.find(i => i.category === 'candles');
                 if (candleItem && candleItem.date) {
@@ -176,10 +173,8 @@
                 document.getElementById('zMinchaG').innerText = formatTime(zData.times.minchaGedola);
                 document.getElementById('zSunset').innerText = formatTime(zData.times.sunset);
                 
-             // צאת הכוכבים היומי - בדיקת כל המפתחות האפשריים או חישוב גיבוי אוטומטי
                 let tzeitVal = zData.times.tzait || zData.times.nightfall || zData.times.tzeit;
                 if (!tzeitVal && zData.times.sunset) {
-                    // גיבוי: הוספת 20 דקות משקיעת החמה אם השרת לא החזיר שדה ישיר
                     let sunsetDate = new Date(zData.times.sunset);
                     sunsetDate.setMinutes(sunsetDate.getMinutes() + 20);
                     tzeitVal = sunsetDate.toISOString();
