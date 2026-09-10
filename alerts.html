@@ -248,15 +248,16 @@
         }
 
         async function fetchAlertsHistory() {
-            try {
-                var response = await fetch("https://www.oref.org.il/WarningMessages/History/AlertsHistory.json");
-                var data = await response.json();
-                if (data && data.length > 0) {
-                    allAlerts = data;
-                    renderTable(allAlerts);
-                } else { useFallbackData(); }
-            } catch (error) { useFallbackData(); }
-        }
+    try {
+        var targetUrl = encodeURIComponent("https://www.oref.org.il/WarningMessages/History/AlertsHistory.json");
+        var response = await fetch(`https://api.allorigins.win/raw?url=${targetUrl}`);
+        var data = await response.json();
+        if (data && data.length > 0) {
+            allAlerts = data;
+            renderTable(allAlerts);
+        } else { useFallbackData(); }
+    } catch (error) { useFallbackData(); }
+}
 
         function useFallbackData() {
             allAlerts = [
@@ -292,33 +293,43 @@
         }
 
         async function checkLiveAlerts() {
-            try {
-                var res = await fetch("https://www.oref.org.il/WarningMessages/alert/alerts.json");
-                var data = await res.json();
-                var statusBox = document.getElementById('liveStatus');
-                var activeContainer = document.getElementById('activeCitiesContainer');
-                var audio = document.getElementById('alertSound');
+    try {
+        var targetUrl = encodeURIComponent("https://www.oref.org.il/WarningMessages/alert/alerts.json");
+        var res = await fetch(`https://api.allorigins.win/raw?url=${targetUrl}`);
+        var textData = await res.text();
+        
+        var statusBox = document.getElementById('liveStatus');
+        var activeContainer = document.getElementById('activeCitiesContainer');
+        var audio = document.getElementById('alertSound');
 
-                if (data && data.data && data.data.length > 0) {
-                    statusBox.className = 'status-box active';
-                    statusBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> התראת צבע אדום פעילה ברגע זה!';
-                    activeContainer.innerHTML = '';
-                    data.data.forEach(function(city) {
-                        var badge = document.createElement('div');
-                        badge.className = 'city-badge';
-                        badge.innerHTML = `<span><i class="fa-solid fa-location-dot"></i> ${city}</span> <small>צבע אדום</small>`;
-                        activeContainer.appendChild(badge);
-                    });
-                    if (pageSoundEnabled && audio) { audio.play(); }
-                    var firstCity = encodeURIComponent(data.data[0]);
-                    document.getElementById('orefMapFrame').src = `https://maps.google.com/maps?width=100%25&height=600&hl=he&q=${firstCity}+Israel&t=&z=11&ie=UTF8&iwloc=B&output=embed`;
-                } else {
-                    statusBox.className = 'status-box';
-                    statusBox.innerHTML = '<i class="fa-solid fa-shield-halved"></i> אין התראות פעילות כעת בפיקוד העורף (שגרה)';
-                    activeContainer.innerHTML = `<p style="color: #94a3b8; text-align: center; margin-top: 40px;"><i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 28px; display: block; margin-bottom: 8px;"></i>אין התראות פעילות כעת</p>`;
-                }
-            } catch (e) {}
+        // אם אין אזעקות, פיקוד העורף מחזיר מחרוזת ריקה
+        if (!textData || textData.trim() === "") {
+            statusBox.className = 'status-box';
+            statusBox.innerHTML = '<i class="fa-solid fa-shield-halved"></i> אין התראות פעילות כעת בפיקוד העורף (שגרה)';
+            activeContainer.innerHTML = `<p style="color: #94a3b8; text-align: center; margin-top: 40px;"><i class="fa-solid fa-check-circle" style="color: #4ade80; font-size: 28px; display: block; margin-bottom: 8px;"></i>אין התראות פעילות כעת</p>`;
+            return;
         }
+
+        var data = JSON.parse(textData);
+
+        if (data && data.data && data.data.length > 0) {
+            statusBox.className = 'status-box active';
+            statusBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> התראת צבע אדום פעילה ברגע זה!';
+            activeContainer.innerHTML = '';
+            data.data.forEach(function(city) {
+                var badge = document.createElement('div');
+                badge.className = 'city-badge';
+                badge.innerHTML = `<span><i class="fa-solid fa-location-dot"></i> ${city}</span> <small>צבע אדום</small>`;
+                activeContainer.appendChild(badge);
+            });
+            if (pageSoundEnabled && audio) { audio.play(); }
+            var firstCity = encodeURIComponent(data.data[0]);
+            document.getElementById('orefMapFrame').src = `https://maps.google.com/maps?width=100%25&height=600&hl=he&q=${firstCity}+Israel&t=&z=11&ie=UTF8&iwloc=B&output=embed`;
+        }
+    } catch (e) {
+        console.log("בדיקת שגרה");
+    }
+}
 
         fetchAlertsHistory();
         setInterval(checkLiveAlerts, 3000);
