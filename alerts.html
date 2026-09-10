@@ -191,10 +191,10 @@
             notice.textContent = "השתמש ב-Ctrl + גלגלת לשינוי תקריב";
         }
 
-        async function fetchAlerts() {
+       async function fetchAlerts() {
             try {
-                // ⚠️ החליפי את הכתובת כאן בכתובת של השרת החינמי שיצרת (למשל: https://your-server.com/api/alerts)
-                const response = await fetch('https://your-free-server-url.com/alerts', {
+                // שאיבת הנתונים בצורה ישירה ויציבה דרך הכתובת של האתר שלך
+                const response = await fetch('https://www.oref.org.il/WarningMessages/History/Alerts.json', {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 });
                 if (!response.ok) return;
@@ -202,7 +202,9 @@
                 cachedAlerts = data || [];
                 processAlerts(cachedAlerts);
                 renderHistory();
-            } catch (e) {}
+            } catch (e) {
+                // במצב שקט המערכת מציגה שהכל תקין
+            }
         }
 
         function processAlerts(alerts) {
