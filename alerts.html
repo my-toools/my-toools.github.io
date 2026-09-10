@@ -20,13 +20,14 @@
 
         .container { max-width: 1280px; margin: 40px auto; padding: 0 20px; }
         
-        /* פאנל כהה ויוקרתי סביב כותרת העמוד */
-        .page-header-card { background: #131c2e; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
-        .page-header-card h1 { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        .page-header-card p { color: #94a3b8; font-size: 16px; margin: 0; }
+        /* כותרת ראשית מקצועית ויוקרתית */
+        .page-header-card { background: #131c2e; border: 1px solid #1e293b; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; position: relative; overflow: hidden; }
+        .page-header-card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: #0284c7; }
+        .page-header-card h1 { font-size: 30px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .page-header-card p { color: #94a3b8; font-size: 15px; margin: 0; font-weight: 400; }
 
         /* פעמון אדום שזז ורוטט אך ורק בזמן אזעקה פעילה */
-        .live-alarm-icon { color: #ef4444; font-size: 28px; transition: color 0.3s; }
+        .live-alarm-icon { color: #ef4444; font-size: 26px; transition: color 0.3s; }
         .live-alarm-icon.active { animation: alarm-ring 0.6s ease-in-out infinite alternate; }
         @keyframes alarm-ring { 
             0% { transform: rotate(-15deg) scale(1); } 
@@ -53,7 +54,7 @@
         .map-tool-btn { background: #1e293b; color: #cbd5e1; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .map-tool-btn:hover, .map-tool-btn.active { background: #0284c7; color: white; }
 
-        .map-iframe { width: 100%; height: 100%; border: none; filter: brightness(0.85) contrast(1.1); transition: filter 0.3s ease; }
+        .map-iframe { width: 100%; height: 100%; border: none; filter: brightness(1) contrast(1); transition: filter 0.3s ease; pointer-events: auto; }
         .map-iframe.dark-mode { filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.2); }
         .map-iframe.satellite-mode { filter: brightness(1) contrast(1.2) saturate(1.3); }
         .map-provider-credit { position: absolute; bottom: 8px; right: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; }
@@ -76,13 +77,13 @@
     <div id="main-header"></div>
 
     <main class="container">
-        <!-- פאנל כהה סביב כותרת העמוד -->
+        <!-- כותרת ראשית בתוך פאנל כהה יוקרתי -->
         <div class="page-header-card">
             <h1>
                 <i id="header-alarm-icon" class="fa-solid fa-bell live-alarm-icon"></i> 
                 מרכז ההתרעות והחירום הארצי
             </h1>
-            <p>מעקב ממוקד בזמן אמת, מפה לאומית והגדרות התראה אישיות.</p>
+            <p>מערכת מעקב וניטור בזמן אמת אחר נתוני פיקוד העורף והגדרות אישיות מתקדמות</p>
         </div>
 
         <div class="grid-layout">
@@ -113,7 +114,7 @@
                     </select>
 
                     <button class="btn-primary" onclick="saveSettings()">שמור הגדרות אישיות</button>
-                    <div id="save-msg" style="text-align: center; margin-top: 10px; color: #22c55e; font-size: 13px; display:none;">✔ ההגדרות נשמרו בהצלחה בזיכרון המערכת</div>
+                    <div id="save-msg" style="text-align: center; margin-top: 10px; color: #22c55e; font-size: 13px; display:none;">✔ ההגדרות נשמרו בהצלחה</div>
                 </div>
             </div>
 
@@ -123,13 +124,13 @@
                         <span><i class="fa-solid fa-map-location-dot" style="color: #38bdf8;"></i> מפת התרעות ארצית חיה</span>
                     </div>
                     <div class="map-wrapper">
-                        <!-- סרגל וריאציות למפה -->
+                        <!-- סרגל וריאציות למפה (ברירת מחדל על רגיל) -->
                         <div class="map-toolbar">
-                            <button class="map-tool-btn active" onclick="setMapStyle('dark', this)">מצב חשוך</button>
-                            <button class="map-tool-btn" onclick="setMapStyle('standard', this)">רגיל</button>
+                            <button class="map-tool-btn" onclick="setMapStyle('dark', this)">מצב חשוך</button>
+                            <button class="map-tool-btn active" onclick="setMapStyle('standard', this)">רגיל</button>
                             <button class="map-tool-btn" onclick="setMapStyle('satellite', this)">לוויין/תלת מימד</button>
                         </div>
-                        <iframe id="google-map-frame" class="map-iframe dark-mode" 
+                        <iframe id="google-map-frame" class="map-iframe" 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3448135.534293883!2d34.851612!3d31.046051!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDAyJzQ1LjgiTiAzNDfCsDUxJzA1LjgiRQ!5e0!3m2!1siw!2sil!4v1650000000000!5m2!1siw!2sil" 
                             allowfullscreen="" loading="lazy">
                         </iframe>
@@ -140,15 +141,17 @@
 
         </div>
 
+        <!-- פאנל היסטוריה עם כותרת במרכז ובחירת טווח מצויה בצד ימין -->
         <div class="card" style="margin-top: 24px;">
-            <div class="section-title" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
-                <!-- סינון היסטוריה מיושר לימין -->
-                <select id="history-filter" class="form-control" style="width: 180px; margin-bottom: 0; padding: 6px 10px; font-size: 13px;" onchange="renderHistory()">
+            <div class="section-title" style="justify-content: center; position: relative;">
+                <!-- בחירת טווח זמנים מיושר לימין -->
+                <select id="history-filter" class="form-control" style="width: 170px; margin-bottom: 0; padding: 6px 10px; font-size: 13px; position: absolute; right: 18px;" onchange="renderHistory()">
                     <option value="24h">24 שעות אחרונות</option>
                     <option value="week">שבוע אחרון</option>
                     <option value="month">חודש אחרון</option>
                 </select>
+                <!-- כותרת במרכז -->
+                <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
             <div class="history-list" id="history-alerts-container">
                 <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מהשרת...</p>
