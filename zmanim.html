@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לוח זמנים עולמי, פרשת השבוע ולוח עברי-לועזי פרימיום - NETOOLS</title>
+    <title>זמני שבת, הלכה ולוח שנה פרימיום - NETOOLS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -354,7 +354,7 @@
         <!-- 1. פרשת השבוע, מולדות וכניסת שבת -->
         <div class="top-section-grid">
             <div class="info-box">
-                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע / חג קרוב</h3>
+                <h3><i class="fa-solid fa-book-quran"></i> פרשת השבוע הקרובה</h3>
                 <div class="val" id="shabbatParasha">טוען...</div>
             </div>
             <div class="info-box molad">
@@ -460,20 +460,24 @@
         document.getElementById('shabbatParasha').innerText = "טוען...";
         document.getElementById('moladText').innerText = "טוען מולד...";
 
-        // 1. שליפת שבת, חגים ופרשת השבוע הקרובה
+        // 1. שליפת שבת ופרשת השבוע בלבד (בעדיפות עליונה לפרשת השבוע בעברית)
         try {
             var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                var holidayItem = shabbatData.items.find(i => i.category === 'holiday');
+                // חיפוש מובהק של פרשת השבוע (Parashat)
                 var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
                 
-                let displayName = "נצבים-וילך";
-                if (holidayItem) {
-                    displayName = holidayItem.hebrew || holidayItem.title;
-                } else if (parashaItem) {
+                let displayName = "האזינו"; // פרשת השבוע לשבת הקרובה (ספטמבר 2026)
+                if (parashaItem) {
                     displayName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
+                } else {
+                    // גיבוי לפי רשימת פרשות השנה אם ה-API מחזיר חג
+                    var holidayItem = shabbatData.items.find(i => i.category === 'holiday');
+                    if (holidayItem) {
+                        displayName = holidayItem.hebrew || holidayItem.title;
+                    }
                 }
                 document.getElementById('shabbatParasha').innerText = displayName;
 
@@ -491,10 +495,10 @@
             }
         } catch(e) {
             console.error("שגיאה בנתוני שבת", e);
-            document.getElementById('shabbatParasha').innerText = "נצבים-וילך";
+            document.getElementById('shabbatParasha').innerText = "האזינו";
         }
 
-        // 2. מולדות החודש העברי המדויק
+        // 2. מולדות החודש העברי המדויק בעברית
         try {
             let now = new Date();
             let hebConvRes = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}&g2h=1`);
@@ -544,7 +548,7 @@
         renderCalendar();
     }
 
-    // פונקציית לוח שנה מהירה ונקייה ללא שגיאות או כפילויות מיותרות
+    // פונקציית לוח שנה מהירה ונקייה בעברית בלבד
     async function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -557,12 +561,11 @@
 
         let monthEvents = {};
         try {
-            let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=293397&m=55`);
+            let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=293397&m=55&lg=he`);
             let data = await res.json();
             if (data && data.items) {
                 data.items.forEach(item => {
                     let dStr = item.date.split('T')[0];
-                    // סינון נקי של אירועים רלוונטיים בלבד (ללא זמני הדלקה טכניים בתוך הקוביות)
                     if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat') {
                         if (!monthEvents[dStr]) monthEvents[dStr] = [];
                         monthEvents[dStr].push(item.hebrew || item.title);
@@ -637,7 +640,7 @@
         if(!val) { alert('נא לבחור תאריך לועזי'); return; }
         let d = new Date(val);
         try {
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${d.getFullYear()}&gm=${d.getMonth()+1}&gd=${d.getDate()}&g2h=1`);
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${d.getFullYear()}&gm=${d.getMonth()+1}&gd=${d.getDate()}&g2h=1&lg=he`);
             let data = await res.json();
             if(data && data.hebrew) {
                 document.getElementById('convertResult').innerText = `תאריך עברי: ${data.hebrew}`;
@@ -653,7 +656,7 @@
         let birthDate = new Date(val);
         let barMitzvahYear = birthDate.getFullYear() + 13;
         try {
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${barMitzvahYear}&gm=${birthDate.getMonth()+1}&gd=${birthDate.getDate()}&g2h=1`);
+            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${barMitzvahYear}&gm=${birthDate.getMonth()+1}&gd=${birthDate.getDate()}&g2h=1&lg=he`);
             let data = await res.json();
             if(data && data.hebrew) {
                 document.getElementById('mitzvahResult').innerText = `בר/בת מצווה עברית: גיל 13 חל ב-${data.hebrew}`;
