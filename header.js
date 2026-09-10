@@ -16,7 +16,7 @@ if (!favicon) {
 }
 favicon.href = "favicon.png";
 
-// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר
+// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר (עם הגדלת שני הסרגלים בראש האתר)
 const styleId = "netools-nav-style";
 if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
@@ -52,12 +52,13 @@ if (!document.getElementById(styleId)) {
             top: 0;
             z-index: 10000;
             width: 100%;
+            padding: 6px 0;
         }
         
         .header-container {
-            max-width: 1400px;
+            max-width: 1480px;
             margin: 0 auto;
-            padding: 12px 20px;
+            padding: 18px 24px;
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
@@ -65,7 +66,7 @@ if (!document.getElementById(styleId)) {
         }
         
         .brand-name {
-            font-size: 22px;
+            font-size: 26px !important;
             font-weight: 800;
             color: #ffffff !important;
             text-decoration: none;
@@ -94,8 +95,8 @@ if (!document.getElementById(styleId)) {
             color: #ffffff !important;
             text-decoration: none;
             font-weight: 500;
-            font-size: 14px;
-            padding: 6px 13px;
+            font-size: 15px !important;
+            padding: 9px 16px !important;
             border-radius: 6px;
             transition: all 0.2s ease-in-out;
             display: inline-block;
@@ -118,17 +119,17 @@ if (!document.getElementById(styleId)) {
         }
 
         .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
-        .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
+        .center-logo img { height: 38px; width: 38px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
         .center-logo img:hover { transform: scale(1.1); }
 
         .header-alert-btn {
             color: #ef4444 !important;
-            font-size: 20px;
+            font-size: 22px;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 6px 10px;
+            padding: 8px 12px;
             border-radius: 8px;
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.4);
@@ -140,13 +141,13 @@ if (!document.getElementById(styleId)) {
         }
 
         .secondary-bar {
-            background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
+            background: #1e293b; color: #cbd5e1; font-size: 14.5px !important; padding: 12px 18px !important; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
         }
         .secondary-container {
-            max-width: 1550px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 10px; overflow-x: auto; white-space: nowrap;
+            max-width: 1650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
         }
         .secondary-container::-webkit-scrollbar { display: none; }
-        .widget-item { display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
+        .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
         .widget-item strong { color: #ffffff; }
 
         .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
@@ -199,7 +200,7 @@ if (!document.getElementById(styleId)) {
         footer.main-footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
-            .secondary-container { font-size: 11px; padding: 5px; }
+            .secondary-container { font-size: 12px; padding: 6px; }
             footer.main-footer { font-size: 13px; padding: 20px 10px; }
             body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
                 max-width: 100% !important;
