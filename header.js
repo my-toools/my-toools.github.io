@@ -303,8 +303,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // תאריך עברי
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
-
-    fetch("https://www.hebcal.com/etc/hdate-he.json")
+    
+    fetch('https://www.hebcal.com/converter?cfg=json&g2h=1&strict=1')
         .then(res => res.json())
         .then(data => {
             const hebEl = document.getElementById("nav-hebrew");
