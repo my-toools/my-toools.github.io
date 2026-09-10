@@ -23,10 +23,15 @@
         
         /* כותרת ראשית */
         .page-header { text-align: center; margin-bottom: 35px; }
-        .page-header h1 { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .page-header h1 { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
         .page-header p { color: #94a3b8; font-size: 16px; }
 
-        /* פריסת עמוד: ימין אזעקות והגדרות, שמאל מפה */
+        /* אייקון אזעקה מתקדם (מסתובב ומהבהב בזמן אמת) */
+        .live-alarm-icon { color: #64748b; font-size: 28px; transition: color 0.3s; }
+        .live-alarm-icon.active { color: #ef4444; animation: alarm-spin 1.2s linear infinite; }
+        @keyframes alarm-spin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(15deg) scale(1.2); } 100% { transform: rotate(-15deg) scale(1.2); } }
+
+        /* פריסת עמוד */
         .grid-layout { display: grid; grid-template-columns: 420px 1fr; gap: 24px; align-items: start; }
         @media (max-width: 1024px) { .grid-layout { grid-template-columns: 1fr; } }
 
@@ -36,15 +41,16 @@
         .form-control { width: 100%; padding: 12px 16px; margin-bottom: 16px; background: #0b0f19; border: 1px solid #334155; color: white; border-radius: 10px; font-size: 14px; transition: border-color 0.2s; }
         .form-control:focus { outline: none; border-color: #0284c7; }
         
-        .btn-primary { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s, transform 0.1s; }
+        .btn-primary { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
         .btn-primary:hover { background: #0ea5e9; }
 
-        /* אזור מפה יוקרתי בצד שמאל */
+        /* אזור מפה לאומית מלאה בצד שמאל */
         .map-wrapper { background: #0b0f19; border: 1px solid #1e293b; border-radius: 14px; min-height: 520px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 20px; text-align: center; }
-        .map-icon { font-size: 72px; color: #334155; margin-bottom: 16px; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        /* חלונית אזעקות פעילות */
+        
+        /* סימולציית מפת ישראל קבועה שנדלקת באדום באזורים פעילים */
+        .map-visual { width: 100%; height: 100%; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: radial-gradient(circle, #1e293b 0%, #0b0f19 80%); border-radius: 10px; border: 1px dashed #334155; }
+        .map-visual.alert-active { border-color: #ef4444; box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.2); }
+        
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
         .alert-item-title { font-weight: 700; color: #fca5a5; font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; line-height: 1.4; }
@@ -53,9 +59,9 @@
         .history-list { max-height: 320px; overflow-y: auto; padding-left: 4px; }
         .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #38bdf8; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
 
-        /* הבהרה משפטית תחתונה */
-        .legal-disclaimer { background: #131c2e; border: 1px dashed #334155; border-radius: 12px; padding: 16px 20px; text-align: center; color: #94a3b8; font-size: 13px; margin-top: 30px; line-height: 1.6; }
-        .legal-disclaimer strong { color: #cbd5e1; }
+        /* הבהרה משפטית מעוצבת ונגישה */
+        .legal-disclaimer { background: #131c2e; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: right; color: #cbd5e1; font-size: 13px; margin-top: 30px; line-height: 1.6; }
+        .legal-disclaimer-title { font-weight: 700; color: #f59e0b; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -70,7 +76,10 @@
 
     <main class="container">
         <div class="page-header">
-            <h1>מרכז ההתרעות והחירום הארצי</h1>
+            <h1>
+                <i id="header-alarm-icon" class="fa-solid fa-tower-broadcast live-alarm-icon"></i> 
+                מרכז ההתרעות והחירום הארצי
+            </h1>
             <p>מעקב ממוקד בזמן אמת, מפה לאומית והגדרות התראה אישיות.</p>
         </div>
 
@@ -78,7 +87,6 @@
             
             <!-- 📁 צד ימין: הגדרות ואזעקות בזמן אמת -->
             <div>
-                <!-- הגדרות אישיות -->
                 <div class="card">
                     <h3 style="font-size: 18px; margin-bottom: 16px; color: #f8fafc;"><i class="fa-solid fa-sliders" style="color: #0284c7;"></i> הגדרות התראה אישיות</h3>
                     
@@ -96,7 +104,6 @@
                     <div id="save-msg" style="text-align: center; margin-top: 10px; color: #22c55e; font-size: 13px; display:none;">✔ ההגדרות נשמרו בהצלחה בזיכרון המערכת</div>
                 </div>
 
-                <!-- אזעקות בזמן אמת -->
                 <div class="card">
                     <h3 style="font-size: 18px; margin-bottom: 16px; color: #ef4444;"><i class="fa-solid fa-bell"></i> אזעקות פעילות כעת</h3>
                     <div id="active-alerts-container" style="max-height: 380px; overflow-y: auto;">
@@ -105,14 +112,16 @@
                 </div>
             </div>
 
-            <!-- 🗺️ צד שמאל: מפת ישראל בזמן אמת -->
+            <!-- 🗺️ צד שמאל: מפת ישראל המלאה והדינמית -->
             <div>
                 <div class="card" style="height: calc(100% - 24px); display: flex; flex-direction: column;">
                     <h3 style="font-size: 18px; margin-bottom: 16px; color: #f8fafc;"><i class="fa-solid fa-map-location-dot" style="color: #38bdf8;"></i> מפת התרעות ארצית חיה</h3>
-                    <div class="map-wrapper" id="israel-map-box">
-                        <i class="fa-solid fa-earth-americas map-icon"></i>
-                        <p style="color: #cbd5e1; font-weight: 600; font-size: 16px; margin-bottom: 6px;">ממתין לנתוני פיקוד העורף בזמן אמת</p>
-                        <p style="color: #64748b; font-size: 13px; max-width: 320px;">אזורים שבהם תופעל התרעה יואדמו באופן אוטומטי על גבי המערכת.</p>
+                    <div class="map-wrapper">
+                        <div id="map-visual-box" class="map-visual">
+                            <i class="fa-solid fa-map" style="font-size: 64px; color: #334155; margin-bottom: 16px;"></i>
+                            <p id="map-status-text" style="color: #cbd5e1; font-weight: 600; font-size: 16px; margin-bottom: 6px;">מפת ישראל פעילה - ממתינה לנתונים</p>
+                            <p id="map-active-cities" style="color: #ef4444; font-size: 14px; font-weight: 700; max-width: 340px; margin-top: 10px;"></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,16 +136,19 @@
             </div>
         </div>
 
-        <!-- ⚖️ הבהרה משפטית ואחריות -->
+        <!-- ⚖️ הבהרה משפטית נגישה עם כותרת מובחנת -->
         <div class="legal-disclaimer">
-            <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; margin-left: 6px;"></i>
-            <strong>הבהרה משפטית ואחריות מערכתית:</strong> הנתונים באתר מובאים כשירות לנוחיות הגולשים ומתבססים על המידע המפורסם לציבור. עם זאת, המערכת אינה מהווה תחרוֹת או ערוץ רשמי מוסמך, וייתכנו עיכובים טכניים או פערי זמנים. <strong>בכל אירוע אמת, ההנחיות המחייבות והמעודכנות ביותר בכל רגע נתון הן אך ורק אלו של פיקוד העורף באפליקציה ובאמצעים הרשמיים.</strong>
+            <div class="legal-disclaimer-title">
+                <i class="fa-solid fa-triangle-exclamation"></i> הבהרה משפטית ואחריות מערכתית
+            </div>
+            <p style="margin: 0; color: #94a3b8;">
+                הנתונים באתר מובאים כשירות לנוחיות הגולשים ומתבססים על המידע המפורסם לציבור. מערכת זו אינה מהווה ערוץ רשמי מוסמך, וייתכנו עיכובים טכניים או פערי זמנים בהעברת הנתונים. <strong>בכל אירוע אמת, ההנחיות המחייבות והמעודכנות ביותר בכל רגע נתון הן אך ורק אלו של פיקוד העורף באפליקציה ובערוצים הרשמיים המוסמכים.</strong>
+            </p>
         </div>
     </main>
 
     <script src="header.js"></script>
     <script>
-        // ניהול שמירת העדפות
         document.getElementById('user-city').value = localStorage.getItem('netools_alert_city') || '';
         document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
 
@@ -153,7 +165,6 @@
             setTimeout(() => msg.style.display = 'none', 3000);
         }
 
-        // משיכת נתונים מהירה ואמינה (כל 2 שניות)
         async function fetchAlerts() {
             try {
                 const response = await fetch('https://www.oref.org.il/WarningMessages/History/Alerts.json', {
@@ -163,7 +174,7 @@
                 const data = await response.json();
                 processAlerts(data);
             } catch (e) {
-                // מנגנון גיבוי שקט למניעת שגיאות קונסול
+                // שקט במקרה של חסימת CORS דפדפן
             }
         }
 
@@ -173,21 +184,39 @@
             const activeContainer = document.getElementById('active-alerts-container');
             const historyContainer = document.getElementById('history-alerts-container');
             const banner = document.getElementById('live-alert-banner');
+            const alarmIcon = document.getElementById('header-alarm-icon');
+            const mapBox = document.getElementById('map-visual-box');
+            const mapCitiesText = document.getElementById('map-active-cities');
+            const mapStatusText = document.getElementById('map-status-text');
 
             let isUserAlerted = false;
+            let allActiveCities = [];
 
             if (!alerts || alerts.length === 0) {
                 activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
                 historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 15px 0;">אין אירועים נוספים בהיסטוריה מהיממה האחרונה.</p>';
                 banner.style.display = 'none';
+                alarmIcon.classList.remove('active');
+                mapBox.classList.remove('alert-active');
+                mapStatusText.textContent = "מפת ישראל פעילה - הכל שקט כרגע";
+                mapCitiesText.textContent = "";
                 return;
             }
+
+            // הפעלת האייקון והאדום במפה בזמן אמת
+            alarmIcon.classList.add('active');
+            mapBox.classList.add('alert-active');
+            mapStatusText.textContent = "🚨 התרעות פעילות כעת באזורים הבאים:";
 
             let activeHtml = '';
             let historyHtml = '';
 
             alerts.forEach((alert, index) => {
                 const cities = alert.data || [];
+                if (index === 0) {
+                    allActiveCities = cities;
+                }
+
                 if (userCity !== '' && cities.some(c => c.includes(userCity))) {
                     isUserAlerted = true;
                 }
@@ -212,6 +241,7 @@
 
             activeContainer.innerHTML = activeHtml || '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">הכל שקט כרגע.</p>';
             historyContainer.innerHTML = historyHtml || '<p style="color: #64748b; font-size: 14px; text-align: center;">אין אירועים נוספים.</p>';
+            mapCitiesText.textContent = allActiveCities.join(', ');
 
             if (isUserAlerted && alertMode === 'full') {
                 banner.style.display = 'block';
