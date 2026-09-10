@@ -108,16 +108,41 @@ document.addEventListener("DOMContentLoaded", function () {
             .center-logo img:hover { transform: scale(1.1); }
 
             /* סרגל משני עם ניגודיות גבוהה */
+           /* סרגל משני מרוכז ומסודר */
             .secondary-bar {
-                background: #131c2e; color: #f1f5f9; font-size: 13px; padding: 8px 14px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
+                background: #131c2e; 
+                color: #f1f5f9; 
+                font-size: 13px; 
+                padding: 10px 14px; 
+                border-top: 1px solid #334155; 
+                width: 100%; 
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             .secondary-container {
-                max-width: 1550px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 12px; overflow-x: auto; white-space: nowrap;
+                max-width: 1600px; 
+                width: 100%;
+                margin: 0 auto; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                flex-wrap: nowrap; 
+                gap: 20px; 
+                overflow-x: auto; 
+                white-space: nowrap;
             }
             .secondary-container::-webkit-scrollbar { display: none; }
-            .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: #f8fafc; }
+            .widget-item { 
+                display: inline-flex; 
+                align-items: center; 
+                justify-content: center;
+                gap: 6px; 
+                font-weight: 600; 
+                color: #f8fafc; 
+            }
             .widget-item strong { color: #ffffff; }
-
             .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #fbbf24; }
             .icon-parasha { color: #c084fc; } .icon-sun { color: #fbbf24; } .icon-usd { color: #4ade80; }
             .icon-eur { color: #22d3ee; } .icon-btc { color: #fbbf24; } .icon-prime { color: #fb923c; } .icon-cpi { color: #c084fc; } .icon-wage { color: #f472b6; }
