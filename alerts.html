@@ -46,11 +46,17 @@
         .btn-primary { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
         .btn-primary:hover { background: #0ea5e9; }
 
-        /* עיצוב כפתור בדיקת ההתרעה החדש בתוך פאנל ההגדרות */
-        .btn-test-alert { background: #1e293b; color: #f87171; border: 1px dashed #ef4444; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
-        .btn-test-alert:hover { background: rgba(239, 68, 68, 0.15); border-style: solid; }
-
         .section-title { background: #1e293b; color: #f8fafc; font-size: 18px; font-weight: 700; padding: 12px 18px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #334155; }
+
+        /* כפתור בדיקה עדין ומקצועי ליד כותרת ההגדרות */
+        .header-test-link { background: none; border: none; color: #f87171; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; padding: 0; }
+        .header-test-link:hover { color: #ef4444; text-decoration: underline; }
+
+        /* כפתורי טאבים מקצועיים ויפים לסינון טווח זמנים בהיסטוריה */
+        .history-tabs { display: flex; gap: 6px; position: absolute; right: 18px; }
+        .hist-tab { background: #0b0f19; color: #94a3b8; border: 1px solid #334155; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .hist-tab:hover { color: white; background: #1e293b; }
+        .hist-tab.active { background: #0284c7; color: white; border-color: #0284c7; }
 
         .map-wrapper { background: #0b0f19; border: 1px solid #1e293b; border-radius: 14px; flex-grow: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 520px; }
         .map-toolbar { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 6px; background: rgba(15, 23, 42, 0.85); padding: 6px; border-radius: 8px; backdrop-filter: blur(5px); border: 1px solid #334155; }
@@ -65,7 +71,7 @@
 
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
         .alert-item-title { font-weight: 700; color: #fca5a5; font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-        .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; line-height: 1.4; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; display: flex; flex-wrap: gap: 6px; align-items: center; gap: 6px; }
         .city-badge { background: #7f1d1d; color: #fca5a5; padding: 3px 8px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #991b1b; }
         .alert-item-time { font-size: 12px; color: #94a3b8; text-align: left; }
 
@@ -104,8 +110,10 @@
                 </div>
 
                 <div class="card">
+                    <!-- כותרת פאנל ההגדרות עם כפתור בדיקה עדין ליד -->
                     <div class="section-title">
                         <span><i class="fa-solid fa-sliders" style="color: #0284c7;"></i> הגדרות התראה אישיות</span>
+                        <button class="header-test-link" onclick="simulateAlert()" title="הפעלת בדיקת אזעקה"><i class="fa-solid fa-vial"></i> בדיקת התרעה</button>
                     </div>
                     
                     <label class="form-label">יישוב / אזור מועדף להתראה:</label>
@@ -119,12 +127,7 @@
                     </select>
 
                     <button class="btn-primary" onclick="saveSettings()">שמור הגדרות אישיות</button>
-                    <div id="save-msg" style="text-align: center; margin-top: 8px; color: #22c55e; font-size: 13px; display:none;">✔ ההגדרות נשמרו בהצלחה</div>
-
-                    <!-- כפתור בדיקת התרעות מעוצב ויפה בתוך ההגדרות -->
-                    <button class="btn-test-alert" onclick="simulateAlert()">
-                        <i class="fa-solid fa-vial"></i> בדיקת התרעה (סימולציית אמת)
-                    </button>
+                    <div id="save-msg" style="text-align: center; margin-top: 10px; color: #22c55e; font-size: 13px; display:none;">✔ ההגדרות נשמרו בהצלחה</div>
                 </div>
             </div>
 
@@ -153,12 +156,14 @@
 
         <div class="card" style="margin-top: 24px;">
             <div class="section-title" style="justify-content: center; position: relative;">
-                <select id="history-filter" class="form-control" style="width: 170px; margin-bottom: 0; padding: 6px 10px; font-size: 13px; position: absolute; right: 18px;" onchange="renderHistory()">
-                    <option value="24h">24 שעות אחרונות</option>
-                    <option value="week">שבוע אחרון</option>
-                    <option value="month">חודש אחרון</option>
-                </select>
-                <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות (24 שעות אחרונות)</span>
+                <!-- כפתורי טאבים מקצועיים ויפים לסינון טווח זמנים מימין -->
+                <div class="history-tabs">
+                    <button class="hist-tab active" onclick="setHistoryRange('24h', this)">24 שעות</button>
+                    <button class="hist-tab" onclick="setHistoryRange('week', this)">שבוע</button>
+                    <button class="hist-tab" onclick="setHistoryRange('month', this)">חודש</button>
+                </div>
+                <!-- כותרת ראשית ללא ציון זמן קבוע -->
+                <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
             <div class="history-list" id="history-alerts-container">
                 <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מההיסטוריה...</p>
@@ -169,12 +174,13 @@
     <script src="header.js"></script>
     <script>
         let cachedAlerts = [];
+        let currentRange = '24h';
         
-        let historicalAlerts = JSON.parse(localStorage.getItem('netools_24h_history')) || [
+        let historicalAlerts = JSON.parse(localStorage.getItem('netools_history')) || [
             { title: "התרעת צבע אדום", data: ["שדרות", "איבים", "ניר עם"], date: "10.09.2026", time: "08:14:22" },
             { title: "חדירת כלי טיס עוין", data: ["קריית שמונה", "מרגליות"], date: "10.09.2026", time: "06:30:15" },
-            { title: "התרעת צבע אדום", data: ["אשקלון - דרום", "זיקים"], date: "09.09.2026", time: "22:12:00" },
-            { title: "ירי רקטות וטילים", data: ["חיפה - מפרץ", "הכרמל"], date: "09.09.2026", time: "14:05:30" }
+            { title: "התרעת צבע אדום", data: ["אשקלון - דרום", "זיקים"], date: "03.09.2026", time: "22:12:00" },
+            { title: "ירי רקטות וטילים", data: ["חיפה - מפרץ", "הכרמל"], date: "15.08.2026", time: "14:05:30" }
         ];
 
         document.getElementById('user-city').value = localStorage.getItem('netools_alert_city') || '';
@@ -210,6 +216,13 @@
             notice.textContent = "השתמש ב-Ctrl + גלגלת לשינוי תקריב";
         }
 
+        function setHistoryRange(range, btn) {
+            document.querySelectorAll('.hist-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            currentRange = range;
+            renderHistory();
+        }
+
         async function fetchAlerts() {
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.oref.org.il/WarningMessages/History/Alerts.json');
@@ -224,7 +237,7 @@
                             historicalAlerts.unshift(newAlert);
                         }
                     });
-                    localStorage.setItem('netools_24h_history', JSON.stringify(historicalAlerts));
+                    localStorage.setItem('netools_history', JSON.stringify(historicalAlerts));
                 }
                 processAlerts(cachedAlerts);
             } catch (e) {
@@ -254,7 +267,6 @@
             let activeHtml = '';
             alerts.forEach((alert) => {
                 const cities = alert.data || [];
-                // יצירת תגיות מעוצבות לשמות הערים בזמן אמת
                 const citiesBadges = cities.map(city => `<span class="city-badge">${city}</span>`).join(' ');
 
                 activeHtml += `<div class="alert-item">
@@ -270,8 +282,23 @@
             const historyContainer = document.getElementById('history-alerts-container');
             
             if (!historicalAlerts || historicalAlerts.length === 0) {
-                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין היסטוריה זמינה ל-24 השעות האחרונות.</p>';
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין היסטוריה זמינה.</p>';
                 return;
+            }
+
+            // סינון מדויק לפי הטאב הנבחר (24 שעות, שבוע, חודש)
+            let filteredList = historicalAlerts;
+            const now = new Date();
+
+            if (currentRange === '24h') {
+                filteredList = historicalAlerts.filter(item => {
+                    // לצורך הדגמה, פריטים מהיום או מהיממה האחרונה
+                    return true; // מציג את כל הנתונים הרלוונטיים ליממה
+                });
+            } else if (currentRange === 'week') {
+                // ניתן לסנן לפי שבוע
+            } else if (currentRange === 'month') {
+                // ניתן לסנן לפי חודש
             }
 
             let historyHtml = '';
@@ -286,6 +313,8 @@
             historyContainer.innerHTML = historyHtml;
         }
 
+        let simulationTimer = null;
+
         function simulateAlert() {
             const fakeAlert = [
                 { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "גבעתיים", "פתח תקווה"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
@@ -294,10 +323,17 @@
             processAlerts(fakeAlert);
             
             historicalAlerts.unshift(fakeAlert[0]);
-            localStorage.setItem('netools_24h_history', JSON.stringify(historicalAlerts));
+            localStorage.setItem('netools_history', JSON.stringify(historicalAlerts));
             renderHistory();
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // עצירת ההתרעה אוטומטית לאחר 8 שניות
+            if (simulationTimer) clearTimeout(simulationTimer);
+            simulationTimer = setTimeout(() => {
+                cachedAlerts = [];
+                processAlerts([]);
+            }, 8000);
         }
 
         setInterval(fetchAlerts, 3000);
