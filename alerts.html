@@ -47,24 +47,15 @@
         .btn-primary { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
         .btn-primary:hover { background: #0ea5e9; }
 
-        /* כותרת מעוצבת למפה עם רקע כהה נעים */
-        .map-section-title { background: #1e293b; color: #f8fafc; font-size: 18px; font-weight: 700; padding: 10px 16px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; border: 1px solid #334155; }
+        /* כותרת מעוצבת עם רקע כהה לכל כותרת בעמוד */
+        .section-title { background: #1e293b; color: #f8fafc; font-size: 18px; font-weight: 700; padding: 12px 18px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; border: 1px solid #334155; }
 
-        /* אזור מפה מגניב עם אפשרויות תצוגה (חשוך, רגיל, לוויין) */
-        .map-wrapper { background: #0b0f19; border: 1px solid #1e293b; border-radius: 14px; height: 520px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-        
-        .map-toolbar { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 6px; background: rgba(15, 23, 42, 0.85); padding: 6px; border-radius: 8px; backdrop-filter: blur(5px); border: 1px solid #334155; }
-        .map-tool-btn { background: #1e293b; color: #cbd5e1; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .map-tool-btn:hover, .map-tool-btn.active { background: #0284c7; color: white; }
+        /* מפת ישראל ויזואלית רדאר בטוחה וחוקית לחלוטין */
+        .radar-map-wrapper { background: #0b0f19; border: 1px solid #1e293b; border-radius: 14px; height: 580px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; text-align: center; padding: 20px; }
+        .radar-circle { width: 220px; height: 220px; border: 2px dashed #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 4s linear infinite; }
+        @keyframes radar-pulse { 0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.1); } 70% { box-shadow: 0 0 0 30px rgba(2, 132, 199, 0); } 100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); } }
 
-        /* מסגרת מפה אמיתית מבוססת Google Maps Embed עם התאמה למצב חשוך/לוויין */
-        .map-iframe-container { width: 100%; height: 100%; border: none; filter: brightness(0.85) contrast(1.1); transition: filter 0.3s ease; }
-        .map-iframe-container.dark-mode { filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.2); }
-        .map-iframe-container.satellite-mode { filter: brightness(1) contrast(1.2) saturate(1.3); }
-
-        .map-provider-credit { position: absolute; bottom: 8px; right: 12px; background: rgba(15, 23, 42, 0.8); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #64748b; z-index: 10; }
-
-        /* חלונית אזעקות בולטת ומרכזית בראש צד ימין */
+        /* חלונית אזעקות מוגדלת ומרכזית בצד ימין */
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
         .alert-item-title { font-weight: 700; color: #fca5a5; font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; line-height: 1.4; }
@@ -72,10 +63,6 @@
 
         .history-list { max-height: 320px; overflow-y: auto; padding-left: 4px; }
         .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #38bdf8; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
-
-        /* הבהרה משפטית עדינה ומוקטנת עם רקע כהה ייעודי לכותרת בלבד */
-        .legal-disclaimer { background: #0f1523; border: 1px solid #1e293b; border-radius: 10px; padding: 14px 18px; text-align: right; color: #64748b; font-size: 11px; margin-top: 30px; line-height: 1.5; }
-        .legal-disclaimer-title { background: #1e293b; color: #94a3b8; font-weight: 600; font-size: 12px; padding: 4px 10px; border-radius: 6px; margin-bottom: 6px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -100,19 +87,38 @@
 
         <div class="grid-layout">
             
-            <!-- 📁 צד ימין: אזעקות בזמן אמת בראש, מתחתיהן ההגדרות -->
+            <!-- 📁 צד ימין: חלונית אזעקות מוגדלת ומרכזית -->
             <div>
-                <div class="card" style="border: 2px solid #334155;">
-                    <h3 style="font-size: 18px; margin-bottom: 16px; color: #ef4444; display: flex; align-items: center; gap: 8px;">
+                <div class="card" style="border: 2px solid #334155; min-height: 640px; display: flex; flex-direction: column;">
+                    <div class="section-title" style="color: #ef4444; border-color: #7f1d1d; background: #1a0f13;">
                         <i class="fa-solid fa-triangle-exclamation"></i> אזעקות פעילות כעת
-                    </h3>
-                    <div id="active-alerts-container" style="max-height: 380px; overflow-y: auto;">
-                        <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>
+                    </div>
+                    <div id="active-alerts-container" style="flex-grow: 1; max-height: 520px; overflow-y: auto;">
+                        <p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🗺️ צד שמאל: מפת רדאר ארצית חיה ובטוחה לחלוטין משפטית -->
+            <div>
+                <div class="card" style="display: flex; flex-direction: column; margin-bottom: 24px;">
+                    <div class="section-title">
+                        <i class="fa-solid fa-map-location-dot" style="color: #38bdf8;"></i> מפת התרעות ארצית חיה
+                    </div>
+                    <div class="radar-map-wrapper" id="radar-box">
+                        <div class="radar-circle">
+                            <i class="fa-solid fa-shield-halved" style="font-size: 48px; color: #0284c7;"></i>
+                        </div>
+                        <p id="map-status-text" style="color: #cbd5e1; font-weight: 600; font-size: 16px; margin-top: 20px; margin-bottom: 6px;">מערכת מעקב ארצית פעילה</p>
+                        <p id="map-active-cities" style="color: #ef4444; font-size: 14px; font-weight: 700; max-width: 360px;"></p>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h3 style="font-size: 18px; margin-bottom: 16px; color: #f8fafc;"><i class="fa-solid fa-sliders" style="color: #0284c7;"></i> הגדרות התראה אישיות</h3>
+                <!-- ⚙️ הגדרות אישיות (הועברו למטה עד קצה המפה) -->
+                <div class="card" style="margin-bottom: 0;">
+                    <div class="section-title">
+                        <i class="fa-solid fa-sliders" style="color: #0284c7;"></i> הגדרות התראה אישיות
+                    </div>
                     
                     <label class="form-label">יישוב / אזור מועדף להתראה:</label>
                     <input type="text" id="user-city" class="form-control" placeholder="למשל: תל אביב, באר שבע, חיפה...">
@@ -129,45 +135,16 @@
                 </div>
             </div>
 
-            <!-- 🗺️ צד שמאל: מפת ישראל אמיתית מבוססת Google Maps עם פיצ'רים מגניבים -->
-            <div>
-                <div class="card" style="height: calc(100% - 24px); display: flex; flex-direction: column;">
-                    <div class="map-section-title">
-                        <i class="fa-solid fa-map-location-dot" style="color: #38bdf8;"></i> מפת התרעות ארצית חיה
-                    </div>
-                    <div class="map-wrapper">
-                        <!-- סרגל כפתורים מגניב למפה (חשוך / רגיל / לוויין) -->
-                        <div class="map-toolbar">
-                            <button class="map-tool-btn active" onclick="setMapStyle('dark', this)">מצב חשוך</button>
-                            <button class="map-tool-btn" onclick="setMapStyle('standard', this)">רגיל</button>
-                            <button class="map-tool-btn" onclick="setMapStyle('satellite', this)">לוויין/תלת מימד</button>
-                        </div>
-
-                        <!-- הצגת מפת ישראל אמיתית -->
-                        <iframe id="google-map-frame" class="map-iframe-container dark-mode" 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3448135.534293883!2d34.851612!3d31.046051!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDAyJzQ1LjgiTiAzNDfCsDUxJzA1LjgiRQ!5e0!3m2!1siw!2sil!4v1650000000000!5m2!1siw!2sil" 
-                            allowfullscreen="" loading="lazy">
-                        </iframe>
-
-                        <div class="map-provider-credit">מפות באדיבות Google Maps</div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <!-- 📜 חלק תחתון: היסטוריית אירועים -->
-        <div class="card">
-            <h3 style="font-size: 18px; margin-bottom: 16px; color: #f8fafc;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות מהיממה האחרונה</h3>
+        <div class="card" style="margin-top: 24px;">
+            <div class="section-title">
+                <i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות מהיממה האחרונה
+            </div>
             <div class="history-list" id="history-alerts-container">
                 <p style="color: #64748b; font-size: 14px; text-align: center; padding: 15px 0;">טוען נתונים מהמערכת...</p>
             </div>
-        </div>
-
-        <!-- ⚖️ הבהרה משפטית עדינה ומוקטנת -->
-        <div class="legal-disclaimer">
-            <div class="legal-disclaimer-title">הבהרה משפטית ואחריות מערכתית</div>
-            הנתונים באתר מובאים כשירות לנוחיות הגולשים ומתבססים על המידע המפורסם לציבור. מערכת זו אינה מהווה ערוץ רשמי מוסמך, וייתכנו עיכובים טכניים או פערי זמנים בהעברת הנתונים. בכל אירוע אמת, ההנחיות המחייבות והמעודכנות ביותר בכל רגע נתון הן אך ורק אלו של פיקוד העורף באפליקציה ובערוצים הרשמיים המוסמכים.
         </div>
     </main>
 
@@ -187,16 +164,6 @@
             const msg = document.getElementById('save-msg');
             msg.style.display = 'block';
             setTimeout(() => msg.style.display = 'none', 3000);
-        }
-
-        function setMapStyle(mode, btn) {
-            document.querySelectorAll('.map-tool-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const frame = document.getElementById('google-map-frame');
-            frame.className = "map-iframe-container";
-            if (mode === 'dark') frame.classList.add('dark-mode');
-            if (mode === 'satellite') frame.classList.add('satellite-mode');
         }
 
         async function fetchAlerts() {
@@ -219,24 +186,37 @@
             const historyContainer = document.getElementById('history-alerts-container');
             const banner = document.getElementById('live-alert-banner');
             const alarmIcon = document.getElementById('header-alarm-icon');
+            const radarBox = document.getElementById('radar-box');
+            const mapCitiesText = document.getElementById('map-active-cities');
+            const mapStatusText = document.getElementById('map-status-text');
 
             let isUserAlerted = false;
+            let allActiveCities = [];
 
             if (!alerts || alerts.length === 0) {
-                activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
+                activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
                 historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 15px 0;">אין אירועים נוספים בהיסטוריה מהיממה האחרונה.</p>';
                 banner.style.display = 'none';
                 if (alarmIcon) alarmIcon.classList.remove('active');
+                radarBox.style.borderColor = "#1e293b";
+                mapStatusText.textContent = "מערכת מעקב ארצית פעילה - הכל שקט";
+                mapCitiesText.textContent = "";
                 return;
             }
 
             if (alarmIcon) alarmIcon.classList.add('active');
+            radarBox.style.borderColor = "#ef4444";
+            mapStatusText.textContent = "🚨 התרעות פעילות כעת באזורים הבאים:";
 
             let activeHtml = '';
             let historyHtml = '';
 
             alerts.forEach((alert, index) => {
                 const cities = alert.data || [];
+                if (index === 0) {
+                    allActiveCities = cities;
+                }
+
                 if (userCity !== '' && cities.some(c => c.includes(userCity))) {
                     isUserAlerted = true;
                 }
@@ -259,8 +239,9 @@
                 }
             });
 
-            activeContainer.innerHTML = activeHtml || '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">הכל שקט כרגע.</p>';
+            activeContainer.innerHTML = activeHtml || '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע.</p>';
             historyContainer.innerHTML = historyHtml || '<p style="color: #64748b; font-size: 14px; text-align: center;">אין אירועים נוספים.</p>';
+            mapCitiesText.textContent = allActiveCities.join(', ');
 
             if (isUserAlerted && alertMode === 'full') {
                 banner.style.display = 'block';
