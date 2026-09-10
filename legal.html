@@ -25,7 +25,7 @@
         :root {
             --bg-main: #f8fafc;
             --card-bg: #ffffff;
-            --header-card-bg: #0f172a; /* צבע כהה יוקרתי לקופסת הכותרת */
+            --header-card-bg: #0f172a; /* צבע כהה יוקרתי לכותרת */
             --input-bg: #f1f5f9;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
@@ -34,7 +34,7 @@
         }
 
         body {
-            background-color: var(--bg-main); /* רקע בהיר כמו שביקשת */
+            background-color: var(--bg-main);
             color: var(--text-primary);
             margin: 0;
             padding-top: 20px;
@@ -43,7 +43,7 @@
             line-height: 1.6;
         }
 
-        /* קופסת כותרת כהה, ממרכזת ומעוצבת בדיוק כמו בשעוני העולם */
+        /* קופסת כותרת כהה, מרכזית ויוקרתיות עם סמל מאזניים */
         .hero-header { 
             max-width: 940px; 
             margin: 20px auto; 
@@ -53,12 +53,41 @@
             text-align: center; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
+        .hero-header i { font-size: 32px; color: #38bdf8; margin-bottom: 12px; display: block; }
         .hero-header h1 { font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
-        .hero-header p { color: #94a3b8; font-size: 14px; margin: 0; }
+        .hero-header p { color: #94a3b8; font-size: 14px; margin: 0 0 20px 0; }
+
+        /* סרגל קישורים חיצוניים מהירים למערכות משפטיות */
+        .legal-quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 16px;
+        }
+        .legal-quick-links a {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legal-quick-links a:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
 
         .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
         
-        /* כרטיסים בהירים עם טקסט כהה וקריא */
         .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; }
         .card h2 { font-size: 19px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
 
@@ -84,8 +113,17 @@
 <div id="main-header"></div>
 
 <div class="hero-header">
-    <h1>כלים ומחשבונים משפטיים</h1>
+    <i class="fa-solid fa-scale-balanced"></i>
+    <h1>כלים ומחשבונים משפטיים מתקדמים</h1>
     <p>מחשבוני מועדים ופגרות, אגרות בית משפט, בדיקת סמכות עניינית והפרשי הצמדה וריבית.</p>
+    
+    <!-- קישורים חיצוניים רשמיים ושימושיים למערכות משפטיות -->
+    <div class="legal-quick-links">
+        <a href="https://www.net.court.gov.il/" target="_blank"><i class="fa-solid fa-landmark"></i> נט המשפט</a>
+        <a href="https://www.gov.il/he/departments/execution_office/govil-landing-page" target="_blank"><i class="fa-solid fa-file-invoice-dollar"></i> הוצאה לפועל</a>
+        <a href="https://www.gov.il/he/departments/rabbinical_courts/govil-landing-page" target="_blank"><i class="fa-solid fa-gavel"></i> בתי הדין הרבניים</a>
+        <a href="https://www.kolzchut.org.il/" target="_blank"><i class="fa-solid fa-book-open"></i> פורטל כל זכות</a>
+    </div>
 </div>
 
 <div class="grid-container">
@@ -95,7 +133,7 @@
         <h2>מחשבון מועדים ופגרות בתי המשפט</h2>
         <label>תאריך קבלת כתב הטענות / החלטה:</label>
         <input type="date" id="legalStartDate">
-        <label>מספר ימים שנקבעו בחוק / החלטה:</label>
+        <label>מספר ימים ימים שנקבעו בחוק / החלטה:</label>
         <input type="number" id="legalDays" value="30">
         <button onclick="calcLegalDeadline()">חשב תאריך הגשה סופי</button>
         <div class="result" id="legalDeadResult">בחרי תאריך לחישוב</div>
