@@ -7,110 +7,189 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-YJLYPZR735');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>זמני שבת, הלכה ופרשת השבוע - NETOOLS</title>
+    <title>לוח שנה, זמנים וכלים יהודיים מתקדמים - NETOOLS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { 
             margin: 0; 
             padding: 0; 
-            background-color: #0f172a !important; 
-            color: #f8fafc;
+            background-color: #f8fafc; 
+            color: #1e293b;
             font-family: system-ui, -apple-system, sans-serif; 
         }
-        .zmanim-container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 30px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-        .header-card {
+        .hero-banner {
             background: linear-gradient(135deg, #0f172a, #1e293b);
-            border: 1px solid #334155;
             color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
+            padding: 35px 25px;
+            border-radius: 16px;
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
         }
-        .city-select {
-            padding: 10px 18px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            margin-top: 12px;
-            background: #0f172a;
-            color: #38bdf8;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+        .hero-banner h1 { margin: 0 0 10px 0; font-size: 30px; font-weight: 800; color: #38bdf8; }
+        .hero-banner p { margin: 0; color: #cbd5e1; font-size: 16px; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
         }
-        .city-select:hover {
-            border-color: #38bdf8;
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
-        .shabbat-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 35px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+
+        .panel-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
         }
-        .shabbat-item { text-align: center; }
-        .shabbat-item .label { color: #fbbf24; font-size: 14.5px; font-weight: 600; margin-bottom: 6px; }
-        .shabbat-item .val { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; }
-        
-        .section-title {
-            color: #38bdf8; 
-            border-bottom: 1px solid #334155; 
-            padding-bottom: 10px; 
-            margin-bottom: 24px;
-            font-size: 20px;
+        .panel-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        .panel-title {
+            font-size: 19px;
             font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
         }
+        .panel-title i { color: #0284c7; }
 
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 18px;
-            margin-bottom: 10px;
+        /* טופס ושדות קלט */
+        .form-group {
+            margin-bottom: 15px;
         }
-        .card {
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 20px;
-            border-radius: 12px;
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #475569;
+            font-size: 14px;
+        }
+        .form-control, .city-select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #0f172a;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+        .form-control:focus, .city-select:focus {
+            outline: none;
+            border-color: #0284c7;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+        .btn-action {
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn-action:hover { background: #0369a1; }
+        
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            color: #0369a1;
+            font-weight: 600;
             text-align: center;
-            transition: transform 0.2s, border-color 0.2s;
         }
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: #38bdf8;
-        }
-        .card h3 { margin: 0 0 10px 0; color: #94a3b8; font-size: 15px; font-weight: 500; }
-        .card .time-val { font-size: 22px; font-weight: 700; color: #38bdf8; }
 
-        @media (max-width: 768px) {
-            .zmanim-container { margin: 15px; padding: 15px; }
-            .shabbat-box { flex-direction: column; gap: 15px; }
+        /* לוח שנה אינטראקטיבי */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
+        .calendar-header button {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #334155;
+            transition: background 0.2s;
+        }
+        .calendar-header button:hover { background: #e2e8f0; }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        .cal-day-name {
+            font-weight: 700;
+            color: #64748b;
+            font-size: 13px;
+            padding-bottom: 8px;
+        }
+        .cal-cell {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 4px;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .cal-cell.today {
+            border-color: #0284c7;
+            background: #e0f2fe;
+            font-weight: bold;
+        }
+        .cal-greg { font-size: 12px; color: #64748b; }
+        .cal-hebrew { font-size: 13px; color: #0f172a; font-weight: 600; }
+
+        /* קוביות זמנים רחבות */
+        .times-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .time-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .time-card .t-label { font-size: 14px; color: #64748b; margin-bottom: 6px; }
+        .time-card .t-val { font-size: 20px; font-weight: 700; color: #0284c7; }
     </style>
 </head>
 <body>
@@ -118,13 +197,13 @@
     <!-- הסרגל העליון האחיד מוזרק לכאן -->
     <div id="main-header"></div>
 
-    <div class="zmanim-container">
-        <div class="header-card">
-            <h1 style="margin: 0 0 10px 0; font-size: 28px; font-weight: 800;"><i class="fa-solid fa-synagogue" style="color: #facc15;"></i> זמני שבת והלכה בלייב</h1>
-            <p style="margin: 0; color: #94a3b8; font-size: 15px;">זמני היום לפי ההלכה, פרשת השבוע וכניסת/יציאת שבת לפי ערים</p>
-            <div style="margin-top: 18px;">
-                <label for="citySelector" style="color: #cbd5e1; font-weight: 600; margin-left: 8px;">בחרי עיר: </label>
-                <select id="citySelector" class="city-select" onchange="loadZmanim()">
+    <div class="page-wrapper">
+        <div class="hero-banner">
+            <h1><i class="fa-solid fa-calendar-days" style="color: #facc15;"></i> לוח שנה, זמנים וכלים יהודיים</h1>
+            <p>לוח שנה עברי-לועזי אינטראקטיבי, ממיר תאריכים, חישוב בר-מצווה וזמני היום בהלכה</p>
+            <div style="margin-top: 15px;">
+                <label for="citySelector" style="color: #ffffff; font-weight: 600; margin-left: 8px;">בחרי עיר לזמנים: </label>
+                <select id="citySelector" class="city-select" style="max-width: 220px; display: inline-block;" onchange="loadZmanimAndCalendar()">
                     <option value="281184">ירושלים</option>
                     <option value="293397" selected>תל אביב</option>
                     <option value="294801">חיפה</option>
@@ -133,113 +212,199 @@
             </div>
         </div>
 
-        <div class="shabbat-box">
-            <div class="shabbat-item">
-                <div class="label"><i class="fa-solid fa-book-quran"></i> פרשת השבוע / חג</div>
-                <div class="val" id="shabbatParasha">טוען...</div>
+        <div class="dashboard-grid">
+            <!-- לוח שנה חודשי עברי/לועזי -->
+            <div class="panel-card" style="grid-column: span 2;">
+                <div class="calendar-header">
+                    <button onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-right"></i> חודש קודם</button>
+                    <h2 id="calMonthTitle" style="margin: 0; font-size: 20px; color: #0f172a;">טוען לוח שנה...</h2>
+                    <button onclick="changeMonth(1)">חודש הבא <i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendarBody">
+                    <!-- מודפס אוטומטית ע"י הסקריפט -->
+                </div>
             </div>
-            <div class="shabbat-item">
-                <div class="label"><i class="fa-solid fa-candle-holder"></i> כניסת שבת</div>
-                <div class="val" id="shabbatIn" style="color: #38bdf8;">--:--</div>
+
+            <!-- ממיר תאריכים -->
+            <div class="panel-card">
+                <div class="panel-title"><i class="fa-solid fa-right-left"></i> ממיר תאריכים עברי ⇄ לועזי</div>
+                <div class="form-group">
+                    <label>בחר תאריך לועזי להמרה:</label>
+                    <input type="date" id="gregInput" class="form-control" onchange="convertGregorianToHebrew()">
+                </div>
+                <div class="result-box" id="conversionResult">בחר תאריך להצגת ההמרה</div>
             </div>
-            <div class="shabbat-item">
-                <div class="label"><i class="fa-solid fa-star"></i> יציאת שבת</div>
-                <div class="val" id="shabbatOut" style="color: #a855f7;">--:--</div>
+
+            <!-- מצא את בר המצווה שלך -->
+            <div class="panel-card">
+                <div class="panel-title"><i class="fa-solid fa-star-of-david"></i> מצא את תאריך הבר-מצווה</div>
+                <div class="form-group">
+                    <label>הכנס תאריך לידה לועזי:</label>
+                    <input type="date" id="bdayInput" class="form-control" onchange="calculateBarMitzvah()">
+                </div>
+                <div class="result-box" id="bdayResult" style="background: #fdf4ff; border-color: #f5d0fe; color: #86198f;">הכנס תאריך לידה לחישוב</div>
             </div>
         </div>
 
-        <div class="section-title">
-            <i class="fa-solid fa-clock"></i> זמני היום בהלכה
-        </div>
+        <!-- זמני היום בהלכה ופרשת השבוע -->
+        <div class="panel-card" style="margin-bottom: 40px;">
+            <div class="panel-title"><i class="fa-solid fa-synagogue"></i> פרשת השבוע, מולדות וזמני היום בהלכה</div>
+            
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; text-align: center;">
+                <div>
+                    <div style="color: #166534; font-size: 14px; font-weight: 600;">📜 פרשת השבוע (הקרובה)</div>
+                    <div id="zParasha" style="font-size: 22px; font-weight: 800; color: #15803d; margin-top: 4px;">טוען...</div>
+                </div>
+                <div>
+                    <div style="color: #166534; font-size: 14px; font-weight: 600;">🕯️ כניסת שבת</div>
+                    <div id="zShabbatIn" style="font-size: 22px; font-weight: 800; color: #15803d; margin-top: 4px;">--:--</div>
+                </div>
+                <div>
+                    <div style="color: #166534; font-size: 14px; font-weight: 600;">✨ יציאת שבת</div>
+                    <div id="zShabbatOut" style="font-size: 22px; font-weight: 800; color: #15803d; margin-top: 4px;">--:--</div>
+                </div>
+            </div>
 
-        <div class="grid-cards">
-            <div class="card"><h3>עלות השחר</h3><div class="time-val" id="zAlot">--:--</div></div>
-            <div class="card"><h3>הנץ החמה (זריחה)</h3><div class="time-val" id="zSunrise">--:--</div></div>
-            <div class="card"><h3>סוף זמן קריאת שמע</h3><div class="time-val" id="zShma">--:--</div></div>
-            <div class="card"><h3>סוף זמן תפילה</h3><div class="time-val" id="zTfila">--:--</div></div>
-            <div class="card"><h3>מנחה גדולה</h3><div class="time-val" id="zMinchaG">--:--</div></div>
-            <div class="card"><h3>שקיעת החמה</h3><div class="time-val" id="zSunset">--:--</div></div>
-            <div class="card"><h3>צאת הכוכבים</h3><div class="time-val" id="zTzet">--:--</div></div>
+            <div class="times-grid">
+                <div class="time-card"><div class="t-label">עלות השחר</div><div class="t-val" id="zAlot">--:--</div></div>
+                <div class="time-card"><div class="t-label">הנץ החמה (זריחה)</div><div class="t-val" id="zSunrise">--:--</div></div>
+                <div class="time-card"><div class="t-label">סוף זמן שמע</div><div class="t-val" id="zShma">--:--</div></div>
+                <div class="time-card"><div class="t-label">סוף זמן תפילה</div><div class="t-val" id="zTfila">--:--</div></div>
+                <div class="time-card"><div class="t-label">מנחה גדולה</div><div class="t-val" id="zMincha">--:--</div></div>
+                <div class="time-card"><div class="t-label">שקיעת החמה</div><div class="t-val" id="zSunset">--:--</div></div>
+                <div class="time-card"><div class="t-label">צאת הכוכבים</div><div class="t-val" id="zTzet">--:--</div></div>
+            </div>
         </div>
     </div>
 
-  <script>
-    async function loadZmanim() {
-        var geonameid = document.getElementById('citySelector').value;
-        
-        // שליפת נתוני שבת ופרשת השבוע (רצה קדימה אוטומטית כבר מתחילת השבוע)
-        try {
-            var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
-            var shabbatData = await shabbatRes.json();
+    <script>
+        let currentMonthDate = new Date();
+
+        async function loadZmanimAndCalendar() {
+            const geonameid = document.getElementById('citySelector').value;
             
-            if (shabbatData && shabbatData.items) {
-                var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
-                var holidayItem = shabbatData.items.find(i => i.category === 'holiday');
-                
-                let displayName = "";
-                if (holidayItem) {
-                    displayName = holidayItem.hebrew || holidayItem.title;
-                } else if (parashaItem) {
-                    displayName = (parashaItem.hebrew || parashaItem.title).replace(/^פרשת\s+/, '');
-                } else {
-                    displayName = "נצבים וילך";
-                }
-                
-                document.getElementById('shabbatParasha').innerText = displayName;
+            // 1. טעינת זמנים ופרשת שבוע
+            try {
+                const res = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
+                const data = await res.json();
+                if (data && data.items) {
+                    const parasha = data.items.find(i => i.category === 'parashat');
+                    const holiday = data.items.find(i => i.category === 'holiday');
+                    document.getElementById('zParasha').innerText = holiday ? (holiday.hebrew || holiday.title) : (parasha ? (parasha.hebrew || parasha.title).replace(/^פרשת\s+/, '') : "נצבים וילך");
 
-                var candleItem = shabbatData.items.find(i => i.category === 'candles');
-                if (candleItem && candleItem.date) {
-                    let candleTime = new Date(candleItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                    document.getElementById('shabbatIn').innerText = candleTime !== 'Invalid Date' ? candleTime : '--:--';
-                }
+                    const candle = data.items.find(i => i.category === 'candles');
+                    if (candle) document.getElementById('zShabbatIn').innerText = new Date(candle.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
 
-                var havdalahItem = shabbatData.items.find(i => i.category === 'havdalah' || i.category === 'mzei');
-                if (havdalahItem && havdalahItem.date) {
-                    let havdalahTime = new Date(havdalahItem.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                    document.getElementById('shabbatOut').innerText = havdalahTime !== 'Invalid Date' ? havdalahTime : '--:--';
+                    const havdalah = data.items.find(i => i.category === 'havdalah' || i.category === 'mzei');
+                    if (havdalah) document.getElementById('zShabbatOut').innerText = new Date(havdalah.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
                 }
-            }
-        } catch(e) {
-            console.error("שגיאה בטעינת נתוני שבת", e);
-            document.getElementById('shabbatParasha').innerText = "נצבים וילך";
+            } catch(e) { console.error(e); }
+
+            // זמני היום בהלכה
+            try {
+                const zRes = await fetch(`https://www.hebcal.com/zmanim?cfg=json&geonameid=${geonameid}`);
+                const zData = await zRes.json();
+                if (zData && zData.times) {
+                    const fmt = (iso) => iso ? new Date(iso).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit', hour12:false}) : '--:--';
+                    document.getElementById('zAlot').innerText = fmt(zData.times.alotHaShachar);
+                    document.getElementById('zSunrise').innerText = fmt(zData.times.sunrise);
+                    document.getElementById('zShma').innerText = fmt(zData.times.sofZmanShma);
+                    document.getElementById('zTfila').innerText = fmt(zData.times.sofZmanTfilla);
+                    document.getElementById('zMincha').innerText = fmt(zData.times.minchaGedola);
+                    document.getElementById('zSunset').innerText = fmt(zData.times.sunset);
+                    
+                    let tzet = zData.times.tzait || zData.times.nightfall;
+                    if(!tzet && zData.times.sunset) {
+                        let d = new Date(zData.times.sunset);
+                        d.setMinutes(d.getMinutes() + 20);
+                        tzet = d.toISOString();
+                    }
+                    document.getElementById('zTzet').innerText = fmt(tzet);
+                }
+            } catch(e) { console.error(e); }
+
+            renderCalendar();
         }
 
-        // שליפת זמני היום בהלכה
-        try {
-            var zRes = await fetch(`https://www.hebcal.com/zmanim?cfg=json&geonameid=${geonameid}`);
-            var zData = await zRes.json();
+        async function renderCalendar() {
+            const year = currentMonthDate.getFullYear();
+            const month = currentMonthDate.getMonth() + 1;
             
-            if (zData && zData.times) {
-                var formatTime = function(isoStr) {
-                    if(!isoStr) return '--:--';
-                    var d = new Date(isoStr);
-                    return d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-                };
-
-                document.getElementById('zAlot').innerText = formatTime(zData.times.alotHaShachar);
-                document.getElementById('zSunrise').innerText = formatTime(zData.times.sunrise);
-                document.getElementById('zShma').innerText = formatTime(zData.times.sofZmanShma);
-                document.getElementById('zTfila').innerText = formatTime(zData.times.sofZmanTfilla);
-                document.getElementById('zMinchaG').innerText = formatTime(zData.times.minchaGedola);
-                document.getElementById('zSunset').innerText = formatTime(zData.times.sunset);
+            document.getElementById('calMonthTitle').innerText = `${currentMonthDate.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' })} / לוח עברי-לועזי`;
+            
+            try {
+                const res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month}&lg=he&s=on`);
+                const data = await res.json();
                 
-                let tzeitVal = zData.times.tzait || zData.times.nightfall || zData.times.tzeit;
-                if (!tzeitVal && zData.times.sunset) {
-                    let sunsetDate = new Date(zData.times.sunset);
-                    sunsetDate.setMinutes(sunsetDate.getMinutes() + 20);
-                    tzeitVal = sunsetDate.toISOString();
-                }
-                if (tzeitVal) {
-                    document.getElementById('zTzet').innerText = formatTime(tzeitVal);
-                }
-            }
-        } catch(e) {
-            console.error("שגיאה בטעינת זמני היום", e);
-        }
-    }
+                const calBody = document.getElementById('calendarBody');
+                calBody.innerHTML = `
+                    <div class="cal-day-name">א'</div><div class="cal-day-name">ב'</div><div class="cal-day-name">ג'</div>
+                    <div class="cal-day-name">ד'</div><div class="cal-day-name">ה'</div><div class="cal-day-name">ו'</div><div class="cal-day-name">שבת</div>
+                `;
 
-    loadZmanim();
-</script>
+                // יצירת ימי החודש
+                const firstDayIndex = new Date(year, month - 1, 1).getDay();
+                const daysInMonth = new Date(year, month, 0).getDate();
+
+                // רווחים לימים הראשונים
+                for(let i=0; i<firstDayIndex; i++) {
+                    calBody.innerHTML += `<div class="cal-cell" style="background: transparent; border:none;"></div>`;
+                }
+
+                for(let day=1; day<=daysInMonth; day++) {
+                    const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                    const dayEvent = data.items ? data.items.find(i => i.date === dateStr && i.hdate) : null;
+                    const hebrewDateText = dayEvent ? dayEvent.hdate : '';
+
+                    const isToday = new Date().toDateString() === new Date(year, month-1, day).toDateString();
+
+                    calBody.innerHTML += `
+                        <div class="cal-cell ${isToday ? 'today' : ''}">
+                            <span class="cal-greg">${day}</span>
+                            <span class="cal-hebrew">${hebrewDateText}</span>
+                        </div>
+                    `;
+                }
+            } catch(e) {
+                console.error("שגיאה בטעינת הלוח", e);
+            }
+        }
+
+        function changeMonth(dir) {
+            currentMonthDate.setMonth(currentMonthDate.getMonth() + dir);
+            renderCalendar();
+        }
+
+        async function convertGregorianToHebrew() {
+            const val = document.getElementById('gregInput').value;
+            if(!val) return;
+            try {
+                const [y, m, d] = val.split('-');
+                const res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${y}&gm=${m}&gd=${d}&g2h=1`);
+                const data = await res.json();
+                if(data && data.hebrew) {
+                    document.getElementById('conversionResult').innerText = `תאריך עברי: ${data.hebrew}`;
+                }
+            } catch(e) {
+                document.getElementById('conversionResult').innerText = "שגיאה בהמרת התאריך";
+            }
+        }
+
+        async function calculateBarMitzvah() {
+            const val = document.getElementById('bdayInput').value;
+            if(!val) return;
+            const bday = new Date(val);
+            // יום הולדת 13 עברי/לועזי מקורב
+            bday.setFullYear(bday.getFullYear() + 13);
+            const formatted = bday.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('bdayResult').innerText = `תאריך בר/בת מצווה משוער: ${formatted}`;
+        }
+
+        // טעינה ראשונית
+        document.getElementById('gregInput').valueAsDate = new Date();
+        loadZmanimAndCalendar();
+        convertGregorianToHebrew();
+    </script>
 
     <!-- טעינת קובץ הסרגל והפוטר האחיד של האתר -->
     <script src="header.js"></script>
