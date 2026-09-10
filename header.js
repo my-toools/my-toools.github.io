@@ -231,7 +231,8 @@ const headerHtml = `
                     <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
                     <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
                     <li><a href="news.html" class="nav-item-news">חדשות</a></li>
-                    <li><a href="alerts.html" class="nav-item-alerts">התרעות חירום</a></li>
+                    // הוספת אייקון אזעקה לסרגל העליון שמוביל לעמוד ההתרעות
+const alertMenuIcon = `<a href="alerts.html" title="מרכז ההתרעות" style="color: #ef4444; font-size: 18px; margin-left: 15px; display: inline-flex; align-items: center;"><i class="fa-solid fa-bell"></i></a>`;
                 </ul>
             </div>
 
