@@ -3,9 +3,6 @@
 <head>
     <!-- טעינת ספריית האייקונים FontAwesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    .center-text {
-  text-align: center;
-}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>כלים ומחשבונים משפטיים - NETOOLS</title>
@@ -26,18 +23,18 @@
         }
 
         :root {
-            --bg-main: #0b1120;
-            --card-bg: #1e293b;
-            --input-bg: #0f172a;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --dark-blue: #0f172a;
-            --accent-blue: #38bdf8;
-            --border-color: #334155;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --header-card-bg: #0f172a; /* צבע כהה יוקרתי לקופסת הכותרת */
+            --input-bg: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-blue: #0284c7;
+            --border-color: #e2e8f0;
         }
 
-    body {
-            background-color: #f8fafc;
+        body {
+            background-color: var(--bg-main); /* רקע בהיר כמו שביקשת */
             color: var(--text-primary);
             margin: 0;
             padding-top: 20px;
@@ -45,28 +42,38 @@
             direction: rtl;
             line-height: 1.6;
         }
-        }
 
-        .hero-header { max-width: 900px; margin: 20px auto; text-align: center; }
-        .hero-header h1 { font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
-        .hero-header p { color: var(--text-secondary); font-size: 15px; margin: 0; }
+        /* קופסת כותרת כהה, ממרכזת ומעוצבת בדיוק כמו בשעוני העולם */
+        .hero-header { 
+            max-width: 940px; 
+            margin: 20px auto; 
+            background: var(--header-card-bg); 
+            padding: 30px 20px; 
+            border-radius: 12px; 
+            text-align: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .hero-header h1 { font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .hero-header p { color: #94a3b8; font-size: 14px; margin: 0; }
 
         .grid-container { max-width: 940px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 10px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.25); text-align: right; }
-        .card h2 { font-size: 19px; font-weight: 700; color: var(--accent-blue); margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        
+        /* כרטיסים בהירים עם טקסט כהה וקריא */
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right; }
+        .card h2 { font-size: 19px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
 
-        label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; margin-top: 12px; }
-        input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 6px; margin-top: 12px; }
+        input, select { width: 100%; background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; padding: 10px 12px; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
 
         button { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 15px; margin-top: 16px; transition: background 0.2s; }
         button:hover { background: #0369a1; }
 
-        .result { font-size: 15px; font-weight: 700; color: #38bdf8; margin-top: 16px; text-align: center; background: #0f172a; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; word-break: break-all; }
+        .result { font-size: 15px; font-weight: 700; color: #0284c7; margin-top: 16px; text-align: center; background: #f1f5f9; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; word-break: break-all; }
 
-        .guide-box { margin-top: 14px; font-size: 13px; color: var(--text-secondary); background: #0f172a; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); }
-        .guide-box h4 { margin: 0 0 6px 0; color: #ffffff; font-size: 14px; }
+        .guide-box { margin-top: 14px; font-size: 13px; color: #475569; background: #f8fafc; padding: 12px; border-radius: 8px; border-right: 3px solid var(--accent-blue); border: 1px solid var(--border-color); }
+        .guide-box h4 { margin: 0 0 6px 0; color: #0f172a; font-size: 14px; }
         
-        .legal-disclaimer { font-size: 11px; color: #64748b; margin-top: 8px; text-align: justify; }
+        .legal-disclaimer { font-size: 11px; color: #94a3b8; margin-top: 8px; text-align: justify; }
 
         @media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; } }
     </style>
@@ -88,7 +95,7 @@
         <h2>מחשבון מועדים ופגרות בתי המשפט</h2>
         <label>תאריך קבלת כתב הטענות / החלטה:</label>
         <input type="date" id="legalStartDate">
-        <label>מספר ימים ימים שנקבעו בחוק / החלטה:</label>
+        <label>מספר ימים שנקבעו בחוק / החלטה:</label>
         <input type="number" id="legalDays" value="30">
         <button onclick="calcLegalDeadline()">חשב תאריך הגשה סופי</button>
         <div class="result" id="legalDeadResult">בחרי תאריך לחישוב</div>
