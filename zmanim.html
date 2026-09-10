@@ -59,14 +59,6 @@
             position: relative;
             overflow: hidden;
         }
-        .header-card::after {
-            content: '';
-            position: absolute;
-            top: -50px; left: -50px; width: 150px; height: 150px;
-            background: rgba(56, 189, 248, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
-        }
         .header-card h1 { margin: 0 0 10px 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; text-align: center; }
         .header-card p { margin: 0; color: #94a3b8; font-size: 15px; text-align: center; }
 
@@ -92,6 +84,27 @@
             outline: none;
         }
 
+        /* כפתור הדפסה יוקרתי */
+        .print-btn-wrapper {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .print-btn {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        }
+        .print-btn:hover { background: #0369a1; transform: translateY(-2px); }
+
         /* גריד עליון: פרשת שבוע, מולדות, כניסת שבת */
         .top-section-grid {
             display: grid;
@@ -106,9 +119,9 @@
             border-radius: 14px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease;
         }
-        .info-box:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.18); }
+        .info-box:hover { transform: translateY(-3px); }
         .info-box.molad {
             background: linear-gradient(135deg, #f0fdf4, #dcfce7);
             border-color: #86efac;
@@ -299,6 +312,12 @@
         .cal-hebrew { font-size: 12px; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.1); padding: 2px 6px; border-radius: 6px; }
         .cal-holiday { font-size: 11px; background: #fef3c7; color: #92400e; padding: 3px 6px; border-radius: 6px; margin-top: auto; font-weight: 700; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+        @media print {
+            .print-btn-wrapper, .city-select-wrapper, .cal-header-controls, .cal-header select, .calculators-grid { display: none !important; }
+            body { background: white !important; }
+            .zmanim-container { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 0 !important; }
+        }
+
         @media (max-width: 768px) {
             .zmanim-container { padding: 15px; margin: 15px; }
             .cal-day { min-height: 85px; padding: 6px; }
@@ -313,6 +332,11 @@
     <div id="main-header"></div>
 
     <div class="zmanim-container">
+        <!-- כפתור הדפסה -->
+        <div class="print-btn-wrapper">
+            <button class="print-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> הדפסת עמוד / שמירה כ-PDF</button>
+        </div>
+
         <div class="header-card">
             <h1><i class="fa-solid fa-synagogue" style="color: var(--accent-gold);"></i> זמני שבת, הלכה ולוח שנה פרימיום</h1>
             <p>מערכת חכמה, מהירה ומאובטחת לניהול זמני היום, פרשת השבוע ומולדות</p>
@@ -380,7 +404,7 @@
         </div>
 
         <!-- 3. לוח שנה עברי-לועזי אולטרה-מהיר -->
-        <h2 class="section-title"><i class="fa-solid fa-calendar-check"></i> לוח שנה עברי-לועזי אינטראקטיבי</h2>
+        <h2 class="section-title"><i class="fa-solid fa-calendar-check"></i> לוח שנה עברי-לועזי</h2>
         <div class="calendar-wrapper">
             <div class="cal-header">
                 <!-- צד ימין: כפתור חודש קודם -->
@@ -436,7 +460,7 @@
         document.getElementById('shabbatParasha').innerText = "טוען...";
         document.getElementById('moladText').innerText = "טוען מולד...";
 
-        // 1. שליפת שבת, חגים ופרשת השבוע הקרובה (רצים קדימה כבר מראשון)
+        // 1. שליפת שבת, חגים ופרשת השבוע הקרובה
         try {
             var shabbatRes = await fetch(`https://www.hebcal.com/shabbat?cfg=json&geonameid=${geonameid}&il=true`);
             var shabbatData = await shabbatRes.json();
@@ -520,7 +544,7 @@
         renderCalendar();
     }
 
-    // פונקציית לוח שנה מהירה במיוחד בטעינת חודש מלא מבקשת רשת יחידה
+    // פונקציית לוח שנה מהירה ונקייה ללא שגיאות או כפילויות מיותרות
     async function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -531,16 +555,18 @@
         const container = document.getElementById('calendarDaysContainer');
         container.innerHTML = `<div style="grid-column: span 7; text-align: center; padding: 30px; color: var(--text-muted); font-weight: 700;">טוען את נתוני החודש במהירות...</div>`;
 
-        // שליפת כל אירועי החודש בבקשת API אחת בלבד (מהיר פי 30!)
         let monthEvents = {};
         try {
             let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=293397&m=55`);
             let data = await res.json();
             if (data && data.items) {
                 data.items.forEach(item => {
-                    let dStr = item.date.split('T')[0]; // YYYY-MM-DD
-                    if (!monthEvents[dStr]) monthEvents[dStr] = [];
-                    monthEvents[dStr].push(item.hebrew || item.title);
+                    let dStr = item.date.split('T')[0];
+                    // סינון נקי של אירועים רלוונטיים בלבד (ללא זמני הדלקה טכניים בתוך הקוביות)
+                    if (item.category === 'holiday' || item.category === 'roshchodesh' || item.category === 'parashat') {
+                        if (!monthEvents[dStr]) monthEvents[dStr] = [];
+                        monthEvents[dStr].push(item.hebrew || item.title);
+                    }
                 });
             }
         } catch(e) {
@@ -571,9 +597,8 @@
             if (currentDayOfWeek === 6) cell.classList.add('shabbat');
 
             let dFormatted = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            let eventsText = monthEvents[dFormatted] ? monthEvents[dFormatted][0] : (currentDayOfWeek === 6 ? 'שבת קודש' : '');
+            let eventName = monthEvents[dFormatted] ? monthEvents[dFormatted][0] : (currentDayOfWeek === 6 ? 'שבת קודש' : '');
 
-            // המרה מהירה לתאריך עברי מקומי
             let hebDayText = "";
             try {
                 let dObj = new Date(year, month, day);
@@ -588,7 +613,7 @@
                     <span class="cal-gregorian">${day}</span>
                     <span class="cal-hebrew">${hebDayText}</span>
                 </div>
-                <div class="cal-holiday" title="${eventsText}">${eventsText}</div>
+                <div class="cal-holiday" title="${eventName}">${eventName}</div>
             `;
             container.appendChild(cell);
         }
