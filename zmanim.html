@@ -67,8 +67,8 @@
             border-radius: 50%;
             pointer-events: none;
         }
-        .header-card h1 { margin: 0 0 10px 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
-        .header-card p { margin: 0; color: #94a3b8; font-size: 15px; }
+        .header-card h1 { margin: 0 0 10px 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; text-align: center; }
+        .header-card p { margin: 0; color: #94a3b8; font-size: 15px; text-align: center; }
 
         .city-select-wrapper {
             margin-top: 20px;
@@ -126,7 +126,7 @@
         .info-box.molad .val { color: #14532d; }
         .info-box.shabbat-times .val { color: #1e3a8a; font-size: 17px; }
 
-        /* כותרות סעיפים */
+        /* כותרות סעיפים מיושרות לאמצע */
         .section-title {
             color: var(--primary);
             border-bottom: 2px solid var(--border);
@@ -134,8 +134,10 @@
             margin: 45px 0 25px 0;
             font-size: 22px;
             font-weight: 800;
+            text-align: center;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
         .section-title i { color: #0284c7; }
@@ -173,13 +175,15 @@
             padding: 28px;
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            text-align: center;
         }
-        .calc-card h3 { margin: 0 0 16px 0; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 700; }
+        .calc-card h3 { margin: 0 0 16px 0; font-size: 18px; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; }
         .calc-input-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             align-items: center;
+            justify-content: center;
             margin-bottom: 14px;
         }
         .calc-input {
@@ -189,6 +193,7 @@
             font-size: 15px;
             background: #ffffff;
             flex: 1;
+            min-width: 180px;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -205,7 +210,7 @@
         }
         .calc-btn:hover { background: #1d4ed8; }
         .calc-btn:active { transform: scale(0.98); }
-        .calc-result { font-weight: 700; color: var(--primary); font-size: 15px; margin-top: 10px; display: block; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); }
+        .calc-result { font-weight: 700; color: var(--primary); font-size: 15px; margin-top: 10px; display: block; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
 
         /* לוח שנה עברי-לועזי אולטרה-מהיר ויוקרתי */
         .calendar-wrapper {
@@ -223,11 +228,6 @@
             margin-bottom: 25px;
             flex-wrap: wrap;
             gap: 15px;
-        }
-        .cal-header-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
         }
         .cal-select {
             padding: 10px 16px;
@@ -383,11 +383,11 @@
         <h2 class="section-title"><i class="fa-solid fa-calendar-check"></i> לוח שנה עברי-לועזי אינטראקטיבי</h2>
         <div class="calendar-wrapper">
             <div class="cal-header">
-                <div class="cal-header-controls">
-                    <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-right"></i> חודש קודם</button>
-                    <button class="cal-nav-btn" onclick="changeMonth(1)">חודש הבא <i class="fa-solid fa-chevron-left"></i></button>
-                </div>
-                <div style="display: flex; gap: 10px;">
+                <!-- צד ימין: כפתור חודש קודם -->
+                <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-right"></i> חודש קודם</button>
+                
+                <!-- אמצע: בחירת חודש ושנה -->
+                <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
                     <select id="calMonthSelect" class="cal-select" onchange="jumpToSelectedMonthYear()">
                         <option value="0">ינואר</option><option value="1">פברואר</option><option value="2">מרץ</option>
                         <option value="3">אפריל</option><option value="4">מאי</option><option value="5">יוני</option>
@@ -398,6 +398,9 @@
                         <!-- יתמלא אוטומטית בשנים -->
                     </select>
                 </div>
+
+                <!-- צד שמאל: כפתור חודש הבא -->
+                <button class="cal-nav-btn" onclick="changeMonth(1)">חודש הבא <i class="fa-solid fa-chevron-left"></i></button>
             </div>
             <div class="calendar-grid">
                 <div class="cal-day-name">ראשון</div><div class="cal-day-name">שני</div><div class="cal-day-name">שלישי</div>
@@ -439,7 +442,6 @@
             var shabbatData = await shabbatRes.json();
             
             if (shabbatData && shabbatData.items) {
-                // בדיקת עדיפות לחג או פרשת שבוע
                 var holidayItem = shabbatData.items.find(i => i.category === 'holiday');
                 var parashaItem = shabbatData.items.find(i => i.category === 'parashat');
                 
@@ -575,7 +577,6 @@
             let hebDayText = "";
             try {
                 let dObj = new Date(year, month, day);
-                // נשתמש באובייקט אינטרנציונליזציה מהיר או נתוני המרה
                 let formatter = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', { day: 'numeric', month: 'short' });
                 hebDayText = formatter.format(dObj).replace(' בשבט', '').replace(' באדר', '');
             } catch(err) {
