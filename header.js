@@ -22,7 +22,6 @@ if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
     style.id = styleId;
     style.textContent = `
-        /* שלד אחיד למניעת שטחים לבנים והתאמה מלאה למסכים ולמובייל */
         html, body {
             height: 100%;
             margin: 0 !important;
@@ -36,7 +35,6 @@ if (!document.getElementById(styleId)) {
             min-height: 100vh;
         }
 
-        /* מניעת כיווץ של תכני העמוד במסשבי שולחן עבודה */
         body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
             width: 100%;
             max-width: 1200px;
@@ -112,7 +110,6 @@ if (!document.getElementById(styleId)) {
         .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
         .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
         .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
-        .nav-item-alerts { border: 1px solid rgba(239, 68, 68, 0.8); color: #ef4444 !important; }
         .nav-item-world { border: 1px solid rgba(14, 165, 233, 0.6); }
 
         .main-nav a:hover {
@@ -123,6 +120,25 @@ if (!document.getElementById(styleId)) {
         .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
         .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
         .center-logo img:hover { transform: scale(1.1); }
+
+        /* עיצוב אייקון הפעמון האדום הקיצוני בצד שמאל */
+        .header-alert-btn {
+            color: #ef4444 !important;
+            font-size: 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+        }
+        .header-alert-btn:hover {
+            background: rgba(239, 68, 68, 0.25);
+            transform: scale(1.05);
+        }
 
         /* סרגל משני רספונסיבי */
         .secondary-bar {
@@ -196,7 +212,6 @@ if (!document.getElementById(styleId)) {
             text-decoration: underline;
         }
 
-        /* התאמה רספונסיבית למובייל */
         @media (max-width: 768px) {
             .secondary-container { font-size: 11px; padding: 5px; }
             footer.main-footer { font-size: 13px; padding: 20px 10px; }
@@ -210,7 +225,7 @@ if (!document.getElementById(styleId)) {
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header
+// 3. הזרקת ה-Header עם כפתור אזעקה אדום בקצה השמאלי ביותר
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
@@ -231,11 +246,15 @@ const headerHtml = `
                     <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
                     <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
                     <li><a href="news.html" class="nav-item-news">חדשות</a></li>
-                    <li><a href="alerts.html" class="nav-item-alerts">התרעות חירום</a></li>
                 </ul>
             </div>
 
-            <div style="width: 80px;"></div>
+            <!-- פעמון אדום בולט ומעוצב בצד שמאל הקיצוני -->
+            <div>
+                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+            </div>
         </div>
 
         <div class="secondary-bar">
