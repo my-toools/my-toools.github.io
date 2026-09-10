@@ -16,13 +16,31 @@ if (!favicon) {
 }
 favicon.href = "favicon.png";
 
-// 2. עיצוב CSS המקורי והמדויק
+// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר
 const styleId = "netools-nav-style";
 if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
     style.id = styleId;
     style.textContent = `
-        body { margin: 0 !important; padding-top: 0 !important; }
+        /* שלד אחיד למניעת שטחים לבנים והתאמה מלאה למסכים ולמובייל */
+        html, body {
+            height: 100%;
+            margin: 0 !important;
+            padding-top: 0 !important;
+            background-color: var(--bg-main, #f8fafc);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* תוכן האתר המרכזי ממלא את המרחב ודוחף את הפוטר לתחתית */
+        .grid-container, main, .content-wrapper {
+            flex: 1;
+        }
+
         header.main-header {
             background: #0f172a;
             color: #ffffff;
@@ -101,8 +119,8 @@ if (!document.getElementById(styleId)) {
         .center-logo img { height: 34px; width: 34px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
         .center-logo img:hover { transform: scale(1.1); }
 
-        /* סרגל משני */
-          .secondary-bar {
+        /* סרגל משני רספונסיבי */
+        .secondary-bar {
             background: #1e293b; color: #cbd5e1; font-size: 12.5px; padding: 7px 12px; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
         }
         .secondary-container {
@@ -147,15 +165,17 @@ if (!document.getElementById(styleId)) {
         .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
         .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
 
-        /* עיצוב פוטר בטקסט לבן */
+        /* פוטר מקצועי שנצמד אוטומטית לתחתית המסך */
         footer.main-footer {
             background: #0f172a !important;
             color: #ffffff !important;
             text-align: center;
             padding: 28px 20px;
-            margin-top: 50px;
+            margin-top: auto !important;
             border-top: 1px solid #1e293b;
             font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
         footer.main-footer p {
             color: #ffffff !important;
@@ -170,11 +190,17 @@ if (!document.getElementById(styleId)) {
         footer.main-footer a:hover {
             text-decoration: underline;
         }
+
+        /* התאמה רספונסיבית למובייל */
+        @media (max-width: 768px) {
+            .secondary-container { font-size: 11px; padding: 5px; }
+            footer.main-footer { font-size: 13px; padding: 20px 10px; }
+        }
     `;
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header (רצץ מיידי ובטוח שמונע את היעלמות הסרגל)
+// 3. הזרקת ה-Header
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
@@ -202,20 +228,19 @@ const headerHtml = `
             <div style="width: 80px;"></div>
         </div>
 
-     <div class="secondary-bar">
-<div class="secondary-container">
-    <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
-    <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
-    <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-    <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
-    <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
-    <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-    <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$62,500</strong></span>
-    <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
-    <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
-    <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
-</div>
-</div>
+        <div class="secondary-bar">
+            <div class="secondary-container">
+                <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
+                <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
+                <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
+                <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+                <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+                <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
+                <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$62,500</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
+            </div>
         </div>
     </header>
 
@@ -287,9 +312,8 @@ if (!document.querySelector("footer.main-footer")) {
     document.body.insertAdjacentHTML("beforeend", footerHtml);
 }
 
-// 5. שעונים, מזג אוויר ונתונים (רצים באופן בטוח ברגע שהדף מוכן)
+// 5. סคריפטים של שעונים, מזג אוויר ונתונים
 document.addEventListener("DOMContentLoaded", function () {
-    // שעון ותאריך לועזי
     function updateClockAndDate() {
         const now = new Date();
         const clockEl = document.getElementById("nav-clock");
@@ -300,7 +324,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    // תאריך עברי
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
     
@@ -313,7 +336,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // פרשת שבוע
     fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
         .then(res => res.json())
         .then(data => {
@@ -325,7 +347,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).catch(() => {});
 
-    // מט"ח + ביטקוין בלייב
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
         .then(res => res.json())
         .then(data => {
@@ -339,12 +360,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(btcData => {
                             const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
                             const forexEl = document.getElementById("nav-forex");
-                       if (forexEl) forexEl.innerHTML =`<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>${eur}₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
+                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>${eur} ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
                         }).catch(() => {});
                 });
         }).catch(() => {});
 
-    // מזג אוויר
     fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true")
         .then(res => res.json())
         .then(data => {
@@ -356,7 +376,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }).catch(() => {});
 });
 
-// פונקציות המחשבון המדעי
 function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
 function closeNavCalculator() { document.getElementById("navCalcModal").style.display = "none"; }
 
@@ -395,7 +414,7 @@ function calcInput(val) {
     }
 }
 
-// תפריט נגישות צף
+// נגישות צפה
 document.addEventListener("DOMContentLoaded", function () {
     if (!document.getElementById("acc-floating-btn")) {
         const accContainer = document.createElement("div");
