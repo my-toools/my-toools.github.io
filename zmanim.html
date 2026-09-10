@@ -175,50 +175,65 @@
         .card h3 { margin: 0 0 8px 0; color: var(--text-muted); font-size: 15px; font-weight: 600; }
         .card .time-val { font-size: 24px; font-weight: 800; color: #2563eb; }
 
-        /* מחשבונים מעוצבים פרימיום */
-        .calculators-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
+        /* מחשבון המרה מרכזי מוגדל ויוקרתי */
+        .calculator-center-wrapper {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
         }
-        .calc-card {
+        .calc-card-large {
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
             border: 1px solid var(--border);
-            padding: 28px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             text-align: center;
         }
-        .calc-card h3 { margin: 0 0 16px 0; font-size: 18px; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; }
+        .calc-card-large h3 { margin: 0 0 25px 0; font-size: 22px; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800; }
+        .conversion-box-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 768px) {
+            .conversion-box-grid { grid-template-columns: 1fr; }
+        }
+        .conv-sub-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .conv-title { font-size: 15px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; text-align: center; }
         .calc-input-group {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
         .calc-input, .calc-select-field {
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid #cbd5e1;
-            font-size: 14px;
+            font-size: 15px;
             background: #ffffff;
             outline: none;
+            flex: 1;
         }
         .calc-btn {
             background: #2563eb;
             color: white;
             border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
             transition: background 0.2s;
         }
         .calc-btn:hover { background: #1d4ed8; }
-        .calc-result { font-weight: 700; color: var(--primary); font-size: 14px; margin-top: 10px; display: block; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
+        .calc-result { font-weight: 700; color: var(--primary); font-size: 15px; margin-top: 12px; display: block; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
 
         /* לוח שנה עברי-לועזי אולטרה-מהיר ויוקרתי */
         .calendar-wrapper {
@@ -230,11 +245,12 @@
             margin-top: 20px;
         }
         .cal-header {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            display: flex;
+            justify-content: center;
             align-items: center;
             margin-bottom: 25px;
             gap: 15px;
+            flex-wrap: wrap;
         }
         .cal-select {
             padding: 10px 16px;
@@ -251,7 +267,7 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 18px;
+            padding: 10px 20px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
@@ -277,7 +293,7 @@
         .cal-day {
             background: #ffffff;
             border: 1px solid var(--border);
-            min-height: 110px;
+            min-height: 120px;
             border-radius: 12px;
             padding: 8px;
             display: flex;
@@ -304,19 +320,19 @@
         }
         .cal-gregorian { font-weight: 800; font-size: 15px; color: var(--primary); }
         .cal-hebrew { font-size: 11px; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.1); padding: 2px 5px; border-radius: 6px; }
-        .cal-holiday { font-size: 10.5px; background: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .cal-holiday { font-size: 10px; background: #fef3c7; color: #92400e; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .cal-candle { font-size: 10px; background: #eff6ff; color: #1e40af; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; }
+        .cal-havdalah { font-size: 10px; background: #f3e8ff; color: #6b21a8; padding: 2px 4px; border-radius: 6px; margin-top: 2px; font-weight: 700; text-align: center; }
 
         @media print {
-            .print-btn-wrapper, .city-select-wrapper, .cal-nav-btn, .cal-header select, .calculators-grid { display: none !important; }
+            .print-btn-wrapper, .city-select-wrapper, .cal-nav-btn, .cal-header select, .calculator-center-wrapper { display: none !important; }
             body { background: white !important; }
             .zmanim-container { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 0 !important; }
         }
 
         @media (max-width: 768px) {
             .zmanim-container { padding: 15px; margin: 15px; }
-            .cal-header { grid-template-columns: 1fr; justify-items: center; }
-            .cal-day { min-height: 90px; padding: 5px; }
+            .cal-day { min-height: 100px; padding: 5px; }
             .cal-gregorian { font-size: 13px; }
             .cal-hebrew { font-size: 9.5px; }
         }
@@ -377,49 +393,39 @@
             <div class="card"><h3>צאת הכוכבים</h3><div class="time-val" id="zTzet">--:--</div></div>
         </div>
 
-        <!-- 2. מחשבונים מעוצבים -->
-        <h2 class="section-title"><i class="fa-solid fa-calculator"></i> מחשבונים שימושיים</h2>
-        <div class="calculators-grid">
-            <!-- מחשבון המרת תאריכים דו-כיווני -->
-            <div class="calc-card">
-                <h3><i class="fa-solid fa-calendar-days" style="color: #2563eb;"></i> המרת תאריכים (לועזי ⟷ עברי)</h3>
-                
-                <!-- המרה א: לועזי לעברי -->
-                <div style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
-                    <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted);">לועזי ➔ עברי</div>
-                    <div class="calc-input-group">
-                        <input type="date" id="dateInput" class="calc-input">
-                        <button onclick="convertGregToHeb()" class="calc-btn">המר לעברי</button>
+        <!-- 2. מחשבון המרה מרכזי מוגדל ויוקרתי -->
+        <h2 class="section-title"><i class="fa-solid fa-calculator"></i> מחשבון המרת תאריכים מתקדם</h2>
+        <div class="calculator-center-wrapper">
+            <div class="calc-card-large">
+                <h3><i class="fa-solid fa-calendar-days" style="color: #2563eb;"></i> המרת תאריכים דו-כיוונית</h3>
+                <div class="conversion-box-grid">
+                    <!-- המרה א: לועזי לעברי -->
+                    <div class="conv-sub-card">
+                        <div class="conv-title">תאריך לועזי ➔ עברי</div>
+                        <div class="calc-input-group">
+                            <input type="date" id="dateInput" class="calc-input">
+                            <button onclick="convertGregToHeb()" class="calc-btn">המר</button>
+                        </div>
+                        <span id="convertResultGreg" class="calc-result" style="display:none;"></span>
                     </div>
-                    <span id="convertResultGreg" class="calc-result" style="display:none;"></span>
-                </div>
 
-                <!-- המרה ב: עברי ללועזי -->
-                <div>
-                    <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted);">עברי ➔ לועזי</div>
-                    <div class="calc-input-group">
-                        <input type="number" id="hebDay" placeholder="יום (1-30)" min="1" max="30" class="calc-input" style="max-width: 75px;">
-                        <select id="hebMonth" class="calc-select-field">
-                            <option value="Nisan">ניסן</option><option value="Iyyar">אייר</option><option value="Sivan">סיון</option>
-                            <option value="Tammuz">תמוז</option><option value="Av">אב</option><option value="Elul">אלול</option>
-                            <option value="Tishrei" selected>תשרי</option><option value="Cheshvan">חשון</option><option value="Kislev">כסלו</option>
-                            <option value="Tevet">טבת</option><option value="Shvat">שבט</option><option value="Adar">אדר</option><option value="Adar II">אדר ב'</option>
-                        </select>
-                        <input type="number" id="hebYear" placeholder="שנה (למשל 5787)" value="5787" class="calc-input" style="max-width: 95px;">
-                        <button onclick="convertHebToGreg()" class="calc-btn">המר ללועזי</button>
+                    <!-- המרה ב: עברי ללועזי -->
+                    <div class="conv-sub-card">
+                        <div class="conv-title">תאריך עברי ➔ לועזי</div>
+                        <div class="calc-input-group" style="gap: 5px;">
+                            <input type="number" id="hebDay" placeholder="יום" min="1" max="30" class="calc-input" style="max-width: 60px;">
+                            <select id="hebMonth" class="calc-select-field">
+                                <option value="Nisan">ניסן</option><option value="Iyyar">אייר</option><option value="Sivan">סיון</option>
+                                <option value="Tammuz">תמוז</option><option value="Av">אב</option><option value="Elul">אלול</option>
+                                <option value="Tishrei" selected>תשרי</option><option value="Cheshvan">חשון</option><option value="Kislev">כסלו</option>
+                                <option value="Tevet">טבת</option><option value="Shvat">שבט</option><option value="Adar">אדר</option><option value="Adar II">אדר ב'</option>
+                            </select>
+                            <input type="number" id="hebYear" placeholder="שנה" value="5787" class="calc-input" style="max-width: 80px;">
+                            <button onclick="convertHebToGreg()" class="calc-btn">המר</button>
+                        </div>
+                        <span id="convertResultHeb" class="calc-result" style="display:none;"></span>
                     </div>
-                    <span id="convertResultHeb" class="calc-result" style="display:none;"></span>
                 </div>
-            </div>
-
-            <!-- מחשבון בר/בת מצווה -->
-            <div class="calc-card">
-                <h3><i class="fa-solid fa-star" style="color: #f59e0b;"></i> מחשבון בר/בת מצווה עברית</h3>
-                <div class="calc-input-group">
-                    <input type="date" id="mitzvahDateInput" class="calc-input">
-                    <button onclick="calculateMitzvah()" class="calc-btn" style="background: #059669;">חשב מצווה</button>
-                </div>
-                <span id="mitzvahResult" class="calc-result">הזן/י תאריך לידה לועזי</span>
             </div>
         </div>
 
@@ -427,13 +433,8 @@
         <h2 class="section-title"><i class="fa-solid fa-calendar-check"></i> לוח שנה עברי-לועזי</h2>
         <div class="calendar-wrapper">
             <div class="cal-header">
-                <!-- צד ימין: כפתור חודש קודם -->
-                <div style="text-align: right;">
-                    <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-right"></i> חודש קודם</button>
-                </div>
-                
-                <!-- אמצע: בחירת חודש ושנה מיושרים במרכז -->
-                <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-right"></i> חודש קודם</button>
+                <div style="display: flex; gap: 10px; align-items: center;">
                     <select id="calMonthSelect" class="cal-select" onchange="jumpToSelectedMonthYear()">
                         <option value="0">ינואר</option><option value="1">פברואר</option><option value="2">מרץ</option>
                         <option value="3">אפריל</option><option value="4">מאי</option><option value="5">יוני</option>
@@ -444,11 +445,7 @@
                         <!-- יתמלא אוטומטית בשנים -->
                     </select>
                 </div>
-
-                <!-- צד שמאל: כפתור חודש הבא -->
-                <div style="text-align: left;">
-                    <button class="cal-nav-btn" onclick="changeMonth(1)">חודש הבא <i class="fa-solid fa-chevron-left"></i></button>
-                </div>
+                <button class="cal-nav-btn" onclick="changeMonth(1)">חודש הבא <i class="fa-solid fa-chevron-left"></i></button>
             </div>
             <div class="calendar-grid">
                 <div class="cal-day-name">ראשון</div><div class="cal-day-name">שני</div><div class="cal-day-name">שלישי</div>
@@ -563,7 +560,7 @@
         renderCalendar();
     }
 
-    // פונקציית לוח שנה כולל זמני כניסת שבת בימי שישי
+    // פונקציית לוח שנה כולל כניסת שבת בשישי ויציאת שבת בשבת
     async function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -576,6 +573,7 @@
 
         let monthEvents = {};
         let candleTimes = {};
+        let havdalahTimes = {};
         try {
             let geonameid = document.getElementById('citySelector').value;
             let res = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month+1}&geonameid=${geonameid}&m=55&lg=he&s=on`);
@@ -590,6 +588,10 @@
                     if (item.category === 'candles') {
                         let timeStr = new Date(item.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
                         candleTimes[dStr] = timeStr;
+                    }
+                    if (item.category === 'havdalah' || item.category === 'mzei') {
+                        let timeStr = new Date(item.date).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+                        havdalahTimes[dStr] = timeStr;
                     }
                 });
             }
@@ -623,6 +625,7 @@
             let dFormatted = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             let eventName = monthEvents[dFormatted] ? monthEvents[dFormatted][0] : (currentDayOfWeek === 6 ? 'שבת קודש' : '');
             let candleTimeStr = (currentDayOfWeek === 5 && candleTimes[dFormatted]) ? `כניסת שבת: ${candleTimes[dFormatted]}` : '';
+            let havdalahTimeStr = (currentDayOfWeek === 6 && havdalahTimes[dFormatted]) ? `יציאת שבת: ${havdalahTimes[dFormatted]}` : '';
 
             let hebDayText = "";
             try {
@@ -639,6 +642,7 @@
                     <span class="cal-hebrew">${hebDayText}</span>
                 </div>
                 ${candleTimeStr ? `<div class="cal-candle"><i class="fa-solid fa-candle-holder"></i> ${candleTimeStr}</div>` : ''}
+                ${havdalahTimeStr ? `<div class="cal-havdalah"><i class="fa-solid fa-star"></i> ${havdalahTimeStr}</div>` : ''}
                 <div class="cal-holiday" title="${eventName}">${eventName}</div>
             `;
             container.appendChild(cell);
@@ -699,22 +703,6 @@
             let resEl = document.getElementById('convertResultHeb');
             resEl.style.display = 'block';
             resEl.innerText = "שגיאה בהתחברות לשרת";
-        }
-    }
-
-    async function calculateMitzvah() {
-        let val = document.getElementById('mitzvahDateInput').value;
-        if(!val) { alert('נא לבחור תאריך לידה'); return; }
-        let birthDate = new Date(val);
-        let barMitzvahYear = birthDate.getFullYear() + 13;
-        try {
-            let res = await fetch(`https://www.hebcal.com/converter?cfg=json&gy=${barMitzvahYear}&gm=${birthDate.getMonth()+1}&gd=${birthDate.getDate()}&g2h=1&lg=he`);
-            let data = await res.json();
-            if(data && data.hebrew) {
-                document.getElementById('mitzvahResult').innerText = `בר/בת מצווה עברית: גיל 13 חל ב-${data.hebrew}`;
-            }
-        } catch {
-            document.getElementById('mitzvahResult').innerText = `שנת בר/בת מצווה לועזית: ${barMitzvahYear}`;
         }
     }
 
