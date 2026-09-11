@@ -36,7 +36,6 @@
             padding: 0 24px;
         }
 
-        /* כותרת ראשית יוקרתית */
         .media-header-title {
             text-align: center;
             margin-bottom: 45px;
@@ -64,14 +63,12 @@
         .media-header-title p {
             color: var(--text-muted);
             font-size: 16px;
-            margin: 0;
+            margin: 0 auto;
             font-weight: 400;
             max-width: 650px;
-            margin: 0 auto;
             line-height: 1.6;
         }
 
-        /* סרגלי קטגוריות מתקדמים */
         .category-bar {
             background: linear-gradient(90deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
             border: 1px solid var(--card-border);
@@ -96,14 +93,12 @@
             filter: drop-shadow(0 0 8px var(--accent-glow));
         }
 
-        /* גריד דינמי ורספונסיבי */
         .channels-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
             gap: 22px;
         }
 
-        /* כרטיסיית זכוכית (Glassmorphism Card) */
         .channel-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -147,7 +142,6 @@
             opacity: 1;
         }
 
-        /* תג לייב פועם ומבריק */
         .live-tag {
             position: absolute;
             top: 12px;
@@ -180,7 +174,6 @@
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* לוגו הערוץ בלוק מרובע מעוצב */
         .logo-box {
             background: #ffffff;
             width: 100%;
@@ -204,7 +197,7 @@
         .logo-box span {
             color: #0f172a;
             font-weight: 900;
-            font-size: 19px;
+            font-size: 18px;
             letter-spacing: -0.5px;
         }
 
@@ -249,7 +242,7 @@
         
         <div class="media-header-title">
             <h1><i class="fa-solid fa-tv"></i> ערוצי שידור, רדיו ותוכן בלייב</h1>
-            <p>צפייה ישירה והאזנה לכל ערוצי הטלוויזיה, הרדיו, הספורט, הלייף-סטייל והאקטואליה המובילים בישראל</p>
+            <p>צפייה ישירה והאזנה לכל ערוצי הטלוויזיה, הרדיו, הספורט, המורשת, הלייף-סטייל והאקטואליה המובילים בישראל</p>
         </div>
 
         <!-- 1. ערוצי טלוויזיה ואקטואליה -->
@@ -300,87 +293,55 @@
             </a>
         </div>
 
-        <!-- 2. ערוצי טבע, מדע ודוקו -->
+        <!-- 2. רדיו מורשת, דתי וחרדי (חדש!) -->
         <div class="category-bar">
-            <i class="fa-solid fa-earth-americas"></i> טבע, מדע ודוקו
+            <i class="fa-solid fa-synagogue"></i> רדיו מורשת, דתי וחרדי
         </div>
         <div class="channels-grid">
-            <a href="https://www.nationalgeographic.com" target="_blank" class="channel-card">
+            <a href="https://www.93fm.co.il" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="font-size: 13px;">NAT GEO</span></div>
-                <div class="channel-name">נשיונל גאוגרפיק</div>
-                <p class="channel-desc">טבע, מדע ומחקר</p>
+                <div class="logo-box"><span style="color: #0284c7;">קול חי</span></div>
+                <div class="channel-name">רדיו קול חי</div>
+                <p class="channel-desc">חדשות, שיעורים ואקטואליה</p>
             </a>
 
-            <a href="https://www.discovery.com" target="_blank" class="channel-card">
+            <a href="https://www.kol-barama.co.il" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #0284c7;">Discovery</span></div>
-                <div class="channel-name">ערוץ דיסקברי</div>
-                <p class="channel-desc">מדע, טכנולוגיה וחקירות</p>
+                <div class="logo-box"><span style="color: #d97706;">קול ברמה</span></div>
+                <div class="channel-name">רדיו קול ברמה</div>
+                <p class="channel-desc">שידורי מורשת ואקטואליה</p>
             </a>
 
-            <a href="https://www.kan.org.il/page.aspx?pageid=102" target="_blank" class="channel-card">
+            <a href="https://www.93fm.co.il/music" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span>כאן חינוכית</span></div>
-                <div class="channel-name">כאן חינוכית / דוקו</div>
-                <p class="channel-desc">סדרות וסרטים תיעודיים</p>
-            </a>
-        </div>
-
-        <!-- 3. ערוצי ספורט -->
-        <div class="category-bar">
-            <i class="fa-solid fa-futbol"></i> ספורט בלייב
-        </div>
-        <div class="channels-grid">
-            <a href="https://www.sport5.co.il" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #dc2626;">SPORT 5</span></div>
-                <div class="channel-name">ערוץ הספורט</div>
-                <p class="channel-desc">שידורי ספורט ישירים ועדכונים</p>
+                <div class="logo-box"><span style="color: #2563eb;">קול חי מיוזיק</span></div>
+                <div class="channel-name">קול חי מיוזיק</div>
+                <p class="channel-desc">מוזיקה יהודית וחסידית ברצף</p>
             </a>
 
-            <a href="https://www.one.co.il" target="_blank" class="channel-card">
+            <a href="https://www.kolplay.co.il" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #059669;">ONE</span></div>
-                <div class="channel-name">ערוץ ONE</div>
-                <p class="channel-desc">כדורגל, כדורסל וספורט עולמי</p>
-            </a>
-        </div>
-
-        <!-- 4. ערוצי ילדים ונוער -->
-        <div class="category-bar">
-            <i class="fa-solid fa-child"></i> ילדים ונוער
-        </div>
-        <div class="channels-grid">
-            <a href="https://www.kidztv.co.il" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #7c3aed;">ערוץ הילדים</span></div>
-                <div class="channel-name">ערוץ הילדים</div>
-                <p class="channel-desc">סדרות, תוכניות ואנימציה</p>
+                <div class="logo-box"><span style="color: #7c3aed;">קול פליי</span></div>
+                <div class="channel-name">רדיו קול פליי</div>
+                <p class="channel-desc">מוזיקה יהודית עדכנית ואיכותית</p>
             </a>
 
-            <a href="https://www.hop.co.il" target="_blank" class="channel-card">
+            <a href="https://www.kan.org.il/radio/kan-moreshet/" target="_blank" class="channel-card">
                 <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #f59e0b;">הופ!</span></div>
-                <div class="channel-name">ערוץ הופ!</div>
-                <p class="channel-desc">תוכן מותאם לגיל הרך</p>
+                <div class="logo-box"><span>כאן מורשת</span></div>
+                <div class="channel-name">כאן מורשת</div>
+                <p class="channel-desc">שידורי מורשת מבית תאגיד כאן</p>
+            </a>
+
+            <a href="https://www.gal-eyz.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #059669;">גלי ישראל</span></div>
+                <div class="channel-name">גלי ישראל</div>
+                <p class="channel-desc">אקטואליה, מסורת ושיחות עם מאזינים</p>
             </a>
         </div>
 
-        <!-- 5. ערוצי אוכל ולייף סטייל -->
-        <div class="category-bar">
-            <i class="fa-solid fa-utensils"></i> אוכל ולייף סטייל
-        </div>
-        <div class="channels-grid">
-            <a href="https://www.foodtv.co.il" target="_blank" class="channel-card">
-                <span class="live-tag">LIVE</span>
-                <div class="logo-box"><span style="color: #ea580c;">Food Network</span></div>
-                <div class="channel-name">ערוץ האוכל</div>
-                <p class="channel-desc">תוכניות בישול ומתכונים</p>
-            </a>
-        </div>
-
-        <!-- 6. תחנות רדיו בהאזנה ישירה -->
+        <!-- 3. תחנות רדיו כלליות -->
         <div class="category-bar">
             <i class="fa-solid fa-radio"></i> תחנות רדיו בהאזנה ישירה
         </div>
@@ -414,7 +375,87 @@
             </a>
         </div>
 
-        <!-- 7. כלכלה ושוק ההון -->
+        <!-- 4. ערוצי טבע, מדע ודוקו -->
+        <div class="category-bar">
+            <i class="fa-solid fa-earth-americas"></i> טבע, מדע ודוקו
+        </div>
+        <div class="channels-grid">
+            <a href="https://www.nationalgeographic.com" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="font-size: 13px;">NAT GEO</span></div>
+                <div class="channel-name">נשיונל גאוגרפיק</div>
+                <p class="channel-desc">טבע, מדע ומחקר</p>
+            </a>
+
+            <a href="https://www.discovery.com" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #0284c7;">Discovery</span></div>
+                <div class="channel-name">ערוץ דיסקברי</div>
+                <p class="channel-desc">מדע, טכנולוגיה וחקירות</p>
+            </a>
+
+            <a href="https://www.kan.org.il/page.aspx?pageid=102" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span>כאן חינוכית</span></div>
+                <div class="channel-name">כאן חינוכית / דוקו</div>
+                <p class="channel-desc">סדרות וסרטים תיעודיים</p>
+            </a>
+        </div>
+
+        <!-- 5. ערוצי ספורט -->
+        <div class="category-bar">
+            <i class="fa-solid fa-futbol"></i> ספורט בלייב
+        </div>
+        <div class="channels-grid">
+            <a href="https://www.sport5.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #dc2626;">SPORT 5</span></div>
+                <div class="channel-name">ערוץ הספורט</div>
+                <p class="channel-desc">שידורי ספורט ישירים ועדכונים</p>
+            </a>
+
+            <a href="https://www.one.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #059669;">ONE</span></div>
+                <div class="channel-name">ערוץ ONE</div>
+                <p class="channel-desc">כדורגל, כדורסל וספורט עולמי</p>
+            </a>
+        </div>
+
+        <!-- 6. ערוצי ילדים ונוער -->
+        <div class="category-bar">
+            <i class="fa-solid fa-child"></i> ילדים ונוער
+        </div>
+        <div class="channels-grid">
+            <a href="https://www.kidztv.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #7c3aed;">ערוץ הילדים</span></div>
+                <div class="channel-name">ערוץ הילדים</div>
+                <p class="channel-desc">סדרות, תוכניות ואנימציה</p>
+            </a>
+
+            <a href="https://www.hop.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #f59e0b;">הופ!</span></div>
+                <div class="channel-name">ערוץ הופ!</div>
+                <p class="channel-desc">תוכן מותאם לגיל הרך</p>
+            </a>
+        </div>
+
+        <!-- 7. ערוצי אוכל ולייף סטייל -->
+        <div class="category-bar">
+            <i class="fa-solid fa-utensils"></i> אוכל ולייף סטייל
+        </div>
+        <div class="channels-grid">
+            <a href="https://www.foodtv.co.il" target="_blank" class="channel-card">
+                <span class="live-tag">LIVE</span>
+                <div class="logo-box"><span style="color: #ea580c;">Food Network</span></div>
+                <div class="channel-name">ערוץ האוכל</div>
+                <p class="channel-desc">תוכניות בישול ומתכונים</p>
+            </a>
+        </div>
+
+        <!-- 8. כלכלה ושוק ההון -->
         <div class="category-bar">
             <i class="fa-solid fa-chart-line"></i> כלכלה ושוק ההון
         </div>
