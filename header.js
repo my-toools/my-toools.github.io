@@ -16,7 +16,7 @@ if (!favicon) {
 }
 favicon.href = "favicon.png";
 
-// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר (עם הגדלת שני הסרגלים בראש האתר)
+// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר
 const styleId = "netools-nav-style";
 if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
@@ -148,9 +148,7 @@ if (!document.getElementById(styleId)) {
         }
         .secondary-container {
             max-width: 1650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
-            justify-content: center; 
-            
-            align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
+            justify-content: center; align-items: center;
         }
         .secondary-container::-webkit-scrollbar { display: none; }
         .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
@@ -205,7 +203,59 @@ if (!document.getElementById(styleId)) {
         footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
         footer.main-footer a:hover { text-decoration: underline; }
 
+        /* --- תוספת רספונסיביות ותפריט המבורגר למובייל --- */
+        .mobile-toggle-btn {
+            display: none;
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            font-size: 20px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
         @media (max-width: 768px) {
+            .header-container {
+                display: flex !important;
+                justify-content: space-between !important;
+                padding: 12px 16px !important;
+            }
+
+            .mobile-toggle-btn {
+                display: block !important;
+            }
+
+            .main-nav-wrapper {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                background: #0f172a;
+                padding: 15px;
+                border-bottom: 2px solid #0284c7;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+                z-index: 99999;
+            }
+
+            .main-nav-wrapper.open {
+                display: flex !important;
+            }
+
+            .main-nav {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
+
+            .main-nav li, .main-nav a {
+                width: 100% !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
+            }
+
             .secondary-container { font-size: 12px; padding: 6px; }
             footer.main-footer { font-size: 13px; padding: 20px 10px; }
             body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
@@ -223,7 +273,7 @@ const headerHtml = `
     <header class="main-header">
         <div class="header-container">
             <a href="index.html" class="brand-name">NETOOLS</a>
-            
+            <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט"><i class="fa-solid fa-bars"></i></button>
             <div class="main-nav-wrapper">
                 <ul class="main-nav">
                     <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
@@ -342,7 +392,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
     const todayName = days[new Date().getDay()];
 
-    // קריאה מבוקרת ומוגנת ל-Hebcal למניעת שגיאות 400
     const nowForHeb = new Date();
     const gy = nowForHeb.getFullYear();
     const gm = nowForHeb.getMonth() + 1;
@@ -458,5 +507,21 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
         document.body.appendChild(accContainer);
+    }
+});
+
+// הפעלת פתיחה/סגירה לתפריט המבורגר במובייל
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("menuToggleBtn");
+    const navWrapper = document.querySelector(".main-nav-wrapper");
+
+    if (btn && navWrapper) {
+        btn.addEventListener("click", function () {
+            navWrapper.classList.toggle("open");
+            const icon = btn.querySelector("i");
+            if (icon) {
+                icon.className = navWrapper.classList.contains("open") ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+            }
+        });
     }
 });
