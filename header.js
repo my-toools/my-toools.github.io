@@ -215,55 +215,66 @@ if (!document.getElementById(styleId)) {
             cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            .header-container {
-                display: flex !important;
-                justify-content: space-between !important;
-                padding: 12px 16px !important;
-            }
+       @media (max-width: 768px) {
+    .header-container {
+        display: grid !important;
+        grid-template-columns: auto 1fr auto !important;
+        align-items: center !important;
+        padding: 12px 16px !important;
+    }
 
-            .mobile-toggle-btn {
-                display: block !important;
-            }
+    .mobile-toggle-btn {
+        display: block !important;
+        grid-column: 1 !important; /* המבורגר ראשון מימין */
+    }
 
-            .main-nav-wrapper {
-                display: none;
-                width: 100%;
-                position: absolute;
-                top: 100%;
-                right: 0;
-                left: 0;
-                background: #0f172a;
-                padding: 15px;
-                border-bottom: 2px solid #0284c7;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-                z-index: 99999;
-            }
+    .brand-name {
+        grid-column: 2 !important; /* לוגו במרכז */
+        text-align: center !important;
+    }
 
-            .main-nav-wrapper.open {
-                display: flex !important;
-            }
+    .header-alert-btn {
+        grid-column: 3 !important; /* פעמון התרעות משמאל */
+    }
 
-            .main-nav {
-                flex-direction: column !important;
-                width: 100% !important;
-                gap: 10px !important;
-            }
+    .main-nav-wrapper {
+        display: none;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background: #0f172a;
+        padding: 15px;
+        border-bottom: 2px solid #0284c7;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        z-index: 99999;
+    }
 
-            .main-nav li, .main-nav a {
-                width: 100% !important;
-                text-align: center !important;
-                box-sizing: border-box !important;
-            }
+    .main-nav-wrapper.open {
+        display: flex !important;
+    }
 
-            .secondary-container { font-size: 12px; padding: 6px; }
-            footer.main-footer { font-size: 13px; padding: 20px 10px; }
-            body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
-                max-width: 100% !important;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-        }
+    .main-nav {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .main-nav li, .main-nav a {
+        width: 100% !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+    }
+
+    .secondary-container { font-size: 12px; padding: 6px; }
+    footer.main-footer { font-size: 13px; padding: 20px 10px; }
+    body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+        max-width: 100% !important;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
     `;
     document.head.appendChild(style);
 }
