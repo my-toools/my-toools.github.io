@@ -1,213 +1,462 @@
-// ==========================================
-// NETOOLS - header.js (סרגל עליון רספונסיבי מותאם לכל המכשירים)
-// ==========================================
+// טעינת ספריית האייקונים באופן אוטומטי
+if (!document.getElementById("fa-cdn")) {
+    var faLink = document.createElement("link");
+    faLink.id = "fa-cdn";
+    faLink.rel = "stylesheet";
+    faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css";
+    document.head.appendChild(faLink);
+}
 
-document.addEventListener("DOMContentLoaded", function () {
+// 1. פאביקון לטאב בדפדפן - מופעל מיד
+let favicon = document.querySelector("link[rel*='icon']");
+if (!favicon) {
+    favicon = document.createElement("link");
+    favicon.rel = "shortcut icon";
+    document.head.appendChild(favicon);
+}
+favicon.href = "favicon.png";
 
-    // 1. טעינת ספריית FontAwesome אקטיבית
-    if (!document.getElementById("font-awesome-cdn")) {
-        const faLink = document.createElement("link");
-        faLink.id = "font-awesome-cdn";
-        faLink.rel = "stylesheet";
-        faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css";
-        document.head.appendChild(faLink);
-    }
-
-    // 2. הזרקת עיצוב ה-CSS הרספונסיבי
-    const headerStyle = document.createElement('style');
-    headerStyle.innerHTML = `
-        .main-header {
-            background-color: #0f172a !important;
-            padding: 12px 25px !important;
-            border-bottom: 1px solid #1e293b !important;
-            position: relative !important;
-            z-index: 9999 !important;
+// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר (עם הגדלת שני הסרגלים בראש האתר)
+const styleId = "netools-nav-style";
+if (!document.getElementById(styleId)) {
+    const style = document.createElement("style");
+    style.id = styleId;
+    style.textContent = `
+        html, body {
+            height: 100%;
+            margin: 0 !important;
+            padding-top: 0 !important;
+            background-color: var(--bg-main, #f8fafc);
         }
 
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        header.main-header {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 10000;
+            width: 100%;
+            padding: 6px 0;
+        }
+        
         .header-container {
-            max-width: 1200px !important;
-            margin: 0 auto !important;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            position: relative !important;
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 15px;
         }
-
-        .logo-link {
+        
+        .brand-name {
             font-size: 26px !important;
-            font-weight: 900 !important;
-            color: #38bdf8 !important;
-            text-decoration: none !important;
-            letter-spacing: 1px !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-        }
-
-        .logo-img {
-            height: 32px !important;
-            width: auto !important;
-            object-fit: contain !important;
-        }
-
-        .navbar {
-            display: flex !important;
-            flex-wrap: wrap !important;
-            gap: 8px !important;
-            align-items: center !important;
-        }
-
-        .nav-link {
-            color: #f8fafc !important;
-            text-decoration: none !important;
-            font-weight: 700 !important;
-            font-size: 14px !important;
-            padding: 6px 12px !important;
-            border-radius: 8px !important;
-            border: 1px solid #334155 !important;
-            background-color: #1e293b !important;
-            transition: all 0.2s !important;
-            white-space: nowrap !important;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background-color: #0284c7 !important;
-            border-color: #38bdf8 !important;
+            font-weight: 800;
             color: #ffffff !important;
+            text-decoration: none;
+            letter-spacing: 1px;
+            white-space: nowrap;
         }
 
-        .ticker-bar {
-            background: #060911 !important;
-            color: #94a3b8 !important;
-            padding: 8px 15px !important;
-            font-size: 13px !important;
-            border-bottom: 1px solid #1e293b !important;
-            display: flex !important;
-            overflow-x: auto !important;
-            white-space: nowrap !important;
-            gap: 20px !important;
-            justify-content: center !important;
-            align-items: center !important;
-            scrollbar-width: none !important;
+        .main-nav-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        .ticker-bar::-webkit-scrollbar {
-            display: none !important;
+        .main-nav {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .main-nav a {
+            color: #ffffff !important;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px !important;
+            padding: 9px 16px !important;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.02);
+            white-space: nowrap;
+        }
+        
+        .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
+        .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
+        .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
+        .nav-item-zmanim { border: 1px solid rgba(236, 72, 153, 0.6); }
+        .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
+        .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
+        .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
+        .nav-item-world { border: 1px solid rgba(14, 165, 233, 0.6); }
+
+        .main-nav a:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .ticker-item {
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 6px !important;
+        .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
+        .center-logo img { height: 38px; width: 38px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
+        .center-logo img:hover { transform: scale(1.1); }
+
+        .header-alert-btn {
+            color: #ef4444 !important;
+            font-size: 22px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+        }
+        .header-alert-btn:hover {
+            background: rgba(239, 68, 68, 0.25);
+            transform: scale(1.05);
         }
 
-        /* --- כפתור המבורגר והתאמות למסכים קטנים (תחת 768px) --- */
-        .mobile-toggle {
-            display: none !important;
-            background: #1e293b !important;
-            color: #38bdf8 !important;
-            border: 1px solid #334155 !important;
-            font-size: 20px !important;
-            padding: 8px 12px !important;
-            border-radius: 8px !important;
-            cursor: pointer !important;
+        .secondary-bar {
+            background: #1e293b; color: #cbd5e1; font-size: 14.5px !important; padding: 12px 18px !important; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        .secondary-container {
+            max-width: 1650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
+            justify-content: center; 
+            
+            align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
+        }
+        .secondary-container::-webkit-scrollbar { display: none; }
+        .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
+        .widget-item strong { color: #ffffff; }
+
+        .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
+        .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
+        .icon-eur { color: #06b6d4; } .icon-btc { color: #f59e0b; } .icon-prime { color: #f97316; } .icon-cpi { color: #a855f7; } .icon-wage { color: #ec4899; }
+        .icon-weather { color: #38bdf8; }
+
+        .calc-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999;
+        }
+        .calc-modal {
+            background: #0f172a; border: 1px solid #334155; border-radius: 20px; padding: 22px; width: 380px;
+            color: #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.6); direction: ltr;
+        }
+        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; direction: rtl; }
+        .calc-header h3 { margin: 0; font-size: 17px; color: #38bdf8; font-weight: 700; }
+        .calc-close { background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; transition: color 0.2s; }
+        .calc-close:hover { color: #ef4444; }
+        .calc-display {
+            width: 100%; height: 55px; background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+            color: #38bdf8; font-size: 24px; font-weight: 700; text-align: right; padding: 0 16px; box-sizing: border-box; margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+        .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .c-btn {
+            background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 12px 0;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center;
+        }
+        .c-btn:hover { background: #334155; transform: translateY(-1px); }
+        .c-btn.btn-op { border: 1px solid #38bdf8; color: #38bdf8; font-size: 15px; }
+        .c-btn.btn-sci { border: 1px solid #a855f7; color: #c084fc; }
+        .c-btn.btn-mem { border: 1px solid #f59e0b; color: #fbbf24; }
+        .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
+        .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
+
+        footer.main-footer {
+            background: #0f172a !important;
+            color: #ffffff !important;
+            text-align: center;
+            padding: 28px 20px;
+            margin-top: auto !important;
+            border-top: 1px solid #1e293b;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
+        footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
+        footer.main-footer a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
-            .mobile-toggle {
-                display: block !important;
-            }
-
-            .navbar {
-                display: none !important;
-                flex-direction: column !important;
-                width: 100% !important;
-                position: absolute !important;
-                top: 100% !important;
-                right: 0 !important;
-                left: 0 !important;
-                background-color: #0f172a !important;
-                padding: 15px !important;
-                border-bottom: 2px solid #0284c7 !important;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
-                gap: 10px !important;
-                z-index: 10000 !important;
-            }
-
-            .navbar.open {
-                display: flex !important;
-            }
-
-            .nav-link {
-                width: 100% !important;
-                text-align: center !important;
-                padding: 10px !important;
-                font-size: 15px !important;
-            }
-
-            .ticker-bar {
-                justify-content: flex-start !important;
+            .secondary-container { font-size: 12px; padding: 6px; }
+            footer.main-footer { font-size: 13px; padding: 20px 10px; }
+            body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+                max-width: 100% !important;
+                padding-left: 10px;
+                padding-right: 10px;
             }
         }
     `;
-    document.head.appendChild(headerStyle);
+    document.head.appendChild(style);
+}
 
-    // 3. זיהוי העמוד הפעיל
-    const currentPath = window.location.pathname.split("/").pop() || "index.html";
-
-    // 4. בניית ה-HTML של ה-Header וה-Ticker
-    const headerHTML = `
-        <header class="main-header">
-            <div class="header-container">
-                <a href="index.html" class="logo-link">
-                    <img src="images/logo.png" alt="NETOOLS" class="logo-img" onerror="this.style.display='none';">
-                    <span>NETOOLS</span>
-                </a>
-
-                <button class="mobile-toggle" id="menuToggle" aria-label="פתח תפריט">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-
-                <nav class="navbar" id="navMenu">
-                    <a href="index.html" class="nav-link ${currentPath === 'index.html' ? 'active' : ''}">דף הבית</a>
-                    <a href="rights.html" class="nav-link ${currentPath === 'rights.html' ? 'active' : ''}">זכויות עובדים</a>
-                    <a href="legal.html" class="nav-link ${currentPath === 'legal.html' ? 'active' : ''}">כלים משפטיים</a>
-                    <a href="zmanim.html" class="nav-link ${currentPath === 'zmanim.html' ? 'active' : ''}">זמנים</a>
-                    <a href="finance.html" class="nav-link ${currentPath === 'finance.html' ? 'active' : ''}">פיננסים ומט"ח</a>
-                    <a href="utility.html" class="nav-link ${currentPath === 'utility.html' ? 'active' : ''}">כלים שימושיים</a>
-                    <a href="news.html" class="nav-link ${currentPath === 'news.html' ? 'active' : ''}">חדשות</a>
-                </nav>
+// 3. הזרקת ה-Header פעם אחת בלבד במקומו הנכון
+const headerHtml = `
+    <header class="main-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-name">NETOOLS</a>
+            
+            <div class="main-nav-wrapper">
+                <ul class="main-nav">
+                    <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
+                    <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
+                    <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
+                    <li><a href="zmanim.html" class="nav-item-zmanim">זמנים</a></li>
+                    <li><a href="world.html" class="nav-item-world">עולם ומפות</a></li> 
+                    <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
+                    <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
+                    <li><a href="news.html" class="nav-item-news">חדשות</a></li>
+                </ul>
             </div>
-        </header>
 
-        <div class="ticker-bar">
-            <span class="ticker-item"><i class="fa-regular fa-calendar-days" style="color:#38bdf8;"></i> יום שלישי, כ"ה אלול תשפ"ו</span>
-            <span class="ticker-item"><i class="fa-solid fa-dollar-sign" style="color:#22c55e;"></i> דולר: 3.01 ₪</span>
-            <span class="ticker-item"><i class="fa-solid fa-euro-sign" style="color:#3b82f6;"></i> אירו: 3.50 ₪</span>
-            <span class="ticker-item"><i class="fa-solid fa-percent" style="color:#f59e0b;"></i> ריבית: 4.5%</span>
-            <span class="ticker-item"><i class="fa-solid fa-chart-line" style="color:#ef4444;"></i> פריים: 6.0%</span>
-            <span class="ticker-item"><i class="fa-solid fa-coins" style="color:#eab308;"></i> ביטקוין: $79,140</span>
-            <span class="ticker-item"><i class="fa-solid fa-briefcase" style="color:#a855f7;"></i> שכר מינימום: 5,880 ₪</span>
-            <span class="ticker-item"><i class="fa-solid fa-cloud-sun" style="color:#38bdf8;"></i> 23°C</span>
+            <div>
+                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+            </div>
         </div>
-    `;
 
-    // 5. הזרקת ה-Header לראש הדף
-    if (!document.querySelector(".main-header")) {
-        document.body.insertAdjacentHTML("afterbegin", headerHTML);
+        <div class="secondary-bar">
+            <div class="secondary-container">
+                <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
+                <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
+                <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
+                <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
+                <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
+                <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
+                <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$62,500</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
+                <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="calc-modal-overlay" id="navCalcModal">
+        <div class="calc-modal">
+            <div class="calc-header">
+                <h3><i class="fa-solid fa-calculator"></i> מחשבון מדעי מקצועי</h3>
+                <button class="calc-close" onclick="closeNavCalculator()">&times;</button>
+            </div>
+            <input type="text" class="calc-display" id="calcDisplay" readonly value="0">
+            <div class="calc-grid">
+                <button class="c-btn btn-mem" onclick="calcInput('MC')">MC</button>
+                <button class="c-btn btn-mem" onclick="calcInput('MR')">MR</button>
+                <button class="c-btn btn-mem" onclick="calcInput('MS')">MS</button>
+                <button class="c-btn btn-mem" onclick="calcInput('%')">%</button>
+                <button class="c-btn btn-clear" onclick="calcInput('C')">C</button>
+
+                <button class="c-btn btn-sci" onclick="calcInput('sin')">sin</button>
+                <button class="c-btn btn-sci" onclick="calcInput('cos')">cos</button>
+                <button class="c-btn btn-sci" onclick="calcInput('tan')">tan</button>
+                <button class="c-btn btn-sci" onclick="calcInput('sqrt')">&radic;</button>
+                <button class="c-btn btn-op" onclick="calcInput('/')">&divide;</button>
+
+                <button class="c-btn" onclick="calcInput('7')">7</button>
+                <button class="c-btn" onclick="calcInput('8')">8</button>
+                <button class="c-btn" onclick="calcInput('9')">9</button>
+                <button class="c-btn btn-sci" onclick="calcInput('pow2')">x&sup2;</button>
+                <button class="c-btn btn-op" onclick="calcInput('*')">&times;</button>
+
+                <button class="c-btn" onclick="calcInput('4')">4</button>
+                <button class="c-btn" onclick="calcInput('5')">5</button>
+                <button class="c-btn" onclick="calcInput('6')">6</button>
+                <button class="c-btn btn-sci" onclick="calcInput('pow3')">x&sup3;</button>
+                <button class="c-btn btn-op" onclick="calcInput('-')">-</button>
+
+                <button class="c-btn" onclick="calcInput('1')">1</button>
+                <button class="c-btn" onclick="calcInput('2')">2</button>
+                <button class="c-btn" onclick="calcInput('3')">3</button>
+                <button class="c-btn btn-sci" onclick="calcInput('pi')">&pi;</button>
+                <button class="c-btn btn-op" onclick="calcInput('+')">+</button>
+
+                <button class="c-btn" onclick="calcInput('0')">0</button>
+                <button class="c-btn" onclick="calcInput('.')">.</button>
+                <button class="c-btn btn-sci" onclick="calcInput('log')">log</button>
+                <button class="c-btn btn-eq" onclick="calcInput('=')">=</button>
+            </div>
+        </div>
+    </div>
+`;
+
+document.body.insertAdjacentHTML("afterbegin", headerHtml);
+
+// 4. הזרקת פוטר אחיד
+if (!document.querySelector("footer.main-footer")) {
+    const footerHtml = `
+        <footer class="main-footer">
+            <p>&copy; ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
+            <p>
+                <a href="privacy.html">מדיניות פרטיות</a> | 
+                <a href="about.html">אודות והצהרת נגישות</a> | 
+                <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
+            </p>
+            <p style="font-size: 12.5px; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
+                <strong></strong> המוצגים באתר מהווים אומדן כללי בלבד ואינם מהווים תחליף לייעוץ מקצועי, משפטי או פיננסי.
+            </p>
+        </footer>
+    `;
+    document.body.insertAdjacentHTML("beforeend", footerHtml);
+}
+
+// 5. סקריפטים של שעונים, מזג אוויר ונתונים
+document.addEventListener("DOMContentLoaded", function () {
+    function updateClockAndDate() {
+        const now = new Date();
+        const clockEl = document.getElementById("nav-clock");
+        const dateEl = document.getElementById("nav-greg-date");
+        if (clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock icon-clock"></i> ${now.toLocaleTimeString('he-IL')}`;
+        if (dateEl) dateEl.innerHTML = `<i class="fa-regular fa-calendar icon-date"></i> ${now.toLocaleDateString('he-IL')}`;
+    }
+    setInterval(updateClockAndDate, 1000);
+    updateClockAndDate();
+
+    const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
+    const todayName = days[new Date().getDay()];
+
+    // קריאה מבוקרת ומוגנת ל-Hebcal למניעת שגיאות 400
+    const nowForHeb = new Date();
+    const gy = nowForHeb.getFullYear();
+    const gm = nowForHeb.getMonth() + 1;
+    const gd = nowForHeb.getDate();
+
+    if (gy && gm && gd) {
+        fetch(`https://www.hebcal.com/converter?cfg=json&gy=${gy}&gm=${gm}&gd=${gd}&g2h=1&lg=he`)
+            .then(res => res.json())
+            .then(data => {
+                const hebEl = document.getElementById("nav-hebrew");
+                if (hebEl && data.hebrew) {
+                    hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
+                }
+            }).catch(() => {});
     }
 
-    // 6. הפעלת מנגנון פתיחה/סגירה בלחיצה במובייל
-    const menuToggle = document.getElementById("menuToggle");
-    const navMenu = document.getElementById("navMenu");
-
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener("click", function () {
-            navMenu.classList.toggle("open");
-            const icon = menuToggle.querySelector("i");
-            if (icon) {
-                icon.className = navMenu.classList.contains("open") ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+    fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
+        .then(res => res.json())
+        .then(data => {
+            const parashaItem = data.items.find(i => i.category === "parashat");
+            if (parashaItem && parashaItem.hebrew) {
+                const parEl = document.getElementById("nav-parasha");
+                let pName = parashaItem.hebrew.replace(/^פרשת\s+/, '');
+                if (parEl) parEl.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${pName}</strong>`;
             }
-        });
+        }).catch(() => {});
+
+    fetch("https://api.exchangerate-api.com/v4/latest/USD")
+        .then(res => res.json())
+        .then(data => {
+            const usd = data.rates.ILS ? data.rates.ILS.toFixed(2) : "3.01";
+            fetch("https://api.exchangerate-api.com/v4/latest/EUR")
+                .then(res => res.json())
+                .then(eurData => {
+                    const eur = eurData.rates.ILS ? eurData.rates.ILS.toFixed(2) : "3.50";
+                    fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
+                        .then(res => res.json())
+                        .then(btcData => {
+                            const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
+                            const forexEl = document.getElementById("nav-forex");
+                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>${eur} ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
+                        }).catch(() => {});
+                });
+        }).catch(() => {});
+
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true")
+        .then(res => res.json())
+        .then(data => {
+            const weatherEl = document.getElementById("nav-weather");
+            if (weatherEl && data.current_weather) {
+                const temp = Math.round(data.current_weather.temperature);
+                weatherEl.innerHTML = `<i class="fa-solid fa-cloud-sun icon-weather"></i> <strong>${temp}°C</strong>`;
+            }
+        }).catch(() => {});
+});
+
+function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
+function closeNavCalculator() { document.getElementById("navCalcModal").style.display = "none"; }
+
+let calcExpr = "";
+let calcMem = 0;
+
+function calcInput(val) {
+    const disp = document.getElementById("calcDisplay");
+    if (!disp) return;
+    if (val === 'C') { calcExpr = ""; disp.value = "0"; }
+    else if (val === 'MS') { calcMem = parseFloat(disp.value) || 0; }
+    else if (val === 'MR') { calcExpr += calcMem.toString(); disp.value = calcExpr; }
+    else if (val === 'MC') { calcMem = 0; }
+    else if (val === '%') {
+        try {
+            disp.value = (eval(calcExpr) / 100).toString();
+            calcExpr = disp.value;
+        } catch { disp.value = "שגיאה"; calcExpr = ""; }
+    }
+    else if (val === '=') {
+        try {
+            let parsed = calcExpr.replace(/sin/g, 'Math.sin')
+                                   .replace(/cos/g, 'Math.cos')
+                                   .replace(/tan/g, 'Math.tan')
+                                   .replace(/sqrt/g, 'Math.sqrt')
+                                   .replace(/log/g, 'Math.log10')
+                                   .replace(/pi/g, 'Math.PI')
+                                   .replace(/pow2/g, '**2')
+                                   .replace(/pow3/g, '**3');
+            disp.value = eval(parsed);
+            calcExpr = disp.value;
+        } catch { disp.value = "שגיאה"; calcExpr = ""; }
+    } else {
+        calcExpr += val;
+        disp.value = calcExpr;
+    }
+}
+
+// נגישות צפה
+document.addEventListener("DOMContentLoaded", function () {
+    if (!document.getElementById("acc-floating-btn")) {
+        const accContainer = document.createElement("div");
+        accContainer.id = "acc-floating-btn";
+        accContainer.style.cssText = "position: fixed; bottom: 20px; left: 20px; z-index: 999999;";
+        
+        accContainer.innerHTML = `
+            <button onclick="document.getElementById('acc-panel').style.display = document.getElementById('acc-panel').style.display === 'none' ? 'block' : 'none'" 
+                    style="background: #0284c7; color: white; border: 2px solid white; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" 
+                    title="נגישות">♿</button>
+            
+            <div id="acc-panel" style="display: none; position: absolute; bottom: 60px; left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 15px; width: 220px; color: white; direction: rtl; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; text-align: center; color: #38bdf8;">התאמות נגישות</div>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הגדלת טקסט +</button>
+                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הקטנת טקסט -</button>
+                <button onclick="document.body.style.filter = document.body.style.filter === 'grayscale(100%)' ? 'none' : 'grayscale(100%)'" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">גווני אפור</button>
+                <button onclick="document.body.style.zoom = '100%'; document.body.style.filter = 'none';" style="width:100%; padding:6px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">איפוס</button>
+            </div>
+        `;
+        document.body.appendChild(accContainer);
     }
 });
