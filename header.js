@@ -14,7 +14,7 @@ if (!favicon) {
     favicon.rel = "shortcut icon";
     document.head.appendChild(favicon);
 }
-favicon.href = "favicon.png";
+favicon.href = "favicon.png?v=2";
 
 // 2. עיצוב CSS מקצועי, אחיד ורספונסיבי
 const styleId = "netools-nav-style";
