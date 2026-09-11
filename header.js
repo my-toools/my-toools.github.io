@@ -7,7 +7,7 @@ if (!document.getElementById("fa-cdn")) {
     document.head.appendChild(faLink);
 }
 
-// 1. פאביקון לטאב בדפדפן - מופעל מיד
+// 1. פאביקון לטאב בדפדפן
 let favicon = document.querySelector("link[rel*='icon']");
 if (!favicon) {
     favicon = document.createElement("link");
@@ -16,7 +16,7 @@ if (!favicon) {
 }
 favicon.href = "favicon.png";
 
-// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי לכל האתר
+// 2. עיצוב CSS מקצועי, אחיד ורספונסיבי
 const styleId = "netools-nav-style";
 if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
@@ -58,11 +58,12 @@ if (!document.getElementById(styleId)) {
         .header-container {
             max-width: 1480px;
             margin: 0 auto;
-            padding: 18px 24px;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             gap: 15px;
+            position: relative;
         }
         
         .brand-name {
@@ -77,7 +78,6 @@ if (!document.getElementById(styleId)) {
         .main-nav-wrapper {
             display: flex;
             justify-content: center;
-            width: 100%;
         }
 
         .main-nav {
@@ -118,13 +118,9 @@ if (!document.getElementById(styleId)) {
             background: rgba(255, 255, 255, 0.08);
         }
 
-        .center-logo { display: flex; align-items: center; justify-content: center; margin: 0 4px; cursor: pointer; }
-        .center-logo img { height: 38px; width: 38px; object-fit: contain; border-radius: 6px; transition: transform 0.2s; }
-        .center-logo img:hover { transform: scale(1.1); }
-
         .header-alert-btn {
             color: #ef4444 !important;
-            font-size: 22px;
+            font-size: 20px;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -135,20 +131,24 @@ if (!document.getElementById(styleId)) {
             border: 1px solid rgba(239, 68, 68, 0.4);
             transition: all 0.2s ease;
         }
-        .header-alert-btn:hover {
-            background: rgba(239, 68, 68, 0.25);
-            transform: scale(1.05);
+
+        .mobile-toggle-btn {
+            display: none;
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            font-size: 20px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         .secondary-bar {
             background: #1e293b; color: #cbd5e1; font-size: 14.5px !important; padding: 12px 18px !important; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
         .secondary-container {
-            max-width: 1650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
-            justify-content: center; align-items: center;
+            max-width: 1650px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
         }
         .secondary-container::-webkit-scrollbar { display: none; }
         .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
@@ -167,81 +167,30 @@ if (!document.getElementById(styleId)) {
             background: #0f172a; border: 1px solid #334155; border-radius: 20px; padding: 22px; width: 380px;
             color: #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.6); direction: ltr;
         }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; direction: rtl; }
-        .calc-header h3 { margin: 0; font-size: 17px; color: #38bdf8; font-weight: 700; }
-        .calc-close { background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; transition: color 0.2s; }
-        .calc-close:hover { color: #ef4444; }
-        .calc-display {
-            width: 100%; height: 55px; background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-            color: #38bdf8; font-size: 24px; font-weight: 700; text-align: right; padding: 0 16px; box-sizing: border-box; margin-bottom: 16px;
-            letter-spacing: 1px;
-        }
-        .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-        .c-btn {
-            background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 12px 0;
-            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center;
-        }
-        .c-btn:hover { background: #334155; transform: translateY(-1px); }
-        .c-btn.btn-op { border: 1px solid #38bdf8; color: #38bdf8; font-size: 15px; }
-        .c-btn.btn-sci { border: 1px solid #a855f7; color: #c084fc; }
-        .c-btn.btn-mem { border: 1px solid #f59e0b; color: #fbbf24; }
-        .c-btn.btn-eq { border: 1px solid #22c55e; background: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 18px; font-weight: 800; grid-column: span 2; }
-        .c-btn.btn-clear { border: 1px solid #ef4444; color: #f87171; }
 
         footer.main-footer {
-            background: #0f172a !important;
-            color: #ffffff !important;
-            text-align: center;
-            padding: 28px 20px;
-            margin-top: auto !important;
-            border-top: 1px solid #1e293b;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
+            background: #0f172a !important; color: #ffffff !important; text-align: center; padding: 28px 20px;
+            margin-top: auto !important; border-top: 1px solid #1e293b; font-size: 14px; width: 100%; box-sizing: border-box;
         }
         footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
         footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
-        footer.main-footer a:hover { text-decoration: underline; }
 
-        /* --- תוספת רספונסיביות ותפריט המבורגר למובייל --- */
-        .mobile-toggle-btn {
-            display: none;
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #334155;
-            font-size: 20px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
+        /* --- התאמת מובייל מדויקת (בשורה אחת) --- */
         @media (max-width: 768px) {
             .header-container {
                 display: flex !important;
                 flex-direction: row !important;
                 justify-content: space-between !important;
                 align-items: center !important;
-                padding: 10px 16px !important;
-                position: relative !important;
+                padding: 10px 15px !important;
             }
 
             .mobile-toggle-btn {
                 display: flex !important;
-                align-items: center;
-                justify-content: center;
-                order: 1 !important;
-                margin: 0 !important;
             }
 
             .brand-name {
-                order: 2 !important;
-                text-align: center !important;
-                margin: 0 auto !important;
-            }
-
-            .header-alert-btn {
-                order: 3 !important;
-                margin: 0 !important;
+                font-size: 22px !important;
             }
 
             .main-nav-wrapper {
@@ -271,41 +220,33 @@ if (!document.getElementById(styleId)) {
             .main-nav li, .main-nav a {
                 width: 100% !important;
                 text-align: center !important;
-                box-sizing: border-box !important;
             }
 
             .secondary-container { font-size: 12px; padding: 6px; }
             footer.main-footer { font-size: 13px; padding: 20px 10px; }
-            body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
-                max-width: 100% !important;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
         }
     `;
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header פעם אחת בלבד במקומו הנכון
+// 3. הזרקת ה-Header ב-HTML בסדר המדויק (המבורגר -> לוגו -> פעמון)
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
-            <!-- 1. כפתור המבורגר ראשון מימין -->
+            <!-- 1. המבורגר ראשון מימין -->
             <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-            <!-- 2. לוגו באמצע -->
+            <!-- 2. לוגו במרכז -->
             <a href="index.html" class="brand-name">NETOOLS</a>
 
-            <!-- 3. פעמון אדום הכי שמאלי -->
-            <div>
-                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
-                    <i class="fa-solid fa-bell"></i>
-                </a>
-            </div>
+            <!-- 3. פעמון התרעות משמאל -->
+            <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                <i class="fa-solid fa-bell"></i>
+            </a>
 
-            <!-- תפריט הניווט הנפתח בלחיצה -->
+            <!-- תפריט מובייל נפתח -->
             <div class="main-nav-wrapper">
                 <ul class="main-nav">
                     <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
@@ -335,57 +276,11 @@ const headerHtml = `
             </div>
         </div>
     </header>
-
-    <div class="calc-modal-overlay" id="navCalcModal">
-        <div class="calc-modal">
-            <div class="calc-header">
-                <h3><i class="fa-solid fa-calculator"></i> מחשבון מדעי מקצועי</h3>
-                <button class="calc-close" onclick="closeNavCalculator()">&times;</button>
-            </div>
-            <input type="text" class="calc-display" id="calcDisplay" readonly value="0">
-            <div class="calc-grid">
-                <button class="c-btn btn-mem" onclick="calcInput('MC')">MC</button>
-                <button class="c-btn btn-mem" onclick="calcInput('MR')">MR</button>
-                <button class="c-btn btn-mem" onclick="calcInput('MS')">MS</button>
-                <button class="c-btn btn-mem" onclick="calcInput('%')">%</button>
-                <button class="c-btn btn-clear" onclick="calcInput('C')">C</button>
-
-                <button class="c-btn btn-sci" onclick="calcInput('sin')">sin</button>
-                <button class="c-btn btn-sci" onclick="calcInput('cos')">cos</button>
-                <button class="c-btn btn-sci" onclick="calcInput('tan')">tan</button>
-                <button class="c-btn btn-sci" onclick="calcInput('sqrt')">&radic;</button>
-                <button class="c-btn btn-op" onclick="calcInput('/')">&divide;</button>
-
-                <button class="c-btn" onclick="calcInput('7')">7</button>
-                <button class="c-btn" onclick="calcInput('8')">8</button>
-                <button class="c-btn" onclick="calcInput('9')">9</button>
-                <button class="c-btn btn-sci" onclick="calcInput('pow2')">x&sup2;</button>
-                <button class="c-btn btn-op" onclick="calcInput('*')">&times;</button>
-
-                <button class="c-btn" onclick="calcInput('4')">4</button>
-                <button class="c-btn" onclick="calcInput('5')">5</button>
-                <button class="c-btn" onclick="calcInput('6')">6</button>
-                <button class="c-btn btn-sci" onclick="calcInput('pow3')">x&sup3;</button>
-                <button class="c-btn btn-op" onclick="calcInput('-')">-</button>
-
-                <button class="c-btn" onclick="calcInput('1')">1</button>
-                <button class="c-btn" onclick="calcInput('2')">2</button>
-                <button class="c-btn" onclick="calcInput('3')">3</button>
-                <button class="c-btn btn-sci" onclick="calcInput('pi')">&pi;</button>
-                <button class="c-btn btn-op" onclick="calcInput('+')">+</button>
-
-                <button class="c-btn" onclick="calcInput('0')">0</button>
-                <button class="c-btn" onclick="calcInput('.')">.</button>
-                <button class="c-btn btn-sci" onclick="calcInput('log')">log</button>
-                <button class="c-btn btn-eq" onclick="calcInput('=')">=</button>
-            </div>
-        </div>
-    </div>
 `;
 
 document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
-// 4. הזרקת פוטר אחיד
+// 4. הזרקת פוטר
 if (!document.querySelector("footer.main-footer")) {
     const footerHtml = `
         <footer class="main-footer">
@@ -395,15 +290,12 @@ if (!document.querySelector("footer.main-footer")) {
                 <a href="about.html">אודות והצהרת נגישות</a> | 
                 <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
             </p>
-            <p style="font-size: 12.5px; max-width: 900px; margin: 0 auto 10px auto; line-height: 1.5;">
-                <strong></strong> המוצגים באתר מהווים אומדן כללי בלבד ואינם מהווים תחליף לייעוץ מקצועי, משפטי או פיננסי.
-            </p>
         </footer>
     `;
     document.body.insertAdjacentHTML("beforeend", footerHtml);
 }
 
-// 5. סקריפטים של שעונים, מזג אוויר ונתונים
+// 5. סקריפט שעון, מזג אוויר ופתיחת המבורגר במובייל
 document.addEventListener("DOMContentLoaded", function () {
     function updateClockAndDate() {
         const now = new Date();
@@ -415,129 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(updateClockAndDate, 1000);
     updateClockAndDate();
 
-    const days = ["יום ראשון", "יום שני", "יום שלישי", "יום רביעי", "יום חמישי", "יום שישי", "יום שבת"];
-    const todayName = days[new Date().getDay()];
-
-    const nowForHeb = new Date();
-    const gy = nowForHeb.getFullYear();
-    const gm = nowForHeb.getMonth() + 1;
-    const gd = nowForHeb.getDate();
-
-    if (gy && gm && gd) {
-        fetch(`https://www.hebcal.com/converter?cfg=json&gy=${gy}&gm=${gm}&gd=${gd}&g2h=1&lg=he`)
-            .then(res => res.json())
-            .then(data => {
-                const hebEl = document.getElementById("nav-hebrew");
-                if (hebEl && data.hebrew) {
-                    hebEl.innerHTML = `<i class="fa-solid fa-calendar-days icon-hebrew"></i> ${todayName}, ${data.hebrew}`;
-                }
-            }).catch(() => {});
-    }
-
-    fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=293397&m=0")
-        .then(res => res.json())
-        .then(data => {
-            const parashaItem = data.items.find(i => i.category === "parashat");
-            if (parashaItem && parashaItem.hebrew) {
-                const parEl = document.getElementById("nav-parasha");
-                let pName = parashaItem.hebrew.replace(/^פרשת\s+/, '');
-                if (parEl) parEl.innerHTML = `<i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>${pName}</strong>`;
-            }
-        }).catch(() => {});
-
-    fetch("https://api.exchangerate-api.com/v4/latest/USD")
-        .then(res => res.json())
-        .then(data => {
-            const usd = data.rates.ILS ? data.rates.ILS.toFixed(2) : "3.01";
-            fetch("https://api.exchangerate-api.com/v4/latest/EUR")
-                .then(res => res.json())
-                .then(eurData => {
-                    const eur = eurData.rates.ILS ? eurData.rates.ILS.toFixed(2) : "3.50";
-                    fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
-                        .then(res => res.json())
-                        .then(btcData => {
-                            const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
-                            const forexEl = document.getElementById("nav-forex");
-                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
-                        }).catch(() => {});
-                });
-        }).catch(() => {});
-
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=31.7683&longitude=35.2137&current_weather=true")
-        .then(res => res.json())
-        .then(data => {
-            const weatherEl = document.getElementById("nav-weather");
-            if (weatherEl && data.current_weather) {
-                const temp = Math.round(data.current_weather.temperature);
-                weatherEl.innerHTML = `<i class="fa-solid fa-cloud-sun icon-weather"></i> <strong>${temp}°C</strong>`;
-            }
-        }).catch(() => {});
-});
-
-function openNavCalculator() { document.getElementById("navCalcModal").style.display = "flex"; }
-function closeNavCalculator() { document.getElementById("navCalcModal").style.display = "none"; }
-
-let calcExpr = "";
-let calcMem = 0;
-
-function calcInput(val) {
-    const disp = document.getElementById("calcDisplay");
-    if (!disp) return;
-    if (val === 'C') { calcExpr = ""; disp.value = "0"; }
-    else if (val === 'MS') { calcMem = parseFloat(disp.value) || 0; }
-    else if (val === 'MR') { calcExpr += calcMem.toString(); disp.value = calcExpr; }
-    else if (val === 'MC') { calcMem = 0; }
-    else if (val === '%') {
-        try {
-            disp.value = (eval(calcExpr) / 100).toString();
-            calcExpr = disp.value;
-        } catch { disp.value = "שגיאה"; calcExpr = ""; }
-    }
-    else if (val === '=') {
-        try {
-            let parsed = calcExpr.replace(/sin/g, 'Math.sin')
-                                   .replace(/cos/g, 'Math.cos')
-                                   .replace(/tan/g, 'Math.tan')
-                                   .replace(/sqrt/g, 'Math.sqrt')
-                                   .replace(/log/g, 'Math.log10')
-                                   .replace(/pi/g, 'Math.PI')
-                                   .replace(/pow2/g, '**2')
-                                   .replace(/pow3/g, '**3');
-            disp.value = eval(parsed);
-            calcExpr = disp.value;
-        } catch { disp.value = "שגיאה"; calcExpr = ""; }
-    } else {
-        calcExpr += val;
-        disp.value = calcExpr;
-    }
-}
-
-// נגישות צפה
-document.addEventListener("DOMContentLoaded", function () {
-    if (!document.getElementById("acc-floating-btn")) {
-        const accContainer = document.createElement("div");
-        accContainer.id = "acc-floating-btn";
-        accContainer.style.cssText = "position: fixed; bottom: 20px; left: 20px; z-index: 999999;";
-        
-        accContainer.innerHTML = `
-            <button onclick="document.getElementById('acc-panel').style.display = document.getElementById('acc-panel').style.display === 'none' ? 'block' : 'none'" 
-                    style="background: #0284c7; color: white; border: 2px solid white; border-radius: 50%; width: 48px; height: 48px; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" 
-                    title="נגישות">♿</button>
-            
-            <div id="acc-panel" style="display: none; position: absolute; bottom: 60px; left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 15px; width: 220px; color: white; direction: rtl; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-                <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; text-align: center; color: #38bdf8;">התאמות נגישות</div>
-                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הגדלת טקסט +</button>
-                <button onclick="document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1)" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">הקטנת טקסט -</button>
-                <button onclick="document.body.style.filter = document.body.style.filter === 'grayscale(100%)' ? 'none' : 'grayscale(100%)'" style="width:100%; margin-bottom:6px; padding:6px; background:#1e293b; color:white; border:1px solid #334155; border-radius:6px; cursor:pointer;">גווני אפור</button>
-                <button onclick="document.body.style.zoom = '100%'; document.body.style.filter = 'none';" style="width:100%; padding:6px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">איפוס</button>
-            </div>
-        `;
-        document.body.appendChild(accContainer);
-    }
-});
-
-// הפעלת פתיחה/סגירה לתפריט המבורגר במובייל
-document.addEventListener("DOMContentLoaded", function () {
+    // פתיחה וסגירה של ההמבורגר במובייל
     const btn = document.getElementById("menuToggleBtn");
     const navWrapper = document.querySelector(".main-nav-wrapper");
 
