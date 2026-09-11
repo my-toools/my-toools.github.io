@@ -142,9 +142,15 @@ if (!document.getElementById(styleId)) {
 
         .secondary-bar {
             background: #1e293b; color: #cbd5e1; font-size: 14.5px !important; padding: 12px 18px !important; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .secondary-container {
             max-width: 1650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
+            justify-content: center; 
+            
+            align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
         }
         .secondary-container::-webkit-scrollbar { display: none; }
         .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
