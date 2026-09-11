@@ -307,7 +307,7 @@
         // שאיבת נתונים דרך שרת ה-API העצמאי
         async function fetchAlerts() {
             try {
-                const response = await fetch('/api/alerts');
+const response = await fetch('https://api.netools.co.il/api/alerts');
                 if (response.ok) {
                     const text = await response.text();
                     cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
