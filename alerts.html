@@ -66,14 +66,21 @@
         .map-provider-credit { position: absolute; bottom: 8px; right: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; }
         .map-scroll-notice { position: absolute; bottom: 8px; left: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; pointer-events: none; }
 
+        /* התרעה אדומה (רגילה / חירום) */
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
         .alert-item-title { font-weight: 700; color: #fca5a5; font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
         .city-badge { background: #7f1d1d; color: #fca5a5; padding: 3px 8px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #991b1b; }
         .alert-item-time { font-size: 12px; color: #94a3b8; text-align: left; }
 
+        /* התרעה ירוקה (סיום אירוע / חזרה לשגרה) */
+        .alert-item-success { background: #0f291e !important; border: 1px solid #14532d !important; border-right: 5px solid #22c55e !important; }
+        .alert-item-success .alert-item-title { color: #86efac !important; }
+        .alert-item-success .city-badge { background: #14532d !important; color: #86efac !important; border-color: #166534 !important; }
+
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
         .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #ef4444; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
+        .history-item.success-item { border-right-color: #22c55e !important; }
     </style>
 </head>
 <body>
@@ -194,7 +201,6 @@
             if (savedCities) {
                 try { selectedCitiesArray = JSON.parse(savedCities); } catch(e) { selectedCitiesArray = []; }
             } else {
-                // תמיכה בנתונים ישנים במידה והיו
                 const oldCity = localStorage.getItem('netools_alert_city');
                 if (oldCity) {
                     selectedCitiesArray = oldCity.split(',').map(s => s.trim()).filter(Boolean);
@@ -298,7 +304,7 @@
             renderHistory();
         }
 
-        // שאיבת נתונים דרך שרת ה-API העצמאי שיצרנו ב-Vercel (/api/alerts)
+        // שאיבת נתונים דרך שרת ה-API העצמאי
         async function fetchAlerts() {
             try {
                 const response = await fetch('/api/alerts');
@@ -311,19 +317,18 @@
                 processAlerts([]);
             }
 
-           // שאיבת ארכיון ההתרעות בצורה מאובטחת
-    try {
-        const archiveRes = await fetch('/api/alerts');
-        if (archiveRes.ok) {
-            const archiveData = await archiveRes.json();
-            if (Array.isArray(archiveData)) {
-                historicalAlerts = archiveData;
+            try {
+                const archiveRes = await fetch('/api/alerts');
+                if (archiveRes.ok) {
+                    const archiveData = await archiveRes.json();
+                    if (Array.isArray(archiveData)) {
+                        historicalAlerts = archiveData;
+                    }
+                }
+            } catch (e) {
+                historicalAlerts = cachedAlerts;
             }
-        }
-    } catch (e) {
-        historicalAlerts = cachedAlerts;
-    }
-    renderHistory();
+            renderHistory();
         }
 
         function processAlerts(alerts) {
@@ -349,8 +354,12 @@
 
             let activeHtml = '';
             alerts.forEach((alert) => {
-                const cities = alert.data || [];
+                const cities = alert.data || alert.cities || [];
+                const title = alert.title || 'התרעת חירום';
                 
+                // בדיקה אם מדובר בסיום אירוע / חזרה לשגרה
+                const isSuccess = title.includes("סיום") || title.includes("שגרה") || title.includes("הסתיים") || title.includes("חזרה");
+
                 let isMatchedForUser = false;
                 if (selectedCitiesArray.length > 0) {
                     isMatchedForUser = cities.some(city => selectedCitiesArray.some(input => city.toLowerCase().includes(input.toLowerCase())));
@@ -359,15 +368,19 @@
                     isUserAlerted = true;
                 }
 
-                let itemStyle = "background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444;";
+                // הגדרת סגנונות (אדום או ירוק)
+                let cardClass = isSuccess ? "alert-item alert-item-success" : "alert-item";
+                let iconClass = isSuccess ? "fa-circle-check" : "fa-triangle-exclamation";
+
+                let itemStyle = "";
                 if (silentOther && selectedCitiesArray.length > 0 && !isMatchedForUser) {
-                    itemStyle = "background: #0f172a; border: 1px solid #334155; border-right: 5px solid #64748b; opacity: 0.6;";
+                    itemStyle = "opacity: 0.5;";
                 }
 
                 const citiesBadges = cities.map(city => `<span class="city-badge">${city}</span>`).join(' ');
 
-                activeHtml += `<div class="alert-item" style="${itemStyle}">
-                    <div class="alert-item-title"><i class="fa-solid fa-triangle-exclamation"></i> ${alert.title || 'התרעת חירום'}</div>
+                activeHtml += `<div class="${cardClass}" style="${itemStyle}">
+                    <div class="alert-item-title"><i class="fa-solid ${iconClass}"></i> ${title}</div>
                     <div class="alert-item-cities"><strong>יישובים במרחב:</strong> ${citiesBadges}</div>
                     <div class="alert-item-time">${alert.date || ''} | ${alert.time || ''}</div>
                 </div>`;
@@ -397,8 +410,12 @@
                 const time = alert.time || '';
                 const citiesText = Array.isArray(cities) ? cities.join(', ') : cities;
 
-                historyHtml += `<div class="history-item">
-                    <strong style="color: #f8fafc;">${title}</strong>: ${citiesText} 
+                const isSuccess = title.includes("סיום") || title.includes("שגרה") || title.includes("הסתיים") || title.includes("חזרה");
+                const itemClass = isSuccess ? "history-item success-item" : "history-item";
+                const titleColor = isSuccess ? "#86efac" : "#f8fafc";
+
+                historyHtml += `<div class="${itemClass}">
+                    <strong style="color: ${titleColor};">${title}</strong>: ${citiesText} 
                     <span style="color: #64748b; float: left;">${date} ${time}</span>
                 </div>`;
             });
@@ -410,7 +427,8 @@
 
         function simulateAlert() {
             const fakeAlert = [
-                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון", "מרכז הארץ"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
+                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') },
+                { title: "סיום אירוע - חזרה לשגרה", data: ["תל אביב - יפו", "רמת גן"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
             ];
             cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
