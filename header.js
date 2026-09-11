@@ -215,78 +215,73 @@ if (!document.getElementById(styleId)) {
             cursor: pointer;
         }
 
-     @media (max-width: 768px) {
-    /* סידור שורה אחת יחידה ואופקית לכל האלמנטים במובייל */
-    .header-container {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding: 10px 16px !important;
-        position: relative !important;
-    }
+        @media (max-width: 768px) {
+            .header-container {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 10px 16px !important;
+                position: relative !important;
+            }
 
-    /* 1. המבורגר מימין */
-    .mobile-toggle-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        order: 1 !important;
-        margin: 0 !important;
-    }
+            .mobile-toggle-btn {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                order: 1 !important;
+                margin: 0 !important;
+            }
 
-    /* 2. לוגו במרכז */
-    .brand-name {
-        order: 2 !important;
-        text-align: center !important;
-        margin: 0 auto !important;
-    }
+            .brand-name {
+                order: 2 !important;
+                text-align: center !important;
+                margin: 0 auto !important;
+            }
 
-    /* 3. פעמון התרעות משמאל */
-    .header-alert-btn {
-        order: 3 !important;
-        margin: 0 !important;
-    }
+            .header-alert-btn {
+                order: 3 !important;
+                margin: 0 !important;
+            }
 
-    /* תפריט נפתח במובייל בלחיצה על ההמבורגר */
-    .main-nav-wrapper {
-        display: none;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        background: #0f172a;
-        padding: 15px;
-        border-bottom: 2px solid #0284c7;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        z-index: 99999;
-    }
+            .main-nav-wrapper {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                background: #0f172a;
+                padding: 15px;
+                border-bottom: 2px solid #0284c7;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+                z-index: 99999;
+            }
 
-    .main-nav-wrapper.open {
-        display: flex !important;
-    }
+            .main-nav-wrapper.open {
+                display: flex !important;
+            }
 
-    .main-nav {
-        flex-direction: column !important;
-        width: 100% !important;
-        gap: 10px !important;
-    }
+            .main-nav {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
 
-    .main-nav li, .main-nav a {
-        width: 100% !important;
-        text-align: center !important;
-        box-sizing: border-box !important;
-    }
+            .main-nav li, .main-nav a {
+                width: 100% !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
+            }
 
-    .secondary-container { font-size: 12px; padding: 6px; }
-    footer.main-footer { font-size: 13px; padding: 20px 10px; }
-    body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
-        max-width: 100% !important;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
+            .secondary-container { font-size: 12px; padding: 6px; }
+            footer.main-footer { font-size: 13px; padding: 20px 10px; }
+            body > *:not(header):not(footer):not(.calc-modal-overlay):not(#acc-floating-btn) {
+                max-width: 100% !important;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
     `;
     document.head.appendChild(style);
 }
@@ -295,8 +290,22 @@ if (!document.getElementById(styleId)) {
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
+            <!-- 1. כפתור המבורגר ראשון מימין -->
+            <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- 2. לוגו באמצע -->
             <a href="index.html" class="brand-name">NETOOLS</a>
-            <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט"><i class="fa-solid fa-bars"></i></button>
+
+            <!-- 3. פעמון אדום הכי שמאלי -->
+            <div>
+                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+            </div>
+
+            <!-- תפריט הניווט הנפתח בלחיצה -->
             <div class="main-nav-wrapper">
                 <ul class="main-nav">
                     <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
@@ -308,12 +317,6 @@ const headerHtml = `
                     <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
                     <li><a href="news.html" class="nav-item-news">חדשות</a></li>
                 </ul>
-            </div>
-
-            <div>
-                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
-                    <i class="fa-solid fa-bell"></i>
-                </a>
             </div>
         </div>
 
@@ -455,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(btcData => {
                             const btc = btcData.bitcoin && btcData.bitcoin.usd ? btcData.bitcoin.usd.toLocaleString() : "62,500";
                             const forexEl = document.getElementById("nav-forex");
-                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>${eur} ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
+                            if (forexEl) forexEl.innerHTML = `<i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>${usd} ₪</strong>|<i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$${btc}</strong>`;
                         }).catch(() => {});
                 });
         }).catch(() => {});
