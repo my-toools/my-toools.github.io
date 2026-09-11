@@ -215,28 +215,40 @@ if (!document.getElementById(styleId)) {
             cursor: pointer;
         }
 
-       @media (max-width: 768px) {
+     @media (max-width: 768px) {
+    /* סידור שורה אחת יחידה ואופקית לכל האלמנטים במובייל */
     .header-container {
-        display: grid !important;
-        grid-template-columns: auto 1fr auto !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
         align-items: center !important;
-        padding: 12px 16px !important;
+        padding: 10px 16px !important;
+        position: relative !important;
     }
 
+    /* 1. המבורגר מימין */
     .mobile-toggle-btn {
-        display: block !important;
-        grid-column: 1 !important; /* המבורגר ראשון מימין */
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        order: 1 !important;
+        margin: 0 !important;
     }
 
+    /* 2. לוגו במרכז */
     .brand-name {
-        grid-column: 2 !important; /* לוגו במרכז */
+        order: 2 !important;
         text-align: center !important;
+        margin: 0 auto !important;
     }
 
+    /* 3. פעמון התרעות משמאל */
     .header-alert-btn {
-        grid-column: 3 !important; /* פעמון התרעות משמאל */
+        order: 3 !important;
+        margin: 0 !important;
     }
 
+    /* תפריט נפתח במובייל בלחיצה על ההמבורגר */
     .main-nav-wrapper {
         display: none;
         width: 100%;
