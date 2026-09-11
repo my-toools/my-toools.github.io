@@ -311,20 +311,19 @@
                 processAlerts([]);
             }
 
-            // שאיבת ארכיון ההתרעות המלא
-            try {
-                const archiveUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.tzevaadom.co.il/static/historical/all.json');
-                const archiveRes = await fetch(archiveUrl);
-                if (archiveRes.ok) {
-                    const archiveData = await archiveRes.json();
-                    if (Array.isArray(archiveData)) {
-                        historicalAlerts = archiveData;
-                    }
-                }
-            } catch (e) {
-                historicalAlerts = cachedAlerts;
+           // שאיבת ארכיון ההתרעות בצורה מאובטחת
+    try {
+        const archiveRes = await fetch('/api/alerts');
+        if (archiveRes.ok) {
+            const archiveData = await archiveRes.json();
+            if (Array.isArray(archiveData)) {
+                historicalAlerts = archiveData;
             }
-            renderHistory();
+        }
+    } catch (e) {
+        historicalAlerts = cachedAlerts;
+    }
+    renderHistory();
         }
 
         function processAlerts(alerts) {
