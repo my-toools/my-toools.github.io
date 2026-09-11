@@ -132,15 +132,27 @@ if (!document.getElementById(styleId)) {
             transition: all 0.2s ease;
         }
 
+        /* עיצוב כפתור המבורגר מרובע ומעוצב במובייל */
         .mobile-toggle-btn {
             display: none;
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #334155;
-            font-size: 20px;
-            padding: 8px 14px;
-            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.1) !important;
+            color: #38bdf8 !important;
+            border: 1px solid rgba(56, 189, 248, 0.5) !important;
+            font-size: 20px !important;
+            width: 44px !important;
+            height: 42px !important;
+            border-radius: 10px !important;
             cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease-in-out !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .mobile-toggle-btn:hover, .mobile-toggle-btn:active {
+            background: rgba(56, 189, 248, 0.25) !important;
+            border-color: #38bdf8 !important;
+            transform: scale(1.05);
         }
 
         .secondary-bar {
@@ -175,7 +187,7 @@ if (!document.getElementById(styleId)) {
         footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
         footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
 
-        /* --- התאמת מובייל בלבד (משנה סדר רק במובייל!) --- */
+        /* --- התאמת מובייל בלבד --- */
         @media (max-width: 768px) {
             .header-container {
                 display: flex !important;
@@ -188,17 +200,19 @@ if (!document.getElementById(styleId)) {
 
             .mobile-toggle-btn {
                 display: flex !important;
-                order: 1 !important; /* המבורגר ראשון מימין במובייל */
+                order: 1 !important; /* המבורגר מעוצב מימין */
+                margin: 0 !important;
             }
 
             .brand-name {
                 font-size: 22px !important;
-                order: 2 !important; /* לוגו במרכז במובייל */
+                order: 2 !important; /* לוגו במרכז */
                 margin: 0 auto !important;
             }
 
             .header-alert-wrapper {
-                order: 3 !important; /* פעמון משמאל במובייל */
+                order: 3 !important; /* פעמון משמאל */
+                margin: 0 !important;
             }
 
             .main-nav-wrapper {
@@ -237,7 +251,7 @@ if (!document.getElementById(styleId)) {
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header ב-HTML המקורי (נשאר בדיוק אותו דבר למחשב)
+// 3. הזרקת ה-Header ב-HTML המקורי
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
