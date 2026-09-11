@@ -310,6 +310,9 @@ if (!document.querySelector("footer.main-footer")) {
                 <a href="about.html">אודות והצהרת נגישות</a> | 
                 <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
             </p>
+            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 10px auto 0 auto; line-height: 1.5;">
+                <strong>הבהרה:</strong> הנתונים והחישובים המוצגים באתר מהווים אומדן כללי בלבד ואינם מהווים תחליף לייעוץ מקצועי, משפטי או פיננסי.
+            </p>
         </footer>
     `;
     document.body.insertAdjacentHTML("beforeend", footerHtml);
