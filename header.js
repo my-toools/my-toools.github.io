@@ -58,12 +58,11 @@ if (!document.getElementById(styleId)) {
         .header-container {
             max-width: 1480px;
             margin: 0 auto;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
+            padding: 18px 24px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
             gap: 15px;
-            position: relative;
         }
         
         .brand-name {
@@ -78,6 +77,7 @@ if (!document.getElementById(styleId)) {
         .main-nav-wrapper {
             display: flex;
             justify-content: center;
+            width: 100%;
         }
 
         .main-nav {
@@ -120,7 +120,7 @@ if (!document.getElementById(styleId)) {
 
         .header-alert-btn {
             color: #ef4444 !important;
-            font-size: 20px;
+            font-size: 22px;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -175,7 +175,7 @@ if (!document.getElementById(styleId)) {
         footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
         footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
 
-        /* --- התאמת מובייל מדויקת (בשורה אחת) --- */
+        /* --- התאמת מובייל בלבד (משנה סדר רק במובייל!) --- */
         @media (max-width: 768px) {
             .header-container {
                 display: flex !important;
@@ -183,14 +183,22 @@ if (!document.getElementById(styleId)) {
                 justify-content: space-between !important;
                 align-items: center !important;
                 padding: 10px 15px !important;
+                position: relative !important;
             }
 
             .mobile-toggle-btn {
                 display: flex !important;
+                order: 1 !important; /* המבורגר ראשון מימין במובייל */
             }
 
             .brand-name {
                 font-size: 22px !important;
+                order: 2 !important; /* לוגו במרכז במובייל */
+                margin: 0 auto !important;
+            }
+
+            .header-alert-wrapper {
+                order: 3 !important; /* פעמון משמאל במובייל */
             }
 
             .main-nav-wrapper {
@@ -229,24 +237,16 @@ if (!document.getElementById(styleId)) {
     document.head.appendChild(style);
 }
 
-// 3. הזרקת ה-Header ב-HTML בסדר המדויק (המבורגר -> לוגו -> פעמון)
+// 3. הזרקת ה-Header ב-HTML המקורי (נשאר בדיוק אותו דבר למחשב)
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
-            <!-- 1. המבורגר ראשון מימין -->
+            <a href="index.html" class="brand-name">NETOOLS</a>
+
             <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-            <!-- 2. לוגו במרכז -->
-            <a href="index.html" class="brand-name">NETOOLS</a>
-
-            <!-- 3. פעמון התרעות משמאל -->
-            <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
-                <i class="fa-solid fa-bell"></i>
-            </a>
-
-            <!-- תפריט מובייל נפתח -->
             <div class="main-nav-wrapper">
                 <ul class="main-nav">
                     <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
@@ -258,6 +258,12 @@ const headerHtml = `
                     <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
                     <li><a href="news.html" class="nav-item-news">חדשות</a></li>
                 </ul>
+            </div>
+
+            <div class="header-alert-wrapper">
+                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                    <i class="fa-solid fa-bell"></i>
+                </a>
             </div>
         </div>
 
