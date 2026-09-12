@@ -307,7 +307,7 @@
         // שאיבת נתונים דרך שרת ה-API העצמאי
         async function fetchAlerts() {
             try {
-const response = await fetch('https://my-toools-github-ni97le02p-netools.vercel.app/api/alerts');
+const response = await fetch('https://netools.co.il/api/alerts');
                 if (response.ok) {
                     const text = await response.text();
                     cachedAlerts = (text && text.trim() !== "") ? (JSON.parse(text) || []) : [];
@@ -318,7 +318,7 @@ const response = await fetch('https://my-toools-github-ni97le02p-netools.vercel.
             }
 
             try {
-const archiveRes = await fetch('https://my-toools-github-ni97le02p-netools.vercel.app/api/alerts');
+const archiveRes = await fetch('https://netools.co.il/api/alerts');
                 if (archiveRes.ok) {
                     const archiveData = await archiveRes.json();
                     if (Array.isArray(archiveData)) {
