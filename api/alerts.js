@@ -1,4 +1,18 @@
 export default async function handler(req, res) {
+    // 1. מתן הרשאה מלאה לגישה מהאתר שלך
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // 2. טיפול בבדיקת אבטחה מקדימה של הדפדפן
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
+    // --- כאן ממשיך הקוד הקיים שלך שמביא את ההתרעות ---
+
+
+export default async function handler(req, res) {
     // בדיקת הדומיין המבקש - חסימה אם מגיע ממקום אחר שאינו האתר שלך
     const referer = req.headers.referer || '';
     const origin = req.headers.origin || '';
