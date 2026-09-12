@@ -306,30 +306,23 @@
 
         // שאיבת נתונים דרך שרת ה-API העצמאי
       // שאיבת נתונים דרך שרת ה-API
-async function fetchAlerts() {
-    try {
-        const response = await fetch('https://www.netools.co.il/api/alerts');
-        if (response.ok) {
-            const data = await response.json();
-            
-            // אם התקבלו נתונים, נשתמש בהם גם להתרעות הפעילות וגם להיסטוריה
-            cachedAlerts = Array.isArray(data) ? data : [];
-            historicalAlerts = cachedAlerts;
-        } else {
-            cachedAlerts = [];
-        }
-    } catch (e) {
-        console.error("שגיאה במשיכת נתוני התרעות:", e);
-        cachedAlerts = [];
-    }
-    
-    // עדכון הממשק בדף
-    processAlerts(cachedAlerts);
-    renderHistory();
-}
+// שאיבת נתונים דרך שרת ה-API
+        async function fetchAlerts() {
+            try {
+                const response = await fetch('https://www.netools.co.il/api/alerts');
+                if (response.ok) {
+                    const data = await response.json();
+                    cachedAlerts = Array.isArray(data) ? data : [];
+                    historicalAlerts = cachedAlerts;
+                } else {
+                    cachedAlerts = [];
+                }
             } catch (e) {
-                historicalAlerts = cachedAlerts;
+                console.error("שגיאה במשיכת נתוני התרעות:", e);
+                cachedAlerts = [];
             }
+            
+            processAlerts(cachedAlerts);
             renderHistory();
         }
 
