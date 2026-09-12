@@ -309,7 +309,7 @@
 // שאיבת נתונים דרך שרת ה-API
         async function fetchAlerts() {
             try {
-                const response = await fetch('https://www.netools.co.il/api/alerts');
+const response = await fetch('/api/alerts');
                 if (response.ok) {
                     const data = await response.json();
                     cachedAlerts = Array.isArray(data) ? data : [];
