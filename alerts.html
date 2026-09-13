@@ -23,7 +23,7 @@
         body.theme-light .page-header-card h1 { color: #0f172a; }
         body.theme-light .section-title { background: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
         body.theme-light .form-control, body.theme-light .filter-btn { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
-        body.theme-light .history-item { background: #f1f5f9; border-color: #cbd5e1; }
+        body.theme-light .history-item { background: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
         body.theme-light .hist-tab { background: #ffffff; color: #475569; border-color: #cbd5e1; }
 
         #live-alert-banner {
@@ -81,7 +81,50 @@
         .city-badge { background: #7f1d1d; color: #fca5a5; padding: 3px 8px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #991b1b; }
         
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
-        .history-item { padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; border-right: 4px solid #ef4444; }
+        
+        /* עיצוב משודרג, נעים ומקצועי לפריטי ההיסטוריה */
+        .history-item { 
+            background: #1e293b; 
+            border: 1px solid #334155; 
+            border-right: 5px solid #ef4444; 
+            padding: 14px 18px; 
+            margin-bottom: 12px; 
+            border-radius: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+        }
+        .history-item-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+        }
+        .history-item-title-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-weight: 700; 
+            font-size: 14.5px; 
+            color: #f8fafc; 
+        }
+        .history-item-datetime { 
+            font-size: 12px; 
+            color: #38bdf8; 
+            background: rgba(56, 189, 248, 0.1); 
+            padding: 3px 10px; 
+            border-radius: 20px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 5px; 
+            font-weight: 500; 
+        }
+        .history-item-cities { 
+            font-size: 13.5px; 
+            color: #cbd5e1; 
+            line-height: 1.4; 
+        }
 
         .filter-toggle-group { display: flex; background: rgba(2, 132, 199, 0.1); padding: 4px; border-radius: 30px; margin-bottom: 16px; border: 1px solid rgba(2, 132, 199, 0.3); }
         .filter-toggle-btn { flex: 1; padding: 8px 16px; border: none; background: none; color: #94a3b8; font-weight: 700; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-size: 13.5px; }
@@ -514,6 +557,15 @@
             return isNaN(parsed.getTime()) ? null : parsed;
         }
 
+        // פונקציית עזר להחזרת אייקון מתאים לפי סוג האיום
+        function getThreatIcon(title) {
+            if (title.includes('כלי טיס')) return '<i class="fa-solid fa-plane" style="color: #38bdf8;"></i>';
+            if (title.includes('רקטות') || title.includes('טילים')) return '<i class="fa-solid fa-rocket" style="color: #ef4444;"></i>';
+            if (title.includes('מחבלים')) return '<i class="fa-solid fa-person-running" style="color: #f59e0b;"></i>';
+            if (title.includes('רעידת אדמה')) return '<i class="fa-solid fa-house-crack" style="color: #a855f7;"></i>';
+            return '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>';
+        }
+
         function renderHistory() {
             const historyContainer = document.getElementById('history-alerts-container');
             const counter = document.getElementById('results-counter');
@@ -594,11 +646,24 @@
                 const date = alert.date || '';
                 const time = alert.time || '';
                 const citiesText = Array.isArray(cities) ? cities.join(', ') : cities;
+                const iconHtml = getThreatIcon(title);
 
-                historyHtml += `<div class="history-item">
-                    <strong>${title}</strong>: ${citiesText} 
-                    <span style="color: #64748b; float: left;">${date} ${time}</span>
-                </div>`;
+                historyHtml += `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <div class="history-item-title-group">
+                                ${iconHtml}
+                                <span>${title}</span>
+                            </div>
+                            <div class="history-item-datetime">
+                                <i class="fa-regular fa-clock"></i> ${date} | ${time}
+                            </div>
+                        </div>
+                        <div class="history-item-cities">
+                            <strong>יישובים:</strong> ${citiesText}
+                        </div>
+                    </div>
+                `;
             });
 
             historyContainer.innerHTML = historyHtml;
