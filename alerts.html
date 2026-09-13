@@ -412,19 +412,25 @@ async function fetchAlerts() {
         if (response.ok) {
             const data = await response.json();
             if (Array.isArray(data) && data.length > 0) {
-                // בדיקה אם מדובר בהתרעה פעילה כעת או בהיסטוריה
+                // בדיקה אם מדובר בהתרעה פעילה כעת
                 if (data[0].title && !data[0].title.includes('פעילה') && !data[0].title.includes('הגדר')) {
                     cachedAlerts = [data[0]];
                 } else {
                     cachedAlerts = [];
                 }
 
-                historicalAlerts = data.map(item => ({
-                    title: item.title || 'התרעת פיקוד העורף',
-                    data: Array.isArray(item.data) ? item.data : [item.data || 'יישוב/אזור'],
-                    date: item.date || '',
-                    time: item.time || ''
-                }));
+                // המרת הנתונים מהשרת (מטפל גם בשדות מ-Supabase וגם מפיקוד העורף)
+                historicalAlerts = data.map(item => {
+                    const citiesArr = Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'];
+                    const fullDate = item.date || item.alertDate || '';
+                    
+                    return {
+                        title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                        data: citiesArr,
+                        date: fullDate.includes('T') ? fullDate.split('T')[0] : fullDate,
+                        time: item.time || (fullDate.includes('T') ? fullDate.split('T')[1] : '')
+                    };
+                });
             } else {
                 cachedAlerts = [];
                 historicalAlerts = [];
