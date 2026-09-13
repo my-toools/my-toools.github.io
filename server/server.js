@@ -21,18 +21,11 @@ const browserHeaders = {
     'Cache-Control': 'no-cache',
     'Pragma': 'no-cache',
     'Referer': 'https://www.oref.org.il/heb/alerts-history',
-    'Sec-Ch-Ua': '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-    'Sec-Ch-Ua-Mobile': '?0',
-    'Sec-Ch-Ua-Platform': '"Windows"',
-    'Sec-Fetch-Dest': 'empty',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Site': 'same-origin',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest'
 };
 
 let latestLiveAlerts = [];
-let cachedHistory = [];
 
 function broadcast(data) {
     const payload = JSON.stringify(data);
@@ -43,7 +36,7 @@ function broadcast(data) {
     });
 }
 
-// תשאול התרעות אמת (שנייה וחצי)
+// תשאול התרעות אמת 24/7 (בלייב בלבד)
 async function pollHomeFrontCommand() {
     try {
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers: browserHeaders });
@@ -81,54 +74,36 @@ async function pollHomeFrontCommand() {
     } catch (e) {}
 }
 
-// שאיבת ארכיון היסטוריו מלא ומבנה נתונים תקני
-async function updateHistoryCache() {
+setInterval(pollHomeFrontCommand, 1200);
+
+// WebSocket קל משקל - מעביר בלייב בלבד התרעות אמת
+wss.on('connection', (ws) => {
+    ws.send(JSON.stringify({ type: 'LIVE_ALERT', data: latestLiveAlerts }));
+});
+
+// Endpoint לטעינת היסטוריה חד-פעמית (HTTP REST)
+app.get('/api/alerts-history', async (req, res) => {
     try {
-        // 1. ניסיון שליפת היסטוריה מפיקוד העורף (מאגר רשמי מעודכן)
         const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers: browserHeaders });
         if (historyRes.ok) {
             const historyData = await historyRes.json();
-            if (Array.isArray(historyData) && historyData.length > 0) {
-                cachedHistory = historyData.map(item => ({
-                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                    data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || item.areaName || 'כל הארץ'],
-                    date: item.alertDate || item.date || '',
-                    time: item.time || ''
-                }));
-                return;
+            if (Array.isArray(historyData)) {
+                return res.json(historyData.slice(0, 150));
             }
         }
-
-        // 2. גיבוי מ-Supabase
-        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=200`, {
+        
+        // גיבוי מ-Supabase
+        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=150`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
         if (dbRes.ok) {
             const dbData = await dbRes.json();
-            if (Array.isArray(dbData) && dbData.length > 0) {
-                cachedHistory = dbData;
-            }
+            return res.json(dbData);
         }
+        return res.json([]);
     } catch (e) {
-        console.error("History fetch error:", e);
+        return res.json([]);
     }
-}
-
-setInterval(pollHomeFrontCommand, 1500);
-setInterval(updateHistoryCache, 30000);
-updateHistoryCache();
-
-wss.on('connection', (ws) => {
-    ws.send(JSON.stringify({ 
-        type: 'INIT', 
-        liveAlerts: latestLiveAlerts, 
-        history: cachedHistory 
-    }));
-});
-
-app.get('/api/alerts', (req, res) => {
-    if (latestLiveAlerts.length > 0) return res.json(latestLiveAlerts);
-    return res.json(cachedHistory);
 });
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
