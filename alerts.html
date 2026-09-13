@@ -416,36 +416,34 @@
                 console.log("Connected to Real-Time Alert Engine");
             };
 
-       socket.onmessage = function(event) {
-    try {
-        const message = JSON.parse(event.data);
+            socket.onmessage = function(event) {
+                try {
+                    const message = JSON.parse(event.data);
 
-        if (message.type === 'INIT') {
-            cachedAlerts = message.liveAlerts || [];
-            
-            // המרה נכונה של הנתונים מהשרת (Supabase / פיקוד העורף)
-            const rawHistory = message.history || [];
-            historicalAlerts = rawHistory.map(item => {
-                const citiesArr = Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'];
-                const fullDate = item.date || item.alertDate || '';
-                
-                return {
-                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                    data: citiesArr,
-                    date: fullDate.includes('T') ? fullDate.split('T')[0] : fullDate,
-                    time: item.time || (fullDate.includes('T') ? fullDate.split('T')[1] : '')
-                };
-            });
-        } else if (message.type === 'LIVE_ALERT') {
-            cachedAlerts = message.data || [];
-        }
+                    if (message.type === 'INIT') {
+                        cachedAlerts = message.liveAlerts || [];
+                        const rawHistory = message.history || [];
+                        historicalAlerts = rawHistory.map(item => {
+                            const citiesArr = Array.isArray(item.data) ? item.data : [item.data || item.cityName || item.areaName || 'כל הארץ'];
+                            const fullDate = item.date || item.alertDate || '';
+                            
+                            return {
+                                title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                                data: citiesArr,
+                                date: fullDate.includes('T') ? fullDate.split('T')[0] : fullDate,
+                                time: item.time || (fullDate.includes('T') ? fullDate.split('T')[1] : '')
+                            };
+                        });
+                    } else if (message.type === 'LIVE_ALERT') {
+                        cachedAlerts = message.data || [];
+                    }
 
-        processAlerts(cachedAlerts);
-        renderHistory();
-    } catch (e) {
-        console.error("Error processing WebSocket message:", e);
-    }
-};
+                    processAlerts(cachedAlerts);
+                    renderHistory();
+                } catch (e) {
+                    console.error("Error processing WebSocket message:", e);
+                }
+            };
 
             socket.onclose = function() {
                 console.log("WebSocket connection closed. Reconnecting in 3 seconds...");
@@ -493,30 +491,59 @@
 
             let sourceList = (historicalAlerts && historicalAlerts.length > 0) ? historicalAlerts : cachedAlerts;
 
-            // 1. סינון לפי סוג איום
-            if (selectedThreat !== 'all') {
-                sourceList = sourceList.filter(item => item.title.includes(selectedThreat));
-            }
-
-            // 2. סינון לפי אזורים נבחרים (אם הוגדר)
-            if (currentScope === 'custom' && selectedCitiesArray.length > 0) {
-                sourceList = sourceList.filter(item => {
-                    const cities = Array.isArray(item.data) ? item.data : [item.data];
-                    return cities.some(c => selectedCitiesArray.some(sc => c.toLowerCase().includes(sc.toLowerCase())));
-                });
-            }
-
-            counter.textContent = `נמצאו ${sourceList.length} התרעות`;
-
             if (!sourceList || sourceList.length === 0) {
-                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין התרעות מתאימות להגדרות הסינון.</p>';
+                if (counter) counter.textContent = `נמצאו 0 התרעות`;
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מהארכיון...</p>';
                 return;
             }
 
+            // 1. סינון לפי סוג איום
+            if (selectedThreat !== 'all') {
+                sourceList = sourceList.filter(item => item.title && item.title.includes(selectedThreat));
+            }
+
+            // 2. סינון לפי אזורים נבחרים
+            if (currentScope === 'custom' && selectedCitiesArray.length > 0) {
+                sourceList = sourceList.filter(item => {
+                    const cities = Array.isArray(item.data) ? item.data : [item.data];
+                    return cities.some(c => selectedCitiesArray.some(sc => String(c).toLowerCase().includes(String(sc).toLowerCase())));
+                });
+            }
+
+            // 3. סינון לפי טווח זמנים בלחיצה (24 שעות / שבוע / חודש)
+            const now = new Date();
+            if (currentRange === '24h') {
+                const past24h = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const filtered = sourceList.filter(item => {
+                    if (!item.date) return true;
+                    const d = new Date(item.date);
+                    return isNaN(d.getTime()) || d >= past24h;
+                });
+                if (filtered.length > 0) sourceList = filtered;
+            } else if (currentRange === 'week') {
+                const pastWeek = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+                const filtered = sourceList.filter(item => {
+                    if (!item.date) return true;
+                    const d = new Date(item.date);
+                    return isNaN(d.getTime()) || d >= pastWeek;
+                });
+                if (filtered.length > 0) sourceList = filtered;
+            } else if (currentRange === 'month') {
+                const pastMonth = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
+                const filtered = sourceList.filter(item => {
+                    if (!item.date) return true;
+                    const d = new Date(item.date);
+                    return isNaN(d.getTime()) || d >= pastMonth;
+                });
+                if (filtered.length > 0) sourceList = filtered;
+            }
+
+            if (counter) counter.textContent = `נמצאו ${sourceList.length} התרעות`;
+
             let historyHtml = '';
-            sourceList.slice(0, 100).forEach(alert => {
+            sourceList.slice(0, 150).forEach(alert => {
                 const cities = alert.data || alert.cities || [];
-                const title = alert.title || 'התרעה';
+                const title = alert.title || 'התרעת פיקוד העורף';
                 const date = alert.date || '';
                 const time = alert.time || '';
                 const citiesText = Array.isArray(cities) ? cities.join(', ') : cities;
