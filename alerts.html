@@ -519,40 +519,5 @@
         setInterval(fetchAlerts, 3000);
         fetchAlerts();
     </script>
-    <script>
-// מנגנון גיבוי אוטומטי: טעינת היסטוריה ישירה מפיקוד העורף אם ה-API מחזיר רשימה ריקה
-(function() {
-    const originalFetch = window.fetchAlerts;
-    
-    window.fetchAlerts = async function() {
-        if (typeof originalFetch === 'function') {
-            await originalFetch();
-        }
-        
-        // אם ההיסטוריה עדיין ריקה, שליפת הארכיון הישיר מפיקוד העורף
-        if (!window.historicalAlerts || window.historicalAlerts.length === 0) {
-            try {
-                const res = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        window.historicalAlerts = data.slice(0, 100).map(item => ({
-                            title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                            data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'],
-                            date: item.alertDate || item.date || '',
-                            time: item.time || ''
-                        }));
-                        if (typeof window.renderHistory === 'function') {
-                            window.renderHistory();
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log('Direct history backup skipped:', e);
-            }
-        }
-    };
-})();
-</script>
 </body>
 </html>
