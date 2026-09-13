@@ -10,8 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body, input, select, button, div, p, span, h1, h2, h3 { font-family: 'Rubik', sans-serif; box-sizing: border-box; }
-        body { background: #0b0f19; color: #f1f5f9; margin: 0; padding: 0; }
         
+        /* מצב חשוך (דיפולט) */
+        body.theme-dark { background: #0b0f19; color: #f1f5f9; }
+        body.theme-dark .card, body.theme-dark .page-header-card { background: #131c2e; border-color: #1e293b; color: #f1f5f9; }
+        body.theme-dark .section-title { background: #1e293b; border-color: #334155; color: #f8fafc; }
+        body.theme-dark .form-control, body.theme-dark .filter-btn { background: #0b0f19; border-color: #334155; color: white; }
+
+        /* מצב מואר (Light Mode) המחיל שינוי רק על עמוד ההתרעות */
+        body.theme-light { background: #f8fafc; color: #0f172a; }
+        body.theme-light .card, body.theme-light .page-header-card { background: #ffffff; border-color: #e2e8f0; color: #0f172a; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        body.theme-light .page-header-card h1 { color: #0f172a; }
+        body.theme-light .section-title { background: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
+        body.theme-light .form-control, body.theme-light .filter-btn { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
+        body.theme-light .history-item { background: #f1f5f9; border-color: #cbd5e1; }
+        body.theme-light .hist-tab { background: #ffffff; color: #475569; border-color: #cbd5e1; }
+
         #live-alert-banner {
             background: linear-gradient(135deg, #b91c1c, #ef4444); color: white; padding: 14px; text-align: center;
             font-weight: 700; font-size: 16px; display: none; position: sticky; top: 0; z-index: 10000;
@@ -21,39 +35,36 @@
 
         .container { max-width: 1280px; margin: 40px auto; padding: 0 20px; }
         
-        .page-header-card { background: #131c2e; border: 1px solid #1e293b; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; position: relative; overflow: hidden; }
+        .page-header-card { border-radius: 16px; padding: 28px; margin-bottom: 24px; text-align: center; position: relative; overflow: hidden; }
         .page-header-card::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: #0284c7; }
-        .page-header-card h1 { font-size: 30px; font-weight: 800; color: #ffffff; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .page-header-card h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
         .page-header-card p { color: #94a3b8; font-size: 15px; margin: 0; font-weight: 400; }
+
+        .theme-toggle-btn { position: absolute; top: 20px; left: 20px; background: rgba(2, 132, 199, 0.15); border: 1px solid #0284c7; color: #0284c7; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .theme-toggle-btn:hover { background: #0284c7; color: white; }
 
         .live-alarm-icon { color: #ef4444; font-size: 26px; transition: color 0.3s; }
         .live-alarm-icon.active { animation: fast-ring 0.25s ease-in-out infinite alternate !important; }
-        @keyframes fast-ring { 
-            0% { transform: rotate(-25deg) scale(1.1); } 
-            100% { transform: rotate(25deg) scale(1.35); } 
-        }
+        @keyframes fast-ring { 0% { transform: rotate(-25deg) scale(1.1); } 100% { transform: rotate(25deg) scale(1.35); } }
 
         .grid-layout { display: grid; grid-template-columns: 440px 1fr; gap: 24px; align-items: stretch; }
         @media (max-width: 1024px) { .grid-layout { grid-template-columns: 1fr; } }
 
-        .card { background: #131c2e; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        .card { border-radius: 16px; padding: 24px; display: flex; flex-direction: column; }
         
         .form-label { display: block; font-size: 14px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
-        .form-control { width: 100%; padding: 12px 16px; margin-bottom: 16px; background: #0b0f19; border: 1px solid #334155; color: white; border-radius: 10px; font-size: 14px; transition: border-color 0.2s; }
+        .form-control { width: 100%; padding: 12px 16px; margin-bottom: 16px; border-radius: 10px; font-size: 14px; transition: border-color 0.2s; }
         .form-control:focus { outline: none; border-color: #0284c7; }
         
         .btn-primary { background: #0284c7; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
         .btn-primary:hover { background: #0ea5e9; }
 
-        .section-title { background: #1e293b; color: #f8fafc; font-size: 18px; font-weight: 700; padding: 12px 18px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #334155; }
-
+        .section-title { font-size: 18px; font-weight: 700; padding: 12px 18px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid; }
         .header-test-link { background: none; border: none; color: #f87171; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; padding: 0; }
-        .header-test-link:hover { color: #ef4444; text-decoration: underline; }
-
+        
         .history-tabs { display: flex; gap: 6px; position: absolute; right: 18px; }
-        .hist-tab { background: #0b0f19; color: #94a3b8; border: 1px solid #334155; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .hist-tab:hover { color: white; background: #1e293b; }
-        .hist-tab.active { background: #0284c7; color: white; border-color: #0284c7; }
+        .hist-tab { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid; }
+        .hist-tab.active { background: #0284c7 !important; color: white !important; border-color: #0284c7 !important; }
 
         .map-wrapper { background: #0b0f19; border: 1px solid #1e293b; border-radius: 14px; flex-grow: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; min-height: 520px; }
         .map-toolbar { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 6px; background: rgba(15, 23, 42, 0.85); padding: 6px; border-radius: 8px; backdrop-filter: blur(5px); border: 1px solid #334155; }
@@ -63,35 +74,31 @@
         .map-iframe { width: 100%; height: 100%; border: none; filter: brightness(1) contrast(1); transition: filter 0.3s ease; }
         .map-iframe.dark-mode { filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.2); }
         .map-iframe.satellite-mode { filter: brightness(1) contrast(1.2) saturate(1.3); }
-        .map-provider-credit { position: absolute; bottom: 8px; right: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; }
-        .map-scroll-notice { position: absolute; bottom: 8px; left: 12px; background: rgba(15, 23, 42, 0.85); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #94a3b8; z-index: 10; pointer-events: none; }
 
-        /* התרעה אדומה (רגילה / חירום) */
         .alert-item { background: #1a0f13; border: 1px solid #7f1d1d; border-right: 5px solid #ef4444; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; }
         .alert-item-title { font-weight: 700; color: #fca5a5; font-size: 15px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .alert-item-cities { color: #f1f5f9; font-size: 14px; margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
         .city-badge { background: #7f1d1d; color: #fca5a5; padding: 3px 8px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid #991b1b; }
-        .alert-item-time { font-size: 12px; color: #94a3b8; text-align: left; }
-
-        /* התרעה ירוקה (סיום אירוע / חזרה לשגרה) */
-        .alert-item-success { background: #0f291e !important; border: 1px solid #14532d !important; border-right: 5px solid #22c55e !important; }
-        .alert-item-success .alert-item-title { color: #86efac !important; }
-        .alert-item-success .city-badge { background: #14532d !important; color: #86efac !important; border-color: #166534 !important; }
-
+        
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
-        .history-item { background: #0b0f19; border: 1px solid #1e293b; border-right: 4px solid #ef4444; padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; }
-        .history-item.success-item { border-right-color: #22c55e !important; }
+        .history-item { padding: 12px 16px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; border-right: 4px solid #ef4444; }
 
-        /* תוספות פילטרים וחיפוש מתקדם */
-        .autocomplete-wrapper { position: relative; flex: 1; }
-        .autocomplete-dropdown { position: absolute; top: 100%; right: 0; left: 0; background: #0b0f19; border: 1px solid #334155; border-radius: 8px; max-height: 180px; overflow-y: auto; z-index: 999; display: none; }
-        .autocomplete-item { padding: 10px 14px; color: #f1f5f9; cursor: pointer; font-size: 13px; border-bottom: 1px solid #1e293b; }
+        /* כפתורי סינון גלויים ומתקדמים (כמו בצופר) */
+        .filter-toggle-group { display: flex; background: rgba(2, 132, 199, 0.1); padding: 4px; border-radius: 30px; margin-bottom: 16px; border: 1px solid rgba(2, 132, 199, 0.3); }
+        .filter-toggle-btn { flex: 1; padding: 8px 16px; border: none; background: none; color: #94a3b8; font-weight: 700; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-size: 13.5px; }
+        .filter-toggle-btn.active { background: #0284c7; color: white; }
+
+        .threat-chips-container { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+        .threat-chip { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid #334155; transition: all 0.2s; }
+        .threat-chip.active { background: #0284c7; color: white; border-color: #0284c7; }
+
+        .autocomplete-wrapper { position: relative; width: 100%; }
+        .autocomplete-list { position: absolute; top: 100%; right: 0; left: 0; background: #131c2e; border: 1px solid #334155; border-radius: 8px; max-height: 180px; overflow-y: auto; z-index: 1000; display: none; }
+        .autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #1e293b; color: #f1f5f9; }
         .autocomplete-item:hover { background: #0284c7; }
-        .filter-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-        .filter-input { background: #0b0f19; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 8px; font-size: 13px; flex: 1; }
     </style>
 </head>
-<body>
+<body class="theme-dark">
 
     <div id="live-alert-banner">
         <i class="fa-solid fa-triangle-exclamation"></i> <span id="banner-text">התרעת צבע אדום פעילה באזור שבחרת!</span>
@@ -101,6 +108,9 @@
 
     <main class="container">
         <div class="page-header-card">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="החלת מצב יום/לילה לעמוד ההתרעות">
+                <i class="fa-solid fa-moon" id="theme-icon"></i> <span id="theme-text">מצב חשוך</span>
+            </button>
             <h1>
                 <i id="header-alarm-icon" class="fa-solid fa-bell live-alarm-icon"></i> 
                 מרכז ההתרעות והחירום הארצי
@@ -126,25 +136,32 @@
                         <button class="header-test-link" onclick="simulateAlert()" title="הפעלת בדיקת אזעקה"><i class="fa-solid fa-bell fa-shake" style="color: #ef4444;"></i> בדיקת התרעה</button>
                     </div>
                     
-                    <!-- בחירת אזורים מתקדמת עם השלמה אוטומטית -->
-                    <label class="form-label"><i class="fa-solid fa-location-dot" style="color: #0284c7;"></i> בחירת יישובים או אזורים מועדפים:</label>
-                    <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="city-search-input" class="form-control" placeholder="הזן שם יישוב (למשל: תל אביב, מסילת ציון)..." style="margin-bottom: 0;" oninput="handleCityAutocomplete(this.value)">
-                            <div id="autocomplete-list" class="autocomplete-dropdown"></div>
-                        </div>
-                        <button type="button" onclick="addCityFromInput()" style="background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0 16px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;">הוסף</button>
-                        <button type="button" onclick="clearAllCities()" style="background: #1e293b; color: #f87171; border: 1px solid #334155; padding: 0 14px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;" title="נקה בחירה">נקה בחירה</button>
+                    <!-- סוויץ' מהיר: כל הארץ / אזורים נבחרים (כמו בצופר) -->
+                    <div class="filter-toggle-group">
+                        <button type="button" class="filter-toggle-btn active" id="btn-scope-all" onclick="setScopeFilter('all')">כל הארץ</button>
+                        <button type="button" class="filter-toggle-btn" id="btn-scope-custom" onclick="setScopeFilter('custom')">אזורים נבחרים</button>
                     </div>
 
-                    <!-- אזור תגיות היישובים הנבחרים -->
-                    <div id="selected-cities-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; min-height: 10px;"></div>
+                    <!-- בחירת אזורים מתקדמת עם השלמה אוטומטית -->
+                    <div id="custom-cities-wrapper" style="display: none;">
+                        <label class="form-label"><i class="fa-solid fa-location-dot" style="color: #0284c7;"></i> בחירת יישובים או אזורים מועדפים:</label>
+                        <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                            <div class="autocomplete-wrapper">
+                                <input type="text" id="city-search-input" class="form-control" placeholder="הזן שם יישוב (למשל: תל אביב, מסילת ציון)..." style="margin-bottom: 0;" oninput="handleAutocomplete(this.value)">
+                                <div id="autocomplete-dropdown" class="autocomplete-list"></div>
+                            </div>
+                            <button type="button" onclick="addCityFromInput()" style="background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0 16px; border-radius: 10px; font-weight: 600; cursor: pointer;">הוסף</button>
+                            <button type="button" onclick="clearAllCities()" style="background: #1e293b; color: #f87171; border: 1px solid #334155; padding: 0 14px; border-radius: 10px; font-weight: 600; cursor: pointer;">נקה</button>
+                        </div>
+
+                        <div id="selected-cities-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; min-height: 10px;"></div>
+                    </div>
 
                     <!-- כפתור סימון להתרעות שקטות באזורים שלא נבחרו -->
-                    <div style="background: #0b0f19; border: 1px solid #334155; padding: 12px 14px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
+                    <div style="background: rgba(2, 132, 199, 0.05); border: 1px solid #334155; padding: 12px 14px; border-radius: 10px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
                         <input type="checkbox" id="silent-other-areas" style="width: 18px; height: 18px; accent-color: #0284c7; margin-top: 2px; cursor: pointer;">
                         <div>
-                            <label for="silent-other-areas" style="font-size: 13.5px; font-weight: 700; color: #f8fafc; cursor: pointer; display: block; margin-bottom: 2px;">התרעות שקטות באזורים שלא נבחרו</label>
+                            <label for="silent-other-areas" style="font-size: 13.5px; font-weight: 700; cursor: pointer; display: block; margin-bottom: 2px;">התרעות שקטות באזורים שלא נבחרו</label>
                             <span style="font-size: 11.5px; color: #94a3b8; display: block;">קבלת התרעות שקטות עבור שאר האזורים שלא נבחרו ברשימה המועדפת</span>
                         </div>
                     </div>
@@ -176,44 +193,42 @@
                             src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d860120.3547442345!2d34.851612!3d31.525000!3m2!1i1024!2i768!4f13.1!5e0!3m2!1siw!2sil!4v1650000000000!5m2!1siw!2sil" 
                             allowfullscreen="" loading="lazy">
                         </iframe>
-                        <div class="map-scroll-notice" id="map-notice">לחץ על המפה להגדלה (Ctrl + גלגלת)</div>
-                        <div class="map-provider-credit">מפות באדיבות Google Maps</div>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- ארכיון התרעות חכם ומתקדם -->
+        <!-- ארכיון והיסטוריה עם מסננים גלויים (צופר + פיקוד העורף) -->
         <div class="card" style="margin-top: 24px;">
             <div class="section-title" style="justify-content: center; position: relative;">
                 <div class="history-tabs">
                     <button class="hist-tab active" onclick="setHistoryRange('24h', this)">24 שעות</button>
                     <button class="hist-tab" onclick="setHistoryRange('week', this)">שבוע</button>
                     <button class="hist-tab" onclick="setHistoryRange('month', this)">חודש</button>
-                    <button class="hist-tab" onclick="setHistoryRange('custom', this)">מותאם אישית</button>
+                    <button class="hist-tab" onclick="setHistoryRange('custom', this)">📅 מ-עד תאריך</button>
                 </div>
                 <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
 
-            <!-- פילטרים מתקדמים לסוגי התרעה וחיפוש חופשי -->
-            <div class="filter-row">
-                <input type="text" id="archive-search-input" class="filter-input" placeholder="🔍 חיפוש חופשי בארכיון (שם יישוב, אזור)..." oninput="renderHistory()">
-                <select id="alert-category-filter" class="filter-input" onchange="renderHistory()">
-                    <option value="all">כל סוגי ההתרעות</option>
-                    <option value="רקטות">רקטות וטילים</option>
-                    <option value="כלי טיס">חדירת כלי טיס עוין</option>
-                    <option value="מחבלים">חדירת מחבלים</option>
-                    <option value="רעידת אדמה">רעידת אדמה</option>
-                    <option value="חומרים מסוכנים">אירוע חומרים מסוכנים</option>
-                </select>
+            <!-- לחצני סינון גלויים מחוץ לתפריט מוסתר (סוגי איומים) -->
+            <div style="margin-bottom: 12px; font-weight: 600; font-size: 13px; color: #94a3b8;">סינון לפי סוג התרעה:</div>
+            <div class="threat-chips-container">
+                <button type="button" class="threat-chip active" onclick="setThreatFilter('all', this)">כל האיומים</button>
+                <button type="button" class="threat-chip" onclick="setThreatFilter('רקטות', this)">🚀 רקטות וטילים</button>
+                <button type="button" class="threat-chip" onclick="setThreatFilter('כלי טיס', this)">✈️ כלי טיס עוין</button>
+                <button type="button" class="threat-chip" onclick="setThreatFilter('מחבלים', this)">🌁 חדירת מחבלים</button>
+                <button type="button" class="threat-chip" onclick="setThreatFilter('רעידת אדמה', this)">🌋 רעידת אדמה</button>
             </div>
 
-            <!-- בחירת תאריכים מותאמת אישית -->
-            <div id="custom-date-container" class="filter-row" style="display: none;">
-                <input type="date" id="start-date-filter" class="filter-input" onchange="renderHistory()">
-                <input type="date" id="end-date-filter" class="filter-input" onchange="renderHistory()">
+            <!-- בחירת תאריכים מותאמת (תאריך התחלה וסיום) -->
+            <div id="custom-date-box" style="display: none; gap: 10px; margin-bottom: 16px;">
+                <input type="date" id="date-from" class="form-control" style="margin: 0; flex: 1;" onchange="renderHistory()">
+                <input type="date" id="date-to" class="form-control" style="margin: 0; flex: 1;" onchange="renderHistory()">
             </div>
+
+            <!-- מונה תוצאות בלייב (כמו בצופר) -->
+            <div id="results-counter" style="color: #ef4444; font-weight: 700; font-size: 14px; margin-bottom: 12px; text-align: right;">נמצאו 0 התרעות</div>
 
             <div class="history-list" id="history-alerts-container">
                 <p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">טוען נתונים מהארכיון...</p>
@@ -227,13 +242,13 @@
         let historicalAlerts = [];
         let currentRange = '24h';
         let selectedCitiesArray = [];
+        let currentScope = 'all'; // ברירת מחדל: כל הארץ
+        let selectedThreat = 'all'; // ברירת מחדל: כל האיומים
 
-        // מאגר יישובים להשלמה אוטומטית (Autocomplete)
-        const commonCitiesList = [
+        const citiesDatabase = [
             "תל אביב - יפו", "ירושלים", "חיפה", "באר שבע", "ראשון לציון", "פתח תקווה", "אשדוד", "נתניה", 
             "חולון", "בני ברק", "רמת גן", "אשקלון", "רחובות", "בת ים", "בית שמש", "כפר סבא", "הרצליה", 
-            "חדרה", "מודיעין-מכבים-רעות", "נצרת", "לוד", "רמלה", "רעננה", "קריית אתא", "עכו", "נהריה", 
-            "מסילת ציון", "שדרות", "קריית שמונה", "מטולה", "צפת", "טבריה", "עפולה", "דימונה", "אילת"
+            "חדרה", "מודיעין-מכבים-רעות", "שדרות", "קריית שמונה", "מטולה", "צפת", "טבריה", "עפולה", "דימונה", "אילת"
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -248,29 +263,65 @@
             renderCityTags();
         });
 
+        // מתג יום/לילה המחיל שינוי רק על עמוד ההתרעות
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+
+            if (body.classList.contains('theme-dark')) {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                icon.className = 'fa-solid fa-sun';
+                text.textContent = 'מצב מואר';
+            } else {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                icon.className = 'fa-solid fa-moon';
+                text.textContent = 'מצב חשוך';
+            }
+        }
+
+        // הגדרת היקף: כל הארץ / אזורים נבחרים
+        function setScopeFilter(scope) {
+            currentScope = scope;
+            document.getElementById('btn-scope-all').classList.toggle('active', scope === 'all');
+            document.getElementById('btn-scope-custom').classList.toggle('active', scope === 'custom');
+            document.getElementById('custom-cities-wrapper').style.display = (scope === 'custom') ? 'block' : 'none';
+            renderHistory();
+        }
+
+        // הגדרת סוג איום
+        function setThreatFilter(threat, btn) {
+            document.querySelectorAll('.threat-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedThreat = threat;
+            renderHistory();
+        }
+
         // השלמה אוטומטית ליישובים
-        function handleCityAutocomplete(query) {
-            const dropdown = document.getElementById('autocomplete-list');
-            if (!query || query.trim().length < 1) {
+        function handleAutocomplete(query) {
+            const dropdown = document.getElementById('autocomplete-dropdown');
+            if (!query || query.trim().length === 0) {
                 dropdown.style.display = 'none';
                 return;
             }
-            const filtered = commonCitiesList.filter(city => city.includes(query.trim()));
-            if (filtered.length === 0) {
+            const matches = citiesDatabase.filter(c => c.includes(query.trim()));
+            if (matches.length === 0) {
                 dropdown.style.display = 'none';
                 return;
             }
             let html = '';
-            filtered.slice(0, 6).forEach(city => {
-                html += `<div class="autocomplete-item" onclick="selectAutocompleteCity('${city}')">${city}</div>`;
+            matches.slice(0, 5).forEach(city => {
+                html += `<div class="autocomplete-item" onclick="selectCity('${city}')">${city}</div>`;
             });
             dropdown.innerHTML = html;
             dropdown.style.display = 'block';
         }
 
-        function selectAutocompleteCity(city) {
+        function selectCity(city) {
             document.getElementById('city-search-input').value = city;
-            document.getElementById('autocomplete-list').style.display = 'none';
+            document.getElementById('autocomplete-dropdown').style.display = 'none';
             addCityFromInput();
         }
 
@@ -284,7 +335,6 @@
                 renderCityTags();
             }
             input.value = '';
-            document.getElementById('autocomplete-list').style.display = 'none';
         }
 
         function removeCity(cityName) {
@@ -322,10 +372,6 @@
             localStorage.setItem('netools_selected_cities', JSON.stringify(selectedCitiesArray));
             localStorage.setItem('netools_silent_other', document.getElementById('silent-other-areas').checked);
             localStorage.setItem('netools_alert_mode', document.getElementById('alert-mode').value);
-            
-            if (document.getElementById('alert-mode').value === 'full' && "Notification" in window) {
-                Notification.requestPermission();
-            }
 
             const msg = document.getElementById('save-msg');
             if (msg) {
@@ -346,26 +392,20 @@
 
         function enableMapScroll(wrapper) {
             const iframe = wrapper.querySelector('iframe');
-            const notice = document.getElementById('map-notice');
             iframe.style.pointerEvents = 'auto';
-            notice.textContent = "השתמש ב-Ctrl + גלגלת לשינוי תקריב";
         }
 
         function setHistoryRange(range, btn) {
             document.querySelectorAll('.hist-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
             currentRange = range;
-            
-            const customDates = document.getElementById('custom-date-container');
-            if (range === 'custom') {
-                customDates.style.display = 'flex';
-            } else {
-                customDates.style.display = 'none';
-            }
+
+            const customBox = document.getElementById('custom-date-box');
+            customBox.style.display = (range === 'custom') ? 'flex' : 'none';
             renderHistory();
         }
 
-        // שליפת נתונים מ-API השרת
+        // שליפת הנתונים משרת ה-API
         async function fetchAlerts() {
             try {
                 const response = await fetch('https://api.netools.co.il/api/alerts');
@@ -384,15 +424,10 @@
                             date: item.date || '',
                             time: item.time || ''
                         }));
-                    } else {
-                        cachedAlerts = [];
-                        historicalAlerts = [];
                     }
                 }
             } catch (e) {
                 console.error("Fetch alerts error:", e);
-                cachedAlerts = [];
-                historicalAlerts = [];
             }
 
             processAlerts(cachedAlerts);
@@ -402,86 +437,56 @@
         function processAlerts(alerts) {
             const activeContainer = document.getElementById('active-alerts-container');
             const alarmIcon = document.getElementById('header-alarm-icon');
-            const navBell = document.getElementById('nav-bell-icon');
             const banner = document.getElementById('live-alert-banner');
             
-            let isUserAlerted = false;
-            const silentOther = document.getElementById('silent-other-areas')?.checked || localStorage.getItem('netools_silent_other') === 'true';
-
             if (!alerts || alerts.length === 0) {
                 activeContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 40px 0;">הכל שקט כרגע. אין התרעות פעילות.</p>';
                 if (alarmIcon) alarmIcon.classList.remove('active');
-                if (navBell) navBell.classList.remove('active');
                 if (banner) banner.style.display = 'none';
                 return;
             }
 
             if (alarmIcon) alarmIcon.classList.add('active');
-            if (navBell) navBell.classList.add('active');
             if (banner) banner.style.display = 'block';
 
             let activeHtml = '';
             alerts.forEach((alert) => {
                 const cities = alert.data || alert.cities || [];
                 const title = alert.title || 'התרעת חירום';
-                
-                const isSuccess = title.includes("סיום") || title.includes("שגרה") || title.includes("הסתיים") || title.includes("חזרה");
-
-                let isMatchedForUser = false;
-                if (selectedCitiesArray.length > 0) {
-                    isMatchedForUser = cities.some(city => selectedCitiesArray.some(input => city.toLowerCase().includes(input.toLowerCase())));
-                    if (isMatchedForUser) isUserAlerted = true;
-                } else {
-                    isUserAlerted = true;
-                }
-
-                let cardClass = isSuccess ? "alert-item alert-item-success" : "alert-item";
-                let iconClass = isSuccess ? "fa-circle-check" : "fa-triangle-exclamation";
-
-                let itemStyle = "";
-                if (silentOther && selectedCitiesArray.length > 0 && !isMatchedForUser) {
-                    itemStyle = "opacity: 0.5;";
-                }
-
                 const citiesBadges = cities.map(city => `<span class="city-badge">${city}</span>`).join(' ');
 
-                activeHtml += `<div class="${cardClass}" style="${itemStyle}">
-                    <div class="alert-item-title"><i class="fa-solid ${iconClass}"></i> ${title}</div>
+                activeHtml += `<div class="alert-item">
+                    <div class="alert-item-title"><i class="fa-solid fa-triangle-exclamation"></i> ${title}</div>
                     <div class="alert-item-cities"><strong>יישובים במרחב:</strong> ${citiesBadges}</div>
-                    <div class="alert-item-time">${alert.date || ''} | ${alert.time || ''}</div>
+                    <div style="font-size: 12px; color: #94a3b8;">${alert.date || ''} | ${alert.time || ''}</div>
                 </div>`;
             });
             activeContainer.innerHTML = activeHtml;
-
-            const alertMode = localStorage.getItem('netools_alert_mode') || 'full';
-            if (isUserAlerted && alertMode === 'full' && "Notification" in window && Notification.permission === "granted") {
-                new Notification("🚨 צבע אדום באזורך!", { body: `התרעה פעילה באחד מהיישובים שבחרת` });
-            }
         }
 
-        // רנדור היסטוריה מסונן וחכם
         function renderHistory() {
             const historyContainer = document.getElementById('history-alerts-container');
-            const searchVal = document.getElementById('archive-search-input')?.value.trim().toLowerCase() || '';
-            const categoryVal = document.getElementById('alert-category-filter')?.value || 'all';
+            const counter = document.getElementById('results-counter');
 
             let sourceList = (historicalAlerts && historicalAlerts.length > 0) ? historicalAlerts : cachedAlerts;
 
-            // סינון לפי חיפוש חופשי
-            if (searchVal) {
+            // 1. סינון לפי סוג איום
+            if (selectedThreat !== 'all') {
+                sourceList = sourceList.filter(item => item.title.includes(selectedThreat));
+            }
+
+            // 2. סינון לפי אזורים נבחרים (אם הוגדר)
+            if (currentScope === 'custom' && selectedCitiesArray.length > 0) {
                 sourceList = sourceList.filter(item => {
-                    const citiesStr = Array.isArray(item.data) ? item.data.join(', ') : item.data;
-                    return citiesStr.toLowerCase().includes(searchVal) || item.title.toLowerCase().includes(searchVal);
+                    const cities = Array.isArray(item.data) ? item.data : [item.data];
+                    return cities.some(c => selectedCitiesArray.some(sc => c.toLowerCase().includes(sc.toLowerCase())));
                 });
             }
 
-            // סינון לפי קטגוריה
-            if (categoryVal !== 'all') {
-                sourceList = sourceList.filter(item => item.title.includes(categoryVal));
-            }
+            counter.textContent = `נמצאו ${sourceList.length} התרעות`;
 
             if (!sourceList || sourceList.length === 0) {
-                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">לא נמצאו התרעות מתאימות לחיפוש.</p>';
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין התרעות מתאימות להגדרות הסינון.</p>';
                 return;
             }
 
@@ -493,12 +498,8 @@
                 const time = alert.time || '';
                 const citiesText = Array.isArray(cities) ? cities.join(', ') : cities;
 
-                const isSuccess = title.includes("סיום") || title.includes("שגרה") || title.includes("הסתיים") || title.includes("חזרה");
-                const itemClass = isSuccess ? "history-item success-item" : "history-item";
-                const titleColor = isSuccess ? "#86efac" : "#f8fafc";
-
-                historyHtml += `<div class="${itemClass}">
-                    <strong style="color: ${titleColor};">${title}</strong>: ${citiesText} 
+                historyHtml += `<div class="history-item">
+                    <strong>${title}</strong>: ${citiesText} 
                     <span style="color: #64748b; float: left;">${date} ${time}</span>
                 </div>`;
             });
@@ -506,23 +507,13 @@
             historyContainer.innerHTML = historyHtml;
         }
 
-        let simulationTimer = null;
-
         function simulateAlert() {
             const fakeAlert = [
-                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') },
-                { title: "סיום אירוע - חזרה לשגרה", data: ["תל אביב - יפו", "רמת גן"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
+                { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
             ];
             cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (simulationTimer) clearTimeout(simulationTimer);
-            simulationTimer = setTimeout(() => {
-                cachedAlerts = [];
-                processAlerts([]);
-            }, 8000);
+            setTimeout(() => { cachedAlerts = []; processAlerts([]); }, 8000);
         }
 
         setInterval(fetchAlerts, 3000);
