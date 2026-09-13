@@ -416,32 +416,36 @@
                 console.log("Connected to Real-Time Alert Engine");
             };
 
-            socket.onmessage = function(event) {
-                try {
-                    const message = JSON.parse(event.data);
+       socket.onmessage = function(event) {
+    try {
+        const message = JSON.parse(event.data);
 
-                    if (message.type === 'INIT') {
-                        cachedAlerts = message.liveAlerts || [];
-                        historicalAlerts = (message.history || []).map(item => {
-                            const citiesArr = Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'];
-                            const fullDate = item.date || item.alertDate || '';
-                            return {
-                                title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                                data: citiesArr,
-                                date: fullDate.includes('T') ? fullDate.split('T')[0] : fullDate,
-                                time: item.time || (fullDate.includes('T') ? fullDate.split('T')[1] : '')
-                            };
-                        });
-                    } else if (message.type === 'LIVE_ALERT') {
-                        cachedAlerts = message.data || [];
-                    }
+        if (message.type === 'INIT') {
+            cachedAlerts = message.liveAlerts || [];
+            
+            // המרה נכונה של הנתונים מהשרת (Supabase / פיקוד העורף)
+            const rawHistory = message.history || [];
+            historicalAlerts = rawHistory.map(item => {
+                const citiesArr = Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'];
+                const fullDate = item.date || item.alertDate || '';
+                
+                return {
+                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                    data: citiesArr,
+                    date: fullDate.includes('T') ? fullDate.split('T')[0] : fullDate,
+                    time: item.time || (fullDate.includes('T') ? fullDate.split('T')[1] : '')
+                };
+            });
+        } else if (message.type === 'LIVE_ALERT') {
+            cachedAlerts = message.data || [];
+        }
 
-                    processAlerts(cachedAlerts);
-                    renderHistory();
-                } catch (e) {
-                    console.error("Error processing WebSocket message:", e);
-                }
-            };
+        processAlerts(cachedAlerts);
+        renderHistory();
+    } catch (e) {
+        console.error("Error processing WebSocket message:", e);
+    }
+};
 
             socket.onclose = function() {
                 console.log("WebSocket connection closed. Reconnecting in 3 seconds...");
