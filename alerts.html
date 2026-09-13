@@ -96,7 +96,6 @@
         .autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 13px; border-bottom: 1px solid #1e293b; color: #f1f5f9; }
         .autocomplete-item:hover { background: #0284c7; }
 
-        /* עיצוב חלונית לוח השנה המקצועית */
         .custom-date-picker-card {
             background: rgba(19, 28, 46, 0.95);
             border: 1px solid #0284c7;
@@ -110,30 +109,13 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
-        .date-input-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .date-input-field label {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #38bdf8;
-        }
+        .date-input-field { display: flex; flex-direction: column; gap: 6px; }
+        .date-input-field label { font-size: 12.5px; font-weight: 600; color: #38bdf8; }
         .date-input-field input[type="date"] {
-            background: #0b0f19;
-            border: 1px solid #334155;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-            outline: none;
+            background: #0b0f19; border: 1px solid #334155; color: white; padding: 8px 12px;
+            border-radius: 8px; font-family: inherit; font-size: 13px; outline: none;
         }
-        .date-input-field input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            cursor: pointer;
-        }
+        .date-input-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
     </style>
 </head>
 <body class="theme-dark">
@@ -246,7 +228,7 @@
                 <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock-rotate-left" style="color: #38bdf8;"></i> היסטוריית התרעות</span>
             </div>
 
-            <!-- חלונית בחירת תאריכים מותאמת (DatePicker) -->
+            <!-- חלונית לוח שנה מקצועית -->
             <div id="custom-date-box" class="custom-date-picker-card">
                 <div class="date-input-field">
                     <label><i class="fa-regular fa-calendar-days"></i> מתאריך:</label>
@@ -275,7 +257,7 @@
         </div>
     </main>
 
- <script src="header.js"></script>
+    <script src="header.js"></script>
     <script>
         let cachedAlerts = [];
         let historicalAlerts = [];
@@ -300,8 +282,8 @@
             document.getElementById('alert-mode').value = localStorage.getItem('netools_alert_mode') || 'full';
 
             renderCityTags();
-            loadHistoryOnce(); // טעינה חד פעמית של ההיסטוריה
-            initWebSocket();    // חיבור לייב בלבד
+            loadHistoryOnce();
+            initWebSocket();
         });
 
         function toggleTheme() {
@@ -442,7 +424,6 @@
             renderHistory();
         }
 
-        // טעינה חד פעמית מועלת של היסטוריית ארכיון (HTTP REST)
         async function loadHistoryOnce() {
             try {
                 const res = await fetch('https://netools-server.onrender.com/api/alerts-history');
@@ -467,7 +448,6 @@
             }
         }
 
-        // חיבור WebSocket למאורעות אמת בלבד (Push 0.1s)
         let socket;
         function initWebSocket() {
             const wsUrl = 'wss://netools-server.onrender.com';
@@ -538,7 +518,7 @@
             const historyContainer = document.getElementById('history-alerts-container');
             const counter = document.getElementById('results-counter');
 
-            let sourceList = (historicalAlerts && historicalAlerts.length > 0) ? historicalAlerts : cachedAlerts;
+            let sourceList = (historicalAlerts && historicalAlerts.length > 0) ? [...historicalAlerts] : [];
 
             if (!sourceList || sourceList.length === 0) {
                 if (counter) counter.textContent = `נמצאו 0 התרעות`;
@@ -560,25 +540,22 @@
             const now = new Date();
             if (currentRange === '24h') {
                 const past24h = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-                const filtered = sourceList.filter(item => {
+                sourceList = sourceList.filter(item => {
                     const d = parseAlertDate(item.date);
-                    return !d || d >= past24h;
+                    return d && d >= past24h;
                 });
-                if (filtered.length > 0) sourceList = filtered;
             } else if (currentRange === 'week') {
                 const pastWeek = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
-                const filtered = sourceList.filter(item => {
+                sourceList = sourceList.filter(item => {
                     const d = parseAlertDate(item.date);
-                    return !d || d >= pastWeek;
+                    return d && d >= pastWeek;
                 });
-                if (filtered.length > 0) sourceList = filtered;
             } else if (currentRange === 'month') {
                 const pastMonth = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
-                const filtered = sourceList.filter(item => {
+                sourceList = sourceList.filter(item => {
                     const d = parseAlertDate(item.date);
-                    return !d || d >= pastMonth;
+                    return d && d >= pastMonth;
                 });
-                if (filtered.length > 0) sourceList = filtered;
             } else if (currentRange === 'custom') {
                 const dateFromVal = document.getElementById('date-from').value;
                 const dateToVal = document.getElementById('date-to').value;
@@ -586,7 +563,7 @@
                 if (dateFromVal || dateToVal) {
                     sourceList = sourceList.filter(item => {
                         const d = parseAlertDate(item.date);
-                        if (!d) return true;
+                        if (!d) return false;
                         let valid = true;
                         if (dateFromVal) {
                             const fromD = new Date(dateFromVal);
@@ -604,6 +581,11 @@
             }
 
             if (counter) counter.textContent = `נמצאו ${sourceList.length} התרעות`;
+
+            if (!sourceList || sourceList.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #64748b; font-size: 14px; text-align: center; padding: 20px 0;">אין התרעות מתאימות להגדרות הסינון.</p>';
+                return;
+            }
 
             let historyHtml = '';
             sourceList.slice(0, 150).forEach(alert => {
@@ -626,9 +608,8 @@
             const fakeAlert = [
                 { title: "התרעת צבע אדום (סימולציה)", data: ["תל אביב - יפו", "רמת גן", "מסילת ציון"], date: new Date().toLocaleDateString('he-IL'), time: new Date().toLocaleTimeString('he-IL') }
             ];
-            cachedAlerts = fakeAlert;
             processAlerts(fakeAlert);
-            setTimeout(() => { cachedAlerts = []; processAlerts([]); }, 8000);
+            setTimeout(() => { processAlerts([]); }, 8000);
         }
     </script>
 </body>
