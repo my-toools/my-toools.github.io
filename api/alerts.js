@@ -14,48 +14,6 @@ export default async function handler(req, res) {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     };
 
-    // --- מנגנון שאיבה חד-פעמי (Seed) לתוך Supabase ---
-    if (req.query.seed === 'true') {
-        try {
-            const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers });
-            if (historyRes.ok) {
-                const historyData = await historyRes.json();
-                if (Array.isArray(historyData) && historyData.length > 0) {
-                    
-                    // המרת 500 ההתרעות האחרונות למבנה הטבלה ב-Supabase
-                    const recordsToInsert = historyData.slice(0, 500).map(item => {
-                        const rawDate = item.alertDate || item.date || new Date().toLocaleDateString('he-IL');
-                        const formattedDate = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate;
-                        return {
-                            title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                            data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'],
-                            date: formattedDate,
-                            time: item.time || ''
-                        };
-                    });
-
-                    // שמירת הנתונים ב-Supabase
-                    await fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
-                        method: 'POST',
-                        headers: {
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`,
-                            'Content-Type': 'application/json',
-                            'Prefer': 'return=minimal'
-                        },
-                        body: JSON.stringify(recordsToInsert)
-                    });
-
-                    return res.status(200).json({ status: 'success', inserted: recordsToInsert.length });
-                }
-            }
-            return res.status(400).json({ error: 'Could not fetch history from Home Front Command' });
-        } catch (e) {
-            return res.status(500).json({ error: e.message });
-        }
-    }
-
-    // --- זרימה שוטפת (לייב + שליפה מ-Supabase) ---
     try {
         // 1. בדיקת אזעקות בלייב
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers });
@@ -80,13 +38,41 @@ export default async function handler(req, res) {
             return res.status(200).json(liveData);
         }
 
-        // 2. בשגרת רגיעה: שליפת ההיסטורייה שנאגרה ב-Supabase
+        // 2. שליפת ההיסטוריה מ-Supabase
         const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=200`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
+
         if (dbRes.ok) {
             const dbData = await dbRes.json();
-            return res.status(200).json(dbData);
+            // אם יש נתונים ב-Supabase - מחזירים אותם
+            if (Array.isArray(dbData) && dbData.length > 0) {
+                return res.status(200).json(dbData);
+            }
+        }
+
+        // 3. במידה ו-Supabase ריק: משיכה אוטומטית מפיקוד העורף ושמירה ב-Supabase!
+        const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers });
+        if (historyRes.ok) {
+            const historyData = await historyRes.json();
+            if (Array.isArray(historyData) && historyData.length > 0) {
+                
+                const recordsToInsert = historyData.slice(0, 100).map(item => ({
+                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                    data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'],
+                    date: item.alertDate || item.date || new Date().toLocaleDateString('he-IL'),
+                    time: item.time || ''
+                }));
+
+                // שמירה אוטומטית ב-Supabase ברקע
+                await fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
+                    method: 'POST',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify(recordsToInsert)
+                });
+
+                return res.status(200).json(recordsToInsert);
+            }
         }
 
         return res.status(200).json([]);
