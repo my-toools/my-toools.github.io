@@ -82,7 +82,7 @@
         
         .history-list { max-height: 500px; overflow-y: auto; padding-left: 4px; }
         
-        /* עיצוב משודרג, נעים ומקצועי לפריטי ההיסטוריה */
+        /* עיצוב כרטיסיות חדש ונקי */
         .history-item { 
             background: #1e293b; 
             border: 1px solid #334155; 
@@ -557,7 +557,6 @@
             return isNaN(parsed.getTime()) ? null : parsed;
         }
 
-        // פונקציית עזר להחזרת אייקון מתאים לפי סוג האיום
         function getThreatIcon(title) {
             if (title.includes('כלי טיס')) return '<i class="fa-solid fa-plane" style="color: #38bdf8;"></i>';
             if (title.includes('רקטות') || title.includes('טילים')) return '<i class="fa-solid fa-rocket" style="color: #ef4444;"></i>';
@@ -631,6 +630,28 @@
                     });
                 }
             }
+
+            // איחוד כפילויות חכם: מיזוג שורות תואמות באותה דקה ובאותו סוג איום
+            const mergedMap = new Map();
+            sourceList.forEach(alert => {
+                const title = alert.title || 'התרעה';
+                const date = alert.date || '';
+                const time = alert.time || '';
+                const key = `${date}_${time}_${title}`;
+
+                const cities = Array.isArray(alert.data) ? alert.data : [alert.data];
+
+                if (mergedMap.has(key)) {
+                    const existing = mergedMap.get(key);
+                    cities.forEach(c => {
+                        if (!existing.data.includes(c)) existing.data.push(c);
+                    });
+                } else {
+                    mergedMap.set(key, { ...alert, data: [...cities] });
+                }
+            });
+
+            sourceList = Array.from(mergedMap.values());
 
             if (counter) counter.textContent = `נמצאו ${sourceList.length} התרעות`;
 
