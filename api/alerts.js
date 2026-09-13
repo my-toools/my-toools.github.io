@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-    // 1. הגדרת כותרות CORS שמאפשרות ל-GitHub Pages לקרוא את הנתונים
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
     };
 
     try {
-        // 2. ניסיון קריאה ראשון: התרעות בזמן אמת
+        // 1. ניסיון קריאת התרעות בזמן אמת
         const liveResponse = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers });
 
         if (liveResponse.ok) {
@@ -24,25 +23,32 @@ export default async function handler(req, res) {
                 const liveData = JSON.parse(text);
                 const activeAlerts = Array.isArray(liveData) ? liveData : [liveData];
                 
-                // אם יש התרעה פעילה כעת - נחזיר אותה מיד
                 if (activeAlerts.length > 0) {
                     return res.status(200).json(activeAlerts);
                 }
             }
         }
 
-        // 3. אם אין התרעה פעילה בזמן אמת - נמשוך את ההיסטוריה והארכיון מפיקוד העורף
+        // 2. משיכת הארכיון מפיקוד העורף
         const historyResponse = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers });
 
         if (historyResponse.ok) {
             const historyData = await historyResponse.json();
-            return res.status(200).json(Array.isArray(historyData) ? historyData : []);
+            
+            // נרמול הנתונים כדי להבטיח תצוגה נקייה באתר
+            const normalizedHistory = (Array.isArray(historyData) ? historyData : []).map(item => ({
+                title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                data: Array.isArray(item.data) ? item.data : (item.data ? [item.data] : [item.cityName || 'יישוב לא צוין']),
+                date: item.alertDate || item.date || '',
+                time: item.time || ''
+            }));
+
+            return res.status(200).json(normalizedHistory);
         }
 
         return res.status(200).json([]);
 
     } catch (error) {
-        // מניעת שגיאת 500
         return res.status(200).json([]);
     }
 }
