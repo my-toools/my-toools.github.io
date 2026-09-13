@@ -14,13 +14,15 @@ if (!favicon) {
     favicon.rel = "shortcut icon";
     document.head.appendChild(favicon);
 }
-favicon.href = "favicon.png?v=2";
+favicon.href = "/images/favicon.png?v=3";
 
 // 2. עיצוב CSS מקצועי, אחיד ורספונסיבי
 const styleId = "netools-nav-style";
+
 if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
     style.id = styleId;
+
     style.textContent = `
         html, body {
             height: 100%;
@@ -54,7 +56,7 @@ if (!document.getElementById(styleId)) {
             width: 100%;
             padding: 6px 0;
         }
-        
+
         .header-container {
             max-width: 1480px;
             margin: 0 auto;
@@ -64,14 +66,19 @@ if (!document.getElementById(styleId)) {
             align-items: center;
             gap: 15px;
         }
-        
+
         .brand-name {
-            font-size: 26px !important;
-            font-weight: 800;
             color: #ffffff !important;
             text-decoration: none;
-            letter-spacing: 1px;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: block;
+            width: 165px;
+            height: auto;
         }
 
         .main-nav-wrapper {
@@ -90,7 +97,7 @@ if (!document.getElementById(styleId)) {
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .main-nav a {
             color: #ffffff !important;
             text-decoration: none;
@@ -103,15 +110,38 @@ if (!document.getElementById(styleId)) {
             background: rgba(255, 255, 255, 0.02);
             white-space: nowrap;
         }
-        
-        .nav-item-home { border: 1px solid rgba(56, 189, 248, 0.6); }
-        .nav-item-rights { border: 1px solid rgba(34, 197, 94, 0.6); }
-        .nav-item-legal { border: 1px solid rgba(168, 85, 247, 0.6); }
-        .nav-item-zmanim { border: 1px solid rgba(236, 72, 153, 0.6); }
-        .nav-item-finance { border: 1px solid rgba(6, 182, 212, 0.6); }
-        .nav-item-utility { border: 1px solid rgba(249, 115, 22, 0.6); }
-        .nav-item-news { border: 1px solid rgba(245, 158, 11, 0.6); }
-        .nav-item-world { border: 1px solid rgba(14, 165, 233, 0.6); }
+
+        .nav-item-home {
+            border: 1px solid rgba(56, 189, 248, 0.6);
+        }
+
+        .nav-item-rights {
+            border: 1px solid rgba(34, 197, 94, 0.6);
+        }
+
+        .nav-item-legal {
+            border: 1px solid rgba(168, 85, 247, 0.6);
+        }
+
+        .nav-item-zmanim {
+            border: 1px solid rgba(236, 72, 153, 0.6);
+        }
+
+        .nav-item-finance {
+            border: 1px solid rgba(6, 182, 212, 0.6);
+        }
+
+        .nav-item-utility {
+            border: 1px solid rgba(249, 115, 22, 0.6);
+        }
+
+        .nav-item-news {
+            border: 1px solid rgba(245, 158, 11, 0.6);
+        }
+
+        .nav-item-world {
+            border: 1px solid rgba(14, 165, 233, 0.6);
+        }
 
         .main-nav a:hover {
             transform: translateY(-2px);
@@ -132,7 +162,6 @@ if (!document.getElementById(styleId)) {
             transition: all 0.2s ease;
         }
 
-        /* עיצוב כפתור המבורגר מרובע ומעוצב במובייל */
         .mobile-toggle-btn {
             display: none;
             background: rgba(56, 189, 248, 0.1) !important;
@@ -149,46 +178,149 @@ if (!document.getElementById(styleId)) {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
         }
 
-        .mobile-toggle-btn:hover, .mobile-toggle-btn:active {
+        .mobile-toggle-btn:hover,
+        .mobile-toggle-btn:active {
             background: rgba(56, 189, 248, 0.25) !important;
             border-color: #38bdf8 !important;
             transform: scale(1.05);
         }
 
         .secondary-bar {
-            background: #1e293b; color: #cbd5e1; font-size: 14.5px !important; padding: 12px 18px !important; border-top: 1px solid #334155; width: 100%; box-sizing: border-box;
-            display: flex; align-items: center; justify-content: center;
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 14.5px !important;
+            padding: 12px 18px !important;
+            border-top: 1px solid #334155;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .secondary-container {
-            max-width: 1650px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: nowrap; gap: 20px !important; overflow-x: auto; white-space: nowrap;
-        }
-        .secondary-container::-webkit-scrollbar { display: none; }
-        .widget-item { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
-        .widget-item strong { color: #ffffff; }
 
-        .icon-clock { color: #38bdf8; } .icon-date { color: #38bdf8; } .icon-hebrew { color: #f59e0b; }
-        .icon-parasha { color: #a855f7; } .icon-sun { color: #fbbf24; } .icon-usd { color: #22c55e; }
-        .icon-eur { color: #06b6d4; } .icon-btc { color: #f59e0b; } .icon-prime { color: #f97316; } .icon-cpi { color: #a855f7; } .icon-wage { color: #ec4899; }
-        .icon-weather { color: #38bdf8; }
+        .secondary-container {
+            max-width: 1650px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 20px !important;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .secondary-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .widget-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .widget-item strong {
+            color: #ffffff;
+        }
+
+        .icon-clock,
+        .icon-date {
+            color: #38bdf8;
+        }
+
+        .icon-hebrew {
+            color: #f59e0b;
+        }
+
+        .icon-parasha {
+            color: #a855f7;
+        }
+
+        .icon-sun {
+            color: #fbbf24;
+        }
+
+        .icon-usd {
+            color: #22c55e;
+        }
+
+        .icon-eur {
+            color: #06b6d4;
+        }
+
+        .icon-btc {
+            color: #f59e0b;
+        }
+
+        .icon-prime {
+            color: #f97316;
+        }
+
+        .icon-cpi {
+            color: #a855f7;
+        }
+
+        .icon-wage {
+            color: #ec4899;
+        }
+
+        .icon-weather {
+            color: #38bdf8;
+        }
 
         .calc-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 99999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
         }
+
         .calc-modal {
-            background: #0f172a; border: 1px solid #334155; border-radius: 20px; padding: 22px; width: 380px;
-            color: #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.6); direction: ltr;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 22px;
+            width: 380px;
+            color: #ffffff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            direction: ltr;
         }
 
         footer.main-footer {
-            background: #0f172a !important; color: #ffffff !important; text-align: center; padding: 28px 20px;
-            margin-top: auto !important; border-top: 1px solid #1e293b; font-size: 14px; width: 100%; box-sizing: border-box;
+            background: #0f172a !important;
+            color: #ffffff !important;
+            text-align: center;
+            padding: 28px 20px;
+            margin-top: auto !important;
+            border-top: 1px solid #1e293b;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
-        footer.main-footer p { color: #ffffff !important; margin: 6px 0; }
-        footer.main-footer a { color: #38bdf8 !important; text-decoration: none; margin: 0 8px; font-weight: 500; }
 
-        /* --- התאמת מובייל בלבד --- */
+        footer.main-footer p {
+            color: #ffffff !important;
+            margin: 6px 0;
+        }
+
+        footer.main-footer a {
+            color: #38bdf8 !important;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: 500;
+        }
+
         @media (max-width: 768px) {
+
             .header-container {
                 display: flex !important;
                 flex-direction: row !important;
@@ -200,18 +332,22 @@ if (!document.getElementById(styleId)) {
 
             .mobile-toggle-btn {
                 display: flex !important;
-                order: 1 !important; /* המבורגר מעוצב מימין */
+                order: 1 !important;
                 margin: 0 !important;
             }
 
             .brand-name {
-                font-size: 22px !important;
-                order: 2 !important; /* לוגו במרכז */
+                order: 2 !important;
                 margin: 0 auto !important;
             }
 
+            .brand-logo {
+                width: 130px;
+                height: auto;
+            }
+
             .header-alert-wrapper {
-                order: 3 !important; /* פעמון משמאל */
+                order: 3 !important;
                 margin: 0 !important;
             }
 
@@ -239,15 +375,24 @@ if (!document.getElementById(styleId)) {
                 gap: 10px !important;
             }
 
-            .main-nav li, .main-nav a {
+            .main-nav li,
+            .main-nav a {
                 width: 100% !important;
                 text-align: center !important;
             }
 
-            .secondary-container { font-size: 12px; padding: 6px; }
-            footer.main-footer { font-size: 13px; padding: 20px 10px; }
+            .secondary-container {
+                font-size: 12px;
+                padding: 6px;
+            }
+
+            footer.main-footer {
+                font-size: 13px;
+                padding: 20px 10px;
+            }
         }
     `;
+
     document.head.appendChild(style);
 }
 
@@ -255,44 +400,149 @@ if (!document.getElementById(styleId)) {
 const headerHtml = `
     <header class="main-header">
         <div class="header-container">
-            <a href="index.html" class="brand-name">NETOOLS</a>
 
-            <button class="mobile-toggle-btn" id="menuToggleBtn" aria-label="פתח תפריט">
+            <a href="index.html" class="brand-name" aria-label="NeTools">
+                <img
+                    src="/images/netools-logo.png"
+                    alt="NeTools"
+                    class="brand-logo"
+                >
+            </a>
+
+            <button
+                class="mobile-toggle-btn"
+                id="menuToggleBtn"
+                aria-label="פתח תפריט"
+            >
                 <i class="fa-solid fa-bars"></i>
             </button>
 
             <div class="main-nav-wrapper">
                 <ul class="main-nav">
-                    <li><a href="index.html" class="nav-item-home">דף הבית</a></li>
-                    <li><a href="rights.html" class="nav-item-rights">זכויות עובדים</a></li>
-                    <li><a href="legal.html" class="nav-item-legal">כלים משפטיים</a></li>
-                    <li><a href="zmanim.html" class="nav-item-zmanim">זמנים</a></li>
-                    <li><a href="world.html" class="nav-item-world">עולם ומפות</a></li> 
-                    <li><a href="finance.html" class="nav-item-finance">פיננסים ומט"ח</a></li>
-                    <li><a href="tools.html" class="nav-item-utility">כלים שימושיים</a></li>
-                    <li><a href="news.html" class="nav-item-news">חדשות</a></li>
+                    <li>
+                        <a href="index.html" class="nav-item-home">
+                            דף הבית
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="rights.html" class="nav-item-rights">
+                            זכויות עובדים
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="legal.html" class="nav-item-legal">
+                            כלים משפטיים
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="zmanim.html" class="nav-item-zmanim">
+                            זמנים
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="world.html" class="nav-item-world">
+                            עולם ומפות
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="finance.html" class="nav-item-finance">
+                            פיננסים ומט"ח
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="tools.html" class="nav-item-utility">
+                            כלים שימושיים
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="news.html" class="nav-item-news">
+                            חדשות
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <div class="header-alert-wrapper">
-                <a href="alerts.html" class="header-alert-btn" title="מרכז ההתרעות והחירום">
+                <a
+                    href="alerts.html"
+                    class="header-alert-btn"
+                    title="מרכז ההתרעות והחירום"
+                >
                     <i class="fa-solid fa-bell"></i>
                 </a>
             </div>
+
         </div>
 
         <div class="secondary-bar">
             <div class="secondary-container">
-                <span class="widget-item" id="nav-weather"><i class="fa-solid fa-cloud-sun icon-weather"></i> 24°C</span>
-                <span class="widget-item" id="nav-clock"><i class="fa-regular fa-clock icon-clock"></i> --:--:--</span>
-                <span class="widget-item" id="nav-greg-date"><i class="fa-regular fa-calendar icon-date"></i> --/--/----</span>
-                <span class="widget-item" id="nav-hebrew"><i class="fa-solid fa-calendar-days icon-hebrew"></i> יום שבת, כ"ג אלול תשפ"ו</span>
-                <span class="widget-item" id="nav-parasha"><i class="fa-solid fa-book-quran icon-parasha"></i> פרשת <strong>נצבים-וילך</strong></span>
-                <span class="widget-item" id="nav-sun"><i class="fa-solid fa-sun icon-sun"></i> זריחה: 06:22 | שקיעה: 19:05</span>
-                <span class="widget-item" id="nav-forex"><i class="fa-solid fa-dollar-sign icon-usd"></i>:<strong>3.01 ₪</strong> | <i class="fa-solid fa-euro-sign icon-eur"></i>:<strong>3.50 ₪</strong>|<i class="fa-brands fa-bitcoin icon-btc"></i>:<strong>$62,500</strong></span>
-                <span class="widget-item"><i class="fa-solid fa-percent icon-prime"></i> ריבית: <strong>4.5%</strong> | פריים: <strong>6.0%</strong></span>
-                <span class="widget-item"><i class="fa-solid fa-chart-line icon-cpi"></i> מדד: <strong>+0.3%</strong></span>
-                <span class="widget-item"><i class="fa-solid fa-shekel-sign icon-wage"></i> שכר מינימום: <strong>5,880 ₪</strong></span>
+
+                <span class="widget-item" id="nav-weather">
+                    <i class="fa-solid fa-cloud-sun icon-weather"></i>
+                    24°C
+                </span>
+
+                <span class="widget-item" id="nav-clock">
+                    <i class="fa-regular fa-clock icon-clock"></i>
+                    --:--:--
+                </span>
+
+                <span class="widget-item" id="nav-greg-date">
+                    <i class="fa-regular fa-calendar icon-date"></i>
+                    --/--/----
+                </span>
+
+                <span class="widget-item" id="nav-hebrew">
+                    <i class="fa-solid fa-calendar-days icon-hebrew"></i>
+                    יום שבת, כ"ג אלול תשפ"ו
+                </span>
+
+                <span class="widget-item" id="nav-parasha">
+                    <i class="fa-solid fa-book-quran icon-parasha"></i>
+                    פרשת <strong>נצבים-וילך</strong>
+                </span>
+
+                <span class="widget-item" id="nav-sun">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    זריחה: 06:22 | שקיעה: 19:05
+                </span>
+
+                <span class="widget-item" id="nav-forex">
+                    <i class="fa-solid fa-dollar-sign icon-usd"></i>:
+                    <strong>3.01 ₪</strong>
+                    |
+                    <i class="fa-solid fa-euro-sign icon-eur"></i>:
+                    <strong>3.50 ₪</strong>
+                    |
+                    <i class="fa-brands fa-bitcoin icon-btc"></i>:
+                    <strong>$62,500</strong>
+                </span>
+
+                <span class="widget-item">
+                    <i class="fa-solid fa-percent icon-prime"></i>
+                    ריבית: <strong>4.5%</strong>
+                    |
+                    פריים: <strong>6.0%</strong>
+                </span>
+
+                <span class="widget-item">
+                    <i class="fa-solid fa-chart-line icon-cpi"></i>
+                    מדד: <strong>+0.3%</strong>
+                </span>
+
+                <span class="widget-item">
+                    <i class="fa-solid fa-shekel-sign icon-wage"></i>
+                    שכר מינימום:
+                    <strong>5,880 ₪</strong>
+                </span>
+
             </div>
         </div>
     </header>
@@ -302,44 +552,103 @@ document.body.insertAdjacentHTML("afterbegin", headerHtml);
 
 // 4. הזרקת פוטר
 if (!document.querySelector("footer.main-footer")) {
+
     const footerHtml = `
         <footer class="main-footer">
-            <p>&copy; ${new Date().getFullYear()} NETOOLS - כל הזכויות שמורות</p>
+
             <p>
-                <a href="privacy.html">מדיניות פרטיות</a> | 
-                <a href="about.html">אודות והצהרת נגישות</a> | 
-                <a href="mailto:netools.co.il@gmail.com">netools.co.il@gmail.com</a>
+                &copy; ${new Date().getFullYear()}
+                NeTools - כל הזכויות שמורות
             </p>
-            <p style="font-size: 12.5px; color: #94a3b8; max-width: 900px; margin: 10px auto 0 auto; line-height: 1.5;">
-                <strong></strong> הנתונים והחישובים המוצגים באתר מהווים אומדן כללי בלבד ואינם מהווים תחליף לייעוץ מקצועי, משפטי או פיננסי
+
+            <p>
+                <a href="privacy.html">
+                    מדיניות פרטיות
+                </a>
+                |
+                <a href="about.html">
+                    אודות והצהרת נגישות
+                </a>
+                |
+                <a href="mailto:netools.co.il@gmail.com">
+                    netools.co.il@gmail.com
+                </a>
             </p>
+
+            <p
+                style="
+                    font-size: 12.5px;
+                    color: #94a3b8;
+                    max-width: 900px;
+                    margin: 10px auto 0 auto;
+                    line-height: 1.5;
+                "
+            >
+                הנתונים והחישובים המוצגים באתר
+                מהווים אומדן כללי בלבד ואינם מהווים
+                תחליף לייעוץ מקצועי, משפטי או פיננסי
+            </p>
+
         </footer>
     `;
-    document.body.insertAdjacentHTML("beforeend", footerHtml);
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        footerHtml
+    );
 }
 
-// 5. סקריפט שעון, מזג אוויר ופתיחת המבורגר במובייל
+// 5. סקריפט שעון ופתיחת המבורגר במובייל
 document.addEventListener("DOMContentLoaded", function () {
+
     function updateClockAndDate() {
+
         const now = new Date();
-        const clockEl = document.getElementById("nav-clock");
-        const dateEl = document.getElementById("nav-greg-date");
-        if (clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock icon-clock"></i> ${now.toLocaleTimeString('he-IL')}`;
-        if (dateEl) dateEl.innerHTML = `<i class="fa-regular fa-calendar icon-date"></i> ${now.toLocaleDateString('he-IL')}`;
+
+        const clockEl =
+            document.getElementById("nav-clock");
+
+        const dateEl =
+            document.getElementById("nav-greg-date");
+
+        if (clockEl) {
+            clockEl.innerHTML =
+                `<i class="fa-regular fa-clock icon-clock"></i>
+                ${now.toLocaleTimeString("he-IL")}`;
+        }
+
+        if (dateEl) {
+            dateEl.innerHTML =
+                `<i class="fa-regular fa-calendar icon-date"></i>
+                ${now.toLocaleDateString("he-IL")}`;
+        }
     }
+
     setInterval(updateClockAndDate, 1000);
+
     updateClockAndDate();
 
-    // פתיחה וסגירה של ההמבורגר במובייל
-    const btn = document.getElementById("menuToggleBtn");
-    const navWrapper = document.querySelector(".main-nav-wrapper");
+    const btn =
+        document.getElementById("menuToggleBtn");
+
+    const navWrapper =
+        document.querySelector(".main-nav-wrapper");
 
     if (btn && navWrapper) {
+
         btn.addEventListener("click", function () {
+
             navWrapper.classList.toggle("open");
-            const icon = btn.querySelector("i");
+
+            const icon =
+                btn.querySelector("i");
+
             if (icon) {
-                icon.className = navWrapper.classList.contains("open") ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+
+                icon.className =
+                    navWrapper.classList.contains("open")
+                        ? "fa-solid fa-xmark"
+                        : "fa-solid fa-bars";
             }
         });
     }
