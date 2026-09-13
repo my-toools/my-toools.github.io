@@ -43,7 +43,7 @@ function broadcast(data) {
     });
 }
 
-// דגימה מהירה של התרעות אמת
+// תשאול התרעות אמת (שנייה וחצי)
 async function pollHomeFrontCommand() {
     try {
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers: browserHeaders });
@@ -58,6 +58,7 @@ async function pollHomeFrontCommand() {
                         latestLiveAlerts = currentAlerts;
                         broadcast({ type: 'LIVE_ALERT', data: latestLiveAlerts });
 
+                        // שמירה ברקע ב-Supabase
                         fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
                             method: 'POST',
                             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
@@ -80,51 +81,49 @@ async function pollHomeFrontCommand() {
     } catch (e) {}
 }
 
-// שליפת היסטוריה מוגנת (Supabase + גיבוי פקע"ר)
+// שאיבת ארכיון היסטוריו מלא ומבנה נתונים תקני
 async function updateHistoryCache() {
     try {
-        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=100`, {
+        // 1. ניסיון שליפת היסטוריה מפיקוד העורף (מאגר רשמי מעודכן)
+        const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers: browserHeaders });
+        if (historyRes.ok) {
+            const historyData = await historyRes.json();
+            if (Array.isArray(historyData) && historyData.length > 0) {
+                cachedHistory = historyData.map(item => ({
+                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
+                    data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || item.areaName || 'כל הארץ'],
+                    date: item.alertDate || item.date || '',
+                    time: item.time || ''
+                }));
+                return;
+            }
+        }
+
+        // 2. גיבוי מ-Supabase
+        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=200`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
         if (dbRes.ok) {
             const dbData = await dbRes.json();
             if (Array.isArray(dbData) && dbData.length > 0) {
                 cachedHistory = dbData;
-                return;
             }
         }
-
-        const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers: browserHeaders });
-        if (historyRes.ok) {
-            const historyData = await historyRes.json();
-            if (Array.isArray(historyData)) {
-                cachedHistory = historyData.slice(0, 100).map(item => ({
-                    title: item.title || item.category_desc || 'התרעת פיקוד העורף',
-                    data: Array.isArray(item.data) ? item.data : [item.data || item.cityName || 'כל הארץ'],
-                    date: item.alertDate || item.date || '',
-                    time: item.time || ''
-                }));
-            }
-        }
-    } catch (e) {}
+    } catch (e) {
+        console.error("History fetch error:", e);
+    }
 }
 
-// תזמון רציף
-setInterval(pollHomeFrontCommand, 1200);
+setInterval(pollHomeFrontCommand, 1500);
 setInterval(updateHistoryCache, 30000);
-updateHistoryCache(); // הרצה ראשונית מיידית
+updateHistoryCache();
 
-// חיבור WebSocket יציב ובטוח ללא קריסות
 wss.on('connection', (ws) => {
-    try {
-        ws.send(JSON.stringify({ 
-            type: 'INIT', 
-            liveAlerts: latestLiveAlerts, 
-            history: cachedHistory 
-        }));
-    } catch (e) {
-        console.error("Error sending INIT message:", e);
-    }
+    ws.send(JSON.stringify({ 
+        type: 'INIT', 
+        liveAlerts: latestLiveAlerts, 
+        history: cachedHistory 
+    }));
 });
 
 app.get('/api/alerts', (req, res) => {
