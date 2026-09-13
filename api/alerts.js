@@ -7,52 +7,74 @@ export default async function handler(req, res) {
         return res.status(200).end();
     }
 
-    const headers = {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Referer': 'https://www.oref.org.il/heb/alerts-history',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Accept-Language': 'he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7'
-    };
+    const SUPABASE_URL = 'https://awwwjlzqawrzxxfnhzoh.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_WTL3veV0FNOYRZzN7Ii0UQ_-hsY9Bvg';
 
     try {
-        // 1. ניסיון קריאה ראשון: התרעות בזמן אמת
-        const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers });
+        // 1. קריאת התרעות בזמן אמת מפיקוד העורף
+        const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Referer': 'https://www.oref.org.il/',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+        });
+
+        let currentAlerts = [];
         if (liveRes.ok) {
-            const liveText = await liveRes.text();
-            if (liveText && liveText.trim() !== '') {
-                const liveData = JSON.parse(liveText);
-                if (Array.isArray(liveData) && liveData.length > 0) {
-                    return res.status(200).json(liveData);
-                }
+            const text = await liveRes.text();
+            if (text && text.trim() !== '') {
+                const liveData = JSON.parse(text);
+                currentAlerts = Array.isArray(liveData) ? liveData : [liveData];
             }
         }
 
-        // 2. ניסיון קריאה שני: ארכיון פיקוד העורף (AlertsHistory.json)
-        const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers });
-        if (historyRes.ok) {
-            const historyText = await historyRes.text();
-            if (historyText && historyText.trim() !== '') {
-                const historyData = JSON.parse(historyText);
-                if (Array.isArray(historyData) && historyData.length > 0) {
-                    return res.status(200).json(historyData);
-                }
+        // 2. אם יש התרעת אמת — שמירה ל-Supabase
+        if (currentAlerts.length > 0 && currentAlerts[0].data) {
+            const today = new Date().toLocaleDateString('he-IL');
+            const now = new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+
+            await fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    title: currentAlerts[0].title || 'התרעת פיקוד העורף',
+                    data: currentAlerts[0].data,
+                    date: today,
+                    time: now
+                })
+            });
+
+            return res.status(200).json(currentAlerts);
+        }
+
+        // 3. בזמן שגרה — שליפת הארכיון העצמאי מ-Supabase
+        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=50`, {
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+        });
+
+        if (dbRes.ok) {
+            const dbData = await dbRes.json();
+            if (Array.isArray(dbData) && dbData.length > 0) {
+                return res.status(200).json(dbData);
             }
         }
 
-        // 3. ניסיון קריאה שלישי (נתיב חלופי במידה והראשון נחסם בשרת ענן)
-        const altHistoryRes = await fetch('https://www.oref.org.il/WarningMessages/alert/history.json', { headers });
-        if (altHistoryRes.ok) {
-            const altText = await altHistoryRes.text();
-            if (altText && altText.trim() !== '') {
-                const altData = JSON.parse(altText);
-                if (Array.isArray(altData) && altData.length > 0) {
-                    return res.status(200).json(altData);
-                }
-            }
-        }
-
-        return res.status(200).json([]);
+        // 4. הודעת פתיחה ראשונית במקרה של מסד נתונים ריק
+        return res.status(200).json([{
+            title: 'מערכת התרעות פעילה',
+            data: ['חיבור ל-Supabase הוגדר בהצלחה. ממתין להתרעות'],
+            date: new Date().toLocaleDateString('he-IL'),
+            time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+        }]);
 
     } catch (error) {
         return res.status(200).json([]);
