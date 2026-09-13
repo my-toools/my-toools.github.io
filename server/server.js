@@ -1,10 +1,15 @@
 const express = require('express');
+const http = require('http');
+const WebSocket = require('ws');
 const cors = require('cors');
 const fetch = require('node-fetch');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 const PORT = process.env.PORT || 3000;
 const SUPABASE_URL = 'https://awwwjlzqawrzxxfnhzoh.supabase.co';
@@ -26,47 +31,65 @@ const browserHeaders = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-// זיכרון פנימי בשרת
 let latestLiveAlerts = [];
 let cachedHistory = [];
 
-// לולאת שאיבה רציפה מפיקוד העורף בדיוק כמו צופר (רץ בלופ 24/7)
+// הפצת התרעה לכל המשתמשים המחוברים ב-WebSocket בזמן אמת (Push)
+function broadcast(data) {
+    const payload = JSON.stringify(data);
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(payload);
+        }
+    });
+}
+
+// לולאת שאיבה מהירה ורציפה מפיקוד העורף
 async function pollHomeFrontCommand() {
     try {
-        // 1. תשאול התרעות אמת
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers: browserHeaders });
         if (liveRes.ok) {
             const text = await liveRes.text();
             if (text && text.trim() !== '') {
                 const liveData = JSON.parse(text);
-                latestLiveAlerts = Array.isArray(liveData) ? liveData : [liveData];
+                const currentAlerts = Array.isArray(liveData) ? liveData : [liveData];
 
-                // שמירה אוטומטית ב-Supabase במידה ויש התרעה
-                if (latestLiveAlerts.length > 0 && latestLiveAlerts[0].data) {
-                    fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
-                        method: 'POST',
-                        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            title: latestLiveAlerts[0].title || 'התרעת פיקוד העורף',
-                            data: latestLiveAlerts[0].data,
-                            date: new Date().toLocaleDateString('he-IL'),
-                            time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
-                        })
-                    }).catch(() => {});
+                if (currentAlerts.length > 0 && currentAlerts[0].data) {
+                    // בדיקה אם מדובר בהתרעה חדשה
+                    if (JSON.stringify(currentAlerts) !== JSON.stringify(latestLiveAlerts)) {
+                        latestLiveAlerts = currentAlerts;
+                        
+                        // "דחיפה" מיידית ב-WebSocket לכל הדפדפנים
+                        broadcast({ type: 'LIVE_ALERT', data: latestLiveAlerts });
+
+                        // שמירה ברקע ב-Supabase
+                        fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
+                            method: 'POST',
+                            headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                title: latestLiveAlerts[0].title || 'התרעת פיקוד העורף',
+                                data: latestLiveAlerts[0].data,
+                                date: new Date().toLocaleDateString('he-IL'),
+                                time: new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })
+                            })
+                        }).catch(() => {});
+                    }
+                    return;
                 }
-            } else {
-                latestLiveAlerts = [];
             }
         }
-    } catch (e) {
-        latestLiveAlerts = [];
-    }
+        
+        // אם אין התרעה פעילה
+        if (latestLiveAlerts.length > 0) {
+            latestLiveAlerts = [];
+            broadcast({ type: 'LIVE_ALERT', data: [] });
+        }
+    } catch (e) {}
 }
 
-// שאיבת היסטוריה
+// שאיבת ארכיון היסטוריו
 async function updateHistoryCache() {
     try {
-        // ניסיון שליפה מ-Supabase
         const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=100`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
         });
@@ -78,7 +101,6 @@ async function updateHistoryCache() {
             }
         }
 
-        // גיבוי מפיקוד העורף
         const historyRes = await fetch('https://www.oref.org.il/WarningMessages/History/AlertsHistory.json', { headers: browserHeaders });
         if (historyRes.ok) {
             const historyData = await historyRes.json();
@@ -94,17 +116,25 @@ async function updateHistoryCache() {
     } catch (e) {}
 }
 
-// תזמון משיכה: לייב כל שנייה וחצי, היסטוריה כל 30 שניות
-setInterval(pollHomeFrontCommand, 1500);
+// תזמון: שאיבת התרעות בלופ של 1 שנייה, עדכון היסטוריה כל 30 שניות
+setInterval(pollHomeFrontCommand, 1000);
 setInterval(updateHistoryCache, 30000);
 updateHistoryCache();
 
-// Endpoint יחיד שמחזיר מיד את המידע לדפדפן (אפס שיהוי)
+// ניהול חיבורי WebSocket נכנסים
+wss.on('connection', (ws) => {
+    // שליחת מצב היסטוריה והתרעה נוכחית מיד להתחברות
+    ws.send(JSON.stringify({ 
+        type: 'INIT', 
+        liveAlerts: latestLiveAlerts, 
+        history: cachedHistory 
+    }));
+});
+
+// Endpoint גיבוי ב-HTTP REST
 app.get('/api/alerts', (req, res) => {
-    if (latestLiveAlerts.length > 0) {
-        return res.json(latestLiveAlerts);
-    }
+    if (latestLiveAlerts.length > 0) return res.json(latestLiveAlerts);
     return res.json(cachedHistory);
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Tzeva Adom WebSocket server running on port ${PORT}`));
