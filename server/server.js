@@ -34,7 +34,6 @@ const browserHeaders = {
 let latestLiveAlerts = [];
 let cachedHistory = [];
 
-// הפצת התרעה לכל המשתמשים המחוברים ב-WebSocket בזמן אמת (Push)
 function broadcast(data) {
     const payload = JSON.stringify(data);
     wss.clients.forEach(client => {
@@ -44,7 +43,7 @@ function broadcast(data) {
     });
 }
 
-// לולאת שאיבה מהירה ורציפה מפיקוד העורף
+// דגימה מהירה של התרעות אמת
 async function pollHomeFrontCommand() {
     try {
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers: browserHeaders });
@@ -55,14 +54,10 @@ async function pollHomeFrontCommand() {
                 const currentAlerts = Array.isArray(liveData) ? liveData : [liveData];
 
                 if (currentAlerts.length > 0 && currentAlerts[0].data) {
-                    // בדיקה אם מדובר בהתרעה חדשה
                     if (JSON.stringify(currentAlerts) !== JSON.stringify(latestLiveAlerts)) {
                         latestLiveAlerts = currentAlerts;
-                        
-                        // "דחיפה" מיידית ב-WebSocket לכל הדפדפנים
                         broadcast({ type: 'LIVE_ALERT', data: latestLiveAlerts });
 
-                        // שמירה ברקע ב-Supabase
                         fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
                             method: 'POST',
                             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
@@ -78,8 +73,6 @@ async function pollHomeFrontCommand() {
                 }
             }
         }
-        
-        // אם אין התרעה פעילה
         if (latestLiveAlerts.length > 0) {
             latestLiveAlerts = [];
             broadcast({ type: 'LIVE_ALERT', data: [] });
@@ -87,7 +80,7 @@ async function pollHomeFrontCommand() {
     } catch (e) {}
 }
 
-// שאיבת ארכיון היסטוריו
+// שליפת היסטוריה מוגנת (Supabase + גיבוי פקע"ר)
 async function updateHistoryCache() {
     try {
         const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=100`, {
@@ -116,29 +109,27 @@ async function updateHistoryCache() {
     } catch (e) {}
 }
 
-// תזמון: שאיבת התרעות בלופ של 1 שנייה, עדכון היסטוריה כל 30 שניות
-setInterval(pollHomeFrontCommand, 1000);
+// תזמון רציף
+setInterval(pollHomeFrontCommand, 1200);
 setInterval(updateHistoryCache, 30000);
-updateHistoryCache();
+updateHistoryCache(); // הרצה ראשונית מיידית
 
-// ניהול חיבורי WebSocket נכנסים
-// ניהול חיבורי WebSocket נכנסים - שולח תמיד את ההיסטוריה המעודכנת
-wss.on('connection', async (ws) => {
-    // אם ההיסטוריה בזיכרון עדיין ריקה, נבצע שליפה מיידית
-    if (cachedHistory.length === 0) {
-        await updateHistoryCache();
+// חיבור WebSocket יציב ובטוח ללא קריסות
+wss.on('connection', (ws) => {
+    try {
+        ws.send(JSON.stringify({ 
+            type: 'INIT', 
+            liveAlerts: latestLiveAlerts, 
+            history: cachedHistory 
+        }));
+    } catch (e) {
+        console.error("Error sending INIT message:", e);
     }
-    
-    ws.send(JSON.stringify({ 
-        type: 'INIT', 
-        liveAlerts: latestLiveAlerts, 
-        history: cachedHistory 
-    }));
 });
-// Endpoint גיבוי ב-HTTP REST
+
 app.get('/api/alerts', (req, res) => {
     if (latestLiveAlerts.length > 0) return res.json(latestLiveAlerts);
     return res.json(cachedHistory);
 });
 
-server.listen(PORT, () => console.log(`Tzeva Adom WebSocket server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
