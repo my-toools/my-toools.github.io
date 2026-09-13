@@ -122,15 +122,19 @@ setInterval(updateHistoryCache, 30000);
 updateHistoryCache();
 
 // ניהול חיבורי WebSocket נכנסים
-wss.on('connection', (ws) => {
-    // שליחת מצב היסטוריה והתרעה נוכחית מיד להתחברות
+// ניהול חיבורי WebSocket נכנסים - שולח תמיד את ההיסטוריה המעודכנת
+wss.on('connection', async (ws) => {
+    // אם ההיסטוריה בזיכרון עדיין ריקה, נבצע שליפה מיידית
+    if (cachedHistory.length === 0) {
+        await updateHistoryCache();
+    }
+    
     ws.send(JSON.stringify({ 
         type: 'INIT', 
         liveAlerts: latestLiveAlerts, 
         history: cachedHistory 
     }));
 });
-
 // Endpoint גיבוי ב-HTTP REST
 app.get('/api/alerts', (req, res) => {
     if (latestLiveAlerts.length > 0) return res.json(latestLiveAlerts);
