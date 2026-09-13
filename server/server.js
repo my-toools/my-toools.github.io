@@ -16,7 +16,7 @@ const SUPABASE_URL = 'https://awwwjlzqawrzxxfnhzoh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_WTL3veV0FNOYRZzN7Ii0UQ_-hsY9Bvg';
 
 const orefHeaders = {
-    'Accept': 'application/json, text/javascript, *_/*; q=0.01',
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
     'Accept-Language': 'he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7',
     'Cache-Control': 'no-cache',
     'Pragma': 'no-cache',
@@ -27,7 +27,7 @@ const orefHeaders = {
 
 let latestLiveAlerts = [];
 
-// ארכיון אמת מדויק מעודכן לחודש האחרון (בהתאמה מלאה לפיקוד העורף)
+// ארכיון האמת המלא של החודש האחרון (כולל נתוני אמת מעודכנים)
 const realMonthHistory = [
     { title: "חדירת כלי טיס עוין", data: ["עג'ר", "הגושרים", "מעיין ברוך", "כפר יובל", "בית הלל"], date: "2026-09-10", time: "00:31" },
     { title: "חדירת כלי טיס עוין", data: ["בית הלל"], date: "2026-09-10", time: "00:27" },
@@ -50,7 +50,7 @@ function broadcast(data) {
     });
 }
 
-// לולאת אמת בלייב ששומרת אוטומטית ל-Supabase
+// לולאת ניטור בלייב ושמירה אוטומטית ב-Supabase בזמן אמת
 async function pollHomeFrontCommand() {
     try {
         const liveRes = await fetch('https://www.oref.org.il/WarningMessages/alert/alerts.json', { headers: orefHeaders });
@@ -65,7 +65,7 @@ async function pollHomeFrontCommand() {
                         latestLiveAlerts = currentAlerts;
                         broadcast({ type: 'LIVE_ALERT', data: latestLiveAlerts });
 
-                        // שמירה אוטומטית במסד הנתונים Supabase להיסטוריה עתידית
+                        // שמירה אוטומטית במסד הנתונים Supabase
                         fetch(`${SUPABASE_URL}/rest/v1/alerts`, {
                             method: 'POST',
                             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
@@ -91,10 +91,10 @@ async function pollHomeFrontCommand() {
 setInterval(pollHomeFrontCommand, 1200);
 
 wss.on('connection', (ws) => {
-    ws.send(JSON.stringify({ type: 'LIVE_ALERT', data: latestLiveAlerts }));
+    ws.ws?.send ? ws.send(JSON.stringify({ type: 'LIVE_ALERT', data: latestLiveAlerts })) : ws.send(JSON.stringify({ type: 'LIVE_ALERT', data: latestLiveAlerts }));
 });
 
-// Endpoint ארכיון: קודם שולף מ-Supabase (התרעות אמת שנצברו), ואם ריק - מחזיר את ארכיון החודש המלא
+// Endpoint ארכיון: משלב את הנתונים שנצברו ב-Supabase יחד עם ארכיון החודש המעודכן
 app.get('/api/alerts-history', async (req, res) => {
     try {
         const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/alerts?select=*&order=id.desc&limit=150`, {
@@ -103,7 +103,6 @@ app.get('/api/alerts-history', async (req, res) => {
         if (dbRes.ok) {
             const dbData = await dbRes.json();
             if (Array.isArray(dbData) && dbData.length > 0) {
-                // שילוב בין מה שנצבר ב-Supabase לבין ארכיון החודש
                 return res.json([...dbData, ...realMonthHistory]);
             }
         }
